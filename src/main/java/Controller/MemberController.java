@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -17,17 +16,17 @@ public class MemberController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
-		if (cmd.equals("/add.member")) {
+		if (cmd.equals("/add.do")) {
 
-		} else if (cmd.equals("/printout.member")) {
+		} else if (cmd.equals("/member/printout.do")) {
 
-		} else if (cmd.equals("/update.member")) {
+		} else if (cmd.equals("/member/update.do")) {
 
-		} else if (cmd.equals("/delete.member")) {
+		} else if (cmd.equals("/member/delete.do")) {
 
-		} else if (cmd.equals("/validate.member")) {
+		} else if (cmd.equals("/member/validate.do")) {
 
-		} else if (cmd.equals("/shortvalid.member")) {
+		} else if (cmd.equals("/member/shortvalid.do")) {
 
 		}
 
