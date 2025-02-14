@@ -3,38 +3,38 @@ package DTO;
 import java.sql.Timestamp;
 
 public class BoardDTO {
-	private int board_id;
-	private int writer;
+	private int boardId;
+	private String writer;
 	private String title;
-	private Timestamp reg_date;
-	private String contens;
+	private Timestamp regDate;
+	private String contents;
 
 	public BoardDTO() {
 		super();
 	}
 
-	public BoardDTO(int board_id, int writer, String title, Timestamp reg_date, String contens) {
+	public BoardDTO(int boardId, String writer, String title, Timestamp regDate, String contents) {
 		super();
-		this.board_id = board_id;
+		this.boardId = boardId;
 		this.writer = writer;
 		this.title = title;
-		this.reg_date = reg_date;
-		this.contens = contens;
+		this.regDate = regDate;
+		this.contents = contents;
 	}
 
-	public int getBoard_id() {
-		return board_id;
+	public int getBoardId() {
+		return boardId;
 	}
 
-	public void setBoard_id(int board_id) {
-		this.board_id = board_id;
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
 	}
 
-	public int getWriter() {
+	public String getWriter() {
 		return writer;
 	}
 
-	public void setWriter(int writer) {
+	public void setWriter(String writer) {
 		this.writer = writer;
 	}
 
@@ -46,19 +46,19 @@ public class BoardDTO {
 		this.title = title;
 	}
 
-	public Timestamp getReg_date() {
-		return reg_date;
+	public Timestamp getRegDate() {
+		return regDate;
 	}
 
-	public void setReg_date(Timestamp reg_date) {
-		this.reg_date = reg_date;
+	public void setReg_date(Timestamp regDate) {
+		this.regDate = regDate;
 	}
 
-	public String getContens() {
-		return contens;
+	public String getContents() {
+		return contents;
 	}
 
-	public void setContens(String contens) {
-		this.contens = contens;
+	public void setContens(String contents) {
+		this.contents = contents;
 	}
 }
