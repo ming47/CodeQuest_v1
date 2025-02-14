@@ -4,28 +4,42 @@ import java.sql.Timestamp;
 
 public class ScoreDTO {
 
-	private int score_id;
-	private int game_id;
-	private int member_id;
+	private int scoreId;
+	private int gameId;
+	private int memberId;
 	private int score;
-	private Timestamp reg_date;
-	public int getScore_id() {
-		return score_id;
+	private Timestamp regDate;
+	
+	public ScoreDTO(int scoreId, int gameId, int memberId, int score, Timestamp regDate) {
+		super();
+		this.scoreId = scoreId;
+		this.gameId = gameId;
+		this.memberId = memberId;
+		this.score = score;
+		this.regDate = regDate;
 	}
-	public void setScore_id(int score_id) {
-		this.score_id = score_id;
+	
+	public ScoreDTO() {
+		super();
 	}
-	public int getGame_id() {
-		return game_id;
+	
+	public int getScoreId() {
+		return scoreId;
 	}
-	public void setGame_id(int game_id) {
-		this.game_id = game_id;
+	public void setScoreId(int scoreId) {
+		this.scoreId = scoreId;
 	}
-	public int getMember_id() {
-		return member_id;
+	public int getGameId() {
+		return gameId;
 	}
-	public void setMember_id(int member_id) {
-		this.member_id = member_id;
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+	public int getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
 	public int getScore() {
 		return score;
@@ -33,22 +47,12 @@ public class ScoreDTO {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	public Timestamp getReg_date() {
-		return reg_date;
+	public Timestamp getRegDate() {
+		return regDate;
 	}
-	public void setReg_date(Timestamp reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(Timestamp regDate) {
+		this.regDate = regDate;
 	}
-	public ScoreDTO(int score_id, int game_id, int member_id, int score, Timestamp reg_date) {
-		super();
-		this.score_id = score_id;
-		this.game_id = game_id;
-		this.member_id = member_id;
-		this.score = score;
-		this.reg_date = reg_date;
-	}
-	public ScoreDTO() {
-		super();
-	}
-
+	
+	
 }

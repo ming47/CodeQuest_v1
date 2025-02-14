@@ -4,18 +4,31 @@ import java.sql.Timestamp;
 
 public class ReplyDTO {
 
-	private int reply_id;
+	private int replyId;
 	private String name;
-	private int board_id;
+	private int boardId;
 	private String contents;
-	private Timestamp reg_date;
-
-	public int getReply_id() {
-		return reply_id;
+	private Timestamp regDate;
+	
+	public ReplyDTO(int replyId, String name, int boardId, String contents, Timestamp regDate) {
+		super();
+		this.replyId = replyId;
+		this.name = name;
+		this.boardId = boardId;
+		this.contents = contents;
+		this.regDate = regDate;
 	}
 
-	public void setReply_id(int reply_id) {
-		this.reply_id = reply_id;
+	public ReplyDTO() {
+		super();
+	}
+
+	public int getReplyId() {
+		return replyId;
+	}
+
+	public void setReplyId(int replyId) {
+		this.replyId = replyId;
 	}
 
 	public String getName() {
@@ -26,12 +39,12 @@ public class ReplyDTO {
 		this.name = name;
 	}
 
-	public int getBoard_id() {
-		return board_id;
+	public int getBoardId() {
+		return boardId;
 	}
 
-	public void setBoard_id(int board_id) {
-		this.board_id = board_id;
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
 	}
 
 	public String getContents() {
@@ -42,25 +55,13 @@ public class ReplyDTO {
 		this.contents = contents;
 	}
 
-	public Timestamp getReg_date() {
-		return reg_date;
+	public Timestamp getRegDate() {
+		return regDate;
 	}
 
-	public void setReg_date(Timestamp reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(Timestamp regDate) {
+		this.regDate = regDate;
 	}
 
-	public ReplyDTO(int reply_id, String name, int board_id, String contents, Timestamp reg_date) {
-		super();
-		this.reply_id = reply_id;
-		this.name = name;
-		this.board_id = board_id;
-		this.contents = contents;
-		this.reg_date = reg_date;
-	}
-
-	public ReplyDTO() {
-		super();
-	}
 
 }
