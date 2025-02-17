@@ -89,7 +89,6 @@ public class MemberController extends HttpServlet {
             }   
             response.sendRedirect("/");
 
-<<<<<<< HEAD
 			} else if(cmd.equals("/member/login.do")) {
 				
 		        String id = request.getParameter("id");
