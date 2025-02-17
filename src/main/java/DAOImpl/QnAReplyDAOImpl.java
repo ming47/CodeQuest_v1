@@ -39,13 +39,16 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 	@Override
 	public int insert(QnAReplyDTO dto) throws Exception {
 		String sql = "INSERT INTO QNA_REPLY(QNA_REPLY_ID, QNA_ID, MEMBER_ID, CONTEXT) "
-				+ "VALUES(QNA_REPLY_ID_SEQ.NEXTVAL, ?, ? ,?)";
+				+ "VALUES(QNA_REPLY_SEQ.NEXTVAL, ?, ? ,?)";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, dto.getQnaId());
+			pstat.setInt(2, dto.getMemberId());
+			pstat.setString(3, dto.getContext());
 			
+			return pstat.executeUpdate();
 		}
-		return 0;
 	}
 
 	@Override
@@ -62,13 +65,13 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 
 	@Override
 	public QnAReplyDTO selectByQnAId(int qnaId) throws Exception {
-		String sql = "SELECT * FROM QNA_REPLY WHRER QNA_ID=?";
+		String sql = "SELECT * FROM QNA_REPLY Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE QNA_ID=?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, qnaId);
 			try(ResultSet rs = pstat.executeQuery()) {
-				
+				rs.next();
 				return QnAReplyDTO.of(rs);
 			}
 		}
