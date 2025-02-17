@@ -50,7 +50,6 @@ public class MemberController extends HttpServlet {
 		} catch(Exception e) {
 			e.printStackTrace();
 
-
 		}
 
 	}
@@ -92,21 +91,6 @@ public class MemberController extends HttpServlet {
 
 			} else if(cmd.equals("/member/login.do")) {
 
-				HttpSession session = request.getSession();
-
-				Integer failedCount = (Integer) session.getAttribute("failedLoginCount");
-				Long lockoutTime = (Long) session.getAttribute("lockoutTime");
-				long currentTime = System.currentTimeMillis();
-				final long LOCKOUT_DURATION = 30 * 1000;
-				System.out.println(lockoutTime + "세션에 담긴 락타임");
-				System.out.println(failedCount + "실패횟수 카운팅");
-				if(lockoutTime != null && currentTime < lockoutTime + LOCKOUT_DURATION) {
-					response.getWriter().write("locked");
-					return;
-				} else if(lockoutTime != null && currentTime >= lockoutTime + LOCKOUT_DURATION) {
-					session.removeAttribute("failedLoginCount");
-					session.removeAttribute("lockoutTime");
-				}
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
 
@@ -116,40 +100,25 @@ public class MemberController extends HttpServlet {
 
 				if(member != null) {
 					System.out.println("로그인성공!");
-					session.removeAttribute("failedLoginCount");
-					session.removeAttribute("lockoutTime");
 					request.getSession().setAttribute("member", member);
 					response.getWriter().write("success");
-				} else {
-					if(failedCount == null) {
-						failedCount = 1;
-					} else {
-						failedCount++;
-					}
-					session.setAttribute("failedLoginCount", failedCount);
-
-					if(failedCount >= 5) {
-						session.setAttribute("lockoutTime", currentTime);
-						response.getWriter().write("locked");
-					} else {
-						response.getWriter().write("fail");
-					}  
 				}
+
 			} else if (cmd.equals("/printout.do")) {
 
-			} else if (cmd.equals("/update.do")) {
+         } else if (cmd.equals("/update.do")) {
 
-			} else if (cmd.equals("/delete.do")) {
+         } else if (cmd.equals("/delete.do")) {
 
-			} else if (cmd.equals("/validate.do")) {
+         } else if (cmd.equals("/validate.do")) {
 
-			} else if (cmd.equals("/shortvalid.do")) {
+         } else if (cmd.equals("/shortvalid.do")) {
 
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+         }
+      } catch(Exception e) {
+         e.printStackTrace();
+      }
 
 
-	}
+   }
 }
