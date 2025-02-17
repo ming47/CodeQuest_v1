@@ -10,14 +10,16 @@ public class QnAReplyDTO {
 	private int memberId;
 	private Timestamp regDate;
 	private String context;
+	private String writer;
 	
-	public QnAReplyDTO(int qnaReplyId, int qnaId, int memberId, Timestamp regDate, String context) {
+	public QnAReplyDTO(int qnaReplyId, int qnaId, int memberId, Timestamp regDate, String context, String writer) {
 		super();
 		this.qnaReplyId = qnaReplyId;
 		this.qnaId = qnaId;
 		this.memberId = memberId;
 		this.regDate = regDate;
 		this.context = context;
+		this.writer = writer;
 	}
 	
 	public QnAReplyDTO(int qnaId, int memberId, String context) {
@@ -52,6 +54,7 @@ public class QnAReplyDTO {
 				rs.getInt("QNA_ID"),
 				rs.getInt("MEMBER_ID"),
 				rs.getTimestamp("REG_DATE"),
-				rs.getString("CONTEXT"));
+				rs.getString("CONTEXT"),
+				rs.getString("NAME"));
 	}
 }
