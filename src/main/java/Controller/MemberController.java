@@ -106,10 +106,10 @@ public class MemberController extends HttpServlet {
 				response.getWriter().write("fail");
 				}
 				
-			} else if (cmd.equals("/printout.do")) {
+			} else if (cmd.equals("/printout.do")) {  //출력
 
 			} else if (cmd.equals("/update.do")) {
-
+				
 			} else if (cmd.equals("/delete.do")) {
 
 			} else if (cmd.equals("/validate.do")) {
