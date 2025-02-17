@@ -14,11 +14,13 @@ import com.google.gson.Gson;
 
 import Common.ConvertURL;
 import DAOImpl.QnADAOImpl;
+import DAOImpl.QnAReplyDAOImpl;
 import DTO.QnADTO;
 
 @WebServlet("/qna/*")
 public class QnAController<QnADAO> extends HttpServlet {
 	QnADAOImpl dao = QnADAOImpl.INSTACNE;
+	QnAReplyDAOImpl qnaReplyDAO = QnAReplyDAOImpl.INSTANCE;
 	
 	Gson g = new Gson();
 	

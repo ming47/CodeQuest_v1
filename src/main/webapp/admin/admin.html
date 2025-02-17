@@ -717,7 +717,7 @@
     }
 
     function setQnAContents(item) {
-        $('#qna-contents-title').html(item.);
+        $('#qna-contents-title').html(item.responseYN);
         $('#qna-contents-id').html(item.qnaId);
         $('#qna-contents-writer').html(item.writer);
         $('#qna-contents-reg-date').html(item.regDate);
@@ -768,11 +768,34 @@
         });
     }
 
+    function makePageNavi(dto) {
+        const pageNavi = $('<div>').addClass('pageNavi');
+
+        if (!dto.isFirst) {
+            pageNavi.append(makeSpan('이전', dto.startNavi - 1));
+        }
+
+        for (let i = dto.startNavi; i <= dto.endNavi; i++) {
+            pageNavi.append(makeSpan(i, i));
+        }
+
+        if (!dto.isEnd) {
+            pageNavi.append(makeSpan('다음', dto.endNavi + 1));
+        }
+
+        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
+        const hover = '.page:hover { cursor: pointer; }'
+
+        $('style').append(hover).append(indexCss);
+
+        return pageNavi;
+    }
+
     window.onload = function () {
     	$.ajax({
     		url: '/qna/list.do?page=1',
     		type: 'GET'
-    	}).done(function(data) {		
+    	}).done(function(data) {
 	        data = JSON.parse(data);
 	        console.log(data);
     		makeQnAList(data);
