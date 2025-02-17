@@ -28,8 +28,14 @@ public class MemberController extends HttpServlet {
 			System.out.println(cmd);
 			if (cmd.equals("/member/addForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
-			} else if (cmd.equals("/printout.do")) {
-
+			} else if(cmd.equals("/member/idCheck.do")) {
+				String id = request.getParameter("id");
+				boolean result = dao.idVali(id);
+				if (result == true) {
+					response.getWriter().append("exist");
+				}
+			} else if (cmd.equals("/member/mypage.do")) {
+				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 			} else if (cmd.equals("/update.do")) {
 
 			} else if (cmd.equals("/delete.do")) {
