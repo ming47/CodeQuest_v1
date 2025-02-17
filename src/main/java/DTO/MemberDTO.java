@@ -3,100 +3,147 @@ package DTO;
 import java.sql.Timestamp;
 
 public class MemberDTO {
-	private int member_id;
+	private int memberId;
 	private String id;
 	private String pw;
 	private String name;
 	private String ssn;
 	private String email;
-	private String zip_code;
+	private String phone;
+	private int zipCode;
 	private String address;
-	private String detail_address;
+	private String detailAddress;
 	private String role;
-	private Timestamp reg_date;
-	public int getMember_id() {
-		return member_id;
+	private Timestamp regDate;
+		
+	public MemberDTO(String id, String pw, String name, String ssn, String email, String phone, int zipCode,
+			String address, String detailAddress, String role) { //회원 가입
+		super();
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.ssn = ssn;
+		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address = address;
+		this.detailAddress = detailAddress;
+		this.role = role;
 	}
-	public void setMember_id(int member_id) {
-		this.member_id = member_id;
+		
+	public MemberDTO(String id, String name, String ssn, String email, String phone, int zipCode,
+			String address, String detailAddress, String role, Timestamp regDate ) { //로그인
+		super();
+		this.id = id;
+		this.name = name;
+		this.ssn = ssn;
+		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address = address;
+		this.detailAddress = detailAddress;
+		this.role = role;
+		this.regDate = regDate;
 	}
+
+	public MemberDTO() {
+		super();
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getPw() {
 		return pw;
 	}
+
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getSsn() {
 		return ssn;
 	}
+
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getZip_code() {
-		return zip_code;
+	
+	public String getPhone() {
+		return phone;
 	}
-	public void setZip_code(String zip_code) {
-		this.zip_code = zip_code;
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
+
+	public int getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(int zipCode) {
+		this.zipCode = zipCode;
+	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getDetail_address() {
-		return detail_address;
+
+	public String getDetailAddress() {
+		return detailAddress;
 	}
-	public void setDetail_address(String detail_address) {
-		this.detail_address = detail_address;
+
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
 	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public Timestamp getReg_date() {
-		return reg_date;
+
+	public Timestamp getRegDate() {
+		return regDate;
 	}
-	public void setReg_date(Timestamp reg_date) {
-		this.reg_date = reg_date;
-	}
-	public MemberDTO(int member_id, String id, String pw, String name, String ssn, String email, String zip_code,
-			String address, String detail_address, String role, Timestamp reg_date) {
-		super();
-		this.member_id = member_id;
-		this.id = id;
-		this.pw = pw;
-		this.name = name;
-		this.ssn = ssn;
-		this.email = email;
-		this.zip_code = zip_code;
-		this.address = address;
-		this.detail_address = detail_address;
-		this.role = role;
-		this.reg_date = reg_date;
-	}
-	public MemberDTO() {
-		super();
+
+	public void setRegDate(Timestamp regDate) {
+		this.regDate = regDate;
 	}
 	
 	
