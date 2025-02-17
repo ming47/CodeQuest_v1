@@ -279,19 +279,36 @@ background : #919190
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>
 
-	<script>
-		$(document).ready(function() {
-			$("#loginBtn").click(function() {
-				let userId = $("#userId").val();
-				let userPw = $("#userPw").val();
-				if (userId && userPw) {
-					$(".logbox").fadeIn().find("#username").text(userId);
-					$(".loginbox").fadeOut();
-				} else {
-					alert("아이디와 비밀번호를 입력하세요!");
-				}
-			});
-		});
-	</script>
+    <script>
+        $(document).ready(function () {
+            $("#loginBtn").click(function () {
+                let userId = $("#userId").val().trim();
+                let userPw = $("#userPw").val().trim();
+
+                if (userId === "" || userPw === "") {
+                    alert("아이디와 비밀번호를 입력하세요!");
+                    return false;
+                }
+
+                $.ajax({
+                    url: "/member/login.do",
+                    method: "POST", 
+                    data: { id: userId, pw: userPw },
+                    dataType: "text"
+                })
+                .done(function(resp) {
+                    if (resp.trim() === "success") {
+                        $(".logbox").fadeIn().find("#username").text(userId);
+                        $(".loginbox").fadeOut();
+                    } else {
+                        $("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");
+                    }
+                })
+                .fail(function(xhr, status, error) {
+                    console.log("로그인 AJAX 실패:", error);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

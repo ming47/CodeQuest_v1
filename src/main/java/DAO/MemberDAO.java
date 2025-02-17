@@ -9,6 +9,7 @@ public interface MemberDAO {
 	List<MemberDTO> selectAll() throws Exception;
 	MemberDTO selectById(int id) throws Exception;
 	int insert(MemberDTO dto) throws Exception;
+	MemberDTO login(String id, String pw) throws Exception;
 	int update(MemberDTO dto) throws Exception;
 	int deleteById(int id) throws Exception;
 	

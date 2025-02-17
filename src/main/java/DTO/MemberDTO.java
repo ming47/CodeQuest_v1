@@ -9,21 +9,36 @@ public class MemberDTO {
 	private String name;
 	private String ssn;
 	private String email;
-	private String zipCode;
+	private String phone;
+	private int zipCode;
 	private String address;
 	private String detailAddress;
 	private String role;
 	private Timestamp regDate;
-	
-	public MemberDTO(int memberId, String id, String pw, String name, String ssn, String email, String zipCode,
-			String address, String detailAddress, String role, Timestamp regDate) {
+		
+	public MemberDTO(String id, String pw, String name, String ssn, String email, String phone, int zipCode,
+			String address, String detailAddress, String role) { //회원 가입
 		super();
-		this.memberId = memberId;
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
 		this.ssn = ssn;
 		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address = address;
+		this.detailAddress = detailAddress;
+		this.role = role;
+	}
+		
+	public MemberDTO(String id, String name, String ssn, String email, String phone, int zipCode,
+			String address, String detailAddress, String role, Timestamp regDate ) { //로그인
+		super();
+		this.id = id;
+		this.name = name;
+		this.ssn = ssn;
+		this.email = email;
+		this.phone = phone;
 		this.zipCode = zipCode;
 		this.address = address;
 		this.detailAddress = detailAddress;
@@ -82,12 +97,20 @@ public class MemberDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getPhone() {
+		return phone;
+	}
 
-	public String getZipCode() {
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public int getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(String zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 
