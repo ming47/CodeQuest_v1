@@ -16,11 +16,9 @@
 	rel="stylesheet ">
 <title>Responsive Game Portal</title>
 <style>
-<<<<<<< HEAD
+
 	*{
-=======
-* {
->>>>>>> 71764b5 (logbox confimed)
+
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -263,20 +261,13 @@ body {
 
 			<div class="loginbox">
 				<h2>로그인</h2>
-<<<<<<< HEAD
+				
 				<input type="text" id="userId" placeholder="아이디"> 
 				<input type="password" id="userPw" placeholder="비밀번호">
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
 				<div class="login-links">
 					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
-=======
-				<input type="text" id="userId" placeholder="아이디"> <input
-					type="password" id="userPw" placeholder="비밀번호">
-				<button id="loginBtn" style="background: #5e5d5a">로그인</button>
-				<div class="login-links">
-					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW
-						찾기</a>
->>>>>>> 71764b5 (logbox confimed)
+					
 				</div>
 				<div class="social-login">
 					<button class="kakao">🟡 Kakao 로그인</button>
