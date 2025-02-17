@@ -1,5 +1,7 @@
 package DTO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class QnADTO {
@@ -8,14 +10,16 @@ public class QnADTO {
 	private String contents;
 	private Timestamp regDate;
 	private String responseYn;
+	private String writer;
 	
-	public QnADTO(int qnaId, int memberId, String contents, Timestamp regDate, String responseYn) {
+	public QnADTO(int qnaId, int memberId, String contents, Timestamp regDate, String responseYn, String writer) {
 		super();
 		this.qnaId = qnaId;
 		this.memberId = memberId;
 		this.contents = contents;
 		this.regDate = regDate;
 		this.responseYn = responseYn;
+		this.writer = writer;
 	}
 
 	public QnADTO() {
@@ -61,6 +65,19 @@ public class QnADTO {
 	public void setResponseYn(String responseYn) {
 		this.responseYn = responseYn;
 	}
-
+	
+	public String getWriter() {
+		return writer;
+	}
+	
+	public static QnADTO of(ResultSet rs) throws SQLException {
+		return new QnADTO(
+				rs.getInt("QNA_ID"), 
+				rs.getInt("MEMBER_ID"), 
+				rs.getString("CONTENT"), 
+				rs.getTimestamp("REG_DATE"), 
+				rs.getString("RESPONSE_YN"), 
+				rs.getString("NAME"));
+	}
 	
 }

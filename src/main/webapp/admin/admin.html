@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        div {
+            border: 1px solid black;
+        }
+
+        .inner {
+            height: 95%;
+            width: 95%;
+        }
+
+        .inner-fat {
+            height: 95%;
+            width: 98%;
+        }
+
+        .container {
+            width: 100vw;
+            height: 300vh;
+            position: relative;
+        }
+
+        .container>div {
+            float: left;
+            height: 100%;
+        }
+
+        .navi {
+            width: 20%;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+        }
+
+        .navi-selector {
+            width: 100%;
+            position: relative;
+        }
+
+        ul {
+            height: fit-content;
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+            width: 100%;
+            position: absolute;
+            top: 500px;
+        }
+
+        li {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        li:hover {
+            cursor: pointer;
+        }
+
+        .contents {
+            width: 80%;
+            position: absolute;
+            right: 0px;
+        }
+
+        .contents>div {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contents>div>div {
+            height: 95%;
+            width: 95%;
+        }
+
+        .center-align {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            height: 10%;
+            font-size: 50px;
+            font-weight: bolder;
+            display: flex;
+            align-items: center;
+            padding-left: 50px;
+        }
+
+        .contents-inner {
+            height: 90%;
+        }
+
+        .contents-inner>div {
+            height: 100%;
+            float: left;
+        }
+
+        .game-dashboard-inner>div {
+            float: left;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-selector {
+            width: 20%;
+        }
+
+        .detail-dashboard {
+            width: 80%;
+        }
+
+        .detail-dashboard-inner {
+            width: 95%;
+            height: 95%;
+        }
+
+        .mau-display {
+            height: 30%;
+        }
+
+        .mau-diplay-inner {
+            height: 95%;
+            width: 100%;
+        }
+
+        .mau-title {
+            height: 20%;
+            font-size: 35px;
+            font-weight: bolder;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+        }
+
+        .mau {
+            height: 80%;
+        }
+
+        .detail-dashborad-bottom {
+            height: 70%;
+        }
+
+        .detail-dashborad-bottom>div {
+            height: 100%;
+            float: left;
+        }
+
+        .playtime-display {
+            width: 30%;
+            position: relative;
+        }
+
+        .playtime-inner {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            width: 95%;
+            height: 98%;
+        }
+
+        .playtime-title {
+            height: 15%;
+            font-size: 35px;
+            font-weight: bolder;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+        }
+
+        .playtime-button-form {
+            height: 5%;
+        }
+
+        .playtime {
+            height: 80%;
+        }
+
+        .detail-dashboard-bottom-right {
+            width: 70%;
+        }
+
+        .board-management-inner>div {
+            float: left;
+            height: 100%;
+            width: 50%;
+        }
+
+        .user-info {
+            height: 20%;
+        }
+
+        .user-info-title {
+            height: 50%;
+        }
+
+        .resent-board {
+            height: 30%;
+        }
+
+        .ban-list {
+            height: 30%;
+        }
+
+        .ban-controller {
+            height: 20%;
+        }
+
+        .ban-controller>div>div {
+            float: left;
+            height: 100%;
+        }
+
+        .resent-title {
+            height: 20%;
+        }
+
+        .ban-list-title {
+            height: 20%;
+        }
+
+        .ban-detail-setting {
+            width: 70%;
+        }
+
+        .ban-button {
+            width: 30%;
+        }
+
+        .ban-detail-setting>div {
+            height: 50%;
+        }
+
+        .qna-inner>div {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qna-list-contents {
+            height: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .qna-list-contents-inner {
+            height: 98%;
+            width: 98%;
+        }
+
+        .qna-list-controller {
+            height: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-navi-form {
+            height: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-navi-inner {
+            height: 90%;
+            width: 98%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qna-title-inner {
+            height: 70%;
+            width: 98%;
+        }
+
+        .qna-title {
+            height: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qna-contents {
+            height: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qna-contents-inner {
+            width: 98%;
+            height: 95%;
+        }
+
+        #qna-contents-contents {
+            height: 100%;
+            width: 100%;
+        }
+
+        .qna-contents-button {
+            height: 5%;
+            position: relative;
+        }
+
+        #qna-delete {
+            right: 30px;
+            position: absolute;
+        }
+
+        .qna-reply {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 30%;
+        }
+
+        .qna-reply-inner {
+            width: 98%;
+            height: 95%;
+        }
+
+        .qna-reply-contents {
+            height: 90%;
+        }
+
+        #qna-contents-contents {
+            overflow-y: auto;
+        }
+
+        .qna-reply-controller {
+            height: 10%;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navi">
+            <div class="navi-selector">
+                <ul>
+                    <li class="selector" value="game-dashboard">게임 대시 보드</li>
+                    <li class="selector" value="board-management">게시판 관리</li>
+                    <li class="selector" value="qna">질문글</li>
+                </ul>
+            </div>
+        </div>
+        <div class="contents">
+            <div class="game-dashboard">
+                <div class="contents-form">
+                    <div class="title">게임 대시보드</div>
+                    <div class="contents-inner game-dashboard-inner">
+                        <div class="game-selector">
+                            <div class="game-selector-inner inner"></div>
+                        </div>
+                        <div class="detail-dashboard">
+                            <div class="detail-dashboard-inner">
+                                <div class="mau-display">
+                                    <div class="mau-diplay-inner">
+                                        <div class="mau-title">전체 mau</div>
+                                        <div class="mau"></div>
+                                    </div>
+                                </div>
+                                <div class="detail-dashborad-bottom">
+                                    <div class="playtime-display">
+                                        <div class="playtime-inner">
+                                            <div class="playtime-title">게임 이용 시간</div>
+                                            <div class="playtime-button-form">
+                                                <button class="playtime-button" id="whole">전체</button>
+                                                <button class="playtime-button" id="group-game">게임별</button>
+                                                <button class="playtime-button" id="group-gender">성별별</button>
+                                                <button class="playtime-button" id="group-age">나이별</button>
+                                            </div>
+                                            <div class="playtime"></div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-dashboard-bottom-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="board-management">
+                <div class="contents-form">
+                    <div class="title">게시판 관리</div>
+                    <div class="contents-inner board-management-inner">
+                        <div class="ban-list center-align">
+                            <div class="inner">
+                                <div class="qna-list-contents">
+                                    <div class="qna-list-contents-inner">
+                                        <table border="1" id="member-table">
+                                            <tr>
+                                                <th width="10%" height="50px">번호</th>
+                                                <th width="30%">이름</th>
+                                                <th width="30%">ID</th>
+                                                <th width="20%">가입 날짜</th>
+                                                <th width="10%">차단 여부</th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5" height="95%"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="page-navi-form">
+                                    <div class="page-navi-inner"></div>
+                                </div>
+                                <div class="qna-list-controller">
+                                    <div class="inner">
+                                        <div>
+                                            <button class="check-response-yn" value="y">Y</button>
+                                            <button class="check-response-yn" value="n">N</button>
+                                            <button class="check-response-yn" value="whole">전체</button>
+                                        </div>
+                                        <div>
+                                            <select id="user-search-conditions-select">
+                                                <option value="whole">전체</option>
+                                                <option value="writer">작성자</option>
+                                                <option value="title">제목</option>
+                                            </select>
+                                            <input type="text" placeholder="검색할 내용을 입력하세요" id="user-search-key">
+                                            <button id="search">검색</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="management-contoroller center-align">
+                            <div class="inner">
+                                <div class="user-info center-align">
+                                    <div class="inner-fat">
+                                        <div class="user-info-title title">123</div>
+                                        <table border="1" id="user-info-table">
+                                            <tr>
+                                                <th width="10%" height="50%">ID</th>
+                                                <td width="25%" id="user-id"></td>
+                                                <th width="10%">이메일</th>
+                                                <td width="55%" id="user-email"></td>
+                                            </tr>
+                                            <tr>
+                                                <th width="15%">가입 일자</td>
+                                                <td width="20%"></td>
+                                                <th width="15%">차단 횟수</th>
+                                                <td width="10%" id="user-ban-count"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="resent-board center-align">
+                                    <div class="inner-fat">
+                                        <div class="resent-title">최근 게시글</div>
+                                        <table border="1" id="resent-board-table"></table>
+                                        <div class="page-navi-form">
+                                            <div class="page-navi-inner"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ban-list center-align">
+                                    <div class="inner-fat">
+                                        <div class="ban-list-title">차단 목록</div>
+                                        <table border="1" id="ban-list-table" height="75%"></table>
+                                        <div class="page-navi-form">
+                                            <div class="page-navi-inner"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ban-controller center-align">
+                                    <div class="inner-fat">
+                                        <div class="ban-detail-setting">
+                                            <div class="ban-reason-controller">
+                                                <select class="ban-select" id="reason-select"></select>
+                                                <input type="text" placeholder="차단 사유" disabled>
+                                            </div>
+                                            <div class="ban-end-date-controller">
+                                                <select class="ban-select" id="end-date-select"></select>
+                                                <input type="text" placeholder="차단 기간을 설정하십시오" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="ban-button"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="qna">
+                <div class="contents-form">
+                    <div class="title">질문글</div>
+                    <div class="contents-inner qna-inner">
+                        <div class="qna-list">
+                            <div class="inner">
+                                <div class="qna-list-contents">
+                                    <div class="qna-list-contents-inner">
+                                        <table border="1" id="qna-table">
+                                            <tr>
+                                                <th width="10%" height="5%">번호</th>
+                                                <th width="50%">내용</th>
+                                                <th width="20%">작성자</th>
+                                                <th width="20%">작성 시간</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="page-navi-form">
+                                    <div class="page-navi-inner" id="qna-list-page-navi"></div>
+                                </div>
+                                <div class="qna-list-controller">
+                                    <div class="inner">
+                                        <div>
+                                            <button class="check-response-yn" value="y">Y</button>
+                                            <button class="check-response-yn" value="n">N</button>
+                                            <button class="check-response-yn" value="whole">전체</button>
+                                        </div>
+                                        <div>
+                                            <select id="qna-search-conditions-select">
+                                                <option value="whole">전체</option>
+                                                <option value="writer">작성자</option>
+                                                <option value="contents">내용</option>
+                                            </select>
+                                            <input type="text" placeholder="검색할 내용을 입력하세요" id="qna-search-key">
+                                            <button id="qna-search">검색</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qna-respone">
+                            <div class="inner">
+                                <div class="qna-title">
+                                    <div class="qna-title-inner" id="qna-contents-responseYN"></div>
+                                </div>
+                                <div class="qna-contents">
+                                    <div class="qna-contents-inner">
+                                        <table border="1" style="height: 95%;">
+                                            <tr>
+                                                <th width="10%" height="8%">번호</th>
+                                                <td width="10%" id="qna-contents-id"></td>
+                                                <th width="10%">작성자</th>
+                                                <td width="15%" id="qna-contents-writer"></td>
+                                                <th width="15%">등록 날짜</th>
+                                                <td width="20%" id="qna-contents-reg-date"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <div id="qna-contents-contents"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="qna-contents-button">
+                                            <button id="qna-delete" disabled>삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="qna-reply">
+                                    <div class="qna-reply-inner">
+                                        <div class="qna-reply-contents">
+                                            <input type="text" id="context">
+                                        </div>
+                                        <div class="qna-reply-controller"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script tag="common">
+    $('.selector').on('click', function () {
+        const select = $(this).attr('value');
+        const offset = $('.' + select).offset();
+
+        console.log(select, offset);
+
+        $('html, body').animate({ scrollTop: offset.top }, 500);
+    });
+
+    function makePageNavi(dto, className) {
+    	$('.pageNavi').remove();
+    	
+        const pageNavi = $('<div>').addClass('pageNavi');
+        pageNavi.css({
+            'width': 'fit-content',
+            'height': 'fit-content'
+        });
+
+        function makeSpan(content, index) {
+            const span = $('<span>').html(content).addClass('page');
+            span.attr('value', index);
+            return span;
+        }
+
+        if (!dto.isFirst) {
+            pageNavi.append(makeSpan('이전', dto.startNavi - 1).addClass(className));
+        }
+
+        for (let i = dto.startNavi; i <= dto.endNavi; i++) {
+            pageNavi.append(makeSpan(i, i).addClass(className));
+        }
+
+        if (!dto.isEnd) {
+            pageNavi.append(makeSpan('다음', dto.endNavi + 1).addClass(className));
+        }
+
+        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
+        const hover = '.page:hover { cursor: pointer; }'
+
+        $('style').append(hover).append(indexCss);
+
+        return pageNavi;
+    }
+
+    window.onload = function () {
+        $.ajax({
+            url: '/qna/list.do?page=1',
+            type: 'GET'
+        }).done(function (data) {
+            data = JSON.parse(data);
+            console.log(data);
+
+            makeQnAList(data.qnaList);
+            $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
+
+            $('.qna-list-page').on('click', function () {         	
+                $.ajax({
+                    url: '/qna/list.do?page=' + $(this).attr('value'),
+                    type: 'GET'
+                }).done(function (data) {
+                    data = JSON.parse(data);
+                    makeQnAList(data.qnaList);
+                })
+            });
+        });
+    }
+</script>
+<script tag="game">
+    $('.playtime-button').on('click', function () {
+        let url = '/playtime/sum/';
+        const id = $(this).attr('id');
+
+        if (id == 'whole') {
+            url += 'whole.do';
+        } else if (id == 'group-game') {
+            url += 'group-game.do';
+        } else if (id == 'group-gender') {
+            url += 'group-gender.do';
+        } else if (id == 'group-age') {
+            url += 'group-age.do';
+        }
+
+        console.log(url);
+    });
+</script>
+<script tage="user">
+
+</script>
+<script tag="qna">
+    $('.check-response-yn').on('click', function () {
+        const url = ($(this).val() == 'whole') ? "/qna/list.do?page=1" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=1";
+
+        console.log(url);
+        $.ajax({
+            url: url,
+            type: 'GET'
+        }).done(function (data) {
+            data = JSON.parse(data);
+            makeQnAList(data);
+        })
+    });
+
+    $('#qna-search').on('click', function () {
+        const searchKey = $('#qna-search-key').val();
+        const select = $('#qna-search-conditions-select :selected').val();
+        const url = '/qna/list/search.do?conditions=' + select + '&search-key=' + searchKey + "&page=1";
+
+        console.log(url);
+        $.ajax({
+            url: url,
+            type: 'GET'
+        }).done(function (data) {
+            data = JSON.parse(data);
+            makeQnAList(data);
+        });
+    });
+
+    $('#qna-delete').on('click', function () {
+        const url = '/qna/delete.do?id=' + $('#qna-contents-id').html();
+
+        if (confirm("해당 질문글을 삭제하시겠습니까?")) {
+            $.ajax({
+                url: url,
+                type: 'GET'
+            }).done(function () {
+                alert('삭제했습니다.');
+                initQnAContents();
+
+                $.ajax({
+                    url: '/qna/list.do?page=1',
+                    type: 'GET'
+                }).done(function (data) {
+                    data = JSON.parse(data);
+                    makeQnAList(data);
+                });
+            });
+        }
+    });
+
+    function makeQnAList(dto) {
+        $('.qna-item').remove();
+
+        if (dto.length == 0) {
+            $('#qna-table>tbody').append(
+                $('<tr height="95%">').addClass('qna-item').append($('<td colspan="4">').html('질문 글이 없습니다.')));
+        }
+
+        for (let i = 0; i < dto.length; i++) {
+            const tr = $('<tr>').addClass('qna-item');
+            const currentDTO = dto[i];
+
+            let responseState, backgroundColor;
+            if (currentDTO.responseYn == 'N') {
+                responseState = "미응답";
+                backgroundColor = "white";
+            } else {
+                responseState = "응답완료";
+                backgroundColor = "green";
+            }
+
+            let contentsHTML = (currentDTO.contents.length > 15) ? currentDTO.contents.substr(0, 15 - 2) + "..." : currentDTO.contents;
+
+            const contents = $('<td>').html(responseState + " " + contentsHTML).attr('value', currentDTO.qnaId);
+
+            tr.append($('<td>').html(currentDTO.qnaId).attr('height', '9.5%'));
+            tr.append(contents);
+            tr.append($('<td>').html(currentDTO.writer));
+            tr.append($('<td>').html(currentDTO.regDate));
+
+            tr.css('background-color', backgroundColor);
+            $('#qna-table>tbody').append(tr);
+
+            contents.on('click', function () {
+                let url = '/qna/board?id=' + contents.attr('value');
+                console.log(url);
+
+                setQnAContents(currentDTO);
+            });
+        }
+
+        $('style').append('.qna-item:hover {cursor:pointer;}')
+    }
+
+    function setQnAContents(item) {
+        $('#qna-contents-title').html(item.responseYN);
+        $('#qna-contents-id').html(item.qnaId);
+        $('#qna-contents-writer').html(item.writer);
+        $('#qna-contents-reg-date').html(item.regDate);
+        $('#qna-contents-contents').html(item.contents);
+
+        $('#qna-delete').attr('disabled', false);
+
+        setButton(item.responseYN);
+    }
+
+    function initQnAContents() {
+        $('#qna-contents-title').html('');
+        $('#qna-contents-id').html('');
+        $('#qna-contents-writer').html('');
+        $('#qna-contents-reg-date').html('');
+        $('#qna-contents-contents').html('');
+
+        $('#qna-delete').attr('disabled', true);
+        $('.qna-reply-controller').html('');
+    }
+
+    function setButton(responseYN) {
+        let buttonHTML, url;
+
+        $('.qna-reply-controller').html('');
+
+        const data = {};
+        if (responseYN == 'Y') {
+            buttonHTML = '답글 수정하기';
+            url = '/qna_reply/update';
+        } else {
+            $('.qna-reply-contents').attr('contenteditable', true);
+
+            buttonHTML = '답글 등록하기';
+            url = '/qna_reply/insert';
+        }
+        data.qnaId = $('#qna-contents-id').html();
+        data.contents = $('.qna-reply-contents').html();
+
+        const button = $('<button>');
+
+        $('.qna-reply-controller').append(
+            button.html(buttonHTML)
+        );
+
+        button.on('click', function () {
+            console.log(url, data);
+        });
+    }
+</script>
