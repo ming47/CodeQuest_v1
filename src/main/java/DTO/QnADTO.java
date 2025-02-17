@@ -1,28 +1,45 @@
 package DTO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class QnADTO {
-	private int qna_id;
-	private int member_id;
+	private int qnaId;
+	private int memberId;
 	private String contents;
-	private Timestamp reg_date;
-	private String response_yn;
+	private Timestamp regDate;
+	private String responseYn;
+	private String writer;
 	
-	public int getQna_id() {
-		return qna_id;
+	public QnADTO(int qnaId, int memberId, String contents, Timestamp regDate, String responseYn, String writer) {
+		super();
+		this.qnaId = qnaId;
+		this.memberId = memberId;
+		this.contents = contents;
+		this.regDate = regDate;
+		this.responseYn = responseYn;
+		this.writer = writer;
 	}
 
-	public void setQna_id(int qna_id) {
-		this.qna_id = qna_id;
+	public QnADTO() {
+		super();
 	}
 
-	public int getMember_id() {
-		return member_id;
+	public int getQnaId() {
+		return qnaId;
 	}
 
-	public void setMember_id(int member_id) {
-		this.member_id = member_id;
+	public void setQnaId(int qnaId) {
+		this.qnaId = qnaId;
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getContents() {
@@ -33,33 +50,34 @@ public class QnADTO {
 		this.contents = contents;
 	}
 
-	public Timestamp getReg_date() {
-		return reg_date;
+	public Timestamp getRegDate() {
+		return regDate;
 	}
 
-	public void setReg_date(Timestamp reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(Timestamp regDate) {
+		this.regDate = regDate;
 	}
 
-	public String getResponse_yn() {
-		return response_yn;
+	public String getResponseYn() {
+		return responseYn;
 	}
 
-	public void setResponse_yn(String response_yn) {
-		this.response_yn = response_yn;
+	public void setResponseYn(String responseYn) {
+		this.responseYn = responseYn;
 	}
-
-	public QnADTO() {
-		super();
+	
+	public String getWriter() {
+		return writer;
 	}
-
-	public QnADTO(int qna_id, int member_id, String contents, Timestamp reg_date, String response_yn) {
-		super();
-		this.qna_id = qna_id;
-		this.member_id = member_id;
-		this.contents = contents;
-		this.reg_date = reg_date;
-		this.response_yn = response_yn;
+	
+	public static QnADTO of(ResultSet rs) throws SQLException {
+		return new QnADTO(
+				rs.getInt("QNA_ID"), 
+				rs.getInt("MEMBER_ID"), 
+				rs.getString("CONTENT"), 
+				rs.getTimestamp("REG_DATE"), 
+				rs.getString("RESPONSE_YN"), 
+				rs.getString("NAME"));
 	}
-
+	
 }

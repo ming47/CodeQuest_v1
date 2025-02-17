@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import Common.ConvertURL;
 
 @WebServlet("/board/*")
+
 public class BoardController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
 		try {			
-			String cmd = ConvertURL.convert(request);
+			String cmd = ConvertURL.of(request);
 
 			if(cmd.equals("/board/add.do")) {//게시글 추가
 
@@ -31,6 +31,7 @@ public class BoardController extends HttpServlet {
 
 			}else if(cmd.equals("/board/mypage.do")) {//
 
+
 			}
 		}catch (Exception e) {
 
@@ -40,22 +41,24 @@ public class BoardController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String cmd = request.getRequestURI();
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-
-		if(cmd.equals("/add.board")) {
-
-		}else if(cmd.equals("/printout.board")) {
-
-		}else if(cmd.equals("/update.board")) {
-
-		}else if(cmd.equals("/delete.board")) {
-
-		}else if(cmd.equals("/mypage.board")) {
-
+		
+		try {		
+			String cmd = ConvertURL.of(request);
+			if(cmd.equals("/add.board")) {
+			
+			}else if(cmd.equals("/printout.board")) {
+			
+			}else if(cmd.equals("/update.board")) {
+			
+			}else if(cmd.equals("/delete.board")) {
+			
+			}else if(cmd.equals("/mypage.board")) {
+			
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-
 }
