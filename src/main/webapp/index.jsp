@@ -8,13 +8,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<link rel ="preconnect " href ="https: //fonts.googleapis.com "> <link rel
-	="preconnect " href ="https: //fonts.gstatic.com " crossorigin> <link href
-	="https: //fonts.googleapis.com /css2 ?family =Jua &family =Press+Start+2P
-	&display =swap " rel ="stylesheet ">
+<link rel="preconnect " href="https: //fonts.googleapis.com ">
+<link rel="preconnect " href="https: //fonts.gstatic.com " crossorigin>
+<link
+	href="https: //fonts.googleapis.com /css2 ?family =Jua &family =Press+Start+2P
+   &display =swap "
+	rel="stylesheet ">
 <title>Responsive Game Portal</title>
 <style>
+<<<<<<< HEAD
 	*{
+=======
+* {
+>>>>>>> 71764b5 (logbox confimed)
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -180,8 +186,8 @@ body {
 	min-height: 320px;
 }
 
-.loginbtn:hover{
-background : #919190
+.loginbtn:hover {
+	background: #919190
 }
 
 /* 게시판 */
@@ -209,7 +215,9 @@ background : #919190
 					<li>Service</li>
 				</ul>
 			</div>
-			<%@ include file="logbox.jsp"%>
+			<div class="logbox-container">
+				<%@ include file="logbox.jsp"%>
+			</div>
 		</div>
 
 		<!-- 본문 -->
@@ -255,11 +263,20 @@ background : #919190
 
 			<div class="loginbox">
 				<h2>로그인</h2>
+<<<<<<< HEAD
 				<input type="text" id="userId" placeholder="아이디"> 
 				<input type="password" id="userPw" placeholder="비밀번호">
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
 				<div class="login-links">
 					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
+=======
+				<input type="text" id="userId" placeholder="아이디"> <input
+					type="password" id="userPw" placeholder="비밀번호">
+				<button id="loginBtn" style="background: #5e5d5a">로그인</button>
+				<div class="login-links">
+					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW
+						찾기</a>
+>>>>>>> 71764b5 (logbox confimed)
 				</div>
 				<div class="social-login">
 					<button class="kakao">🟡 Kakao 로그인</button>
@@ -280,35 +297,42 @@ background : #919190
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>
 
-    <script>
-        $(document).ready(function () {
-            $("#loginBtn").click(function () {
-                let userId = $("#userId").val().trim();
-                let userPw = $("#userPw").val().trim();
+	<script>
+		$(document).ready(function() {
+			let now;
+			$("#loginBtn").click(function() {
+				let userId = $("#userId").val().trim();
+				let userPw = $("#userPw").val().trim();
 
-                if (userId === "" || userPw === "") {
-                    alert("아이디와 비밀번호를 입력하세요!");
-                    return false;
-                }
+				if (userId === "" || userPw === "") {
+					alert("아이디와 비밀번호를 입력하세요!");
+					return false;
+				}
 
-                $.ajax({
-                    url: "/member/login.do",
-                    method: "POST", 
-                    data: { id: userId, pw: userPw },
-                    dataType: "text"
-                })
-                .done(function(resp) {
-                    if (resp.trim() === "success") {
-                        $(".loginbox").fadeOut();
-                    } else {
-                        $("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");
-                    }
-                })
-                .fail(function(xhr, status, error) {
-                    console.log("로그인 AJAX 실패:", error);
-                });
-            });
-        });
-    </script>
+				$.ajax({
+					url : "/member/login.do",
+					method : "POST",
+					data : {
+						id : userId,
+						pw : userPw
+					},
+					dataType : "text"
+				}).done(function(resp) {
+					if (resp.trim() === "success") {
+						$(".loginbox").fadeOut();
+
+						// logbox.jsp를 다시 불러와 업데이트
+						$(".logbox-container").load("logbox.jsp", function() {
+							$(".logbox").fadeIn();
+						});
+					} else {
+						$("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");
+					}
+				}).fail(function(xhr, status, error) {
+					console.log("로그인 AJAX 실패:", error);
+				});
+			});
+		});
+	</script>
 </body>
 </html>
