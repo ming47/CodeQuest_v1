@@ -10,4 +10,6 @@ public interface QnAReplyDAO {
 	int insert(QnAReplyDTO dto) throws Exception;
 	int update(QnAReplyDTO dto) throws Exception;
 	int deleteById(int id) throws Exception;
+	
+	QnAReplyDTO selectByQnAId(int qnaId) throws Exception;
 }

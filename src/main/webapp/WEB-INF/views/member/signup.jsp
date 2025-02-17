@@ -216,39 +216,38 @@ input[disabled] {
 		<div class="headline">
 			<h2>회원가입</h2>
 		</div>
-		<form action="" id="signupForm" method="post">
+		<form action="/member/add.do" id="signupForm" method="post">
 			<fieldset>
 				<legend>아이디 / 패스워드</legend>
 				<div class="input-group">
-					<input type="text" name="id" id="idi" placeholder="아이디를 입력하세요">
-					<button type="button" class="id-check-btn" id="idchecker">ID
-						중복 체크</button>
-					<span id="idfinder"></span>
+					<input type="text" name="id" id="id" placeholder="아이디를 입력하세요">
+					<button type="button" class="id-check-btn" id="idchecker">ID 중복 체크</button>
 				</div>
-				<input type="password" name="pw" id="pwi" placeholder="패스워드를 입력하세요">
-				<input type="password" name="pwr" id="pwr"
-					placeholder="패스워드를 다시 입력하세요">
+				<span id="idfinder"></span>
+				<input type="password" name="pw" id="pw" placeholder="패스워드를 입력하세요">
+				<input type="password" name="pwr" id="pwr" placeholder="패스워드를 다시 입력하세요">
 			</fieldset>
 
 			<fieldset>
 				<legend>이름 / 전화번호 / 이메일</legend>
-				<input type="text" name="name" id="namei" placeholder="이름을 입력하세요">
-				<input type="text" name="phone" id="phonei"
-					placeholder="전화번호를 입력하세요"> <input type="text" name="email"
-					id="emaili" placeholder="이메일을 입력하세요">
+				<input type="text" name="name" id="name" placeholder="이름을 입력하세요">
+				<div class="input-group">
+				    <input type="text" name="ssnFront" id="ssnFront" placeholder="주민등록번호 앞자리" maxlength="6">
+				    <span>-</span>
+				    <input type="text" name="ssnBack" id="ssnBack" placeholder="주민등록번호 뒷자리" maxlength="1">
+				</div>
+				<input type="text" name="phone" id="phone" placeholder="전화번호를 입력하세요"> 
+				<input type="text" name="email" id="email" placeholder="이메일을 입력하세요">
 			</fieldset>
 
 			<fieldset>
 				<legend>주소</legend>
 				<div class="input-group">
-					<input type="text" name="postcode" id="postci" placeholder="우편번호"
-						readonly>
-					<button type="button" class="postcode-btn" id="searchbnt">우편번호
-						검색</button>
+					<input type="text" name="postcode" id="postcode" placeholder="우편번호" readonly>
+					<button type="button" class="postcode-btn" id="searchbnt">우편번호 검색</button>
 				</div>
-				<input type="text" name="address1" id="addr1i"
-					placeholder="주소를 입력하세요" readonly> <input type="text"
-					name="address2" id="addr2i" placeholder="상세주소를 입력하세요">
+				<input type="text" name="address1" id="address1" placeholder="주소를 입력하세요" readonly> 
+				<input type="text" name="address2" id="address2" placeholder="상세주소를 입력하세요">
 			</fieldset>
 
 			<div class="buttons">
@@ -269,22 +268,21 @@ input[disabled] {
 
 		// ID 중복 체크 (AJAX 활용)
 		$(document).ready(function() {
+			
 			$("#idchecker").on("click", function() {
-				var userId = $("#idi").val().trim();
+				var userId = $("#id").val().trim();
 
 				if (userId === "") {
 					alert("아이디를 입력하세요!");
 					return;
 				}
 				$.ajax({
-				    url: "/idcheck.member",
-				    data: { id: $("#idi").val() },
+				    url: "/member/idCheck.do",
+				    data: { id: $("#id").val() },
 				    method:"GET",
 				    dataType:"text"
-
 				}).done(function(resp) {
-				    console.log("서버 응답:", resp); // 콘솔 확인
-
+				    console.log("서버 응답:", resp);
 				    if (resp.trim() === "exist") {
 				        $("#idfinder").html("이미 사용중인 ID입니다").css("color", "red");
 				    } else {
@@ -294,14 +292,23 @@ input[disabled] {
 				    console.error("AJAX 요청 실패:", error);
 				});
 			});
+		    $("#ssnFront").on("input", function() {
+		        let val = $(this).val().replace(/\D/g, "");
+		        $(this).val(val);
+		        if (val.length === 6) {
+		            $("#ssnBack").focus();
+		        }
+		    });
+			
+			
 		});
 		// 다음 주소 API
 		document.getElementById("searchbnt").onclick = function() {
 			new daum.Postcode({
 				oncomplete : function(data) {
-					document.getElementById("postci").value = data.zonecode;
-					document.getElementById("addr1i").value = data.roadAddress;
-					document.getElementById("addr2i").focus();
+					document.getElementById("postcode").value = data.zonecode;
+					document.getElementById("address1").value = data.roadAddress;
+					document.getElementById("address2").focus();
 				}
 			}).open();
 		};
