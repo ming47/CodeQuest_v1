@@ -90,10 +90,11 @@ public class MemberController extends HttpServlet {
 		        
 				String encryptPw = SecurityUtil.hashPassword(pw);
 				
-				MemberDTO user = dao.login(id, encryptPw);
+				MemberDTO member = dao.login(id, encryptPw);
 				
-				if(user != null) {
+				if(member != null) {
 					System.out.println("로그인성공!");
+					request.getSession().setAttribute("member", member);
 					response.getWriter().write("success");
 				} else {
 				response.getWriter().write("fail");

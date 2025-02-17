@@ -14,11 +14,12 @@
 	&display =swap " rel ="stylesheet ">
 <title>Responsive Game Portal</title>
 <style>
+	*{
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+	}
 
 body {
 	background-color: #2b2b27;
@@ -254,11 +255,11 @@ background : #919190
 
 			<div class="loginbox">
 				<h2>로그인</h2>
-				<input type="text" id="userId" placeholder="아이디"> <input
-					type="password" id="userPw" placeholder="비밀번호">
+				<input type="text" id="userId" placeholder="아이디"> 
+				<input type="password" id="userPw" placeholder="비밀번호">
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
 				<div class="login-links">
-					<a href="#">회원가입</a> <a href="#">ID/PW 찾기</a>
+					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
 				</div>
 				<div class="social-login">
 					<button class="kakao">🟡 Kakao 로그인</button>
@@ -298,7 +299,6 @@ background : #919190
                 })
                 .done(function(resp) {
                     if (resp.trim() === "success") {
-                        $(".logbox").fadeIn().find("#username").text(userId);
                         $(".loginbox").fadeOut();
                     } else {
                         $("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");

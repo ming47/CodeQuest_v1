@@ -78,8 +78,8 @@ public enum MemberDAOImpl implements MemberDAO {
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
 					
-					MemberDTO user = new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date);
-					return user;
+					MemberDTO member = new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date);
+					return member;
 				}
 			}
 		}
