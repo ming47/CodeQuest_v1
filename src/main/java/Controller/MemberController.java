@@ -28,8 +28,14 @@ public class MemberController extends HttpServlet {
 			System.out.println(cmd);
 			if (cmd.equals("/member/addForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
-			} else if (cmd.equals("/printout.do")) {
-
+			} else if(cmd.equals("/member/idCheck.do")) {
+				String id = request.getParameter("id");
+				boolean result = dao.idVali(id);
+				if (result == true) {
+					response.getWriter().append("exist");
+				}
+			} else if (cmd.equals("/member/mypage.do")) {
+				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 			} else if (cmd.equals("/update.do")) {
 
 			} else if (cmd.equals("/delete.do")) {
@@ -90,10 +96,11 @@ public class MemberController extends HttpServlet {
 		        
 				String encryptPw = SecurityUtil.hashPassword(pw);
 				
-				MemberDTO user = dao.login(id, encryptPw);
+				MemberDTO member = dao.login(id, encryptPw);
 				
-				if(user != null) {
+				if(member != null) {
 					System.out.println("로그인성공!");
+					request.getSession().setAttribute("member", member);
 					response.getWriter().write("success");
 				} else {
 				response.getWriter().write("fail");
