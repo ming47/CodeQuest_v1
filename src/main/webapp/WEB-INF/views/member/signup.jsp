@@ -268,7 +268,6 @@ input[disabled] {
 
 		// ID 중복 체크 (AJAX 활용)
 		$(document).ready(function() {
-			
 			$("#idchecker").on("click", function() {
 				var userId = $("#id").val().trim();
 
@@ -302,7 +301,6 @@ input[disabled] {
 			
 			
 		});
-		// 다음 주소 API
 		document.getElementById("searchbnt").onclick = function() {
 			new daum.Postcode({
 				oncomplete : function(data) {

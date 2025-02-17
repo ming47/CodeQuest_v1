@@ -27,8 +27,8 @@ public class QnAReplyController extends HttpServlet {
 		try {		
 			String cmd = ConvertURL.of(request);
 			
-			if(cmd.equals("/qna_reply/board/qna")) {
-				int qnaId = Integer.parseInt(request.getParameter("qna_id"));
+			if(cmd.equals("/qna_reply/board/qna.do")) {
+				int qnaId = Integer.parseInt(request.getParameter("id"));
 				
 				QnAReplyDTO dto = qnaReplyDAO.selectByQnAId(qnaId);
 				response.getWriter().append(g.toJson(dto));
@@ -46,11 +46,10 @@ public class QnAReplyController extends HttpServlet {
 			String cmd = ConvertURL.of(request);
 			
 			if (cmd.equals("/qna_reply/insert.do")) {
-				int qnaId = Integer.parseInt(request.getParameter("qna_id"));
-				int memberId = Integer.parseInt(request.getParameter("member_id"));
+				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
 				String context = request.getParameter("context");
 				
-				qnaReplyDAO.insert(new QnAReplyDTO(qnaId, memberId, context));
+				qnaReplyDAO.insert(new QnAReplyDTO(qnaId, 100001, context));
 				qnaDAO.updateResponseYNById(qnaId, "Y");
 			}
 		} catch(Exception e) {

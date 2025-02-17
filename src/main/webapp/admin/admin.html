@@ -322,6 +322,7 @@
         #qna-contents-contents {
             height: 100%;
             width: 100%;
+            overflow-y: auto;
         }
 
         .qna-contents-button {
@@ -542,7 +543,6 @@
                                         </div>
                                         <div>
                                             <select id="qna-search-conditions-select">
-                                                <option value="whole">전체</option>
                                                 <option value="writer">작성자</option>
                                                 <option value="contents">내용</option>
                                             </select>
@@ -583,7 +583,6 @@
                                 <div class="qna-reply">
                                     <div class="qna-reply-inner">
                                         <div class="qna-reply-contents">
-                                            <input type="text" id="context">
                                         </div>
                                         <div class="qna-reply-controller"></div>
                                     </div>
@@ -772,7 +771,7 @@
             $('#qna-table>tbody').append(tr);
 
             contents.on('click', function () {
-                let url = '/qna/board?id=' + contents.attr('value');
+                let url = '/qna/board.do?id=' + contents.attr('value');
                 console.log(url);
 
                 setQnAContents(currentDTO);
@@ -783,7 +782,7 @@
     }
 
     function setQnAContents(item) {
-        $('#qna-contents-title').html(item.responseYN);
+        $('#qna-contents-title').html(item.responseYn);
         $('#qna-contents-id').html(item.qnaId);
         $('#qna-contents-writer').html(item.writer);
         $('#qna-contents-reg-date').html(item.regDate);
@@ -792,6 +791,20 @@
         $('#qna-delete').attr('disabled', false);
 
         setButton(item.responseYN);
+        
+        if(item.responseYn == 'Y') {
+        	console.log('/qna_reply/board/qna.do?id=' + item.qnaId);
+        	
+        	$.ajax({
+        		url: '/qna_reply/board/qna.do?id=' + item.qnaId,
+        		type: 'GET'
+        	}).done(function(data) {
+        		data = JSON.parse(data);
+        		console.log(data);
+        		
+        		makeQnAReplyContent(data);
+        	});
+        }
     }
 
     function initQnAContents() {
@@ -804,6 +817,16 @@
         $('#qna-delete').attr('disabled', true);
         $('.qna-reply-controller').html('');
     }
+    
+    function makeQnAReplyContent(item) {
+    	const div = $('<div>').addClass('qna-reply-contents');
+        div.append($('<div>').html(item.writer + "의 답변입니다.").addClass('qna-reply-writer'));
+        div.append($('<div>').html("답변 시간: " + item.regDate).addClass('qna-reply-regDate'));
+        div.append($('<div>').html(item.context).addClass('qna-reply-context'));
+    	div.css('margin-top', '30px');
+        
+    	$('#qna-contents-contents').append(div);
+    }
 
     function setButton(responseYN) {
         let buttonHTML, url;
@@ -813,24 +836,36 @@
         const data = {};
         if (responseYN == 'Y') {
             buttonHTML = '답글 수정하기';
-            url = '/qna_reply/update';
+            url = '/qna_reply/update.do';
         } else {
             $('.qna-reply-contents').attr('contenteditable', true);
 
             buttonHTML = '답글 등록하기';
-            url = '/qna_reply/insert';
+            url = '/qna_reply/insert.do';
         }
         data.qnaId = $('#qna-contents-id').html();
-        data.contents = $('.qna-reply-contents').html();
 
         const button = $('<button>');
 
         $('.qna-reply-controller').append(
-            button.html(buttonHTML)
-        );
+            button.html(buttonHTML));
 
         button.on('click', function () {
+	        data.context = $('.qna-reply-contents').html();
             console.log(url, data);
+            $.ajax({
+            	url: url,
+            	data: data,
+            	type: 'POST'
+            }).done(function(data) {
+            	$.ajax({
+            		url: '/qna/list.do?page=1',
+            		type: 'GET'
+            	}).done(function(data) {
+            		data = JSON.parse(data);
+            		makeQnAList(data.qnaList);
+            	})
+            });
         });
     }
 </script>

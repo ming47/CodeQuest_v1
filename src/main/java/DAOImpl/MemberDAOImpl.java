@@ -59,6 +59,16 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 	
+	public boolean idVali(String id) throws Exception {// ID검증
+		String sql = "select user_id from users where user_id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+			pstat.setString(1, id);
+			try (ResultSet rs = pstat.executeQuery()) {
+				return rs.next();
+			}
+		}
+	}
+	
 	@Override
 	public MemberDTO login(String inputId, String inputPw) throws Exception {
 		String sql = "select * from users where user_id = ? and password = ?";
