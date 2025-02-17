@@ -42,7 +42,7 @@ public enum QnADAOImpl implements QnADAO {
 			return dtos;
 		}
 	}
-
+	
 	@Override
 	public QnADTO selectById(int id) throws Exception {
 		String sql = "SELECT * FROM QNA Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE QNA_ID=?";
@@ -170,5 +170,6 @@ public enum QnADAOImpl implements QnADAO {
 			} 
 		}
 	}
+
 
 }

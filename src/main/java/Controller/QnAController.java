@@ -2,7 +2,9 @@ package Controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import Common.ConvertURL;
+import Common.PageNavi;
 import DAOImpl.QnADAOImpl;
 import DAOImpl.QnAReplyDAOImpl;
 import DTO.QnADTO;
@@ -39,8 +42,13 @@ public class QnAController<QnADAO> extends HttpServlet {
 			} else if (cmd.equals("/qna/list.do")) {
 				int page = Integer.parseInt(request.getParameter("page"));
 				
+				Map<String, Object> json = new HashMap<>();
+				
 				List<QnADTO> dtos = dao.selectAll();
-				response.getWriter().append(g.toJson(dtos));
+				json.put("qnaList", dtos);
+				
+				json.put("pageNavi", new PageNavi(page, dtos.size(), 10, 10).generate());
+				response.getWriter().append(g.toJson(json));
 			} else if (cmd.equals("/qna/list/response_yn.do")) {
 				String responseYN = request.getParameter("response_yn").toUpperCase();
 				int page = Integer.parseInt(request.getParameter("page"));

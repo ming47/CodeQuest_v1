@@ -290,6 +290,9 @@
         .page-navi-inner {
             height: 90%;
             width: 98%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .qna-title-inner {
@@ -528,7 +531,7 @@
                                     </div>
                                 </div>
                                 <div class="page-navi-form">
-                                    <div class="page-navi-inner"></div>
+                                    <div class="page-navi-inner" id="qna-list-page-navi"></div>
                                 </div>
                                 <div class="qna-list-controller">
                                     <div class="inner">
@@ -595,7 +598,7 @@
 </body>
 
 </html>
-<script>
+<script tag="common">
     $('.selector').on('click', function () {
         const select = $(this).attr('value');
         const offset = $('.' + select).offset();
@@ -605,6 +608,65 @@
         $('html, body').animate({ scrollTop: offset.top }, 500);
     });
 
+    function makePageNavi(dto, className) {
+    	$('.pageNavi').remove();
+    	
+        const pageNavi = $('<div>').addClass('pageNavi');
+        pageNavi.css({
+            'width': 'fit-content',
+            'height': 'fit-content'
+        });
+
+        function makeSpan(content, index) {
+            const span = $('<span>').html(content).addClass('page');
+            span.attr('value', index);
+            return span;
+        }
+
+        if (!dto.isFirst) {
+            pageNavi.append(makeSpan('이전', dto.startNavi - 1).addClass(className));
+        }
+
+        for (let i = dto.startNavi; i <= dto.endNavi; i++) {
+            pageNavi.append(makeSpan(i, i).addClass(className));
+        }
+
+        if (!dto.isEnd) {
+            pageNavi.append(makeSpan('다음', dto.endNavi + 1).addClass(className));
+        }
+
+        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
+        const hover = '.page:hover { cursor: pointer; }'
+
+        $('style').append(hover).append(indexCss);
+
+        return pageNavi;
+    }
+
+    window.onload = function () {
+        $.ajax({
+            url: '/qna/list.do?page=1',
+            type: 'GET'
+        }).done(function (data) {
+            data = JSON.parse(data);
+            console.log(data);
+
+            makeQnAList(data.qnaList);
+            $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
+
+            $('.qna-list-page').on('click', function () {         	
+                $.ajax({
+                    url: '/qna/list.do?page=' + $(this).attr('value'),
+                    type: 'GET'
+                }).done(function (data) {
+                    data = JSON.parse(data);
+                    makeQnAList(data.qnaList);
+                })
+            });
+        });
+    }
+</script>
+<script tag="game">
     $('.playtime-button').on('click', function () {
         let url = '/playtime/sum/';
         const id = $(this).attr('id');
@@ -618,10 +680,14 @@
         } else if (id == 'group-age') {
             url += 'group-age.do';
         }
-        
+
         console.log(url);
     });
+</script>
+<script tage="user">
 
+</script>
+<script tag="qna">
     $('.check-response-yn').on('click', function () {
         const url = ($(this).val() == 'whole') ? "/qna/list.do?page=1" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=1";
 
@@ -629,7 +695,7 @@
         $.ajax({
             url: url,
             type: 'GET'
-        }).done(function(data) {
+        }).done(function (data) {
             data = JSON.parse(data);
             makeQnAList(data);
         })
@@ -642,11 +708,11 @@
 
         console.log(url);
         $.ajax({
-        	url: url,
-        	type: 'GET'
-        }).done(function(data) {
-        	data = JSON.parse(data);
-        	makeQnAList(data);
+            url: url,
+            type: 'GET'
+        }).done(function (data) {
+            data = JSON.parse(data);
+            makeQnAList(data);
         });
     });
 
@@ -654,27 +720,27 @@
         const url = '/qna/delete.do?id=' + $('#qna-contents-id').html();
 
         if (confirm("해당 질문글을 삭제하시겠습니까?")) {
-        	$.ajax({
-        		url: url,
-        		type: 'GET'
-        	}).done(function() {		
-	            alert('삭제했습니다.');
-    	        initQnAContents();
-    	        
-    	        $.ajax({
-    	        	url: '/qna/list.do?page=1',
-    	        	type: 'GET'
-    	        }).done(function(data) {
-    	        	data = JSON.parse(data);
-    	        	makeQnAList(data);
-    	        });
-        	});
+            $.ajax({
+                url: url,
+                type: 'GET'
+            }).done(function () {
+                alert('삭제했습니다.');
+                initQnAContents();
+
+                $.ajax({
+                    url: '/qna/list.do?page=1',
+                    type: 'GET'
+                }).done(function (data) {
+                    data = JSON.parse(data);
+                    makeQnAList(data);
+                });
+            });
         }
     });
 
     function makeQnAList(dto) {
-    	$('.qna-item').remove();
-    	
+        $('.qna-item').remove();
+
         if (dto.length == 0) {
             $('#qna-table>tbody').append(
                 $('<tr height="95%">').addClass('qna-item').append($('<td colspan="4">').html('질문 글이 없습니다.')));
@@ -693,7 +759,7 @@
                 backgroundColor = "green";
             }
 
-            let contentsHTML = (currentDTO.contents.length > 15) ? currentDTO.contents.substr(0, 15 - 2) + " ..." : currentDTO.contents;
+            let contentsHTML = (currentDTO.contents.length > 15) ? currentDTO.contents.substr(0, 15 - 2) + "..." : currentDTO.contents;
 
             const contents = $('<td>').html(responseState + " " + contentsHTML).attr('value', currentDTO.qnaId);
 
@@ -766,39 +832,5 @@
         button.on('click', function () {
             console.log(url, data);
         });
-    }
-
-    function makePageNavi(dto) {
-        const pageNavi = $('<div>').addClass('pageNavi');
-
-        if (!dto.isFirst) {
-            pageNavi.append(makeSpan('이전', dto.startNavi - 1));
-        }
-
-        for (let i = dto.startNavi; i <= dto.endNavi; i++) {
-            pageNavi.append(makeSpan(i, i));
-        }
-
-        if (!dto.isEnd) {
-            pageNavi.append(makeSpan('다음', dto.endNavi + 1));
-        }
-
-        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
-        const hover = '.page:hover { cursor: pointer; }'
-
-        $('style').append(hover).append(indexCss);
-
-        return pageNavi;
-    }
-
-    window.onload = function () {
-    	$.ajax({
-    		url: '/qna/list.do?page=1',
-    		type: 'GET'
-    	}).done(function(data) {
-	        data = JSON.parse(data);
-	        console.log(data);
-    		makeQnAList(data);
-    	});
     }
 </script>
