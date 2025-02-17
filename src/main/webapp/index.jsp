@@ -259,7 +259,7 @@ background : #919190
 				<input type="password" id="userPw" placeholder="비밀번호">
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
 				<div class="login-links">
-					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
+					<a href="/member/addForm.do">회원가입</a> <a href="/">ID/PW 찾기</a>
 				</div>
 				<div class="social-login">
 					<button class="kakao">🟡 Kakao 로그인</button>
@@ -300,6 +300,8 @@ background : #919190
                 .done(function(resp) {
                     if (resp.trim() === "success") {
                         $(".loginbox").fadeOut();
+                    } else if(resp.trim() === "locked") {
+                        alert("로그인 시도가 5회 실패하여 30초 동안 로그인할 수 없습니다.");
                     } else {
                         $("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");
                     }
