@@ -10,6 +10,7 @@ public interface MemberDAO {
 	MemberDTO selectById(int id) throws Exception;
 	int insert(MemberDTO dto) throws Exception;
 	MemberDTO login(String id, String pw) throws Exception;
+	boolean idVali(String id) throws Exception;
 	int update(MemberDTO dto) throws Exception;
 	int deleteById(int id) throws Exception;
 	
