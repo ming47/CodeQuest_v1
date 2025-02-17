@@ -48,7 +48,6 @@ public class MemberController extends HttpServlet {
 		} catch(Exception e) {
 			e.printStackTrace();
 
-
 		}
 
 	}
@@ -108,19 +107,19 @@ public class MemberController extends HttpServlet {
 				
 			} else if (cmd.equals("/printout.do")) {
 
-			} else if (cmd.equals("/update.do")) {
+         } else if (cmd.equals("/update.do")) {
 
-			} else if (cmd.equals("/delete.do")) {
+         } else if (cmd.equals("/delete.do")) {
 
-			} else if (cmd.equals("/validate.do")) {
+         } else if (cmd.equals("/validate.do")) {
 
-			} else if (cmd.equals("/shortvalid.do")) {
+         } else if (cmd.equals("/shortvalid.do")) {
 
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+         }
+      } catch(Exception e) {
+         e.printStackTrace();
+      }
 
 
-	}
+   }
 }
