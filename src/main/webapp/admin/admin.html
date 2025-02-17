@@ -608,8 +608,8 @@
     });
 
     function makePageNavi(dto, className) {
-    	$('.pageNavi').remove();
-    	
+        $('.pageNavi').remove();
+
         const pageNavi = $('<div>').addClass('pageNavi');
         pageNavi.css({
             'width': 'fit-content',
@@ -653,7 +653,7 @@
             makeQnAList(data.qnaList);
             $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
 
-            $('.qna-list-page').on('click', function () {         	
+            $('.qna-list-page').on('click', function () {
                 $.ajax({
                     url: '/qna/list.do?page=' + $(this).attr('value'),
                     type: 'GET'
@@ -688,30 +688,58 @@
 </script>
 <script tag="qna">
     $('.check-response-yn').on('click', function () {
-        const url = ($(this).val() == 'whole') ? "/qna/list.do?page=1" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=1";
+        const url = ($(this).val() == 'whole') ? "/qna/list.do?page=1" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=";
 
         console.log(url);
         $.ajax({
-            url: url,
+            url: url + '1',
             type: 'GET'
         }).done(function (data) {
             data = JSON.parse(data);
-            makeQnAList(data);
+            makeQnAList(data.qnaList);
+            
+            $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
+
+            $('.qna-list-page').off('click');
+            $('.qna-list-page').on('click', function () {
+                console.log(url + $(this).attr('value'));
+                $.ajax({
+                    url: url + $(this).attr('value'),
+                    type: 'GET'
+                }).done(function (data) {
+                    data = JSON.parse(data);
+                    makeQnAList(data.qnaList);
+                });
+            });
         })
     });
 
     $('#qna-search').on('click', function () {
         const searchKey = $('#qna-search-key').val();
         const select = $('#qna-search-conditions-select :selected').val();
-        const url = '/qna/list/search.do?conditions=' + select + '&search-key=' + searchKey + "&page=1";
+        const url = '/qna/list/search.do?conditions=' + select + '&search-key=' + searchKey + "&page=";
 
         console.log(url);
         $.ajax({
-            url: url,
+            url: url + '1',
             type: 'GET'
         }).done(function (data) {
             data = JSON.parse(data);
-            makeQnAList(data);
+            makeQnAList(data.qnaList);
+
+            $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
+
+            $('.qna-list-page').off('click');
+            $('.qna-list-page').on('click', function () {
+                console.log(url + $(this).attr('value'));
+                $.ajax({
+                    url: url + $(this).attr('value'),
+                    type: 'GET'
+                }).done(function (data) {
+                    data = JSON.parse(data);
+                    makeQnAList(data.qnaList);
+                })
+            });
         });
     });
 
@@ -731,7 +759,21 @@
                     type: 'GET'
                 }).done(function (data) {
                     data = JSON.parse(data);
-                    makeQnAList(data);
+                    makeQnAList(data.qnaList);
+
+                    $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
+
+                    $('.qna-list-page').off('click');
+                    $('.qna-list-page').on('click', function () {
+                        console.log(url + $(this).attr('value'));
+                        $.ajax({
+                            url: '/qna/list.do?page=' + $(this).attr('value'),
+                            type: 'GET'
+                        }).done(function (data) {
+                            data = JSON.parse(data);
+                            makeQnAList(data.qnaList);
+                        })
+                    });
                 });
             });
         }
@@ -790,20 +832,20 @@
 
         $('#qna-delete').attr('disabled', false);
 
-        setButton(item.responseYN);
-        
-        if(item.responseYn == 'Y') {
-        	console.log('/qna_reply/board/qna.do?id=' + item.qnaId);
-        	
-        	$.ajax({
-        		url: '/qna_reply/board/qna.do?id=' + item.qnaId,
-        		type: 'GET'
-        	}).done(function(data) {
-        		data = JSON.parse(data);
-        		console.log(data);
-        		
-        		makeQnAReplyContent(data);
-        	});
+        setButton(item.responseYn);
+
+        if (item.responseYn == 'Y') {
+            console.log('/qna_reply/board/qna.do?id=' + item.qnaId);
+
+            $.ajax({
+                url: '/qna_reply/board/qna.do?id=' + item.qnaId,
+                type: 'GET'
+            }).done(function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+
+                makeQnAReplyContent(data);
+            });
         }
     }
 
@@ -817,15 +859,15 @@
         $('#qna-delete').attr('disabled', true);
         $('.qna-reply-controller').html('');
     }
-    
+
     function makeQnAReplyContent(item) {
-    	const div = $('<div>').addClass('qna-reply-contents');
+        const div = $('<div>').addClass('qna-reply-contents');
         div.append($('<div>').html(item.writer + "의 답변입니다.").addClass('qna-reply-writer'));
         div.append($('<div>').html("답변 시간: " + item.regDate).addClass('qna-reply-regDate'));
         div.append($('<div>').html(item.context).addClass('qna-reply-context'));
-    	div.css('margin-top', '30px');
-        
-    	$('#qna-contents-contents').append(div);
+        div.css('margin-top', '30px');
+
+        $('#qna-contents-contents').append(div);
     }
 
     function setButton(responseYN) {
@@ -851,20 +893,36 @@
             button.html(buttonHTML));
 
         button.on('click', function () {
-	        data.context = $('.qna-reply-contents').html();
+            data.context = $('.qna-reply-contents').html();
             console.log(url, data);
             $.ajax({
-            	url: url,
-            	data: data,
-            	type: 'POST'
-            }).done(function(data) {
-            	$.ajax({
-            		url: '/qna/list.do?page=1',
-            		type: 'GET'
-            	}).done(function(data) {
-            		data = JSON.parse(data);
-            		makeQnAList(data.qnaList);
-            	})
+                url: url,
+                data: data,
+                type: 'POST'
+            }).done(function (data) {
+                $.ajax({
+                    url: '/qna/list.do?page=1',
+                    type: 'GET'
+                }).done(function (data) {
+                    $('.qna-reply-contents').attr('contenteditable', false);
+
+                    data = JSON.parse(data);
+                    makeQnAList(data.qnaList);
+
+                    $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
+
+                    $('.qna-list-page').off('click');
+                    $('.qna-list-page').on('click', function () {
+                        console.log(url + $(this).attr('value'));
+                        $.ajax({
+                            url: url + $(this).attr('value'),
+                            type: 'GET'
+                        }).done(function (data) {
+                            data = JSON.parse(data);
+                            makeQnAList(data.qnaList);
+                        })
+                    });
+                })
             });
         });
     }
