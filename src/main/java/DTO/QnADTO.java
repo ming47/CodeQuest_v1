@@ -74,7 +74,7 @@ public class QnADTO {
 		return new QnADTO(
 				rs.getInt("QNA_ID"), 
 				rs.getInt("MEMBER_ID"), 
-				rs.getString("CONTENTS"), 
+				rs.getString("CONTENT"), 
 				rs.getTimestamp("REG_DATE"), 
 				rs.getString("RESPONSE_YN"), 
 				rs.getString("NAME"));

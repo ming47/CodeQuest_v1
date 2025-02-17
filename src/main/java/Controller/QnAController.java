@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -39,13 +40,27 @@ public class QnAController<QnADAO> extends HttpServlet {
 				List<QnADTO> dtos = dao.selectAll();
 				response.getWriter().append(g.toJson(dtos));
 			} else if (cmd.equals("/qna/list/response_yn.do")) {
-				String responseYN = request.getParameter("response_yn");
+				String responseYN = request.getParameter("response_yn").toUpperCase();
 				int page = Integer.parseInt(request.getParameter("page"));
 				
+				List<QnADTO> dtos = dao.selectByResponseYN(responseYN);
+				response.getWriter().append(g.toJson(dtos));
 			} else if (cmd.equals("/qna/list/search.do")) {
+				String conditions = request.getParameter("conditions");
+				String searchKey = request.getParameter("search-key");
 				
+				List<QnADTO> dtos = new ArrayList<>();
+				if(conditions.equals("writer")) {
+					dtos = dao.selectByWriterLike(searchKey);
+				} else if(conditions.equals("contents")) {
+					dtos = dao.selectByContentLike(searchKey);
+				}
+				
+				response.getWriter().append(g.toJson(dtos));
 			} else if (cmd.equals("/qna/delete.do")) {
+				int id = Integer.parseInt(request.getParameter("id"));
 				
+				dao.deleteById(id);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

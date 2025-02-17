@@ -266,7 +266,6 @@
 
         table {
             width: 100%;
-            height: 100%;
         }
 
         .qna-list-contents-inner {
@@ -416,7 +415,7 @@
                                     <div class="qna-list-contents-inner">
                                         <table border="1" id="member-table">
                                             <tr>
-                                                <th width="10%" height="5%">번호</th>
+                                                <th width="10%" height="50px">번호</th>
                                                 <th width="30%">이름</th>
                                                 <th width="30%">ID</th>
                                                 <th width="20%">가입 날짜</th>
@@ -439,12 +438,12 @@
                                             <button class="check-response-yn" value="whole">전체</button>
                                         </div>
                                         <div>
-                                            <select id="qna-search-conditions-select">
+                                            <select id="user-search-conditions-select">
                                                 <option value="whole">전체</option>
                                                 <option value="writer">작성자</option>
                                                 <option value="title">제목</option>
                                             </select>
-                                            <input type="text" placeholder="검색할 내용을 입력하세요" id="qna-search-key">
+                                            <input type="text" placeholder="검색할 내용을 입력하세요" id="user-search-key">
                                             <button id="search">검색</button>
                                         </div>
                                     </div>
@@ -456,7 +455,7 @@
                                 <div class="user-info center-align">
                                     <div class="inner-fat">
                                         <div class="user-info-title title">123</div>
-                                        <table border="1" id="user-info-table" style="height: 50%;">
+                                        <table border="1" id="user-info-table">
                                             <tr>
                                                 <th width="10%" height="50%">ID</th>
                                                 <td width="25%" id="user-id"></td>
@@ -521,7 +520,7 @@
                                         <table border="1" id="qna-table">
                                             <tr>
                                                 <th width="10%" height="5%">번호</th>
-                                                <th width="50%">제목</th>
+                                                <th width="50%">내용</th>
                                                 <th width="20%">작성자</th>
                                                 <th width="20%">작성 시간</th>
                                             </tr>
@@ -542,10 +541,10 @@
                                             <select id="qna-search-conditions-select">
                                                 <option value="whole">전체</option>
                                                 <option value="writer">작성자</option>
-                                                <option value="title">제목</option>
+                                                <option value="contents">내용</option>
                                             </select>
                                             <input type="text" placeholder="검색할 내용을 입력하세요" id="qna-search-key">
-                                            <button id="search">검색</button>
+                                            <button id="qna-search">검색</button>
                                         </div>
                                     </div>
                                 </div>
@@ -554,7 +553,7 @@
                         <div class="qna-respone">
                             <div class="inner">
                                 <div class="qna-title">
-                                    <div class="qna-title-inner" id="qna-contents-title"></div>
+                                    <div class="qna-title-inner" id="qna-contents-responseYN"></div>
                                 </div>
                                 <div class="qna-contents">
                                     <div class="qna-contents-inner">
@@ -580,7 +579,9 @@
                                 </div>
                                 <div class="qna-reply">
                                     <div class="qna-reply-inner">
-                                        <div class="qna-reply-contents"></div>
+                                        <div class="qna-reply-contents">
+                                            <input type="text" id="context">
+                                        </div>
                                         <div class="qna-reply-controller"></div>
                                     </div>
                                 </div>
@@ -617,7 +618,7 @@
         } else if (id == 'group-age') {
             url += 'group-age.do';
         }
-
+        
         console.log(url);
     });
 
@@ -625,104 +626,66 @@
         const url = ($(this).val() == 'whole') ? "/qna/list.do?page=1" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=1";
 
         console.log(url);
+        $.ajax({
+            url: url,
+            type: 'GET'
+        }).done(function(data) {
+            data = JSON.parse(data);
+            makeQnAList(data);
+        })
     });
 
-    $('#search').on('click', function () {
+    $('#qna-search').on('click', function () {
         const searchKey = $('#qna-search-key').val();
         const select = $('#qna-search-conditions-select :selected').val();
-        const url = '/qna/list/search.do?conditions?=' + select + '&search-key=' + searchKey + "&page=1";
+        const url = '/qna/list/search.do?conditions=' + select + '&search-key=' + searchKey + "&page=1";
 
         console.log(url);
+        $.ajax({
+        	url: url,
+        	type: 'GET'
+        }).done(function(data) {
+        	data = JSON.parse(data);
+        	makeQnAList(data);
+        });
     });
 
     $('#qna-delete').on('click', function () {
-        const url = '/qna/delete?id=' + $('#qna-contents-id').html();
+        const url = '/qna/delete.do?id=' + $('#qna-contents-id').html();
 
         if (confirm("해당 질문글을 삭제하시겠습니까?")) {
-            alert('삭제했습니다.');
-            initQnAContents();
+        	$.ajax({
+        		url: url,
+        		type: 'GET'
+        	}).done(function() {		
+	            alert('삭제했습니다.');
+    	        initQnAContents();
+    	        
+    	        $.ajax({
+    	        	url: '/qna/list.do?page=1',
+    	        	type: 'GET'
+    	        }).done(function(data) {
+    	        	data = JSON.parse(data);
+    	        	makeQnAList(data);
+    	        });
+        	});
         }
-        console.log(url);
     });
 
-    const testDTO = [
-        {
-            qnaId: 1,
-            name: 'USER12',
-            contents: 'USER12의 질문글입니다 0',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 2,
-            name: 'USER16',
-            contents: 'USER16의 질문글입니다 1',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 3,
-            name: 'USER19',
-            contents: 'USER19의 질문글입니다 3',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 4,
-            name: 'USER23',
-            contents: 'USER23의 질문글입니다 4',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 5,
-            name: 'USER44',
-            contents: 'USER44의 질문글입니다 5',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 5,
-            name: 'USER44',
-            contents: 'USER44의 질문글입니다 5',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 5,
-            name: 'USER44',
-            contents: 'USER44의 질문글입니다 5',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 5,
-            name: 'USER44',
-            contents: 'USER44의 질문글입니다 5',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 5,
-            name: 'USER44',
-            contents: 'USER44의 질문글입니다 5',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'N'
-        }, {
-            qnaId: 5,
-            name: 'USER44',
-            contents: 'USER44의 질문글입니다 5',
-            regDate: '25/02/16 00:52:48.733000',
-            responseYN: 'Y'
-        }
-    ];
-
-    const emptyDTO = [];
-
     function makeQnAList(dto) {
+    	$('.qna-item').remove();
+    	
         if (dto.length == 0) {
             $('#qna-table>tbody').append(
-                $('<tr height="95%">').append($('<td colspan="4">').html('질문 글이 없습니다.')));
+                $('<tr height="95%">').addClass('qna-item').append($('<td colspan="4">').html('질문 글이 없습니다.')));
         }
 
         for (let i = 0; i < dto.length; i++) {
-            const tr = $('<tr>');
+            const tr = $('<tr>').addClass('qna-item');
             const currentDTO = dto[i];
 
             let responseState, backgroundColor;
-            if (currentDTO.responseYN == 'N') {
+            if (currentDTO.responseYn == 'N') {
                 responseState = "미응답";
                 backgroundColor = "white";
             } else {
@@ -730,11 +693,13 @@
                 backgroundColor = "green";
             }
 
-            const contents = $('<td>').html(responseState + " " + currentDTO.contents).addClass('qna-item').attr('value', currentDTO.qnaId);
+            let contentsHTML = (currentDTO.contents.length > 15) ? currentDTO.contents.substr(0, 15 - 2) + " ..." : currentDTO.contents;
+
+            const contents = $('<td>').html(responseState + " " + contentsHTML).attr('value', currentDTO.qnaId);
 
             tr.append($('<td>').html(currentDTO.qnaId).attr('height', '9.5%'));
             tr.append(contents);
-            tr.append($('<td>').html(currentDTO.name));
+            tr.append($('<td>').html(currentDTO.writer));
             tr.append($('<td>').html(currentDTO.regDate));
 
             tr.css('background-color', backgroundColor);
@@ -752,9 +717,9 @@
     }
 
     function setQnAContents(item) {
-        $('#qna-contents-title').html(item.contents);
+        $('#qna-contents-title').html(item.);
         $('#qna-contents-id').html(item.qnaId);
-        $('#qna-contents-writer').html(item.name);
+        $('#qna-contents-writer').html(item.writer);
         $('#qna-contents-reg-date').html(item.regDate);
         $('#qna-contents-contents').html(item.contents);
 
@@ -771,6 +736,7 @@
         $('#qna-contents-contents').html('');
 
         $('#qna-delete').attr('disabled', true);
+        $('.qna-reply-controller').html('');
     }
 
     function setButton(responseYN) {
@@ -803,6 +769,13 @@
     }
 
     window.onload = function () {
-        makeQnAList(testDTO);
+    	$.ajax({
+    		url: '/qna/list.do?page=1',
+    		type: 'GET'
+    	}).done(function(data) {		
+	        data = JSON.parse(data);
+	        console.log(data);
+    		makeQnAList(data);
+    	});
     }
 </script>
