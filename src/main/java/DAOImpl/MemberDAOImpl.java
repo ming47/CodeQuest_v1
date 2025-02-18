@@ -85,13 +85,13 @@ public enum MemberDAOImpl implements MemberDAO {
 	
 	@Override
 	public MemberDTO login(String inputId, String inputPw) throws Exception {
-		String sql = "SELECT login_id, name, nickname, ssn, email, phone, zip_code, address, detail_address, role, reg_date FROM members WHERE login_id = ? AND password = ?";
+		String sql = "select * from members where login_id = ? and password = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setString(1, inputId);
 			pstat.setString(2, inputPw);
 			try (ResultSet rs = pstat.executeQuery()) {
 				if (rs.next()) {
-					String id = rs.getString("user_id");
+					String id = rs.getString("login_id");
 					String name = rs.getString("name");
 					String nickName = rs.getString("nickname");
 					String ssn = rs.getString("ssn");

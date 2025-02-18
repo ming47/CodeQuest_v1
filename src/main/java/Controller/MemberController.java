@@ -1,12 +1,12 @@
 package Controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import Common.ConvertURL;
 import Common.SecurityUtil;
@@ -26,8 +26,8 @@ public class MemberController extends HttpServlet {
 
 		try {
 			String cmd = ConvertURL.of(request);
-			System.out.println(cmd);
-			if (cmd.equals("/member/addForm.do")) { // 회원가입 폼
+			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
+
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 			} else if(cmd.equals("/member/valueCheck.do")) { //ajax 중복체크
 				String value = request.getParameter("value");
@@ -125,6 +125,7 @@ public class MemberController extends HttpServlet {
 				} else {
 					response.getWriter().write("fail");
 				}
+				
 
 			} else if (cmd.equals("/printout.do")) { // 출력
 
@@ -136,13 +137,14 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/member/login.do");
 					return;
 				}
+				String nickname = request.getParameter("nickname");
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
 				int zipCode = Integer.parseInt(request.getParameter("postcode"));
 				String address = request.getParameter("address");
 				String detail_address = request.getParameter("detail_address");
 				try {
-					int result = dao.update(new MemberDTO(id,email, phone, zipCode, address, detail_address));
+					int result = dao.update(new MemberDTO(id, nickname,email, phone, zipCode, address, detail_address));
 					if (result > 0) {
 						response.sendRedirect("/member/mypage.jsp");
 					} else {
