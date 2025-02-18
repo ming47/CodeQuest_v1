@@ -53,11 +53,20 @@ public class QnAController<QnADAO> extends HttpServlet {
 				String responseYN = request.getParameter("response_yn").toUpperCase();
 				int page = Integer.parseInt(request.getParameter("page"));
 				
+				Map<String, Object> json = new HashMap<>();
+				
 				List<QnADTO> dtos = dao.selectByResponseYN(responseYN);
-				response.getWriter().append(g.toJson(dtos));
+				json.put("qnaList", dtos);
+				
+				json.put("pageNavi", new PageNavi(page, dtos.size(), 10, 10).generate());
+				response.getWriter().append(g.toJson(json));
 			} else if (cmd.equals("/qna/list/search.do")) {
+				int page = Integer.parseInt(request.getParameter("page"));
 				String conditions = request.getParameter("conditions");
 				String searchKey = request.getParameter("search-key");
+				
+				Map<String, Object> json = new HashMap<>();
+				
 				
 				List<QnADTO> dtos = new ArrayList<>();
 				if(conditions.equals("writer")) {
@@ -65,8 +74,10 @@ public class QnAController<QnADAO> extends HttpServlet {
 				} else if(conditions.equals("contents")) {
 					dtos = dao.selectByContentLike(searchKey);
 				}
+				json.put("qnaList", dtos);
 				
-				response.getWriter().append(g.toJson(dtos));
+				json.put("pageNavi", new PageNavi(page, dtos.size(), 10, 10).generate());
+				response.getWriter().append(g.toJson(json));
 			} else if (cmd.equals("/qna/delete.do")) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				
