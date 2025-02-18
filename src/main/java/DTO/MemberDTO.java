@@ -7,6 +7,7 @@ public class MemberDTO {
 	private String id;
 	private String pw;
 	private String name;
+	private String nickName;
 	private String ssn;
 	private String email;
 	private String phone;
@@ -16,12 +17,13 @@ public class MemberDTO {
 	private String role;
 	private Timestamp regDate;
 		
-	public MemberDTO(String id, String pw, String name, String ssn, String email, String phone, int zipCode,
+	public MemberDTO(String id, String pw, String name, String nickName, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role) { //회원 가입
 		super();
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
+		this.nickName = nickName;
 		this.ssn = ssn;
 		this.email = email;
 		this.phone = phone;
@@ -31,8 +33,23 @@ public class MemberDTO {
 		this.role = role;
 	}
 		
-	public MemberDTO(String id, String name, String ssn, String email, String phone, int zipCode,
+	public MemberDTO(String id, String name, String nickName, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role, Timestamp regDate ) { //로그인
+		super();
+		this.id = id;
+		this.name = name;
+		this.nickName = nickName;
+		this.ssn = ssn;
+		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address = address;
+		this.detailAddress = detailAddress;
+		this.role = role;
+		this.regDate = regDate;
+	}
+		public MemberDTO(String id, String name, String ssn, String email, String phone, int zipCode,
+			String address, String detailAddress, String role, Timestamp regDate ) { //성별로 찾는다
 		super();
 		this.id = id;
 		this.name = name;
@@ -145,6 +162,16 @@ public class MemberDTO {
 	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	
+	
 	
 	
 }
