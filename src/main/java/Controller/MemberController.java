@@ -33,7 +33,6 @@ public class MemberController extends HttpServlet {
 				String value = request.getParameter("value");
 			    String field = request.getParameter("field");
 			    String column = null;
-			    System.out.println("필드:"+field);
 			    if ("login_id".equals(field)) {
 			        column = "login_id";
 			    } else if ("nickname".equals(field)) {
@@ -42,12 +41,9 @@ public class MemberController extends HttpServlet {
 			        column = "email";
 			    } else if ("phone".equals(field)) {
 			        column = "phone";
-			    }
-			    System.out.println("검사할 컬럼: " + column + ", 값: " + value);
-				
+			    }				
 			    if (column != null) {
 			    	boolean result = dao.isDuplicate(column, value);
-			    	System.out.println("결과:"+result);
 			    	if(result == true) {
 			    		response.getWriter().append("exist");
 			    	}
@@ -99,7 +95,6 @@ public class MemberController extends HttpServlet {
 				
 				
 				String postcodeStr = request.getParameter("postcode");
-				System.out.println(postcodeStr);
 				int postcode = 0;
 				if(postcodeStr != "") {
 					postcode = Integer.parseInt(postcodeStr);
