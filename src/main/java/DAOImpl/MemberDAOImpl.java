@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
@@ -110,13 +111,35 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<MemberDTO> selectByGender(GENDER gender) throws Exception {
-		// TODO Auto-generated method stub
-		int genderFactor = gender.getGenderFactor();
+	public List<MemberDTO> selectByGender(GENDER gender) throws Exception {		
+		String sql = "SELECT * FROM USERS WHERE SSN LIKE ?";
 		
-		String sql = "?";
-		
-		return null;
+		String target = String.format("%%-%d______", gender.getGenderFactor());
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, target);
+			
+			List<MemberDTO> dto = new ArrayList<>();
+			try (ResultSet rs = pstat.executeQuery()) {
+				while (rs.next()) {
+					String id = rs.getString("user_id");
+					String name = rs.getString("name");
+					String ssn = rs.getString("ssn");
+					String email = rs.getString("email");
+					String phone = rs.getString("phone");
+					int postcode = rs.getInt("zip_code");
+					String address = rs.getString("address");
+					String detail_address = rs.getString("detail_address");
+					String role = rs.getString("role");
+					Timestamp date = rs.getTimestamp("reg_date");
+					
+					dto.add(new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date));
+
+				}
+				
+				return dto;
+			}
+		}
 	}
 
 	@Override
