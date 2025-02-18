@@ -1,12 +1,12 @@
 package Controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import Common.ConvertURL;
 import Common.SecurityUtil;
@@ -26,7 +26,6 @@ public class MemberController extends HttpServlet {
 
 		try {		
 			String cmd = ConvertURL.of(request);
-			System.out.println(cmd);
 			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 			} else if(cmd.equals("/member/valueCheck.do")) { //ajax 중복체크
@@ -128,6 +127,7 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("member", member);
 					response.getWriter().write("success");
 				}
+				
 
 			} else if (cmd.equals("/printout.do")) {
 
