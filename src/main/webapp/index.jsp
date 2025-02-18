@@ -8,32 +8,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<link rel="preconnect " href="https: //fonts.googleapis.com ">
-<link rel="preconnect " href="https: //fonts.gstatic.com " crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
-	href="https: //fonts.googleapis.com /css2 ?family =Jua &family =Press+Start+2P
-   &display =swap "
-	rel="stylesheet ">
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
+	rel="stylesheet">
 <title>Responsive Game Portal</title>
 <style>
-
-	*{
-
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	}
+}
 
 body {
-	background-color: #2b2b27;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
 }
 
-/* 컨테이너 */
 .container {
 	width: 100%;
 	max-width: 1660px;
@@ -42,25 +36,27 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background: white;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 	border-radius: 10px;
+	background: url('/allback.jpg') no-repeat center;
+	background-size: cover;
 }
 
-/* Header & Footer */
 .header, .footer {
 	width: 100%;
 	height: 80px;
-	background: #dedbd1;
+	background: #1e201d;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 20px;
-	color: white;
-	font-weight: bold;
+	color: #b4c28a;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 12px;
 }
 
-/* 네비게이션 */
 .navi {
 	display: flex;
 	align-items: center;
@@ -70,7 +66,7 @@ body {
 
 .logo {
 	font-size: 24px;
-	color: #5c594c;
+	color: #b4c28a;
 }
 
 .navi ul {
@@ -82,14 +78,14 @@ body {
 .navi ul li {
 	padding: 10px 15px;
 	background: white;
-	color: #af8652;
+	color: #debe85;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
 }
 
 .navi ul li:hover {
-	background: #453724;
+	background: #81a5bf;
 	color: white;
 }
 
@@ -121,6 +117,20 @@ body {
 	scroll-snap-type: x mandatory;
 	white-space: nowrap;
 	min-height: 320px;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-weight: 400;
+}
+
+.gameList h3 {
+	font-size: 16px;
+	margin: 10px;
+}
+
+.gameList p {
+	font-size: 14px;
+	margin: 10px;
 }
 
 .gameList::-webkit-scrollbar {
@@ -142,7 +152,6 @@ body {
 	background: white;
 	padding: 15px;
 	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	scroll-snap-align: start;
 	transition: transform 0.3s ease-in-out;
@@ -159,50 +168,91 @@ body {
 }
 
 .game button {
-	width: 100%;
+	width: 170px;
+	height: 60px;
 	padding: 10px;
-	background-color: #8a8676;
 	color: white;
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background 0.3s;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	background: url('/gamebtn.png') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	background-size: cover;
 }
 
 .game button:hover {
-	background: #453724;
+	transform: scale(1.2);
 }
 
-/* 로그인 박스 */
 .loginbox {
 	width: 15%;
-	background: #dedbd1;
+	background: url('/login.jpg') no-repeat center;
+	background-size: 10 10;
 	padding: 20px;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	min-height: 320px;
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
-.loginbtn:hover {
+.loginbox h2 {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 10px;
+	color: #2f2b2b;
+}
+
+.loginbox input {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 3px;
+}
+
+.loginbox>.loginBtn {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.loginBtn:hover {
 	background: #919190
 }
 
-/* 게시판 */
+.login-links {
+	margin: 20px;
+}
+
 .boardlist {
 	width: 60%;
-	background: #f5f3ed;
+	height:25%;
+	background: url('/boardback.jpg') no-repeat center;
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	margin-top: 20px;
 	text-align: center;
+	color:white;
+	margin-bottom: 60px;
 }
 </style>
 </head>
 <body>
 	<div class="container">
-		<!-- 헤더 -->
+
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
@@ -213,9 +263,7 @@ body {
 					<li>Service</li>
 				</ul>
 			</div>
-			<div class="logbox-container">
-				<%@ include file="logbox.jsp"%>
-			</div>
+			<%@ include file="logbox.jsp"%>
 		</div>
 
 		<!-- 본문 -->
@@ -255,22 +303,18 @@ body {
 					<img src="game6.jpg">
 					<h3>Game 6</h3>
 					<p>Sports</p>
-					<button>Play</button>
+					<button></button>
 				</div>
 			</div>
 
 			<div class="loginbox">
 				<h2>로그인</h2>
-				
-				<input type="text" id="userId" placeholder="아이디"> 
-				<input type="password" id="userPw" placeholder="비밀번호">
-				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
+				<input type="text" id="userId" placeholder="아이디"> <input
+					type="password" id="userPw" placeholder="비밀번호">
+				<a href="/member/login.do"><button id="loginBtn">로그인</button> </a>
 				<div class="login-links">
-					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
-					
-				</div>
-				<div class="social-login">
-					<button class="kakao">🟡 Kakao 로그인</button>
+					<a href="/member/addForm.do">회원가입</a><br>
+					<br> <a href="/member/findMember.do">ID/PW 찾기</a>
 				</div>
 			</div>
 		</div>
@@ -290,38 +334,15 @@ body {
 
 	<script>
 		$(document).ready(function() {
-			let now;
 			$("#loginBtn").click(function() {
-				let userId = $("#userId").val().trim();
-				let userPw = $("#userPw").val().trim();
-
-				if (userId === "" || userPw === "") {
+				let userId = $("#userId").val();
+				let userPw = $("#userPw").val();
+				if (userId && userPw) {
+					$(".logbox").fadeIn().find("#username").text(userId);
+					$(".loginbox").fadeOut();
+				} else {
 					alert("아이디와 비밀번호를 입력하세요!");
-					return false;
 				}
-
-				$.ajax({
-					url : "/member/login.do",
-					method : "POST",
-					data : {
-						id : userId,
-						pw : userPw
-					},
-					dataType : "text"
-				}).done(function(resp) {
-					if (resp.trim() === "success") {
-						$(".loginbox").fadeOut();
-
-						// logbox.jsp를 다시 불러와 업데이트
-						$(".logbox-container").load("logbox.jsp", function() {
-							$(".logbox").fadeIn();
-						});
-					} else {
-						$("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");
-					}
-				}).fail(function(xhr, status, error) {
-					console.log("로그인 AJAX 실패:", error);
-				});
 			});
 		});
 	</script>
