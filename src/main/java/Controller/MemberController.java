@@ -29,14 +29,26 @@ public class MemberController extends HttpServlet {
 			System.out.println(cmd);
 			if (cmd.equals("/member/addForm.do")) { // 회원가입 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
-			} else if (cmd.equals("/member/idCheck.do")) {
-				String id = request.getParameter("id");
-				boolean result = dao.idVali(id);
-				if (result == true) {
-					response.getWriter().append("exist");
-				}
-			} else if (cmd.equals("/member/mypage.do")) { // 마이페이지 폼
-				
+			} else if(cmd.equals("/member/valueCheck.do")) { //ajax 중복체크
+				String value = request.getParameter("value");
+			    String field = request.getParameter("field");
+			    String column = null;
+			    if ("login_id".equals(field)) {
+			        column = "login_id";
+			    } else if ("nickname".equals(field)) {
+			        column = "nickname";
+			    } else if ("email".equals(field)) {
+			        column = "email";
+			    } else if ("phone".equals(field)) {
+			        column = "phone";
+			    }				
+			    if (column != null) {
+			    	boolean result = dao.isDuplicate(column, value);
+			    	if(result == true) {
+			    		response.getWriter().append("exist");
+			    	}
+			    }
+			} else if (cmd.equals("/member/mypage.do")) { //마이페이지 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
@@ -71,22 +83,30 @@ public class MemberController extends HttpServlet {
 				String encryptPw = SecurityUtil.hashPassword(pw);
 
 				String name = request.getParameter("name");
-				// 주민번호 앞자리,뒷자리 받은 후 DB입력할수있게 폼 완성
+				String nickName = request.getParameter("nickName");
+
+				//주민번호 앞자리,뒷자리 받은 후 DB입력할수있게 폼 완성
 				String ssnFront = request.getParameter("ssnFront");
 				String ssnBack = request.getParameter("ssnBack");
 				String ssn = ssnFront + "-" + ssnBack + "******";
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
-
-				int postcode = Integer.parseInt(request.getParameter("postcode"));
+				
+				
+				String postcodeStr = request.getParameter("postcode");
+				int postcode = 0;
+				if(postcodeStr != "") {
+					postcode = Integer.parseInt(postcodeStr);
+				} else if(postcodeStr == "") {
+					postcode = 0;
+				}
+						
 				String address1 = request.getParameter("address1");
 				String address2 = request.getParameter("address2");
 
-				int result = dao.insert(
-						new MemberDTO(id, encryptPw, name, ssn, email, phone, postcode, address1, address2, null)); // role은
-																													// 정해진게없어서
-																													// null
-				if (result > 0) {
+
+				int result = dao.insert(new MemberDTO(id,encryptPw,name,nickName,ssn,email,phone,postcode,address1,address2,"user")); //role은 정해진게없어서 null
+				if(result > 0) {
 					System.out.println("가입성공!");
 				}
 				response.sendRedirect("/");
