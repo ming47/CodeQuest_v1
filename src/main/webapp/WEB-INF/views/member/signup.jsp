@@ -432,7 +432,7 @@ input[disabled] {
 				        console.error("AJAX 요청 실패:", error);
 				    });
 		    }
-		});
+		});		
 		
 		//회원가입 submit 전 유효성 검사
 		$("#signupForm").on("submit", function(event) {

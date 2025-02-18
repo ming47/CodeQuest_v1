@@ -262,8 +262,8 @@ body {
 			<div class="loginbox">
 				<h2>로그인</h2>
 				
-				<input type="text" id="userId" placeholder="아이디"> 
-				<input type="password" id="userPw" placeholder="비밀번호">
+				<input type="text" id="id" placeholder="아이디"> 
+				<input type="password" id="pw" placeholder="비밀번호">
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
 				<div class="login-links">
 					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
@@ -292,8 +292,8 @@ body {
 		$(document).ready(function() {
 			let now;
 			$("#loginBtn").click(function() {
-				let userId = $("#userId").val().trim();
-				let userPw = $("#userPw").val().trim();
+				let userId = $("#id").val().trim();
+				let userPw = $("#pw").val().trim();
 
 				if (userId === "" || userPw === "") {
 					alert("아이디와 비밀번호를 입력하세요!");
