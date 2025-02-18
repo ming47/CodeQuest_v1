@@ -53,6 +53,9 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
 				response.sendRedirect("/");
+				
+			} else if (cmd.equals("/member/findMember.do")) {
+				
 			} else if (cmd.equals("/delete.do")) {
 
 			} else if (cmd.equals("/validate.do")) {
