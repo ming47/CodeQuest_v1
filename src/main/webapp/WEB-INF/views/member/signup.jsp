@@ -222,7 +222,6 @@ input[disabled] {
 				<legend> * 아이디 / 패스워드</legend>
 				<div class="input-group">
 					<input type="text" name="id" id="id" placeholder="아이디를 입력하세요">
-					<button type="button" class="id-check-btn" id="idCheck">ID 중복 체크</button>
 				</div>
 				<span id="result_id"></span> 
 				<input type="password" name="pw" id="pw" placeholder="패스워드를 입력하세요"> 
@@ -232,9 +231,11 @@ input[disabled] {
 			</fieldset>
 
 			<fieldset>
-				<legend> * 이름 / 전화번호 / 이메일</legend>
+				<legend> * 이름 / 닉네임 / 전화번호 / 이메일</legend>
 				<input type="text" name="name" id="name" placeholder="이름을 입력하세요">
 				<span id="result_name"></span> 
+				<input type="text" name="nickName" id="nickName" placeholder="닉네임을 입력하세요">
+				<span id="result_nickName"></span> 
 				<div class="input-group">
 					<input type="text" name="ssnFront" id="ssnFront"
 						placeholder="주민등록번호 앞자리" maxlength="6"> <span>-</span> <input
@@ -275,29 +276,6 @@ input[disabled] {
 				event.preventDefault();
 			}
 		});
-		//ID 중복체크
-		$("#idCheck").on("click", function() {
-        	if($("#id").val()== "") {
-				alert("아이디를 먼저 입력해주세요.");
-				return false;
-			}
-			$.ajax({
-				url : "/member/idCheck.do",
-				data : {
-					id : $("#id").val()
-				},
-				method : "GET",
-				dataType : "text"
-			}).done(function(resp) {
-				if (resp.trim() === "exist") {
-			        $("#result_id").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 ID입니다.");
-				} else {
-			        $("#result_id").css({"color": "green", "font-size": "12px"}).html("사용가능한 ID입니다.");
-				}
-			}).fail(function(xhr, status, error) {
-				console.error("AJAX 요청 실패:", error);
-			});
-		});
 		$("#ssnFront").on("input", function() {
 			let val = $(this).val().replace(/\D/g, "");
 			$(this).val(val);
@@ -323,11 +301,33 @@ input[disabled] {
 		        $("#result_id").css({"color": "red", "font-size": "12px"}).html("ID는 영어소문자,숫자 8자리이상 20자리이하로 작성해주세요.");
 		        id_val = false;
 		    } else {
-		        console.log("유효한 ID:", $(this).val());
 		        $("#result_id").css({"color": "green", "font-size": "12px"}).html("유효한 ID입니다.");
 		        id_val = true;
 		    }
 		});
+		$("#id").on("focusout", function() {
+		    if($("#id") == ""){
+		        $("#result_id").html("");
+		        return;
+		    }
+		    $.ajax({
+		        url: "/member/valueCheck.do",
+		        data: { field: "login_id", value: $("#id").val() },
+		        method: "GET",
+		        dataType: "text"
+		    }).done(function(resp) {
+		        if (resp.trim() === "exist") {
+		            $("#result_id").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 ID입니다.");
+		            id_val = false;
+		        } else {
+		            $("#result_id").css({"color": "green", "font-size": "12px"}).html("사용가능한 ID입니다.");
+		            id_val = true;
+		        }
+		    }).fail(function(xhr, status, error) {
+		        console.error("AJAX 요청 실패:", error);
+		    });
+		});
+		
 		
 		$("#pw").on("keyup", function() {
 		    let regex = /^[A-Za-z0-9_]{8,}$/;
@@ -336,7 +336,6 @@ input[disabled] {
 		        $("#result_pw").css({"color": "red", "font-size": "12px"}).html("유효하지 않는 PW입니다.");
 		        pw_val = false;
 		    } else {
-		        console.log("유효한 PW:", $(this).val());
 		        $("#result_pw").css({"color": "green", "font-size": "12px"}).html("유효한 PW 입니다.");
 		        pw_val = true;
 		    }
@@ -345,7 +344,7 @@ input[disabled] {
 		$("#pwr").on("keyup", function(e) {
 		    if ($("#pw").val() === $(this).val()) {
 		        $("#result_pwr").css({"color": "green", "font-size": "12px"}).html("패스워드 일치!");
-		        
+		        pw_val = true;
 		    } else {
 		        $("#result_pwr").css({"color": "red", "font-size": "12px"}).html("패스워드 일치하지 않음!");
 		        pw_val = false;
@@ -359,10 +358,31 @@ input[disabled] {
 		        $("#result_name").css({"color": "red", "font-size": "12px"}).html("유효하지 않는 이름입니다.");
 		        name_val = false;
 		    } else {
-		        console.log("유효한 이름:", $(this).val());
 		        $("#result_name").css({"color": "green", "font-size": "12px"}).html("유효한 이름 입니다.");
 		        name_val = true;
 		    }
+		});
+		$("#nickName").on("focusout", function() {
+		    if($("#nickName") == ""){
+		        $("#result_nickName").html("");
+		        return;
+		    }
+		    $.ajax({
+		        url: "/member/valueCheck.do",
+		        data: { field: "nickname", value: $("#nickName").val() },
+		        method: "GET",
+		        dataType: "text"
+		    }).done(function(resp) {
+		        if (resp.trim() === "exist") {
+		            $("#result_nickName").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 닉네임입니다.");
+		            nickName_val = false;
+		        } else {
+		            $("#result_nickName").css({"color": "green", "font-size": "12px"}).html("사용가능한 닉네임입니다.");
+		            nickName_val = true;
+		        }
+		    }).fail(function(xhr, status, error) {
+		        console.error("AJAX 요청 실패:", error);
+		    });
 		});
 		
 		$("#phone").on("keyup", function() {
@@ -376,6 +396,28 @@ input[disabled] {
 		        tel_val = true;
 		    }
 		});
+		$("#phone").on("focusout", function() {
+		    if($("#phone") == ""){
+		        $("#result_nickName").html("");
+		        return;
+		    }
+		    $.ajax({
+		        url: "/member/valueCheck.do",
+		        data: { field: "phone", value: $("#phone").val() },
+		        method: "GET",
+		        dataType: "text"
+		    }).done(function(resp) {
+		        if (resp.trim() === "exist") {
+		            $("#result_phone").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 전화번호입니다.");
+		            tel_val = false;
+		        } else {
+		            $("#result_phone").css({"color": "green", "font-size": "12px"}).html("사용가능한 전화번호입니다.");
+		            tel_val = true;
+		        }
+		    }).fail(function(xhr, status, error) {
+		        console.error("AJAX 요청 실패:", error);
+		    });
+		});
 		
 		$("#email").on("keyup", function() {
 		    let regex = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[a-zA-Z]{3,4}$/;
@@ -384,11 +426,27 @@ input[disabled] {
 		        $("#result_email").css({"color": "red", "font-size": "12px"}).html("유효하지 않는 이메일입니다.");
 		        email_val = false;
 		    } else {
-		        console.log("유효한 이메일:", $(this).val());
 		        $("#result_email").css({"color": "green", "font-size": "12px"}).html("유효한 이메일 입니다.");
-		        email_val = true;
+				    $.ajax({
+				        url: "/member/valueCheck.do",
+				        data: { field: "email", value: $("#email").val() },
+				        method: "GET",
+				        dataType: "text"
+				    }).done(function(resp) {
+				        if (resp.trim() === "exist") {
+				            $("#result_email").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 이메일입니다.");
+					        email_val = false;
+				        } else {
+				            $("#result_email").css({"color": "green", "font-size": "12px"}).html("사용가능한 이메일입니다.");
+					        email_val = true;
+				        }
+				    }).fail(function(xhr, status, error) {
+				        console.error("AJAX 요청 실패:", error);
+				    });
 		    }
 		});
+		
+		
 		
 		//회원가입 submit 전 유효성 검사
 		$("#signupForm").on("submit", function(event) {
@@ -396,12 +454,11 @@ input[disabled] {
 				alert("ID는 필수 입력사항입니다.");
 				$("#id").focus();
 				return false;
+			} else if(!id_check_ok) {
+				alert("ID중복검사는 필수 진행사항입니다.");
+				$("#idCheck").focus();
+				return false;
 			} 
-			//else if(!$("#idCheck").val()) {
-			//	alert("ID중복검사는 필수 진행사항입니다.");
-			//	$("#idCheck").focus();
-			//	return false;
-			//} 
 			else if(!$("#pw").val()) {
 				alert("PW는 필수 입력사항입니다.");
 				$("#pw").focus();
@@ -431,8 +488,13 @@ input[disabled] {
 				$("#email").focus();
 				return false;
 			}
-			
-		    if (!(id_val && pw_val && name_val && tel_val && email_val)) {
+			console.log(id_val)
+			console.log(pw_val)
+			console.log(name_val)
+			console.log(tel_val)
+			console.log(email_val)
+
+		    if (!(id_val && pw_val && name_val && tel_val && email_val && nickName_val)) {
 		        alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
 		        return false;
 		    }

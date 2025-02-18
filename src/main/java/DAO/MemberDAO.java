@@ -11,6 +11,7 @@ public interface MemberDAO {
 	int insert(MemberDTO dto) throws Exception;
 	MemberDTO login(String id, String pw) throws Exception;
 	boolean idVali(String id) throws Exception;
+	boolean isDuplicate(String column, String value) throws Exception;
 	int update(MemberDTO dto) throws Exception;
 	int deleteById(int id) throws Exception;
 	
