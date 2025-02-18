@@ -39,10 +39,10 @@ public enum MemberDAOImpl implements MemberDAO {
 	
 	@Override
 	public int insert(MemberDTO dto) throws Exception {
-		String sql = "insert into users "
-				+ "(member_id, user_id, password, name, ssn, email, "
+		String sql = "insert into Members "
+				+ "(member_id, login_id, password, name, ssn, email, "
 				+ "phone, zip_code, address, detail_address, role, reg_date)values "
-				+ "(member_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
+				+ "(member_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'user', sysdate)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getId());
 			pstat.setString(2, dto.getPw());
@@ -53,14 +53,14 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setInt(7, dto.getZipCode());
 			pstat.setString(8, dto.getAddress());
 			pstat.setString(9, dto.getDetailAddress());
-			pstat.setString(10, dto.getRole());
+			
 
 			return pstat.executeUpdate();
 		}
 	}
 	
 	public boolean idVali(String id) throws Exception {// ID검증
-		String sql = "select user_id from users where user_id = ?";
+		String sql = "select login_id from Members where login_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setString(1, id);
 			try (ResultSet rs = pstat.executeQuery()) {
@@ -71,7 +71,7 @@ public enum MemberDAOImpl implements MemberDAO {
 	
 	@Override
 	public MemberDTO login(String inputId, String inputPw) throws Exception {
-		String sql = "select * from users where user_id = ? and password = ?";
+		String sql = "select * from Members where login_id = ? and password = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setString(1, inputId);
 			pstat.setString(2, inputPw);
@@ -90,15 +90,16 @@ public enum MemberDAOImpl implements MemberDAO {
 					
 					MemberDTO member = new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date);
 					return member;
-				}
+
 			}
 		}
 		return null;
+		}
 	}
 
 	@Override
 	public int update(MemberDTO dto) throws Exception {	//mypage수정
-		String sql = "update users set email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where member_id = ?";
+		String sql = "update Members set email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where member_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, dto.getEmail());
 			pstat.setString(2, dto.getPhone());

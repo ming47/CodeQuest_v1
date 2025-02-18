@@ -45,10 +45,10 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 </head>
 <body>
 	<div class="logbox"
-		style="display: <%=(sessionLoginId != null) ? "flex" : "none"%>;">
-		<span><%=(sessionLoginId != null) ? sessionLoginId + " 님 환영합니다" : ""%></span>
+		style="display: ${not empty member.id ? 'flex' : 'none'};">
+		<span>${not empty member.id ? member.id.concat(' 님 환영합니다') : ''}</span>
 		<div class="logbox-buttons">
-			<a href="mypage.jsp">마이페이지</a> <a href="logout.jsp">로그아웃</a>
+			<a href="/member/mypage.do">마이페이지</a> <a href="/member/logout.do">로그아웃</a>
 		</div>
 		<div class="logbox-time">
 			접속시간: <span id="loginTime"></span>
@@ -57,7 +57,7 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 	<script>
 		// 현재 시간 표시 (JST 시간 기준)
 		function updateTime() {
-			let now = new Date();
+			let now = sessionStorage.getItem("login-time")
 			let timeString = now.toLocaleTimeString();
 			document.getElementById("loginTime").innerText = timeString;
 		}

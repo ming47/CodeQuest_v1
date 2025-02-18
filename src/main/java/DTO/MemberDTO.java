@@ -45,7 +45,8 @@ public class MemberDTO {
 		this.role = role;
 		this.regDate = regDate;
 	}
-	public MemberDTO(String email, String phone, int zipCode, String address, String detailAddress) {	//수정
+	public MemberDTO(String id,String email, String phone, int zipCode, String address, String detailAddress) {	//수정
+		this.id = id;
 		this.email = email;
 		this.phone = phone;
 		this.zipCode = zipCode;

@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Common.ConvertURL;
 import Common.SecurityUtil;
@@ -26,7 +27,7 @@ public class MemberController extends HttpServlet {
 		try {
 			String cmd = ConvertURL.of(request);
 			System.out.println(cmd);
-			if (cmd.equals("/member/addForm.do")) {
+			if (cmd.equals("/member/addForm.do")) { // 회원가입 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 			} else if (cmd.equals("/member/idCheck.do")) {
 				String id = request.getParameter("id");
@@ -34,10 +35,12 @@ public class MemberController extends HttpServlet {
 				if (result == true) {
 					response.getWriter().append("exist");
 				}
-			} else if (cmd.equals("/member/mypage.do")) {
+			} else if (cmd.equals("/member/mypage.do")) { // 마이페이지 폼
+				
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
-			} else if (cmd.equals("/update.do")) {
-
+			} else if (cmd.equals("/member/logout.do")) {
+				request.getSession().invalidate();
+				response.sendRedirect("/");
 			} else if (cmd.equals("/delete.do")) {
 
 			} else if (cmd.equals("/validate.do")) {
@@ -68,12 +71,10 @@ public class MemberController extends HttpServlet {
 				String encryptPw = SecurityUtil.hashPassword(pw);
 
 				String name = request.getParameter("name");
-
 				// 주민번호 앞자리,뒷자리 받은 후 DB입력할수있게 폼 완성
 				String ssnFront = request.getParameter("ssnFront");
 				String ssnBack = request.getParameter("ssnBack");
 				String ssn = ssnFront + "-" + ssnBack + "******";
-
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
 
@@ -89,7 +90,6 @@ public class MemberController extends HttpServlet {
 					System.out.println("가입성공!");
 				}
 				response.sendRedirect("/");
-
 			} else if (cmd.equals("/member/login.do")) {
 
 				String id = request.getParameter("id");
@@ -98,7 +98,6 @@ public class MemberController extends HttpServlet {
 				String encryptPw = SecurityUtil.hashPassword(pw);
 
 				MemberDTO member = dao.login(id, encryptPw);
-
 				if (member != null) {
 					System.out.println("로그인성공!");
 					request.getSession().setAttribute("member", member);
@@ -109,7 +108,7 @@ public class MemberController extends HttpServlet {
 
 			} else if (cmd.equals("/printout.do")) { // 출력
 
-			} else if (cmd.equals("/update.do")) { // 수정
+			} else if (cmd.equals("/member/update.do")) { // 수정
 				// 세션에서 가져옴
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 				String id = member.getId();
@@ -123,13 +122,13 @@ public class MemberController extends HttpServlet {
 				String address = request.getParameter("address");
 				String detail_address = request.getParameter("detail_address");
 				try {
-					int result = dao.update(new MemberDTO(email, phone, zipCode, address, detail_address));
-					if(result > 0) {
+					int result = dao.update(new MemberDTO(id,email, phone, zipCode, address, detail_address));
+					if (result > 0) {
 						response.sendRedirect("/member/mypage.jsp");
-					}else {
+					} else {
 						response.sendRedirect("/error.jsp");
 					}
-				}catch(Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					response.sendRedirect("/error.jsp");
 				}
@@ -144,10 +143,5 @@ public class MemberController extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	}
-
-	private MemberDTO MemberDTO() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
