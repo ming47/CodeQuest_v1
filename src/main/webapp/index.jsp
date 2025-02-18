@@ -231,7 +231,7 @@ body {
 
 .boardlist {
 	width: 60%;
-	height:1000px;
+	height:1200px;
 	background: url('/board.jpg') no-repeat center;
 	background-size: cover;
 	padding: 20px;
@@ -241,6 +241,7 @@ body {
 	text-align: center;
 	color:white;
 	margin-bottom: 60px;
+	margin-right: 300px;
 }
 </style>
 </head>
