@@ -16,4 +16,6 @@ public interface QnADAO {
 	List<QnADTO> selectByContentLike(String content) throws Exception;
 	void updateResponseYNById(int id, String responseYN) throws Exception;
 	List<QnADTO> selectByMemberId(int memberId) throws Exception;
+	
+	int getSize() throws Exception;
 }
