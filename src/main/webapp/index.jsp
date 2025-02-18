@@ -5,54 +5,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <title>Responsive Game Portal</title>
-    <style>
-        /* 기본 스타일 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-=======
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<link rel="preconnect " href="https: //fonts.googleapis.com ">
-<link rel="preconnect " href="https: //fonts.gstatic.com " crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
-	href="https: //fonts.googleapis.com /css2 ?family =Jua &family =Press+Start+2P
-   &display =swap "
-	rel="stylesheet ">
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
+	rel="stylesheet">
 <title>Responsive Game Portal</title>
 <style>
-
-	*{
-
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-body {
-	background-color: #2b2b27;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
 }
 
-/* 컨테이너 */
+body {
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+	background: url('/allback.jpg') no-repeat center;
+	background-size: cover;
+	background-attachment: fixed;
+	align-items: stretch;
+}
+
 .container {
 	width: 100%;
 	max-width: 1660px;
@@ -61,25 +39,26 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background: white;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 	border-radius: 10px;
 }
 
-/* Header & Footer */
 .header, .footer {
 	width: 100%;
-	height: 80px;
-	background: #dedbd1;
+	height: 100px;
+	pading:20px;
+	background: #1e201d;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 20px;
-	color: white;
-	font-weight: bold;
+	color: #b4c28a;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 15px;
 }
 
-/* 네비게이션 */
 .navi {
 	display: flex;
 	align-items: center;
@@ -89,26 +68,28 @@ body {
 
 .logo {
 	font-size: 24px;
-	color: #5c594c;
+	color: #b4c28a;
 }
 
 .navi ul {
 	list-style: none;
 	display: flex;
-	gap: 20px;
 }
 
 .navi ul li {
+	width: 130px;
+	height:30px;
 	padding: 10px 15px;
 	background: white;
-	color: #af8652;
+	color: #b4c28a;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
+	margin: 20px;
 }
 
 .navi ul li:hover {
-	background: #453724;
+	background: #81a5bf;
 	color: white;
 }
 
@@ -130,30 +111,29 @@ body {
 	gap: 5%;
 }
 
-/* 게임 리스트 (가로 스크롤 복구) */
+
 .gameList {
-	display: flex;
-	overflow-x: auto;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	gap: 20px;
 	padding: 10px;
 	width: 70%;
-	scroll-snap-type: x mandatory;
 	white-space: nowrap;
 	min-height: 320px;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-weight: 400;
 }
 
-.gameList::-webkit-scrollbar {
-	height: 8px;
+.gameList h3 {
+	font-size: 16px;
+	margin: 10px;
 }
 
-.gameList::-webkit-scrollbar-thumb {
-	background: #007bff;
-	border-radius: 10px;
-}
-
-.gameList::-webkit-scrollbar-track {
-	background: #ddd;
-	border-radius: 10px;
+.gameList p {
+	font-size: 14px;
+	margin: 10px;
 }
 
 .game {
@@ -161,7 +141,6 @@ body {
 	background: white;
 	padding: 15px;
 	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	scroll-snap-align: start;
 	transition: transform 0.3s ease-in-out;
@@ -178,63 +157,108 @@ body {
 }
 
 .game button {
-	width: 100%;
+	width: 170px;
+	height: 60px;
 	padding: 10px;
-	background-color: #8a8676;
 	color: white;
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background 0.3s;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	background: url('/gamebtn.png') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	background-size: cover;
 }
 
 .game button:hover {
-	background: #453724;
+	transform: scale(1.2);
 }
 
-/* 로그인 박스 */
 .loginbox {
 	width: 15%;
-	background: #dedbd1;
+	height: 80%;
+	background: url('/login.jpg') no-repeat center;
+	background-size: 10 10;
 	padding: 20px;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	min-height: 320px;
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
-.loginbtn:hover {
+.loginbox h2 {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 10px;
+	color: #2f2b2b;
+}
+
+.loginbox input {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 5px;
+}
+
+.loginbox>loginBtn {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size:80px;
+	background: #919190;
+	color:white;
+}
+
+.loginBtn:hover {
 	background: #919190
 }
 
-/* 게시판 */
+.login-links {
+	margin: 20px;
+}
+
 .boardlist {
 	width: 60%;
-	background: #f5f3ed;
+	height:1200px;
+	background: url('/board.jpg') no-repeat center;
+	background-size: cover;
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	margin-top: 20px;
 	text-align: center;
+	color:white;
+	margin-bottom: 60px;
+	margin-right: 300px;
 }
 </style>
 </head>
 <body>
 	<div class="container">
-		<!-- 헤더 -->
+
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul>
-					<li>Home</li>
-					<li>Game</li>
-					<li>Board</li>
-					<li>Service</li>
+					<li align="center">Home</li>
+					<li align="center">Game</li>
+					<li align="center">Board</li>
+					<li align="center">Service</li>
 				</ul>
 			</div>
-			<div class="logbox-container">
-				<%@ include file="logbox.jsp"%>
-			</div>
+			<%@ include file="logbox.jsp"%>
 		</div>
 
 		<!-- 본문 -->
@@ -280,16 +304,13 @@ body {
 
 			<div class="loginbox">
 				<h2>로그인</h2>
-				
 				<input type="text" id="id" placeholder="아이디"> 
 				<input type="password" id="pw" placeholder="비밀번호">
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
+
 				<div class="login-links">
-					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
-					
-				</div>
-				<div class="social-login">
-					<button class="kakao">🟡 Kakao 로그인</button>
+					<a href="/member/addForm.do">회원가입</a><br>
+					<br> <a href="/member/findMember.do">ID/PW 찾기</a>
 				</div>
 			</div>
 		</div>
@@ -309,7 +330,6 @@ body {
 
 	<script>
 		$(document).ready(function() {
-			let now;
 			$("#loginBtn").click(function() {
 				let userId = $("#id").val().trim();
 				let userPw = $("#pw").val().trim();
@@ -318,7 +338,6 @@ body {
 					alert("아이디와 비밀번호를 입력하세요!");
 					return false;
 				}
-
 				$.ajax({
 					url : "/member/login.do",
 					method : "POST",
@@ -330,8 +349,6 @@ body {
 				}).done(function(resp) {
 					if (resp.trim() === "success") {
 						$(".loginbox").fadeOut();
-
-						// logbox.jsp를 다시 불러와 업데이트
 						$(".logbox-container").load("logbox.jsp", function() {
 							$(".logbox").fadeIn();
 						});
@@ -344,5 +361,8 @@ body {
 			});
 		});
 	</script>
+	
+	
+	
 </body>
 </html>
