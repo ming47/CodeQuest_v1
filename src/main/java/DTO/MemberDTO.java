@@ -48,6 +48,20 @@ public class MemberDTO {
 		this.role = role;
 		this.regDate = regDate;
 	}
+		public MemberDTO(String id, String name, String ssn, String email, String phone, int zipCode,
+			String address, String detailAddress, String role, Timestamp regDate ) { //성별로 찾는다
+		super();
+		this.id = id;
+		this.name = name;
+		this.ssn = ssn;
+		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address = address;
+		this.detailAddress = detailAddress;
+		this.role = role;
+		this.regDate = regDate;
+	}
 
 	public MemberDTO() {
 		super();
