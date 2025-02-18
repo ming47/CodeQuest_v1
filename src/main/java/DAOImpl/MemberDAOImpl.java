@@ -97,9 +97,19 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int update(MemberDTO dto) throws Exception {
+	public int update(MemberDTO dto) throws Exception {	//mypage수정
+		String sql = "update users set email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where member_id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, dto.getEmail());
+			pstat.setString(2, dto.getPhone());
+			pstat.setInt(3, dto.getZipCode());
+			pstat.setString(4, dto.getAddress());
+			pstat.setString(5, dto.getDetailAddress());
+			pstat.setInt(6, dto.getMemberId());
+			
+			return pstat.executeUpdate();
+		}
 		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override

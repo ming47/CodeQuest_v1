@@ -23,12 +23,12 @@ public class MemberController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
-		try {		
+		try {
 			String cmd = ConvertURL.of(request);
 			System.out.println(cmd);
 			if (cmd.equals("/member/addForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
-			} else if(cmd.equals("/member/idCheck.do")) {
+			} else if (cmd.equals("/member/idCheck.do")) {
 				String id = request.getParameter("id");
 				boolean result = dao.idVali(id);
 				if (result == true) {
@@ -45,9 +45,8 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/shortvalid.do")) {
 
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-
 
 		}
 
@@ -57,59 +56,83 @@ public class MemberController extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		
-		try {		
+
+		try {
 			String cmd = ConvertURL.of(request);
 			System.out.println(cmd);
 			if (cmd.equals("/member/add.do")) {
-				
+
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
-				
+
 				String encryptPw = SecurityUtil.hashPassword(pw);
-				
+
 				String name = request.getParameter("name");
-				
-				//주민번호 앞자리,뒷자리 받은 후 DB입력할수있게 폼 완성
+
+				// 주민번호 앞자리,뒷자리 받은 후 DB입력할수있게 폼 완성
 				String ssnFront = request.getParameter("ssnFront");
 				String ssnBack = request.getParameter("ssnBack");
-				String ssn = ssnFront + "-"+ssnBack+"******";
-				
+				String ssn = ssnFront + "-" + ssnBack + "******";
+
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
-				
+
 				int postcode = Integer.parseInt(request.getParameter("postcode"));
 				String address1 = request.getParameter("address1");
 				String address2 = request.getParameter("address2");
-				
-				
-				int result = dao.insert(new MemberDTO(id,encryptPw,name,ssn,email,phone,postcode,address1,address2,null)); //role은 정해진게없어서 null
-				if(result > 0) {
+
+				int result = dao.insert(
+						new MemberDTO(id, encryptPw, name, ssn, email, phone, postcode, address1, address2, null)); // role은
+																													// 정해진게없어서
+																													// null
+				if (result > 0) {
 					System.out.println("가입성공!");
-				}	
+				}
 				response.sendRedirect("/");
 
-			} else if(cmd.equals("/member/login.do")) {
-				
-		        String id = request.getParameter("id");
-		        String pw = request.getParameter("pw");
-		        
+			} else if (cmd.equals("/member/login.do")) {
+
+				String id = request.getParameter("id");
+				String pw = request.getParameter("pw");
+
 				String encryptPw = SecurityUtil.hashPassword(pw);
-				
+
 				MemberDTO member = dao.login(id, encryptPw);
-				
-				if(member != null) {
+
+				if (member != null) {
 					System.out.println("로그인성공!");
 					request.getSession().setAttribute("member", member);
 					response.getWriter().write("success");
 				} else {
-				response.getWriter().write("fail");
+					response.getWriter().write("fail");
 				}
-				
-			} else if (cmd.equals("/printout.do")) {  //출력
 
-			} else if (cmd.equals("/update.do")) {
-				
+			} else if (cmd.equals("/printout.do")) { // 출력
+
+			} else if (cmd.equals("/update.do")) { // 수정
+				// 세션에서 가져옴
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				String id = member.getId();
+				if (id == null) {
+					response.sendRedirect("/member/login.do");
+					return;
+				}
+				String email = request.getParameter("email");
+				String phone = request.getParameter("phone");
+				int zipCode = Integer.parseInt(request.getParameter("postcode"));
+				String address = request.getParameter("address");
+				String detail_address = request.getParameter("detail_address");
+				try {
+					int result = dao.update(new MemberDTO(email, phone, zipCode, address, detail_address));
+					if(result > 0) {
+						response.sendRedirect("/member/mypage.jsp");
+					}else {
+						response.sendRedirect("/error.jsp");
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					response.sendRedirect("/error.jsp");
+				}
 			} else if (cmd.equals("/delete.do")) {
 
 			} else if (cmd.equals("/validate.do")) {
@@ -117,10 +140,14 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/shortvalid.do")) {
 
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
 
+	private MemberDTO MemberDTO() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
