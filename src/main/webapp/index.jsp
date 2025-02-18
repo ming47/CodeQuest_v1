@@ -46,7 +46,7 @@ body {
 .header, .footer {
 	width: 100%;
 	height: 100px;
-	pading:15px;
+	pading:20px;
 	background: #1e201d;
 	display: flex;
 	align-items: center;
