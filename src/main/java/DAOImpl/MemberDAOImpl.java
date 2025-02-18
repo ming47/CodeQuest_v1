@@ -40,28 +40,29 @@ public enum MemberDAOImpl implements MemberDAO {
 	
 	@Override
 	public int insert(MemberDTO dto) throws Exception {
-		String sql = "insert into users "
-				+ "(member_id, user_id, password, name, ssn, email, "
+		String sql = "insert into members "
+				+ "(member_id, login_id, password, name, nickname, ssn, email, "
 				+ "phone, zip_code, address, detail_address, role, reg_date)values "
-				+ "(member_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
+				+ "(member_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getId());
 			pstat.setString(2, dto.getPw());
 			pstat.setString(3, dto.getName());
-			pstat.setString(4, dto.getSsn());
-			pstat.setString(5, dto.getEmail());
-			pstat.setString(6, dto.getPhone());
-			pstat.setInt(7, dto.getZipCode());
-			pstat.setString(8, dto.getAddress());
-			pstat.setString(9, dto.getDetailAddress());
-			pstat.setString(10, dto.getRole());
+			pstat.setString(4, dto.getNickName());
+			pstat.setString(5, dto.getSsn());
+			pstat.setString(6, dto.getEmail());
+			pstat.setString(7, dto.getPhone());
+			pstat.setInt(8, dto.getZipCode());
+			pstat.setString(9, dto.getAddress());
+			pstat.setString(10, dto.getDetailAddress());
+			pstat.setString(11, dto.getRole());
 
 			return pstat.executeUpdate();
 		}
 	}
 	
 	public boolean idVali(String id) throws Exception {// ID검증
-		String sql = "select user_id from users where user_id = ?";
+		String sql = "select user_id from members where user_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setString(1, id);
 			try (ResultSet rs = pstat.executeQuery()) {
@@ -70,9 +71,20 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 	
+	public boolean isDuplicate(String column, String value) throws Exception {
+	    String sql = "select " + column + " from members where " + column + " = ?";
+	    try (Connection con = this.getConnection(); 
+	         PreparedStatement pstat = con.prepareStatement(sql)) {
+	        pstat.setString(1, value);
+	        try (ResultSet rs = pstat.executeQuery()) {
+	            return rs.next();
+	        }
+	    }
+	}
+	
 	@Override
 	public MemberDTO login(String inputId, String inputPw) throws Exception {
-		String sql = "select * from users where user_id = ? and password = ?";
+		String sql = "select * from members where user_id = ? and password = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setString(1, inputId);
 			pstat.setString(2, inputPw);
@@ -80,6 +92,7 @@ public enum MemberDAOImpl implements MemberDAO {
 				if (rs.next()) {
 					String id = rs.getString("user_id");
 					String name = rs.getString("name");
+					String nickName = rs.getString("nickname");
 					String ssn = rs.getString("ssn");
 					String email = rs.getString("email");
 					String phone = rs.getString("phone");
@@ -89,7 +102,7 @@ public enum MemberDAOImpl implements MemberDAO {
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
 					
-					MemberDTO member = new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date);
+					MemberDTO member = new MemberDTO(id,name,nickName,ssn,email,phone,postcode,address,detail_address,role,date);
 					return member;
 
 			}
