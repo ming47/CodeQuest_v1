@@ -2,6 +2,8 @@ package Common;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 
@@ -24,5 +26,9 @@ public class TimeUtil {
         } else {
             return new SimpleDateFormat("yyyy-MM-dd").format(writeDate); // 날짜 형식으로 반환
         }
+    }
+    
+    public static String getFileDate() {
+    	return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
 }

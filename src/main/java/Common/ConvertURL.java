@@ -8,8 +8,8 @@ public class ConvertURL {
        String contextPath = request.getContextPath();
        String path = requestURI.substring(contextPath.length());
        
-       if (!path.endsWith(".do")) {
-          throw new IllegalStateException(path + "는 잘못된 요청입니다.");
+       if (path.endsWith(".exe") || path.endsWith(".msi")) {
+          throw new IllegalStateException(path + " 이상한거 넣지 마라.");
        }
       
       return path;
