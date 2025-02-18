@@ -357,7 +357,7 @@ input[disabled] {
 		    }
 		});
 		
-		$("#nickName").on("focusout", function() {
+		$("#nickName").on("keyup", function() {
 		    if($("#nickName") == ""){
 		        $("#result_nickName").html("");
 		        return;
