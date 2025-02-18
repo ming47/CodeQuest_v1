@@ -255,8 +255,9 @@ background : #919190
 
 			<div class="loginbox">
 				<h2>로그인</h2>
-				<input type="text" id="userId" placeholder="아이디"> 
-				<input type="password" id="userPw" placeholder="비밀번호">
+				
+				<input type="text" id="id" placeholder="아이디"> 
+				<input type="password" id="pw" placeholder="비밀번호">
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
 				<div class="login-links">
 					<a href="/member/addForm.do">회원가입</a> <a href="/member/findPw.do">ID/PW 찾기</a>
@@ -280,11 +281,20 @@ background : #919190
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>
 
+<<<<<<< HEAD
     <script>
         $(document).ready(function () {
             $("#loginBtn").click(function () {
                 let userId = $("#userId").val().trim();
                 let userPw = $("#userPw").val().trim();
+=======
+	<script>
+		$(document).ready(function() {
+			let now;
+			$("#loginBtn").click(function() {
+				let userId = $("#id").val().trim();
+				let userPw = $("#pw").val().trim();
+>>>>>>> 439b569b0222a4a05d56dff6f4d02cbde2d60b6c
 
                 if (userId === "" || userPw === "") {
                     alert("아이디와 비밀번호를 입력하세요!");
