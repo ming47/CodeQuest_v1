@@ -3,31 +3,57 @@ package DTO;
 import java.sql.Timestamp;
 
 public class BoardDTO {
-	private int boardId;
+	private int board_id;
 	private String writer;
 	private String title;
-	private Timestamp regDate;
+	private Timestamp reg_date;
 	private String contents;
+	private int viewCount;
+	private int replyCount;
+
 
 	public BoardDTO() {
 		super();
 	}
 
-	public BoardDTO(int boardId, String writer, String title, Timestamp regDate, String contents) {
+	public BoardDTO(int board_id, String writer, String title, Timestamp reg_date, String contents ,int viewCount ,int replyCount) {
 		super();
-		this.boardId = boardId;
+		this.board_id = board_id;
 		this.writer = writer;
 		this.title = title;
-		this.regDate = regDate;
+		this.reg_date = reg_date;
 		this.contents = contents;
+		this.viewCount = viewCount;
+        this.replyCount = replyCount;
+
+	}
+	
+	public BoardDTO(String title,  String contents ,int board_id) {
+
+		this.board_id = board_id;
+	
+		this.title = title;
+
+		this.contents = contents;
+
+
+	}
+	
+	public BoardDTO(int board_id,String title,String writer, String contents ) {
+
+		this.board_id = board_id;
+		this.title = title;
+		this.writer = writer;
+		this.contents = contents;
+
+
+	}
+	public int getBoard_id() {
+		return board_id;
 	}
 
-	public int getBoardId() {
-		return boardId;
-	}
-
-	public void setBoardId(int boardId) {
-		this.boardId = boardId;
+	public void setBoard_id(int board_id) {
+		this.board_id = board_id;
 	}
 
 	public String getWriter() {
@@ -46,12 +72,12 @@ public class BoardDTO {
 		this.title = title;
 	}
 
-	public Timestamp getRegDate() {
-		return regDate;
+	public Timestamp getReg_date() {
+		return reg_date;
 	}
 
-	public void setReg_date(Timestamp regDate) {
-		this.regDate = regDate;
+	public void setReg_date(Timestamp reg_date) {
+		this.reg_date = reg_date;
 	}
 
 	public String getContents() {
@@ -61,4 +87,14 @@ public class BoardDTO {
 	public void setContens(String contents) {
 		this.contents = contents;
 	}
+	
+	
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	
 }
