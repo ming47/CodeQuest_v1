@@ -224,6 +224,8 @@ input[disabled] {
 					<input type="text" name="id" id="id" placeholder="아이디를 입력하세요">
 				</div>
 				<span id="result_id"></span> 
+				<br>
+				<span id="result_id_dupl"></span> 
 				<input type="password" name="pw" id="pw" placeholder="패스워드를 입력하세요"> 
 				<span id="result_pw"></span> 
 				<input type="password" name="pwr" id="pwr" placeholder="패스워드를 다시 입력하세요">
@@ -302,33 +304,25 @@ input[disabled] {
 		        id_val = false;
 		    } else {
 		        $("#result_id").css({"color": "green", "font-size": "12px"}).html("유효한 ID입니다.");
-		        id_val = true;
-		    }
-		});
-		$("#id").on("focusout", function() {
-		    if($("#id") == ""){
-		        $("#result_id").html("");
-		        return;
-		    }
-		    $.ajax({
-		        url: "/member/valueCheck.do",
-		        data: { field: "login_id", value: $("#id").val() },
-		        method: "GET",
-		        dataType: "text"
-		    }).done(function(resp) {
-		        if (resp.trim() === "exist") {
-		            $("#result_id").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 ID입니다.");
-		            id_val = false;
-		        } else {
-		            $("#result_id").css({"color": "green", "font-size": "12px"}).html("사용가능한 ID입니다.");
-		            id_val = true;
-		        }
-		    }).fail(function(xhr, status, error) {
-		        console.error("AJAX 요청 실패:", error);
-		    });
-		});
-		
-		
+			    $.ajax({
+			        url: "/member/valueCheck.do",
+			        data: { field: "login_id", value: $("#id").val() },
+			        method: "GET",
+			        dataType: "text"
+			    }).done(function(resp) {
+			        if (resp.trim() === "exist") {
+			            $("#result_id_dupl").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 ID입니다");
+			            id_val = false;
+			        } else {
+			            $("#result_id_dupl").css({"color": "green", "font-size": "12px"}).html("사용가능한 ID입니다.");
+			            id_val = true;
+			        }
+			    }).fail(function(xhr, status, error) {
+			        console.error("AJAX 요청 실패:", error);
+			    });
+	    }   
+	});
+
 		$("#pw").on("keyup", function() {
 		    let regex = /^[A-Za-z0-9_]{8,}$/;
 		    let vali = regex.exec($(this).val());
@@ -362,6 +356,7 @@ input[disabled] {
 		        name_val = true;
 		    }
 		});
+		
 		$("#nickName").on("focusout", function() {
 		    if($("#nickName") == ""){
 		        $("#result_nickName").html("");
@@ -392,32 +387,25 @@ input[disabled] {
 		        $("#result_phone").css({"color": "red", "font-size": "12px"}).html("유효하지 않는 전화번호입니다.");
 		        tel_val = false;
 		    } else {
-		        $("#result_phone").css({"color": "green", "font-size": "12px"}).html("유효한 전화번호 입니다.");
-		        tel_val = true;
-		    }
-		});
-		$("#phone").on("focusout", function() {
-		    if($("#phone") == ""){
-		        $("#result_nickName").html("");
-		        return;
-		    }
-		    $.ajax({
-		        url: "/member/valueCheck.do",
-		        data: { field: "phone", value: $("#phone").val() },
-		        method: "GET",
-		        dataType: "text"
-		    }).done(function(resp) {
-		        if (resp.trim() === "exist") {
-		            $("#result_phone").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 전화번호입니다.");
-		            tel_val = false;
-		        } else {
-		            $("#result_phone").css({"color": "green", "font-size": "12px"}).html("사용가능한 전화번호입니다.");
-		            tel_val = true;
-		        }
-		    }).fail(function(xhr, status, error) {
-		        console.error("AJAX 요청 실패:", error);
-		    });
-		});
+		        $("#result_phone").css({"color": "green", "font-size": "12px"}).html("유효한 전화번호입니다.");
+			    $.ajax({
+			        url: "/member/valueCheck.do",
+			        data: { field: "phone", value: $("#phone").val() },
+			        method: "GET",
+			        dataType: "text"
+			    }).done(function(resp) {
+			        if (resp.trim() === "exist") {
+			            $("#result_phone").css({"color": "red", "font-size": "12px"}).html("이미 사용중인 전화번호입니다.");
+			            tel_val = false;
+			        } else {
+			            $("#result_phone").css({"color": "green", "font-size": "12px"}).html("사용가능한 전화번호입니다");
+			            tel_val = true;
+			        }
+			    }).fail(function(xhr, status, error) {
+			        console.error("AJAX 요청 실패:", error);
+			    });
+	    }   
+	});
 		
 		$("#email").on("keyup", function() {
 		    let regex = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[a-zA-Z]{3,4}$/;
@@ -446,20 +434,13 @@ input[disabled] {
 		    }
 		});
 		
-		
-		
 		//회원가입 submit 전 유효성 검사
 		$("#signupForm").on("submit", function(event) {
 			if(!$("#id").val()) {
 				alert("ID는 필수 입력사항입니다.");
 				$("#id").focus();
 				return false;
-			} else if(!id_check_ok) {
-				alert("ID중복검사는 필수 진행사항입니다.");
-				$("#idCheck").focus();
-				return false;
-			} 
-			else if(!$("#pw").val()) {
+			} else if(!$("#pw").val()) {
 				alert("PW는 필수 입력사항입니다.");
 				$("#pw").focus();
 				return false;
@@ -488,12 +469,8 @@ input[disabled] {
 				$("#email").focus();
 				return false;
 			}
-			console.log(id_val)
-			console.log(pw_val)
-			console.log(name_val)
-			console.log(tel_val)
-			console.log(email_val)
-
+			console.log(id_val,id_val_dupl,pw_val,name_val)
+			
 		    if (!(id_val && pw_val && name_val && tel_val && email_val && nickName_val)) {
 		        alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
 		        return false;
