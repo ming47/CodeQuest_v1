@@ -24,8 +24,11 @@
 body {
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	height: 100vh;
+	background: url('/allback.jpg') no-repeat center;
+	background-size: cover;
+	background-attachment: fixed;
+	align-items: stretch;
 }
 
 .container {
@@ -38,13 +41,12 @@ body {
 	align-items: center;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 	border-radius: 10px;
-	background: url('/allback.jpg') no-repeat center;
-	background-size: cover;
 }
 
 .header, .footer {
 	width: 100%;
-	height: 80px;
+	height: 100px;
+	pading:15px;
 	background: #1e201d;
 	display: flex;
 	align-items: center;
@@ -54,7 +56,7 @@ body {
 	font-family: "Press Start 2P", serif;
 	font-weight: 400;
 	font-style: normal;
-	font-size: 12px;
+	font-size: 15px;
 }
 
 .navi {
@@ -72,16 +74,18 @@ body {
 .navi ul {
 	list-style: none;
 	display: flex;
-	gap: 20px;
 }
 
 .navi ul li {
+	width: 130px;
+	height:30px;
 	padding: 10px 15px;
 	background: white;
-	color: #debe85;
+	color: #b4c28a;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: 0.3s ease-in-out;
+	margin: 20px;
 }
 
 .navi ul li:hover {
@@ -107,14 +111,13 @@ body {
 	gap: 5%;
 }
 
-/* 게임 리스트 (가로 스크롤 복구) */
+
 .gameList {
-	display: flex;
-	overflow-x: auto;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	gap: 20px;
 	padding: 10px;
 	width: 70%;
-	scroll-snap-type: x mandatory;
 	white-space: nowrap;
 	min-height: 320px;
 	font-family: "Press Start 2P", serif;
@@ -131,20 +134,6 @@ body {
 .gameList p {
 	font-size: 14px;
 	margin: 10px;
-}
-
-.gameList::-webkit-scrollbar {
-	height: 8px;
-}
-
-.gameList::-webkit-scrollbar-thumb {
-	background: #007bff;
-	border-radius: 10px;
-}
-
-.gameList::-webkit-scrollbar-track {
-	background: #ddd;
-	border-radius: 10px;
 }
 
 .game {
@@ -191,6 +180,7 @@ body {
 
 .loginbox {
 	width: 15%;
+	height: 80%;
 	background: url('/login.jpg') no-repeat center;
 	background-size: 10 10;
 	padding: 20px;
@@ -219,13 +209,16 @@ body {
 	font-family: "Jua", serif;
 	font-weight: 400;
 	font-style: normal;
-	margin: 3px;
+	margin: 5px;
 }
 
-.loginbox>.loginBtn {
+.loginbox>loginBtn {
 	font-family: "Jua", serif;
 	font-weight: 400;
 	font-style: normal;
+	font-size:80px;
+	background: #919190;
+	color:white;
 }
 
 .loginBtn:hover {
@@ -238,8 +231,9 @@ body {
 
 .boardlist {
 	width: 60%;
-	height:25%;
-	background: url('/boardback.jpg') no-repeat center;
+	height:1000px;
+	background: url('/board.jpg') no-repeat center;
+	background-size: cover;
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -257,10 +251,10 @@ body {
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul>
-					<li>Home</li>
-					<li>Game</li>
-					<li>Board</li>
-					<li>Service</li>
+					<li align="center">Home</li>
+					<li align="center">Game</li>
+					<li align="center">Board</li>
+					<li align="center">Service</li>
 				</ul>
 			</div>
 			<%@ include file="logbox.jsp"%>
@@ -303,7 +297,7 @@ body {
 					<img src="game6.jpg">
 					<h3>Game 6</h3>
 					<p>Sports</p>
-					<button></button>
+					<button>Play</button>
 				</div>
 			</div>
 
@@ -335,16 +329,38 @@ body {
 	<script>
 		$(document).ready(function() {
 			$("#loginBtn").click(function() {
-				let userId = $("#userId").val();
-				let userPw = $("#userPw").val();
-				if (userId && userPw) {
-					$(".logbox").fadeIn().find("#username").text(userId);
-					$(".loginbox").fadeOut();
-				} else {
+				let userId = $("#userId").val().trim();
+				let userPw = $("#userPw").val().trim();
+
+				if (userId === "" || userPw === "") {
 					alert("아이디와 비밀번호를 입력하세요!");
+					return false;
 				}
+				$.ajax({
+					url : "/member/login.do",
+					method : "POST",
+					data : {
+						id : userId,
+						pw : userPw
+					},
+					dataType : "text"
+				}).done(function(resp) {
+					if (resp.trim() === "success") {
+						$(".loginbox").fadeOut();
+						$(".logbox-container").load("logbox.jsp", function() {
+							$(".logbox").fadeIn();
+						});
+					} else {
+						$("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");
+					}
+				}).fail(function(xhr, status, error) {
+					console.log("로그인 AJAX 실패:", error);
+				});
 			});
 		});
 	</script>
+	
+	
+	
 </body>
 </html>
