@@ -90,10 +90,11 @@ public enum MemberDAOImpl implements MemberDAO {
 					
 					MemberDTO member = new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date);
 					return member;
-				}
+
 			}
 		}
 		return null;
+		}
 	}
 
 	@Override
