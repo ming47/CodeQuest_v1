@@ -171,5 +171,11 @@ public enum QnADAOImpl implements QnADAO {
 		}
 	}
 
+	@Override
+	public List<QnADTO> selectByMemberId(int memberId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

@@ -11,7 +11,6 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public List<BlackListDTO> selectAll() throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -23,7 +22,9 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public int insert(BlackListDTO dto) throws Exception {
-		// TODO Auto-generated method stub
+		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID, END_DATE) VALUES(BLACK_ID_SEQ.NEXTVAL, ?, ?)";
+		
+		
 		return 0;
 	}
 
