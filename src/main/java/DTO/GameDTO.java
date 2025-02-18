@@ -1,5 +1,8 @@
 package DTO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class GameDTO {
 	
 	private int gameId;
@@ -27,5 +30,11 @@ public class GameDTO {
 
 	public void setGameName(String gameName) {
 		this.gameName = gameName;
+	}
+	
+	public static GameDTO of(ResultSet rs) throws SQLException {
+		return new GameDTO(
+				rs.getInt("GAME_ID"),
+				rs.getString("GAME_NAME"));
 	}
 }

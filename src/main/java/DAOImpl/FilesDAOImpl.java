@@ -22,7 +22,6 @@ public enum FilesDAOImpl implements FilesDAO {
 
 	@Override
 	public int insert(FilesDTO dto) throws Exception {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
