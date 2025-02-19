@@ -10,8 +10,8 @@ public interface ScoreDAO {
 	int insert(ScoreDTO dto) throws Exception;
 	int deleteById(int dto) throws Exception;
 	
-	List<ScoreDTO> selectByGameId() throws Exception;  // 게임별 점수
+	List<ScoreDTO> selectByGameId(int gameId) throws Exception;  // 게임별 점수
 	List<ScoreDTO> avergeByGameIdGroupByMemberId() throws Exception; // 게임 승수 조회
-	List<ScoreDTO> selectByMemberId() throws Exception; // 유저 개인의 게임 점수
-	List<ScoreDTO> selectByMemberIdAndGameId() throws Exception;	// 유저 개인의 게임 하나의 점수
+	List<ScoreDTO> selectByMemberId(int memberId) throws Exception; // 유저 개인의 게임 점수
+	List<ScoreDTO> selectByMemberIdAndGameId(int memberId, int gameId) throws Exception;	// 유저 개인의 게임 하나의 점수
 }
