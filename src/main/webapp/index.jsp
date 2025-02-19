@@ -489,28 +489,37 @@ body {
 	        });
 	    });
 	    function loadRanking(gameId) {
+	    	console.log(gameId);
+	    	
 	        $.ajax({
-	            url: "/score/list/game.do",
-	            method: "GET",
-	            data: { id: gameId },
+	            url: "/score/list/game.do?id=" + gameId,
+	            type: "GET",
 	            dataType: "json"
 	        }).done(function(data) {
-	            let rankingList = $("#game" + gameId);
-	            if (rankingList.length === 0) {
-	                console.error("랭킹 리스트를 찾을 수 없습니다:", gameId);
-	                return;
-	            }
+	        	console.log(data);
+	            let rankingList = $('.ranking-list');
 
-	            rankingList.empty();
-
+	            rankingList.html('');
 	            if (!data || data.length === 0) {
 	                rankingList.append("<li>랭킹 데이터 없음</li>");
 	                return;
 	            }
-
+	            
+	            for (let i = 0; i < 10; i++) {
+					console.log(data[i]);
+	            	
+	            	const li = $('<li>').html(i + 1 + '위 ' + data[i].user + '(' + data[i].score + '점)');
+	            	$('.ranking-list').append(li);
+	            }
+/*
 	            $.each(data, function(index, player) {
-	                rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
+	            	console.log(index, player);
+	            	
+	            	const li = $('<li>').html(index + 1 + '위 ' + player.user + '(' + player.score + '점)');
+	            	$('.ranking-list').append(li);
+	               // rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
 	            });
+	            */
 	        }).fail(function(xhr, status, error) {
 	            console.log("랭킹 데이터 불러오기 실패:", error);
 	        });
@@ -530,6 +539,7 @@ body {
 	        // ✅ "game1" → "1"로 변환
 	        if (gameId.startsWith("game")) {
 	            gameId = gameId.replace("game", "");
+	            gameId = Number(80000 + gameId);
 	        }
 
 	        loadRanking(gameId);
