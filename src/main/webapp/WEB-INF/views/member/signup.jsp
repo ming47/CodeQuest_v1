@@ -11,11 +11,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
-	rel="stylesheet">
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <title>회원가입</title>
 <style>
@@ -47,7 +44,7 @@ body {
 .header, .footer {
 	width: 100%;
 	height: 100px;
-	pading:20px;
+	padding:20px;
 	background: #1e201d;
 	display: flex;
 	align-items: center;

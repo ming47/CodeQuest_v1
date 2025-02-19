@@ -135,44 +135,7 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/printout.do")) { // 출력
 
 			} else if (cmd.equals("/member/update.do")) { // 수정
-				// 세션에서 가져옴
-				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
-				String id = member.getId();
-				if (id == null) {
-					response.sendRedirect("/member/login.do");
-					return;
-				}
-//				String name = request.getParameter("name");
-//				String ssn = request.getParameter("ssn");
-				String address = request.getParameter("address");
-//				String role = request.getParameter("role");
-//				Timestamp regDate = request.getParameter("regDate");
 				
-				String nickname = request.getParameter("nickname");
-				String email = request.getParameter("email");
-				String phone = request.getParameter("phone");
-				int zipCode = Integer.parseInt(request.getParameter("postcode"));
-				String detail_address = request.getParameter("detail_address");
-				
-				try {
-				    int result = dao.update(new MemberDTO(id, nickname, email, phone, zipCode, address, detail_address));
-				    if (result > 0) {
-				        // 새로운 MemberDTO 객체 생성
-				        MemberDTO updatedMember = new MemberDTO(id, nickname, email, phone, zipCode, address, detail_address);
-				        
-				        // 세션의 member 정보 업데이트
-				        request.getSession().setAttribute("member", updatedMember);
-				        
-				        response.sendRedirect("/member/mypage.do");
-				    } else {
-				        response.sendRedirect("/error123.jsp");
-				    }
-				} catch (Exception e) {
-				    e.printStackTrace();
-				    System.out.println("수정 중 발생한 오류: " + e.getMessage());
-				    e.getStackTrace();
-				    response.sendRedirect("/error123.jsp");
-				}
 			} else if (cmd.equals("/delete.do")) {
 
 			} else if (cmd.equals("/validate.do")) {

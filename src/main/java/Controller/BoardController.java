@@ -138,7 +138,7 @@ public class BoardController extends HttpServlet {
 				BoardDTO dto = dao.selectById(boardId);
 				
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("dto");
-				String user = member.getId();
+				String user = member.loginId();
 
 				
 				int result = dao.deleteById(boardId);
@@ -192,7 +192,7 @@ public class BoardController extends HttpServlet {
 				// 사용자가 파일을 업로드하면, 이 객체가 해당 파일을 서버의 특정 경로에 저장해줍니다.
 
 				int seq = dao.getNextVal(); // 게시글을 작성시 Board 테이블의id값을 가져오는 메서드
-				String writer = dto.getId();
+				String writer = dto.loginId();
 				String title = multi.getParameter("title");
 				String contents = multi.getParameter("contents");
 				//dao.insert(new BoardDTO(seq, title, writer, contents));
