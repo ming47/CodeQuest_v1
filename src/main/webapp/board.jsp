@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -253,12 +254,12 @@ button:hover {
 
 				<c:forEach var="dto" items="${list}">
 					<tr>
-						<td>${dto.id}</td>
-						<td><a href="/detail.board?id=${dto.id}">${dto.title}</a></td>
+						<td>${dto.boardId}</td>
+						<td><a href="/detail.board?id=${dto.boardId}">${dto.title}</a></td>
 						<td>${dto.writer}</td>
-						<td>${dto.writedate}</td>
-						<td>${dto.view}</td>
-						<td>${dto.replycount}</td>
+						<td>${dto.regDate}</td>
+						<td>${dto.viewCount}</td>
+						<td>${dto.replyCount}</td>
 					</tr>
 				</c:forEach>
 

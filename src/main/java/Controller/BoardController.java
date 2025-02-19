@@ -18,9 +18,9 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import Common.ConvertURL;
 import Common.PageNavi;
 import Common.Statics;
-import DAO.BoardDAO;
-import DAO.FilesDAO;
-import DAO.ReplyDAO;
+import DAOImpl.BoardDAOImpl;
+import DAOImpl.FilesDAOImpl;
+import DAOImpl.ReplyDAOImpl;
 import DTO.BoardDTO;
 import DTO.FilesDTO;
 import DTO.MemberDTO;
@@ -28,6 +28,9 @@ import DTO.MemberDTO;
 @WebServlet("/board/*")
 
 public class BoardController extends HttpServlet {
+	BoardDAOImpl dao = BoardDAOImpl.INSTANCE;
+	FilesDAOImpl fdao = FilesDAOImpl.INSTANCE;
+	ReplyDAOImpl rdao = ReplyDAOImpl.INSTANCE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -35,11 +38,9 @@ public class BoardController extends HttpServlet {
 
 		try {			
 			String cmd = ConvertURL.of(request);
-			
+			System.out.println(cmd);
 
-			BoardDAO dao = BoardDAO.getInstance();
-			ReplyDAO replyDao = ReplyDAO.getInstance();
-			FilesDAO fdao = FilesDAO.getInstance();
+	
 			Gson g = new Gson();
 			String ip = request.getRemoteAddr();
 			System.out.println(ip);
@@ -51,9 +52,9 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/board/printout.do")) {
 				
 				
-			}//게시글 목록 출력 
+			}
 			
-			if (cmd.equals("/board/list.do")) {
+			if (cmd.equals("/board/list.do")) {//게시글 목록 출력 
 				// 페이징 유효성 검증
 				String scpage = (String) request.getParameter("cpage");
 
@@ -73,20 +74,22 @@ public class BoardController extends HttpServlet {
 
 				if (cpage < 1) {
 					cpage = 1;
-				} else if (cpage > pageTotalCount) {
+				} 
+				else if (cpage > pageTotalCount) {
 					cpage = pageTotalCount;
 				}
-				// 게시글 목록 담아오기
+			
 				int end = cpage * Statics.recordCountPerPage;
 				int start = end - (Statics.recordCountPerPage - 1);
 
-				// ajax로 받아오기
+				
 				List<BoardDTO> list = dao.selectFromto(start, end);
+				request.setAttribute("list", list);
 
 				int startNavi = (cpage - 1) / Statics.naviCountPerPage * Statics.naviCountPerPage + 1;
 				int endNavi = startNavi + Statics.naviCountPerPage - 1;
 
-				if (endNavi > pageTotalCount) { // endNavi 값은 페이지 전체 개수보다 클수없음
+				if (endNavi > pageTotalCount) { 
 					endNavi = pageTotalCount;
 				}
 
@@ -107,7 +110,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("needNext", needNext);
 
 				request.getSession().getAttribute("dto");
-				request.getRequestDispatcher("/board/board.jsp").forward(request, response);
+				request.getRequestDispatcher("/board.jsp").forward(request, response);
 
 				
 				
@@ -130,61 +133,50 @@ public class BoardController extends HttpServlet {
 					request.getRequestDispatcher("/list.jsp").forward(request, response);
 
 				}
-		}
-//				 else if (cmd.equals("/board/detail.do")) { // 상세게시물
-//						// 게시글 작성자 확인 로직
-//						int boardId = Integer.parseInt(request.getParameter("seq"));//html에 있는 name
-//						dao.viewCount(boardId);
-//						BoardDTO dto = dao.selectById(boardId);
-//						request.setAttribute("boardDto", dto);
-//
+	
+				 else if (cmd.equals("/board/detail.do")) { // 상세게시물
+				
+//		
 //					
-//						MemberDTO member = (MemberDTO) request.getSession().getAttribute("dto");//세션에 있는 정보 member에 담기
-//						if (member == null) {
-//							
-//							response.sendRedirect("/index.jsp");// 회원이 아니면 첫페이지로 이동 
-//							return;
-//						}//댓글 작성자 확인
-//						
-//						String user = member.getId();
-//						request.setAttribute("loginUser", user);//회원인게 확인이 된 아이디 
-//
-//						// 댓글 목록 출력 로직
-//						String rpage_ori = (String) request.getParameter("rpage");
-//						if (rpage_ori == null) {
-//							rpage_ori = "1";
-//						}
-//						
-//						
-//						int rpage = Integer.parseInt(rpage_ori);
-//
-//						request.setAttribute("list", list);
-//						request.setAttribute("rpage", rpage); // 넣음
-//						request.setAttribute("seq", seq); // 넣음
-//						request.setAttribute("reply", list);
-//
-//						// 파일 이름 출력
-//						List<FilesDTO> files = fdao.findById(boardId);
-//						request.setAttribute("files", files);
-//
-//						request.getRequestDispatcher("/board/detail.jsp").forward(request, response);
 
+			}else if(cmd.equals("/board/update.do")) {//게시글 수정 
+				int boardId = Integer.parseInt
+						(request.getParameter("boardId"));
+						String title = request.getParameter("title");
+						String contents = request.getParameter("contents");
+					
+			BoardDTO dto = new BoardDTO(title,contents,boardId);
+						
+							int result = dao.update(dto);
+						
+								response.sendRedirect("/list.board?cpage"+boardId);
+							
+				
+				
+				
+			}else if(cmd.equals("/board/delete.do")) {//게시글 삭제
+				int boardId = Integer.parseInt
+				(request.getParameter("boardId"));
+				
+				BoardDTO dto = dao.selectById(boardId);
+				
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("dto");
+				String user = member.getId();
 
-//			}else if(cmd.equals("/board/update.do")) {//게시글 수정 
-//
-//			}else if(cmd.equals("/board/delete.do")) {//게시글 삭제
-//
-//			}else if(cmd.equals("/board/mypage.do")) {//
-//}
-//
-//	}
-	catch(
+				
+					int result = dao.deleteById(boardId);
+				
+						response.sendRedirect("/list.board?cpage=1");
+					
+					
+					}
+			else if(cmd.equals("/board/mypage.do")) {
+				
+			}
 
-	Exception e)
-
-	{
-		e.printStackTrace();
-	}
+}
+		catch(Exception e)
+	{e.printStackTrace();}
 }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -194,12 +186,11 @@ public class BoardController extends HttpServlet {
 		request.setCharacterEncoding("utf8");
 
 		String cmd = request.getRequestURI();
-		BoardDAO dao = BoardDAO.getInstance();
-		ReplyDAO replyDao = ReplyDAO.getInstance();
-		FilesDAO fdao = FilesDAO.getInstance();
+
 		Gson g = new Gson();
 		String ip = request.getRemoteAddr();
 		System.out.println(ip);
+
 		try {
 
 			if (cmd.equals("/board/add.do")) {// 게시글 추가
@@ -224,11 +215,11 @@ public class BoardController extends HttpServlet {
 				// 파일 업로드를 처리하는 MultipartRequest 객체를 생성하는 코드입니다.
 				// 사용자가 파일을 업로드하면, 이 객체가 해당 파일을 서버의 특정 경로에 저장해줍니다.
 
-				int seq = dao.getBoardId(); // 게시글을 작성시 Board 테이블의id값을 가져오는 메서드
+				int seq = dao.getNextVal(); // 게시글을 작성시 Board 테이블의id값을 가져오는 메서드
 				String writer = dto.getId();
 				String title = multi.getParameter("title");
 				String contents = multi.getParameter("contents");
-				dao.createContents(new BoardDTO(seq, title, writer, contents));
+				dao.insert(new BoardDTO(seq, title, writer, contents));
 
 				Enumeration<String> fileNames = multi.getFileNames(); // Enumeration => List와 같음
 
@@ -239,7 +230,7 @@ public class BoardController extends HttpServlet {
 					if (originName == null) {
 						continue;
 					}
-
+//
 //			String sysName = multi.getFilesystemName(name);
 //			fdao.insert(new FilesDTO(0, originName, sysName, seq));
 
@@ -253,4 +244,3 @@ public class BoardController extends HttpServlet {
 		}
 	}
 }
-

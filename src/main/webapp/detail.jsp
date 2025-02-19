@@ -217,8 +217,8 @@ window.onload = function(){
     // 댓글 목록 불러오기
     $.ajax({
         url: "/ContentsAll.reply",
-        data: { 'parent_seq': ${dto.id} },
-        type: "GET"
+        data: { 'boardId': ${dto.boardID} },
+        type: "get"
     }).done(function(data) {
         data = JSON.parse(data);
 
