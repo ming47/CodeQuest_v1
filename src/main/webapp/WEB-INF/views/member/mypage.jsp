@@ -402,7 +402,7 @@
         </div>
     </div>
     <script>
-        $(".sidebar ul li ").click(function () {
+        $(".sidebar ul li ").click(function () { //휴
             let targetId = $(this).attr("data-target");
             let targetElement = $("#" + targetId);
             if (targetElement.length) {
