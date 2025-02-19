@@ -55,6 +55,7 @@ body {
 .header {
 	height: 100px;
 	padding: 20px;
+	position: relative;
 }
 
 .footer {
@@ -133,7 +134,7 @@ body {
 	text-align: center;
 	font-family: "Jua", serif;
 	margin-bottom: 30px;
-	margin-top:10px;
+	margin-top: 10px;
 }
 
 /* ✅ 로그인 버튼 및 입력 필드 배치 */
@@ -256,8 +257,10 @@ body {
 	background: #919190
 }
 
-.logbox-container{
-	margin-right: -1335px;
+.logbox-container {
+	position: absolute;
+	right: 10px;
+	bottom: -25px;
 }
 
 .rankingboard ul {
@@ -335,12 +338,12 @@ body {
 	font-size: 20px;
 }
 
-.boardlist h3{
-
+.boardlist h3 {
+	
 }
 
 .boardlist li {
-
+	
 }
 </style>
 </head>
@@ -361,12 +364,12 @@ body {
 					<li>Service</li>
 				</ul>
 			</div>
-		</div>
-
 		<!-- ✅ 로그인 정보 -->
 		<div class="logbox-container">
 			<%@ include file="logbox.jsp"%>
 		</div>
+		</div>
+
 
 		<!-- ✅ 좌우 배치 레이아웃 -->
 		<div class="main-content">
