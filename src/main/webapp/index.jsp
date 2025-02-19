@@ -239,6 +239,7 @@ body {
 	width: 80%;
 	height: 50%;
 	padding: 30px;
+	margin-top:40px;
 }
 
 /* ✅ 랭킹 탭 버튼 스타일 */

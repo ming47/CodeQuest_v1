@@ -16,7 +16,7 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 <link
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
 	rel="stylesheet">
-<title>Insert title here</title>
+<title>logbox</title>
 <style>
 .logbox {
 	display: flex;
