@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import Common.Statics;
 import DAO.BoardDAO;
 import DTO.BoardDTO;
 
@@ -27,9 +28,9 @@ public enum BoardDAOImpl implements BoardDAO {
 	//
 	public List<BoardDTO> selectAll() throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-
-			ResultSet rs = pstat.executeQuery();
+		try (Connection con = this.getConnection(); 
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
 
 			List<BoardDTO> dto = new ArrayList<BoardDTO>();
 
@@ -47,9 +48,8 @@ public enum BoardDAOImpl implements BoardDAO {
 				
 				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
 			}
-			rs.close();
 			return dto;
-		}
+		} 
 
 	}// 게시물 전체 가져오기
 
@@ -171,6 +171,50 @@ public enum BoardDAOImpl implements BoardDAO {
 				ResultSet rs = pstat.executeQuery();) {
 			rs.next();
 			return rs.getInt(1);
+		}
+	}
+
+	@Override
+	public List<BoardDTO> selectAll(int page) throws Exception {
+		String sql = "select * "
+				+ "from "
+				+ "(select a.*, ROW_NUMBER() OVER (ORDER BY board_id DESC) AS rnum "
+				+ "from "
+				+ "(select * "
+				+ "from board b "
+				+ "inner join members m "
+				+ "on b.member_id = m.member_id) a) "
+				+ "WHERE rnum BETWEEN ? and ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+		
+		endIndex = (endIndex > getSize()) ? getSize() : endIndex;
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, startIndex);
+			pstat.setInt(2, endIndex);
+			
+			System.out.println(startIndex + " " + endIndex);
+			try(ResultSet rs = pstat.executeQuery()) {
+				List<BoardDTO> dto = new ArrayList<BoardDTO>();
+
+				while (rs.next()) {
+					int id = rs.getInt("board_id");
+					int memberId = rs.getInt("member_id");
+					String writer = rs.getString("nickname");
+					String title = rs.getString("title");
+					String contents = rs.getString("contents");
+					Timestamp regDate = rs.getTimestamp("reg_date");
+					int viewCount = rs.getInt("view_count");
+					int replyCount = rs.getInt("reply_count");
+					String role = rs.getString("role");
+					
+					dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
+				}
+				return dto;
+			}
 		}
 	}
 	

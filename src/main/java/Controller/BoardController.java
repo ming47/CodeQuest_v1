@@ -72,36 +72,14 @@ public class BoardController extends HttpServlet {
 				else if (cpage > pageTotalCount) {
 					cpage = pageTotalCount;
 				}
-			
-				int end = cpage * Statics.recordCountPerPage;
-				int start = end - (Statics.recordCountPerPage - 1);
-
 				
-				List<BoardDTO> list = dao.selectAll();
+				List<BoardDTO> list = dao.selectAll(cpage);
 				request.setAttribute("list", list);
 
-				int startNavi = (cpage - 1) / Statics.naviCountPerPage * Statics.naviCountPerPage + 1;
-				int endNavi = startNavi + Statics.naviCountPerPage - 1;
-
-				if (endNavi > pageTotalCount) { 
-					endNavi = pageTotalCount;
-				}
-
-				boolean needPrev = true;
-				boolean needNext = true;
-				if (startNavi == 1) {
-					needPrev = false;
-				}
-				if (endNavi == pageTotalCount) {
-					needNext = false;
-				}
-
-				// request.setAttribute("list", list);
 				request.setAttribute("cpage", cpage);
-				request.setAttribute("startNavi", startNavi);
-				request.setAttribute("endNavi", endNavi);
-				request.setAttribute("needPrev", needPrev);
-				request.setAttribute("needNext", needNext);
+				PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
+				request.setAttribute("pageNavi", pageNavi.generate());
+				
 				request.getSession().getAttribute("dto");
 				
 				request.getRequestDispatcher("/board.jsp").forward(request, response);
@@ -117,7 +95,7 @@ public class BoardController extends HttpServlet {
 
 					int pageTotalCount = 0;
 
-					PageNavi pageNavi = new PageNavi(cpage, dao.getSize(), 10, 5);
+					PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
 					request.setAttribute("pageNavi", pageNavi);
 					request.getRequestDispatcher("/list.jsp").forward(request, response);
 			} else if (cmd.equals("/board/detail.do")) { // 상세게시물

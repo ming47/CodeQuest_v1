@@ -18,7 +18,13 @@ public class PageNavi {
 		this.totalLength = totalLength;
 		this.recodeCountPerPage = recodeCountPerPage;
 		this.naviCountPerPage = naviCountPerPage;
-		
+	}
+	
+	public PageNavi(int index, int totalLength) {
+		this.index = index;
+		this.totalLength = totalLength;
+		this.recodeCountPerPage = Statics.recordCountPerPage;
+		this.naviCountPerPage = Statics.naviCountPerPage;
 	}
 	
 	public int getStartNavi() {
