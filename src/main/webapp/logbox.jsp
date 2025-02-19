@@ -29,7 +29,6 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 	font-weight: 400;
 	font-style: normal;
 	border-radius: 10px;
-	margin-right:0px;
 }
 
 .logbox-buttons a {
@@ -58,14 +57,11 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 		<span>${not empty member.id ? member.id.concat(' 님 환영합니다') : ''}
 			!</span>
 		<div class="logbox-buttons">
-<<<<<<< HEAD
-			<a href="mypage.jsp">my page</a> <a href="/member/logout.do">logout</a>
-=======
 			<a href="/member/mypage.do">마이페이지</a> <a href="/member/logout.do">로그아웃</a>
->>>>>>> 6b6741a172efd22fb682dfc16568cb1285501746
+
 		</div>
 		<div class="logbox-time">
-			접속시간: <span id="loginTime"></span>
+			접속시간: 00시 00분 <span id="loginTime"></span>
 		</div>
 	</div>
 	<script>

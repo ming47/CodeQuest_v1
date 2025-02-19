@@ -53,13 +53,13 @@ body {
 }
 
 .header {
-	height: 100px;
+	height: 80px;
 	padding: 20px;
 	position: relative;
 }
 
 .footer {
-	height: 80px;
+	height: 60px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -68,7 +68,7 @@ body {
 }
 
 .header>.navi>.logo {
-	font-size: 30px;
+	font-size: 20px;
 }
 
 .navi {
@@ -90,6 +90,8 @@ body {
 	color: white;
 	border-radius: 5px;
 	cursor: pointer;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+		black;
 }
 
 .menu li:hover {
@@ -125,16 +127,20 @@ body {
 
 /* ✅ 로그인 박스 */
 .loginbox {
-	width: 80%;
-	background: url('/login.jpg') no-repeat center;
+	width: 80%; background : url('/login.jpg') no-repeat center;
 	background-size: cover;
-	padding: 20px;
+	padding: 10px;
 	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	font-family: "Jua", serif;
-	margin-bottom: 30px;
-	margin-top: 10px;
+	margin-bottom: 50px;
+	margin-top: 80px;
+	background: url('/login.jpg') no-repeat center; background-size : cover;
+	padding : 10px; border-radius : 20px; box-shadow : 0 0 10px rgba( 0, 0,
+	0, 0.1); text-align : center; font-family : "Jua", serif; margin-bottom
+	: 50px; margin-top : 80px;
+	margin-right: 75px;
 }
 
 /* ✅ 로그인 버튼 및 입력 필드 배치 */
@@ -161,13 +167,13 @@ body {
 .loginbox .input-group {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 5px;
 	justify-content: center;
 }
 
 .loginbox .input-group input {
 	width: 60%;
-	font-size: 16px;
+	font-size: 13px;
 }
 
 .loginbox .input-group button {
@@ -186,13 +192,34 @@ body {
 	background: #3c3b39;
 }
 
+.login-links button {
+	margin: 10px;
+	border-radius: 10px;
+	padding: 8px;
+	transition: background 0.3s;
+	font-weight: bold;
+	background: #717171;
+	color: white;
+	font-family: "Jua", serif;
+	font-size: 17px;
+}
+
+.login-links button:hover {
+	background: #003f7f;
+	transform: scale(1.1);
+}
+
 .login-links {
 	margin: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* ✅ 로그인 전 랭킹보드 기본 크기 */
 .rankingboard {
 	width: 80%;
+	height: 500px;
 	background: white;
 	padding: 20px;
 	border-radius: 10px;
@@ -203,11 +230,13 @@ body {
 	font-weight: 400;
 	font-style: normal;
 	font-size: 20px;
+	margin-top: 30px;
+	margin-right: 80px;
 }
 
 /* ✅ 로그인 후 랭킹보드 크기 조정 (body의 절반) */
 .rankingboard.expanded {
-	width: 100%;
+	width: 80%;
 	height: 50%;
 	padding: 30px;
 }
@@ -260,7 +289,7 @@ body {
 .logbox-container {
 	position: absolute;
 	right: 10px;
-	bottom: -25px;
+	bottom: -35px;
 }
 
 .rankingboard ul {
@@ -277,10 +306,13 @@ body {
 .gameList {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 20px;
+	gap: 25px;
 	padding: 10px;
-	width: 100%;
+	width: 90%;
 	font-family: "Press Start 2P", serif;
+	margin-top: 30px;
+		text-shadow: 0 1px 0 #a3a3a3, -1px 2px 0 #a3a3a3, 1px 4px 0 #a3a3a3, 0 3px 0
+		#a3a3a3;
 }
 
 .game {
@@ -301,6 +333,14 @@ body {
 	width: 100%;
 	height: 160px;
 	border-radius: 10px;
+}
+
+.game h3 {
+	margin: 10px;
+}
+
+.game p {
+	margin: 10px;
 }
 
 .game button {
@@ -324,7 +364,7 @@ body {
 }
 
 .boardlist {
-	width: 100%;
+	width: 90%;
 	background: url('/board.jpg') no-repeat center;
 	background-size: cover;
 	padding: 20px;
@@ -336,14 +376,16 @@ body {
 	font-weight: 400;
 	font-style: normal;
 	font-size: 20px;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 6px 0 black, 0 3px 0
+		black;
 }
 
 .boardlist h3 {
-	
+	margin-bottom: 20px;
 }
 
 .boardlist li {
-	
+	margin-bottom: 10px;
 }
 </style>
 </head>
@@ -364,10 +406,10 @@ body {
 					<li>Service</li>
 				</ul>
 			</div>
-		<!-- ✅ 로그인 정보 -->
-		<div class="logbox-container">
-			<%@ include file="logbox.jsp"%>
-		</div>
+			<!-- ✅ 로그인 정보 -->
+			<div class="logbox-container">
+				<%@ include file="logbox.jsp"%>
+			</div>
 		</div>
 
 
@@ -438,7 +480,7 @@ body {
 
 					<div class="login-links">
 						<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
-							href="/member/findMember.do">ID/PW 찾기</a>
+							href="/member/findMember.do"><button>ID/PW 찾기</button></a>
 					</div>
 				</div>
 
