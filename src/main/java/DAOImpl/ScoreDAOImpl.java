@@ -100,9 +100,7 @@ public enum ScoreDAOImpl implements ScoreDAO {
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, gameId);
 			
-			System.out.println(sql);
 			try(ResultSet rs = pstat.executeQuery()) {
-				
 				List<ScoreDTO> dto = new ArrayList<>();
 				while(rs.next()) {
 					dto.add(ScoreDTO.of(rs));
@@ -111,11 +109,6 @@ public enum ScoreDAOImpl implements ScoreDAO {
 				return dto;
 			}
 		}
-	}
-
-	@Override
-	public List<ScoreDTO> avergeByGameIdGroupByMemberId() throws Exception {
-		return null;
 	}
 
 	@Override
