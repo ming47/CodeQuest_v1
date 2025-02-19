@@ -217,16 +217,12 @@ window.onload = function(){
     // 댓글 목록 불러오기
     $.ajax({
         url: "/reply/ContentsAll.do",
-        data: { 'boardId': ${dto.boardId} },
+        data: { 'boardId': "${dto.boardId}" },
         type: "get"
     }).done(function(data) {
-    	try{
-        data = JSON.parse(data);}
-    	catch (e) {
-            console.error("Error parsing JSON: ", e);
-            return;
-        }
-
+  
+        data = JSON.parse(data);
+    	
         for (let i = 0; i < data.length; i++) {
             let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].reply_id);
             
@@ -347,21 +343,21 @@ window.onload = function(){
 					<th>작성 날짜</th>
 					<td>${dto.regDate}</td>
 				</tr>
-			
-				<tr>	
-					<th>첨부된 파일:</th>
-			<td>
-			<c:forEach var="i" items="${filelist}">	
-			<a href="/download.files?filename=${i.sysName}&oriname=${i.oriName}">${i.oriName}
-			</a><br>	
-			</c:forEach>
-			</td>
-	
-		
-				</tr>
-					
+
 				<tr>
-				
+					<th>첨부된 파일:</th>
+					<td><c:forEach var="i" items="${filelist}">
+							<a
+								href="/download.files?filename=${i.sysName}&oriname=${i.oriName}">${i.oriName}
+							</a>
+							<br>
+						</c:forEach></td>
+
+
+				</tr>
+
+				<tr>
+
 					<th>제목</th>
 					<td class="change" id="title">${dto.title}</td>
 				</tr>
@@ -383,17 +379,18 @@ window.onload = function(){
 		<!-- 댓글 목록 -->
 
 		<div id="commentInputContainer">
-			<input name="parent_seq" type="hidden" value="${dto.boardId}"> 
-			<input name="id" type="hidden" value="${id}"> 
-			<input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
+			<input name="parent_seq" type="hidden" value="${dto.boardId}">
+			<input name="id" type="hidden" value="${id}"> <input
+				id="commentInput" name="contents" placeholder="댓글을 입력하세요">
 			<button id="inputbtn">등록</button>
 
 		</div>
 	</form>
 
-<div id="comments">
-    <ul id="commentList"></ul> <!-- AJAX로 댓글이 추가될 부분 -->
-</div>
+	<div id="comments">
+		<ul id="commentList"></ul>
+		<!-- AJAX로 댓글이 추가될 부분 -->
+	</div>
 
 
 	</div>
@@ -401,10 +398,10 @@ window.onload = function(){
 
 	<form action="/update.board" method="post" id="frm">
 		<div class="footer">
-	
-				<button id="update" type="button">수정하기</button>
-				<button id="delete" type="button">삭제하기</button>
-				<script>
+
+			<button id="update" type="button">수정하기</button>
+			<button id="delete" type="button">삭제하기</button>
+			<script>
 					$("#inputbtn").on(
 							"click",
 							function() {
@@ -546,4 +543,5 @@ window.onload = function(){
 		</div>
 		</div>
 	</form>
+</body>
 </html>

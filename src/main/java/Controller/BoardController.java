@@ -45,10 +45,12 @@ public class BoardController extends HttpServlet {
 			String ip = request.getRemoteAddr();
 			System.out.println(ip);
 
-			if (cmd.equals("/board/add.do")) {
+			if (cmd.equals("/board/addform.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/board/write.jsp").forward(request, response);
 
-			} else if (cmd.equals("/board/printout.do")) {
+			}
+			
+			else if (cmd.equals("/board/printout.do")) {
 
 			} else if (cmd.equals("/board/list.do")) {// 게시글 목록 출력
 				// 페이징 유효성 검증
@@ -232,7 +234,7 @@ public class BoardController extends HttpServlet {
 			if (cmd.equals("/board/add.do")) {// 게시글 추가
 
 				// 로그인 검증
-				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("dto");
+				MemberDTO dto =(MemberDTO) request.getSession().getAttribute("member");
 
 //				if (dto == null) {
 //					response.sendRedirect("/");
@@ -253,11 +255,11 @@ public class BoardController extends HttpServlet {
 				// 사용자가 파일을 업로드하면, 이 객체가 해당 파일을 서버의 특정 경로에 저장해줍니다.
 
 				int boardId = dao.getNextVal(); // 게시글을 작성시 Board 테이블의 id값을 가져오는 메서드
-				String writer = dto.getNickName();
+				int memberId = dto.getMemberId();
 				String title = multi.getParameter("title");
 				String contents = multi.getParameter("contents");
-				dao.insert(new BoardDTO(boardId, title, writer, contents));
-
+				dao.insert(new BoardDTO(boardId, title, memberId, contents));
+			
 				Enumeration<String> fileNames = multi.getFileNames(); // Enumeration => List와 같음
 
 				while (fileNames.hasMoreElements()) {

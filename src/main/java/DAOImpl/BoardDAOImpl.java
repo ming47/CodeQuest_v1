@@ -141,12 +141,12 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int insert(BoardDTO dto) throws Exception {
-		String sql = "insert into board (board_id, title, name, contents, reg_date, view_count,reply_count) values (?, ?, ?, ?, sysdate, 0,0)";
+		String sql = "insert into board (board_id, title, member_id, contents, reg_date, view_count,reply_count) values (?, ?, ?, ?, sysdate, 0,0)";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, dto.getBoardId());
 			pstat.setString(2, dto.getTitle());
-			pstat.setString(3, dto.getWriter());
+			pstat.setInt(3, dto.getMemberId());
 			pstat.setString(4, dto.getContents());
 			
 			return pstat.executeUpdate();

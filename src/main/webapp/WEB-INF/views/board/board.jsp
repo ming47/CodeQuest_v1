@@ -276,7 +276,7 @@ button:hover {
 
 			</table>
 			<div colspan="3" id="buttonbox">
-				<a href="/board/add.do" method="get">
+				<a href="/board/addform.do" method="get">
 					<button>작성하기</button>
 				</a>
 			</div>
