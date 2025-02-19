@@ -204,6 +204,10 @@ button:hover {
 }
 </style>
 
+</head>
+
+<body>
+
 <script>
 	$(function() {
 		// 페이지네이션 클릭 이벤트
@@ -214,10 +218,6 @@ button:hover {
 		});
 	});
 </script>
-
-</head>
-
-<body>
 
 	<div class="container">
 		<!-- 헤더 -->
@@ -255,7 +255,7 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td><a href="/board/detail?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title}</a></td>
+						<td><a href="/board/detail.do?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title}</a></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>

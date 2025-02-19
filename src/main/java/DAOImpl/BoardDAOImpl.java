@@ -51,39 +51,11 @@ public enum BoardDAOImpl implements BoardDAO {
 			return dto;
 		} 
 
-	}// 게시물 전체 가져오기
-
-	public List<BoardDTO> selectFromto(int start, int end) throws Exception {
-		/*
-		String sql = "SELECT * FROM ( SELECT board.*, ROW_NUMBER() OVER (ORDER BY board_id DESC) AS rnum FROM board ) WHERE rnum BETWEEN ? AND ?";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setInt(1, start);
-			pstat.setInt(2, end);
-			try (ResultSet rs = pstat.executeQuery();) {
-				List<BoardDTO> list = new ArrayList<>();
-				while (rs.next()) {
-					int board_id = rs.getInt("board_id");
-					String title = rs.getString("title");
-					String writer = rs.getString("name");
-					Timestamp reg_date = rs.getTimestamp("reg_date");
-					String contents = rs.getString("contents");
-					int viewCount = rs.getInt("view_count");
-					int replyCount = rs.getInt("reply_count");
-					
-					\
-					list.add(new BoardDTO(board_id, title, writer, reg_date, contents, viewCount, replyCount));
-				}
-				return list;
-			}
-		}
-		*/
-		
-		return null;
-	}// 게시물 가져올 범위
+	}
 
 	public BoardDTO selectById(int seq) throws Exception {
-		String sql = "select * from board where seq = ?";
-		/*
+		String sql = "	select * from board b inner join members m "
+				+ "on b.member_id = m.member_id where board_id= ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
 			pstat.setInt(1, seq);
@@ -92,22 +64,24 @@ public enum BoardDAOImpl implements BoardDAO {
 
 			try (ResultSet rs = pstat.executeQuery()) {
 				if (rs.next()) {
-					int board_id = rs.getInt("seq");
+					int boardId = rs.getInt("board_id");
+					int memberId = rs.getInt("member_id");
+					String writer = rs.getString("nickname");
 					String title = rs.getString("title");
-					String writer = rs.getString("writer");
-
-					Timestamp reg_date = rs.getTimestamp("reg_date");
 					String contents = rs.getString("contents");
-					int view = rs.getInt("view");
-					int reply = rs.getInt("reply");
-
-					dto = new BoardDTO(board_id, title, writer, reg_date, contents, view,reply);
+					Timestamp regDate = rs.getTimestamp("reg_date");
+					int viewCount = rs.getInt("view_count");
+					int replyCount = rs.getInt("reply_count");
+					String role = rs.getString("role");
+					
+					dto = new BoardDTO(boardId, memberId, title, regDate, contents, viewCount,replyCount, writer, role);
 				}
 				return dto;
 			}
+			
+			
 		}
-		*/
-		return null;
+	
 	}
 	
 	public int getSize() throws Exception {
@@ -120,10 +94,10 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 	}
 
-	public int deleteById(int seq) throws Exception {
-		String sql = "delete from board WHERE seq = ?";
+	public int deleteById(int boardId) throws Exception {
+		String sql = "delete from board where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-			pstat.setInt(1, seq);
+			pstat.setInt(1, boardId);
 			return pstat.executeUpdate();//리턴값이 0이면 데이터 변경x  
 		}
 	}
@@ -165,7 +139,7 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int getNextVal() throws Exception {
-		String sql = "select board_seq.nextval from dual";
+		String sql = "select board_id_seq.nextval from dual";
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
