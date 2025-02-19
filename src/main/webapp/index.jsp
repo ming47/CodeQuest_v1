@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -203,6 +204,15 @@ body {
     justify-content: center;
     gap: 10px;
     margin-bottom: 10px;
+  }
+
+.loginbox h2 {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 10px;
+	color: #2f2b2b;
+
 }
 
 .tab-btn {
@@ -219,9 +229,14 @@ body {
     color: white;
 }
 
+
 /* ✅ 각 게임별 랭킹 리스트 숨김 */
 .hidden {
     display: none;
+ }
+  
+.loginBtn:hover {
+	background: #919190
 }
 
 .rankingboard ul {
@@ -314,6 +329,7 @@ body {
 </style>
 </head>
 <body>
+
     <div class="container">
 
                <!-- ✅ 헤더 -->
@@ -458,5 +474,6 @@ body {
             });
         });
 		</script>
+
 </body>
 </html>
