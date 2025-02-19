@@ -74,39 +74,16 @@ public class BoardController extends HttpServlet {
 					cpage = pageTotalCount;
 				}
 
-				int end = cpage * Statics.recordCountPerPage;
-				int start = end - (Statics.recordCountPerPage - 1);
-
-				List<BoardDTO> list = dao.selectAll();
-
+				List<BoardDTO> list = dao.selectAll(cpage);
 				request.setAttribute("list", list);
 
-				int startNavi = (cpage - 1) / Statics.naviCountPerPage * Statics.naviCountPerPage + 1;
-				int endNavi = startNavi + Statics.naviCountPerPage - 1;
-
-				if (endNavi > pageTotalCount) {
-					endNavi = pageTotalCount;
-				}
-
-				boolean needPrev = true;
-				boolean needNext = true;
-				if (startNavi == 1) {
-					needPrev = false;
-				}
-				if (endNavi == pageTotalCount) {
-					needNext = false;
-				}
-
-				// request.setAttribute("list", list);
 				request.setAttribute("cpage", cpage);
-				request.setAttribute("startNavi", startNavi);
-				request.setAttribute("endNavi", endNavi);
-				request.setAttribute("needPrev", needPrev);
-				request.setAttribute("needNext", needNext);
-				request.getSession().getAttribute("member");
-
+				PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
+				request.setAttribute("pageNavi", pageNavi.generate());
+				
+				request.getSession().getAttribute("dto");
+				
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
-
 			} else if (cmd.equals("/ajax_list.board")) {// 게시물 목록
 				String scpage = (String) request.getParameter("cpage");
 				if (scpage == null) {
@@ -123,10 +100,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("pageNavi", pageNavi);
 				request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);
 
-			} 
-			
-
-			else if (cmd.equals("/board/detail.do")) { // 상세게시물
+			} else if (cmd.equals("/board/detail.do")) { // 상세게시물
 
 				int boardId = Integer.parseInt(request.getParameter("id"));// jsp에서 url 뒤에 붙는 id
 

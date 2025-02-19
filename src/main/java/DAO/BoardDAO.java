@@ -12,5 +12,6 @@ public interface BoardDAO {
 	int deleteById(int dto) throws Exception;
 	
 	int getNextVal() throws Exception;	// insert전에 다음 시퀸스값을 가져옴
+	List<BoardDTO> selectAll(int page) throws Exception; // 페이징 처리된 값 가져오기
 }
 
