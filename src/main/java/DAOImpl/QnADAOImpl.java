@@ -189,5 +189,18 @@ public enum QnADAOImpl implements QnADAO {
 		}
 	}
 
+	@Override
+	public int getSize() throws Exception {
+		String sql = "SELECT COUNT(*) FROM QNA";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			rs.next();
+			
+			return rs.getInt(1);
+		}
+	}
+
 
 }
