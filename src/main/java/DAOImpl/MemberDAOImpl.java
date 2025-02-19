@@ -174,9 +174,17 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public boolean isAdmin(String role) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isAdmin(int memberId) throws Exception {
+		String sql = "SELECT * FROM MEMBERS WHERE MEMBER_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, memberId);
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				return (rs.getString("ROLE").equals("ADMIN"));
+			}
+		}
 	}
 
 }

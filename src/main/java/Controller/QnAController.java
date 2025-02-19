@@ -47,7 +47,7 @@ public class QnAController<QnADAO> extends HttpServlet {
 				List<QnADTO> dtos = dao.selectAll();
 				json.put("qnaList", dtos);
 				
-				json.put("pageNavi", new PageNavi(page, dtos.size(), 10, 10).generate());
+				json.put("pageNavi", new PageNavi(page, dao.getSize(), 10, 10).generate());
 				response.getWriter().append(g.toJson(json));
 			} else if (cmd.equals("/qna/list/response_yn.do")) {
 				String responseYN = request.getParameter("response_yn").toUpperCase();

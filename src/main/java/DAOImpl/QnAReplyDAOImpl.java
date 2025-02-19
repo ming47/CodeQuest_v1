@@ -53,8 +53,16 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 
 	@Override
 	public int update(QnAReplyDTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "UPDATE QNA_REPLY SET MEMBER_ID = ?, CONTEXT = ? WHERE QNA_REPLY_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, dto.getMemberId());
+			pstat.setString(2, dto.getContext());
+			pstat.setInt(3, dto.getQnaId());
+			
+			return pstat.executeUpdate();
+		}
 	}
 
 	@Override
@@ -65,7 +73,7 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 
 	@Override
 	public QnAReplyDTO selectByQnAId(int qnaId) throws Exception {
-		String sql = "SELECT * FROM QNA_REPLY Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE QNA_ID=?";
+		String sql = "SELECT * FROM QNA_REPLY Q INNER JOIN MEMBERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE QNA_ID=?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
