@@ -13,3 +13,4 @@ public interface BoardDAO {
 	
 	int getNextVal() throws Exception;	// insert전에 다음 시퀸스값을 가져옴
 }
+
