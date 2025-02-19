@@ -8,20 +8,46 @@ public class BoardDTO {
 	private String title;
 	private Timestamp regDate;
 	private String contents;
+	private int viewCount;
+	private int replyCount;
+
 
 	public BoardDTO() {
 		super();
 	}
 
-	public BoardDTO(int boardId, String writer, String title, Timestamp regDate, String contents) {
+	public BoardDTO(int boardId, String writer, String title, Timestamp regDate, String contents ,int viewCount ,int replyCount) {
 		super();
 		this.boardId = boardId;
 		this.writer = writer;
 		this.title = title;
 		this.regDate = regDate;
 		this.contents = contents;
-	}
+		this.viewCount = viewCount;
+        this.replyCount = replyCount;
 
+	}
+	
+	public BoardDTO(String title,  String contents ,int board_id) {
+
+		this.boardId = board_id;
+	
+		this.title = title;
+
+		this.contents = contents;
+
+
+	}
+	
+	public BoardDTO(int boardId,String title,String writer, String contents ) {
+
+		this.boardId = boardId;
+		this.title = title;
+		this.writer = writer;
+		this.contents = contents;
+
+
+	}
 	public int getBoardId() {
 		return boardId;
 	}
@@ -61,4 +87,22 @@ public class BoardDTO {
 	public void setContens(String contents) {
 		this.contents = contents;
 	}
+	
+	public int getViewCount() {
+		return viewCount;
+	}
+	
+	
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+	
+	public int getReplyCount() {
+		return replyCount;
+	}
+
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	
 }

@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -197,6 +198,7 @@ body {
 	justify-content: center;
 }
 
+
 .loginbox h2 {
 	font-family: "Jua", serif;
 	font-weight: 400;
@@ -223,6 +225,7 @@ body {
 
 .loginBtn:hover {
 	background: #919190
+
 }
 
 .login-links {
@@ -309,8 +312,10 @@ body {
 				<button id="loginBtn" style="background:#5e5d5a">로그인</button>
 
 				<div class="login-links">
+
 					<a href="/member/addForm.do">회원가입</a><br>
 					<br> <a href="/member/findMember.do">ID/PW 찾기</a>
+
 				</div>
 			</div>
 		</div>
@@ -333,6 +338,7 @@ body {
 			$("#loginBtn").click(function() {
 				let userId = $("#id").val().trim();
 				let userPw = $("#pw").val().trim();
+
 
 				if (userId === "" || userPw === "") {
 					alert("아이디와 비밀번호를 입력하세요!");
@@ -362,5 +368,11 @@ body {
 		});
 	</script>
 	
+<<<<<<< HEAD
+=======
+	
+	
+
+>>>>>>> 677d89035ed773212599440f9c84021cb039f87f
 </body>
 </html>

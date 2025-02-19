@@ -23,6 +23,11 @@ public class ReplyDTO {
 		super();
 	}
 
+	public ReplyDTO(int replyId, String contents) {
+		this.replyId=replyId;
+		this.contents = contents;
+	}
+
 	public int getReplyId() {
 		return replyId;
 	}
