@@ -50,7 +50,7 @@ public enum FilesDAOImpl implements FilesDAO {
 
 	@Override
 	public FilesDTO selectById(int id) throws Exception {
-		String sql = "select * from files where boardId = ?";
+		String sql = "select * from files where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, id);
 			try (ResultSet rs = pstat.executeQuery();) {

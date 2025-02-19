@@ -42,7 +42,9 @@ public class BoardDTO {
 
 
 	}
-	/*
+	
+
+
 	public BoardDTO(int boardId,String title,String writer, String contents ) {
 
 		this.boardId = boardId;
@@ -50,7 +52,7 @@ public class BoardDTO {
 		this.writer = writer;
 		this.contents = contents;
 	}
-	*/
+
 	
 	public int getBoardId() {
 		return boardId;

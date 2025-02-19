@@ -11,26 +11,34 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
-<title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
+	rel="stylesheet">
+<title>logbox</title>
 <style>
 .logbox {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
 	width: 100%;
-	background: #007bff;
-	color: white;
-	padding: 10px 20px;
-	font-weight: bold;
+	background: #dddddd;
+	color: black;
+	padding: 5px 15px;
+	font-size: 20px;
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	border-radius: 10px;
 }
 
 .logbox-buttons a {
 	margin-left: 15px;
-	color: white;
+	color: #d2ddaf;
 	text-decoration: none;
-	background: #0056b3;
+	background: #717171;
 	padding: 5px 10px;
 	border-radius: 5px;
+	font-size: 17px;
 }
 
 .logbox-buttons a:hover {
@@ -47,11 +55,13 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 	<div class="logbox"
 		style="display: ${not empty member.loginId ? 'flex' : 'none'};">
 		<span>${not empty member.loginId ? member.loginId.concat(' 님 환영합니다') : ''}</span>
+
 		<div class="logbox-buttons">
 			<a href="/member/mypage.do">마이페이지</a> <a href="/member/logout.do">로그아웃</a>
+
 		</div>
 		<div class="logbox-time">
-			접속시간: <span id="loginTime"></span>
+			접속시간: 00시 00분 <span id="loginTime"></span>
 		</div>
 	</div>
 	<script>

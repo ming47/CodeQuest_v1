@@ -3,7 +3,6 @@ package DAOImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,13 +102,6 @@ public enum ScoreDAOImpl implements ScoreDAO {
 			
 			System.out.println(sql);
 			try(ResultSet rs = pstat.executeQuery()) {
-				ResultSetMetaData metaData = rs.getMetaData();
-	            int columnCount = metaData.getColumnCount();
-	            
-	            for (int i = 1; i <= columnCount; i++) {
-	                String columnName = metaData.getColumnName(i);
-	                System.out.println("컬럼 " + i + ": " + columnName);
-	            }
 				
 				List<ScoreDTO> dto = new ArrayList<>();
 				while(rs.next()) {

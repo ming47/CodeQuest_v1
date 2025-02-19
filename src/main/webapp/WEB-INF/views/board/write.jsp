@@ -4,7 +4,11 @@
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>게시글쓰기</title>
@@ -211,6 +215,11 @@ a button:hover {
 #listbtn {
 	width: 100%; /* 버튼이 100%의 너비를 가지도록 수정 */
 }
+
+.note-editable {
+	background-color: background-color: #1f2335;
+}
+
 </style>
 </head>
 <body>
@@ -255,8 +264,8 @@ a button:hover {
 
 
 					<div class="card-header">내용 입력</div>
-					<div class="card-body">
-						<textarea name="contents" placeholder="내용을 입력해주세요" required></textarea>
+					<input type="hidden" name="contents">
+					<div class="card-body" id="contents">
 					</div>
 
 				</div>
@@ -272,3 +281,70 @@ a button:hover {
 
 </body>
 </html>
+<script>
+	$('#contents').summernote(setSummerNote());
+	$('#contents').summernote('backColor', 'red');
+	
+	function setSummerNote() {
+		console.log('서머노트 세팅');
+    	return {
+        	placeholder: '내용을 입력하십시오',
+        	height: 500,
+        	minHeight: null, // set minimum height of editor
+        	maxHeight: null, // set maximum height of editor
+        	lang: 'ko-KR',
+        	toolbar: [
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+        	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						console.log(files[0],this);
+						uploadImage(files[0], this);
+					},
+				
+					onPaste: function (e) {
+						console.log(e);
+						
+						var clipboardData = e.originalEvent.clipboardData;
+						if (clipboardData && clipboardData.items && clipboardData.items.length) {
+							var item = clipboardData.items[0];
+							if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+								e.preventDefault();
+							}
+						}
+					}
+				}
+    		};
+		}
+	
+	function uploadImage(file, editor) {
+		let formData = new FormData();
+		formData.append('file', file);
+		formData.append('request', 'board');
+		
+		$.ajax({
+			url: '/file/image/upload.do',
+			data: formData,
+			type: 'POST',
+			//dataType:"multipart/form-data", 
+            contentType:false, 
+            processData:false,
+            error: function (request, status, error) {
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+		}).done(function(data) {		
+			$(editor).summernote('insertImage', data.path);
+		});
+	}
+</script>
