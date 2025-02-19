@@ -56,13 +56,7 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 	</div>
 	<script>
 		// 현재 시간 표시 (JST 시간 기준)
-		function updateTime() {
-			let now = sessionStorage.getItem("login-time")
-			let timeString = now.toLocaleTimeString();
-			document.getElementById("loginTime").innerText = timeString;
-		}
-		setInterval(updateTime, 1000);
-		updateTime();
+
 	</script>
 </body>
 </html>
