@@ -216,18 +216,23 @@ window.onload = function(){
 	$(document).ready(function() {
     // 댓글 목록 불러오기
     $.ajax({
-        url: "/ContentsAll.reply",
-        data: { 'boardId': ${dto.boardID} },
+        url: "/reply/ContentsAll.do",
+        data: { 'boardId': ${dto.boardId} },
         type: "get"
     }).done(function(data) {
-        data = JSON.parse(data);
+    	try{
+        data = JSON.parse(data);}
+    	catch (e) {
+            console.error("Error parsing JSON: ", e);
+            return;
+        }
 
         for (let i = 0; i < data.length; i++) {
-            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].id);
+            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].reply_id);
             
             let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
             let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].write_date);
+            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].reg_date);
             
             let btnBox = $("<div>").addClass("btnbox");
             let updateBtn = $("<button>").addClass("updatebtn").text("수정");
@@ -310,14 +315,16 @@ window.onload = function(){
                 });
             }
         });
-
+    }); // 여기에 닫는 괄호 추가
+    }); // $(document).ready 끝
+}; // window.onload 끝
 
 </script>
 </head>
 <body>
 
 	<form action="/update.board" method="post" id="frm">
-		<input id=id type="hidden" name="id" value="${dto.id}">
+		<input id=id type="hidden" name="id" value="${dto.boardId}">
 		<inputname =title type="hidden" id="hdtitle"> <input
 			name=contents type="hidden" id="hdcontents">
 
@@ -330,7 +337,7 @@ window.onload = function(){
 			<table>
 				<tr>
 					<th>글 번호</th>
-					<td>${dto.id}</td>
+					<td>${dto.boardId}</td>
 				</tr>
 				<tr>
 					<th>작성자</th>
@@ -338,7 +345,7 @@ window.onload = function(){
 				</tr>
 				<tr>
 					<th>작성 날짜</th>
-					<td>${dto.writedate}</td>
+					<td>${dto.regDate}</td>
 				</tr>
 			
 				<tr>	
@@ -349,7 +356,7 @@ window.onload = function(){
 			</a><br>	
 			</c:forEach>
 			</td>
-				
+	
 		
 				</tr>
 					
@@ -376,7 +383,7 @@ window.onload = function(){
 		<!-- 댓글 목록 -->
 
 		<div id="commentInputContainer">
-			<input name="parent_seq" type="hidden" value="${dto.id}"> 
+			<input name="parent_seq" type="hidden" value="${dto.boardId}"> 
 			<input name="id" type="hidden" value="${id}"> 
 			<input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
 			<button id="inputbtn">등록</button>
@@ -394,8 +401,6 @@ window.onload = function(){
 
 	<form action="/update.board" method="post" id="frm">
 		<div class="footer">
-
-
 	
 				<button id="update" type="button">수정하기</button>
 				<button id="delete" type="button">삭제하기</button>
@@ -413,17 +418,17 @@ window.onload = function(){
 								$("#comments").append(updatecontents);
 								$("#commentsInput").val("");
 							});
-					$(".deletebtn").on("click", function() {
+					$(".deletebtn").on("click", function(){
 						let target = $(this).attr("seq");
 						
 						location.href = "/delete.reply" + target;
 
 					});
 
-					$(".updatebtn").on("click",	function() {
+					$(".updatebtn").on("click",	function(){
 						
 								//댓글 수정하기 버튼 눌렀을때 	
-                               console.log("1");
+                           
 								$(".writerdiv").attr("contentEditable", "true").focus();
 								
 
@@ -447,11 +452,17 @@ window.onload = function(){
 							});
 
 					$("#delete").on("click", function() {
-						let result = alert("정말 삭제하시겠습니까")
-						if (result) {
-							location.href = "/delete.board?id=${dto.id}"
+						let result = confirm("정말 삭제하시겠습니까")
+						if (result == true) {
+							location.href = "/WEB-INF/views/board/delete.do"
+						}
+						
+						else if (result == false){
+						
 						}
 					});// 게시물 삭제하기 눌렀을때 
+					
+					
 					
 					$(".updatebtn").on("click", function() {
 					    // 클릭한 댓글 항목 찾기
@@ -522,7 +533,6 @@ window.onload = function(){
 						$("#contentsreply").val($(".writerdiv").html())
 					})
 				</script>
-
 
 
 			<script>

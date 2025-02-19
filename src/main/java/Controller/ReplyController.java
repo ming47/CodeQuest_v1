@@ -29,8 +29,8 @@ public class ReplyController extends HttpServlet {
 		try {
 
 			Gson g = new Gson();
-			if (cmd.equals("/addContents.reply")) {
-				int boardId = Integer.parseInt(request.getParameter("parent_seq"));
+			if (cmd.equals("/reply/addContents.do")) {
+				int boardId = Integer.parseInt(request.getParameter("boardId"));
 				String name = request.getParameter("name");
 				String contents = request.getParameter("contents");
 				Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -39,20 +39,19 @@ public class ReplyController extends HttpServlet {
 
 				rdao.insert(dto);
 
-				response.sendRedirect("/detail.board?id=" + boardId);
+				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
 
 			}
 
-			else if (cmd.equals("/ContentsAll.reply")) {
+			else if (cmd.equals("/reply/ContentsAll.do")) {
 
-				int id = Integer.parseInt(request.getParameter("parent_seq"));
+				int id = Integer.parseInt(request.getParameter("boardId"));
 				ReplyDTO rdto = rdao.selectById(id);
 				response.setContentType("text/html; charset=utf8");
 				response.getWriter().append(g.toJson(rdto));
-
 			}
 
-			else if (cmd.equals("/update.reply")) {
+			else if (cmd.equals("/reply/update.do")) {
 				int replyId = Integer.parseInt(request.getParameter("replyId"));
 				
 	
@@ -64,16 +63,16 @@ public class ReplyController extends HttpServlet {
 
 				rdao.update(dto);
 
-				response.sendRedirect("/detail.board?id=" + boardId);
+				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
 			}
 
-			else if (cmd.equals("/delete.reply")) {
+			else if (cmd.equals("/reply/delete.do")) {
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
 				int dto = Integer.parseInt(request.getParameter("replyId"));
 				
 				rdao.deleteById(dto);
 
-				response.sendRedirect("/detail.board?id=" + boardId);
+				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
 			}
 
 		} catch (Exception e) {
