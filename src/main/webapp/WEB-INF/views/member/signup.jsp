@@ -9,14 +9,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <title>회원가입</title>
 <style>
 * {
 	box-sizing: border-box;
-	font-family: 'Arial', sans-serif;
 	margin: 0;
 	padding: 0;
 }
@@ -31,13 +32,65 @@ body {
 }
 
 .container {
-	width: 460px;
+	width: 100%;
+	max-width: 1980px;
+	height: 100%;
+	max-height: 1024px;
 	background: white;
-	padding: 25px;
 	border-radius: 10px;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	text-align: center;
 }
+.header, .footer {
+	width: 100%;
+	height: 100px;
+	padding:20px;
+	background: #1e201d;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
+	color: #b4c28a;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 15px;
+}
+
+.navi {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.logo {
+	font-size: 24px;
+	color: #b4c28a;
+}
+
+.navi ul {
+	list-style: none;
+	display: flex;
+}
+
+.navi ul li {
+	width: 130px;
+	height:30px;
+	padding: 10px 15px;
+	background: white;
+	color: #b4c28a;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.3s ease-in-out;
+	margin: 20px;
+}
+
+.navi ul li:hover {
+	background: #81a5bf;
+	color: white;
+}
+
 
 .headline h2 {
 	font-size: 22px;
@@ -47,8 +100,10 @@ body {
 }
 
 fieldset {
-	border: 2px solid dodgerblue;
+	width:50%;
+	border: 3px solid dodgerblue;
 	border-radius: 6px;
+	margin:auto;
 	padding: 15px;
 	margin-bottom: 15px;
 	text-align: left;
@@ -89,6 +144,8 @@ input[disabled] {
 .buttons {
 	display: flex;
 	justify-content: space-between;
+	width:51%;
+	margin: auto;
 	margin-top: 15px;
 }
 
@@ -118,6 +175,7 @@ input[disabled] {
 }
 
 .buttons button:last-child:hover {
+
 	background: gray;
 	color: white;
 }
@@ -153,50 +211,12 @@ input[disabled] {
 	gap: 5px;
 }
 
-#idi {
-	flex: 3;
-}
-
-.id-check-btn {
-	flex: 1;
-	padding: 10px;
-	font-size: 14px;
-	border-radius: 6px;
-	white-space: nowrap;
-}
-
 .input-group {
 	display: flex;
 	gap: 10px;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-}
-
-#idi {
-	flex: 3;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 6px;
-	font-size: 14px;
-}
-
-.id-check-btn {
-	flex: 1;
-	padding: 12px;
-	font-size: 14px;
-	background: dodgerblue;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-	transition: background 0.3s, transform 0.1s;
-	white-space: nowrap;
-}
-
-.id-check-btn:hover {
-	background: #0056b3;
-	transform: scale(1.05);
 }
 
 @media ( max-width : 480px) {
@@ -214,6 +234,21 @@ input[disabled] {
 
 <body>
 	<div class="container">
+		<div class="header">
+			<div class="navi">
+				<div class="logo">Team CodeQuest</div>
+				<ul>
+					<li align="center">
+					    <a href="/" style="color: #b4c28a;; text-decoration: none;">Home</a>
+					</li>					
+					<li align="center">Game</li>
+					<li align="center">Board</li>
+					<li align="center">Service</li>
+				</ul>
+			</div>
+		</div>
+	
+	
 		<div class="headline">
 			<h2>회원가입</h2>
 		</div>
@@ -221,12 +256,11 @@ input[disabled] {
 			<fieldset>
 				<legend> * 아이디 / 패스워드</legend>
 				<div class="input-group">
-					<input type="text" name="id" id="id" placeholder="아이디를 입력하세요">
+					<input type="text" name="id" id="id" placeholder="8~20자 이내 영어소문자,숫자를 포함한 ID를 입력해주세요">
 				</div>
 				<span id="result_id"></span> 
-				<br>
 				<span id="result_id_dupl"></span> 
-				<input type="password" name="pw" id="pw" placeholder="패스워드를 입력하세요"> 
+				<input type="password" name="pw" id="pw" placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요"> 
 				<span id="result_pw"></span> 
 				<input type="password" name="pwr" id="pwr" placeholder="패스워드를 다시 입력하세요">
 				<span id="result_pwr"></span> 
@@ -262,7 +296,7 @@ input[disabled] {
 					placeholder="주소를 입력하세요" readonly> <input type="text"
 					name="address2" id="address2" placeholder="상세주소를 입력하세요">
 			</fieldset>
-			<input type="text" placeholder="*는 필수입력사항임." readonly>
+			<input type="text" placeholder="*는 필수입력사항임." readonly style="background: transparent; width:50%;">
 
 			<div class="buttons">
 				<button type="submit">가입하기</button>
@@ -349,10 +383,10 @@ input[disabled] {
 		    let regex = /^[가-힣]{2,5}$/;
 		    let vali = regex.exec($(this).val());
 		    if (vali == null) {
-		        $("#result_name").css({"color": "red", "font-size": "12px"}).html("유효하지 않는 이름입니다.");
+		        $("#result_name").css({"color": "red", "font-size": "12px"}).html("사용 불가능한 이름입니다.");
 		        name_val = false;
 		    } else {
-		        $("#result_name").css({"color": "green", "font-size": "12px"}).html("유효한 이름 입니다.");
+		        $("#result_name").css({"color": "green", "font-size": "12px"}).html("사용 가능한 이름 입니다.");
 		        name_val = true;
 		    }
 		});

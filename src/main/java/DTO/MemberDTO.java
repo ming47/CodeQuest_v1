@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class MemberDTO {
 	private int memberId;
-	private String id;
+	private String loginId;
 	private String pw;
 	private String name;
 	private String nickName;
@@ -17,10 +17,10 @@ public class MemberDTO {
 	private String role;
 	private Timestamp regDate;
 		
-	public MemberDTO(String id, String pw, String name, String nickName, String ssn, String email, String phone, int zipCode,
+	public MemberDTO(String loginId, String pw, String name, String nickName, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role) { //회원 가입
 		super();
-		this.id = id;
+		this.loginId = loginId;
 		this.pw = pw;
 		this.name = name;
 		this.nickName = nickName;
@@ -33,10 +33,11 @@ public class MemberDTO {
 		this.role = role;
 	}
 		
-	public MemberDTO(String id, String name, String nickName, String ssn, String email, String phone, int zipCode,
+	public MemberDTO(int memberId,String loginId, String name, String nickName, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role, Timestamp regDate ) { //로그인
 		super();
-		this.id = id;
+		this.memberId = memberId;
+		this.loginId = loginId;
 		this.name = name;
 		this.nickName = nickName;
 		this.ssn = ssn;
@@ -48,10 +49,10 @@ public class MemberDTO {
 		this.role = role;
 		this.regDate = regDate;
 	}
-		public MemberDTO(String id, String name, String ssn, String email, String phone, int zipCode,
+		public MemberDTO(String loginId, String name, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role, Timestamp regDate ) { //성별로 찾는다
 		super();
-		this.id = id;
+		this.loginId = loginId;
 		this.name = name;
 		this.ssn = ssn;
 		this.email = email;
@@ -62,8 +63,8 @@ public class MemberDTO {
 		this.role = role;
 		this.regDate = regDate;
 	}
-	public MemberDTO(String id, String nickname,String email, String phone, int zipCode, String address, String detailAddress) {	//수정
-		this.id = id;
+	public MemberDTO(String loginId, String nickname,String email, String phone, int zipCode, String address, String detailAddress) {	//수정
+		this.loginId = loginId;
 		this.nickName = nickname;
 		this.email = email;
 		this.phone = phone;
@@ -83,15 +84,13 @@ public class MemberDTO {
 	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
-
-	public String getId() {
-		return id;
+	public String getLoginId() {
+		return loginId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
-
 	public String getPw() {
 		return pw;
 	}
@@ -179,8 +178,4 @@ public class MemberDTO {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-	
-	
-	
-	
 }

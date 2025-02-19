@@ -200,7 +200,7 @@ public class BoardController extends HttpServlet {
 				BoardDTO dto = dao.selectById(boardId);
 
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("dto");
-				String user = member.getId();
+				String user = member.getLoginId();
 
 				int result = dao.deleteById(boardId);
 
@@ -252,6 +252,7 @@ public class BoardController extends HttpServlet {
 				// 파일 업로드를 처리하는 MultipartRequest 객체를 생성하는 코드입니다.
 				// 사용자가 파일을 업로드하면, 이 객체가 해당 파일을 서버의 특정 경로에 저장해줍니다.
 
+				int seq = dao.getNextVal(); // 게시글을 작성시 Board 테이블의id값을 가져오는 메서드
 				int boardId = dao.getNextVal(); // 게시글을 작성시 Board 테이블의 id값을 가져오는 메서드
 				String writer = dto.getNickName();
 				String title = multi.getParameter("title");
