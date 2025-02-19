@@ -1,5 +1,7 @@
 package DTO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class ScoreDTO {
@@ -54,5 +56,12 @@ public class ScoreDTO {
 		this.regDate = regDate;
 	}
 	
-	
+	public static ScoreDTO of(ResultSet rs) throws SQLException {
+		return new ScoreDTO(
+				rs.getInt("SCORE_ID"),
+				rs.getInt("GAME_ID"),
+				rs.getInt("MEMBER_ID"),
+				rs.getInt("SCORE"),
+				rs.getTimestamp("REG_DATE"));
+	}
 }

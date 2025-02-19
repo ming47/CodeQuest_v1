@@ -28,7 +28,7 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public List<QnADTO> selectAll() throws Exception {
-		String sql = "SELECT * FROM QNA Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID";
+		String sql = "SELECT * FROM QNA Q INNER JOIN MEMBERS U ON Q.MEMBER_ID = U.MEMBER_ID";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -45,7 +45,7 @@ public enum QnADAOImpl implements QnADAO {
 	
 	@Override
 	public QnADTO selectById(int id) throws Exception {
-		String sql = "SELECT * FROM QNA Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE QNA_ID=?";
+		String sql = "SELECT * FROM QNA Q INNER JOIN MEMBERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE QNA_ID=?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -98,7 +98,7 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public List<QnADTO> selectByResponseYN(String responseYN) throws Exception {
-		String sql = "SELECT * FROM QNA Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE RESPONSE_YN=?";
+		String sql = "SELECT * FROM QNA Q INNER JOIN MEMBERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE RESPONSE_YN=?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -117,8 +117,7 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public List<QnADTO> selectByWriterLike(String writer) throws Exception {
-		String sql = "SELECT * FROM QNA Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE U.NAME LIKE ?";
-		
+		String sql = "SELECT * FROM QNA Q INNER JOIN MEMBERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE U.NAME LIKE ?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -137,7 +136,7 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public List<QnADTO> selectByContentLike(String content) throws Exception {
-		String sql = "SELECT * FROM QNA Q INNER JOIN USERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE Q.CONTENT LIKE ?";
+		String sql = "SELECT * FROM QNA Q INNER JOIN MEMBERS U ON Q.MEMBER_ID = U.MEMBER_ID WHERE Q.CONTENT LIKE ?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -173,8 +172,34 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public List<QnADTO> selectByMemberId(int memberId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM QNA WHERE MEMBER_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, memberId);
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				List<QnADTO> dtos = new ArrayList<>();
+				while(rs.next()) {
+					dtos.add(QnADTO.of(rs));
+				}
+			
+				return dtos;
+			}
+		}
+	}
+
+	@Override
+	public int getSize() throws Exception {
+		String sql = "SELECT COUNT(*) FROM QNA";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			rs.next();
+			
+			return rs.getInt(1);
+		}
 	}
 
 

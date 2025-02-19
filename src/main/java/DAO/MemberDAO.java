@@ -17,5 +17,5 @@ public interface MemberDAO {
 	
 	List<MemberDTO> selectByGender(GENDER gender) throws Exception;   // 성별별로 유저를 검색
 	List<MemberDTO> selectByAgeRange(int startAge, int endAge) throws Exception;	// 성별별로 유저를 검색
-	boolean isAdmin(String role) throws Exception;	// 관리자인지 확인 
+	boolean isAdmin(int memberId) throws Exception;	// 관리자인지 확인 
 }
