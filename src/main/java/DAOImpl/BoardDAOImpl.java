@@ -82,8 +82,8 @@ public enum BoardDAOImpl implements BoardDAO {
 	}// 게시물 가져올 범위
 
 	public BoardDTO selectById(int seq) throws Exception {
-		String sql = "select * from board where board_id = ?";
-		/*
+		String sql = "	select * from board b inner join members m "
+				+ "on b.member_id = m.member_id where board_id= ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
 			pstat.setInt(1, seq);
@@ -92,22 +92,24 @@ public enum BoardDAOImpl implements BoardDAO {
 
 			try (ResultSet rs = pstat.executeQuery()) {
 				if (rs.next()) {
-					int board_id = rs.getInt("board_id");
+					int boardId = rs.getInt("board_id");
+					int memberId = rs.getInt("member_id");
+					String writer = rs.getString("nickname");
 					String title = rs.getString("title");
-					String writer = rs.getString("member_id");//닉네임으로 변경? 네임으로 변경?
-
-					Timestamp reg_date = rs.getTimestamp("reg_date");
 					String contents = rs.getString("contents");
-					int view = rs.getInt("view_count");
-					int reply = rs.getInt("reply_count");
-
-					dto = new BoardDTO(board_id, title, writer, reg_date, contents, view,reply);
+					Timestamp regDate = rs.getTimestamp("reg_date");
+					int viewCount = rs.getInt("view_count");
+					int replyCount = rs.getInt("reply_count");
+					String role = rs.getString("role");
+					
+					dto = new BoardDTO(boardId, memberId, title, regDate, contents, viewCount,replyCount, writer, role);
 				}
 				return dto;
 			}
+			
+			
 		}
-		*/
-		return null;
+	
 	}
 	
 	public int getSize() throws Exception {
