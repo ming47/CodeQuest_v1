@@ -521,99 +521,101 @@ body {
 	</div>
 
 	<script>
-		$(document)
-				.ready(
-						function() {
-							// ✅ 랭킹 탭 버튼 클릭 이벤트
-							$(".tab-btn").click(function() {
-								$(".tab-btn").removeClass("active");
-								$(this).addClass("active");
 
-								let gameId = $(this).data("game");
-								$(".ranking-list").addClass("hidden");
-								$("#" + gameId).removeClass("hidden");
-							});
+	$(document).ready(function() {
+	    // ✅ 로그인 처리
+	    $("#loginBtn").click(function() {
+	        let userId = $("#id").val().trim();
+	        let userPw = $("#pw").val().trim();
 
-							// ✅ 로그인 처리
-							$("#loginBtn")
-									.click(
-											function() {
-												let userId = $("#id").val()
-														.trim();
-												let userPw = $("#pw").val()
-														.trim();
+	        if (userId === "" || userPw === "") {
+	            alert("아이디와 비밀번호를 입력하세요!");
+	            return false;
+	        }
 
-												if (userId === ""
-														|| userPw === "") {
-													alert("아이디와 비밀번호를 입력하세요!");
-													return false;
-												}
+	        $.ajax({
+	            url: "/member/login.do",
+	            method: "POST",
+	            data: { id: userId, pw: userPw },
+	            dataType: "text"
+	        })
+	        .done(function(resp) {
+	            if (resp.trim() === "success") {
+	                $(".loginbox").fadeOut(function() {
+	                    let bodyHeight = $(".body").height() / 2;  // ✅ outerHeight → height
+	                    $(".rankingboard").addClass("expanded").css("height", bodyHeight + "px");
+	                });
 
-												$
-														.ajax(
-																{
-																	url : "/member/login.do",
-																	method : "POST",
-																	data : {
-																		id : userId,
-																		pw : userPw
-																	},
-																	dataType : "text"
-																})
-														.done(
-																function(resp) {
-																	if (resp
-																			.trim() === "success") {
-																		$(
-																				".loginbox")
-																				.fadeOut(
-																						function() {
-																							let bodyHeight = $(
-																									".body")
-																									.outerHeight() / 2;
-																							$(
-																									".rankingboard")
-																									.addClass(
-																											"expanded")
-																									.css(
-																											"height",
-																											bodyHeight);
-																						});
+	                $(".logbox-container").load("logbox.jsp", function() {
+	                    $(".logbox").fadeIn();
+	                });
+	            } else {
+	                alert("로그인 실패. 아이디/비밀번호를 확인하세요.");
+	            }
+	        })
+	        .fail(function(xhr, status, error) {
+	            console.log("로그인 AJAX 실패:", error);
+	        });
+	    });
+	    function loadRanking(gameId) {
+	    	console.log(gameId);
+	    	
+	        $.ajax({
+	            url: "/score/list/game.do?id=" + gameId,
+	            type: "GET",
+	            dataType: "json"
+	        }).done(function(data) {
+	        	console.log(data);
+	            let rankingList = $('.ranking-list');
 
-																		$(
-																				".logbox-container")
-																				.load(
-																						"logbox.jsp",
-																						function() {
-																							$(
-																									".logbox")
-																									.fadeIn();
-																						});
-																	} else {
-																		alert("로그인 실패. 아이디/비밀번호를 확인하세요.");
-																	}
-																})
-														.fail(
-																function(xhr,
-																		status,
-																		error) {
-																	console
-																			.log(
-																					"로그인 AJAX 실패:",
-																					error);
-																	console
-																			.log("code: "
-																					+ request.status)
-																	console
-																			.log("message: "
-																					+ request.responseText)
-																	console
-																			.log("error: "
-																					+ error);
-																});
-											});
-						});
-	</script>
+	            rankingList.html('');
+	            if (!data || data.length === 0) {
+	                rankingList.append("<li>랭킹 데이터 없음</li>");
+	                return;
+	            }
+	            
+	            for (let i = 0; i < 10; i++) {
+					console.log(data[i]);
+	            	
+	            	const li = $('<li>').html(i + 1 + '위 ' + data[i].user + '(' + data[i].score + '점)');
+	            	$('.ranking-list').append(li);
+	            }
+/*
+	            $.each(data, function(index, player) {
+	            	console.log(index, player);
+	            	
+	            	const li = $('<li>').html(index + 1 + '위 ' + player.user + '(' + player.score + '점)');
+	            	$('.ranking-list').append(li);
+	               // rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
+	            });
+	            */
+	        }).fail(function(xhr, status, error) {
+	            console.log("랭킹 데이터 불러오기 실패:", error);
+	        });
+	    }
+
+	    // ✅ 초기에 첫 번째 게임 랭킹 불러오기
+	    let defaultGameId = "800001";  // ✅ 초기값 설정
+	    loadRanking(defaultGameId);
+
+	    // ✅ 랭킹 탭 클릭 시 해당 게임 랭킹 로드
+	    $(".tab-btn").click(function() {
+	        $(".tab-btn").removeClass("active");
+	        $(this).addClass("active");
+
+	        let gameId = $(this).data("game");
+
+	        // ✅ "game1" → "1"로 변환
+	        if (gameId.startsWith("game")) {
+	            gameId = gameId.replace("game", "");
+	            gameId = Number(80000 + gameId);
+	        }
+
+	        loadRanking(gameId);
+	    });
+	});
+
+		</script>
 
 </body>
 </html>
