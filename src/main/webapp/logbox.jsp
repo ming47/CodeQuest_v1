@@ -53,9 +53,9 @@ String sessionLoginId = (String) session.getAttribute("sessionLoginId");
 </head>
 <body>
 	<div class="logbox"
-		style="display: ${not empty member.id ? 'flex' : 'none'};">
-		<span>${not empty member.id ? member.id.concat(' 님 환영합니다') : ''}
-			!</span>
+		style="display: ${not empty member.loginId ? 'flex' : 'none'};">
+		<span>${not empty member.loginId ? member.loginId.concat(' 님 환영합니다') : ''}</span>
+
 		<div class="logbox-buttons">
 			<a href="/member/mypage.do">마이페이지</a> <a href="/member/logout.do">로그아웃</a>
 

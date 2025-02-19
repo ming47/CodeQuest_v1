@@ -109,7 +109,10 @@ public class BoardController extends HttpServlet {
 
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
-			} else if (cmd.equals("/ajax_list.board")) {// 게시물 목록
+			} 
+			
+			
+			else if (cmd.equals("/ajax_list.board")) {// 게시물 목록
 				String scpage = (String) request.getParameter("cpage");
 				if (scpage == null) {
 					scpage = "1";
@@ -202,7 +205,6 @@ public class BoardController extends HttpServlet {
 				BoardDTO dto = dao.selectById(boardId);
 
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("dto");
-				String user = member.getId();
 
 				int result = dao.deleteById(boardId);
 

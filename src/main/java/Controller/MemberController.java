@@ -30,6 +30,7 @@ public class MemberController extends HttpServlet {
 			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
 
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+				
 			} else if(cmd.equals("/member/valueCheck.do")) { //ajax 중복체크
 				String value = request.getParameter("value");
 			    String field = request.getParameter("field");
@@ -54,6 +55,9 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
 				response.sendRedirect("/");
+				
+			} else if (cmd.equals("/member/findMember.do")) {
+				
 			} else if (cmd.equals("/delete.do")) {
 
 			} else if (cmd.equals("/validate.do")) {
@@ -131,44 +135,7 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/printout.do")) { // 출력
 
 			} else if (cmd.equals("/member/update.do")) { // 수정
-				// 세션에서 가져옴
-				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
-				String id = member.getId();
-				if (id == null) {
-					response.sendRedirect("/member/login.do");
-					return;
-				}
-//				String name = request.getParameter("name");
-//				String ssn = request.getParameter("ssn");
-				String address = request.getParameter("address");
-//				String role = request.getParameter("role");
-//				Timestamp regDate = request.getParameter("regDate");
 				
-				String nickname = request.getParameter("nickname");
-				String email = request.getParameter("email");
-				String phone = request.getParameter("phone");
-				int zipCode = Integer.parseInt(request.getParameter("postcode"));
-				String detail_address = request.getParameter("detail_address");
-				
-				try {
-				    int result = dao.update(new MemberDTO(id, nickname, email, phone, zipCode, address, detail_address));
-				    if (result > 0) {
-				        // 새로운 MemberDTO 객체 생성
-				        MemberDTO updatedMember = new MemberDTO(id, nickname, email, phone, zipCode, address, detail_address);
-				        
-				        // 세션의 member 정보 업데이트
-				        request.getSession().setAttribute("member", updatedMember);
-				        
-				        response.sendRedirect("/member/mypage.do");
-				    } else {
-				        response.sendRedirect("/error123.jsp");
-				    }
-				} catch (Exception e) {
-				    e.printStackTrace();
-				    System.out.println("수정 중 발생한 오류: " + e.getMessage());
-				    e.getStackTrace();
-				    response.sendRedirect("/error123.jsp");
-				}
 			} else if (cmd.equals("/delete.do")) {
 
 			} else if (cmd.equals("/validate.do")) {
@@ -181,4 +148,32 @@ public class MemberController extends HttpServlet {
 		}
 
 	}
+	
+	   public static void main(String[] args) {
+		      for (int i = 0; i < 100; i++) {
+		         String id = "USER" + i;
+		         
+		         String sql = String.format("INSERT INTO MEMBERS (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, NICKNAME, SSN, EMAIL, PHONE, ROLE) VALUES (MEMBER_ID_SEQ.NEXTVAL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', 'user');", 
+		               id, SecurityUtil.hashPassword(id), id, id, generateSSN(), id + "@" + id + ".com", generatePhoneNumber());
+		         
+		         System.out.println(sql);
+		      }
+		   }
+		   
+		   public static String generateSSN() {
+		      String year = String.valueOf((int) (Math.random() * 29 + 70));      
+		      int month = (int) (Math.random() * 11 + 1);
+		      int day = (int) (Math.random() * 27 + 1);
+		      
+		      int gender = (Math.random() < 0.5) ? 1 : 2;
+		      
+		      String monthStr = (month < 10) ? '0' + String.valueOf(month) : String.valueOf(month);
+		      String dayStr = (day < 10) ? '0' + String.valueOf(day) : String.valueOf(day);
+		      
+		      return year + monthStr + dayStr + "-" + gender + "******";
+		   }
+		   
+		   public static String generatePhoneNumber() {
+		      return "010-" + String.valueOf((int) (Math.random() * 8000 + 1000)) + "-" + String.valueOf((int) (Math.random() * 8000 + 1000));
+		   }
 }

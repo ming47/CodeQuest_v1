@@ -46,7 +46,7 @@ public enum MemberDAOImpl implements MemberDAO {
 				+ "(member_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setString(1, dto.getId());
+			pstat.setString(1, dto.getLoginId());
 			pstat.setString(2, dto.getPw());
 			pstat.setString(3, dto.getName());
 			pstat.setString(4, dto.getNickName());
@@ -91,7 +91,8 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setString(2, inputPw);
 			try (ResultSet rs = pstat.executeQuery()) {
 				if (rs.next()) {
-					String id = rs.getString("login_id");
+					int memberId = rs.getInt("member_id");
+					String loginId = rs.getString("login_id");
 					String name = rs.getString("name");
 					String nickName = rs.getString("nickname");
 					String ssn = rs.getString("ssn");
@@ -103,7 +104,9 @@ public enum MemberDAOImpl implements MemberDAO {
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
 					
-					MemberDTO member = new MemberDTO(id,name,nickName,ssn,email,phone,postcode,address,detail_address,role,date);
+					MemberDTO member = new MemberDTO(memberId,loginId,name,nickName,ssn,
+													 email,phone,postcode,address,detail_address,
+													 role,date);
 					return member;
 
 			}
@@ -122,7 +125,7 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setInt(4, dto.getZipCode());
 			pstat.setString(5, dto.getAddress());
 			pstat.setString(6, dto.getDetailAddress());
-			pstat.setString(7, dto.getId());
+			pstat.setString(7, dto.getLoginId());
 			
 			return pstat.executeUpdate();
 		}

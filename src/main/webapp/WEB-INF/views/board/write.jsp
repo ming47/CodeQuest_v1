@@ -363,4 +363,8 @@ a button:hover {
 			$(editor).summernote('insertImage', data.path);
 		});
 	}
+	
+	$('form').on('submit', function() {
+		$('#input-contents').val($('#contents').summernote('code'));
+	});
 </script>
