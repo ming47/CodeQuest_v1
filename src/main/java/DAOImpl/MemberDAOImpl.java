@@ -44,6 +44,7 @@ public enum MemberDAOImpl implements MemberDAO {
 				+ "(member_id, login_id, password, name, nickname, ssn, email, "
 				+ "phone, zip_code, address, detail_address, role, reg_date)values "
 				+ "(member_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
+
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getId());
 			pstat.setString(2, dto.getPw());
@@ -62,7 +63,7 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 	
 	public boolean idVali(String id) throws Exception {// ID검증
-		String sql = "select user_id from members where user_id = ?";
+		String sql = "select login_id from members where login_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setString(1, id);
 			try (ResultSet rs = pstat.executeQuery()) {
@@ -112,9 +113,20 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int update(MemberDTO dto) throws Exception {
+	public int update(MemberDTO dto) throws Exception {	//mypage수정
+		String sql = "update Members set nickname = ?, email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where login_id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, dto.getNickName());
+			pstat.setString(2, dto.getEmail());
+			pstat.setString(3, dto.getPhone());
+			pstat.setInt(4, dto.getZipCode());
+			pstat.setString(5, dto.getAddress());
+			pstat.setString(6, dto.getDetailAddress());
+			pstat.setString(7, dto.getId());
+			
+			return pstat.executeUpdate();
+		}
 		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -125,7 +137,7 @@ public enum MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public List<MemberDTO> selectByGender(GENDER gender) throws Exception {		
-		String sql = "SELECT * FROM USERS WHERE SSN LIKE ?";
+		String sql = "SELECT * FROM Members WHERE SSN LIKE ?";
 		
 		String target = String.format("%%-%d______", gender.getGenderFactor());
 		try(Connection con = getConnection();

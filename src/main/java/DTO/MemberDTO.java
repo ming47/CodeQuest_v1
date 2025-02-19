@@ -62,6 +62,15 @@ public class MemberDTO {
 		this.role = role;
 		this.regDate = regDate;
 	}
+	public MemberDTO(String id, String nickname,String email, String phone, int zipCode, String address, String detailAddress) {	//수정
+		this.id = id;
+		this.nickName = nickname;
+		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address = address;
+		this.detailAddress = detailAddress;
+	}
 
 	public MemberDTO() {
 		super();
