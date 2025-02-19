@@ -1,5 +1,7 @@
 package DTO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class PlaytimeDTO {
@@ -61,5 +63,14 @@ public class PlaytimeDTO {
 
 	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
+	}
+	
+	public static PlaytimeDTO of(ResultSet rs) throws SQLException {
+		return new PlaytimeDTO(
+				rs.getInt("PLAY_TIME_ID"),
+				rs.getInt("MEMBER_ID"),
+				rs.getInt("GAME_ID"),
+				rs.getTimestamp("PLAY_TIME"),
+				rs.getTimestamp("REG_DATE"));
 	}
 }
