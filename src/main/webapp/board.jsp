@@ -255,7 +255,7 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td><a href="/detail.board?id=${dto.boardId}">${dto.title}</a></td>
+						<td><a href="/detail.board?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title}</a></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
