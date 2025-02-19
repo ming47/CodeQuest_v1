@@ -31,7 +31,10 @@ body {
 }
 
 .container {
-	width: 460px;
+	width: 100%;
+	max-width: 800px;
+	height: fit-content;
+	
 	background: white;
 	padding: 25px;
 	border-radius: 10px;
@@ -47,8 +50,9 @@ body {
 }
 
 fieldset {
-	border: 2px solid dodgerblue;
+	border: 3px solid dodgerblue;
 	border-radius: 6px;
+	
 	padding: 15px;
 	margin-bottom: 15px;
 	text-align: left;

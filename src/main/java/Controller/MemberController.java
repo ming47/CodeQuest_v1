@@ -28,6 +28,7 @@ public class MemberController extends HttpServlet {
 			String cmd = ConvertURL.of(request);
 			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
+				
 			} else if(cmd.equals("/member/valueCheck.do")) { //ajax 중복체크
 				String value = request.getParameter("value");
 			    String field = request.getParameter("field");

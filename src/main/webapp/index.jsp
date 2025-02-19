@@ -362,7 +362,5 @@ body {
 		});
 	</script>
 	
-	
-	
 </body>
 </html>
