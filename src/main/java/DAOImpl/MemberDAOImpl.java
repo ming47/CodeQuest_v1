@@ -114,7 +114,7 @@ public enum MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int update(MemberDTO dto) throws Exception {	//mypage수정
-		String sql = "update Members set nickname = ?, email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where member_id = ?";
+		String sql = "update Members set nickname = ?, email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where login_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, dto.getNickName());
 			pstat.setString(2, dto.getEmail());
@@ -122,7 +122,7 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setInt(4, dto.getZipCode());
 			pstat.setString(5, dto.getAddress());
 			pstat.setString(6, dto.getDetailAddress());
-			pstat.setInt(7, dto.getMemberId());
+			pstat.setString(7, dto.getId());
 			
 			return pstat.executeUpdate();
 		}

@@ -7,13 +7,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    
-    <script>
+     <script>
         $(function() {
             $("#editBtn").on("click", function() {
-                $("input.editable").removeAttr("readonly");
+                $("input.editable").removeAttr("readonly"); // 필드 수정 가능하게
                 $("#findPostcode").show();
-                $("#backBtn, #editBtn").hide();
+                $("#backBtn, #editBtn").hide(); // 기존 버튼 숨기기
+
                 let submitBtn = $("<button>").attr("type", "submit")
                     .text("수정완료").css("margin-right", "5px");
                 let btnCancel = $("<button>").attr("type", "button").text("취소");
@@ -22,7 +22,7 @@
                 });
                 $("#btn1").append(submitBtn);
                 $("#btn2").append(btnCancel);
-            })
+            });
         });
 
         function openPostcode() {
@@ -34,7 +34,6 @@
                 }
             }).open();
         }
-
     </script>
 </head>
 <body>
@@ -57,16 +56,16 @@
             <tr>
                 <td>${member.id}<input type="hidden" name="id" value="${member.id}"></td>
                 <td>${member.name}</td>
-                <td>${member.nickname}<input type = "text" name = "nickname" value = "${member.nickname}" readonly class = "editable"></td>
+                <td><input type = "text" name = "nickname" value = "${member.nickName}" readonly class = "editable"></td>
                 <td>${member.ssn}</td>
-                <td>${member.email}<input type="email" name="email" value="${member.email}" readonly class="editable"></td>
-                <td>${member.phone}<input type="text" name="phone" value="${member.phone}" readonly class="editable"></td>
-                <td>${member.postcode}<input type="text" name="postcode" id = "postcode" value="${member.postcode}" readonly class="editable">
+                <td><input type="email" name="email" value="${member.email}" readonly class="editable"></td>
+                <td><input type="text" name="phone" value="${member.phone}" readonly class="editable"></td>
+                <td><input type="text" name="postcode" id = "postcode" value="${member.zipCode}" readonly class="editable">
                    <button type="button" id="findPostcode" style="display: none;" onclick="openPostcode()">찾기</button>
-                <td>${member.address}<input type="text" name="address" id = "address" value="${member.address}" readonly class="editable"></td>
-                <td>${member.detail_address}<input type="text" name="detail_address" id = "detail_address" value="${member.detail_address}" readonly class="editable"></td>
-                <td>${member.authority}</td>
-                <td>${member.date}</td>
+                <td>${member.address}</td>
+                <td><input type="text" name="detail_address" id = "detail_address" value="${member.detailAddress}" readonly class="editable"></td>
+                <td>${member.role}</td>
+                <td>${member.regDate}</td>
             </tr>
             <tr>
                 <td colspan="5" align="center" id="btn1">

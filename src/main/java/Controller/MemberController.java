@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -137,22 +138,36 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/member/login.do");
 					return;
 				}
+//				String name = request.getParameter("name");
+//				String ssn = request.getParameter("ssn");
+				String address = request.getParameter("address");
+//				String role = request.getParameter("role");
+//				Timestamp regDate = request.getParameter("regDate");
+				
 				String nickname = request.getParameter("nickname");
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
 				int zipCode = Integer.parseInt(request.getParameter("postcode"));
-				String address = request.getParameter("address");
 				String detail_address = request.getParameter("detail_address");
+				
 				try {
-					int result = dao.update(new MemberDTO(id, nickname,email, phone, zipCode, address, detail_address));
-					if (result > 0) {
-						response.sendRedirect("/member/mypage.jsp");
-					} else {
-						response.sendRedirect("/error.jsp");
-					}
+				    int result = dao.update(new MemberDTO(id, nickname, email, phone, zipCode, address, detail_address));
+				    if (result > 0) {
+				        // 새로운 MemberDTO 객체 생성
+				        MemberDTO updatedMember = new MemberDTO(id, nickname, email, phone, zipCode, address, detail_address);
+				        
+				        // 세션의 member 정보 업데이트
+				        request.getSession().setAttribute("member", updatedMember);
+				        
+				        response.sendRedirect("/member/mypage.do");
+				    } else {
+				        response.sendRedirect("/error123.jsp");
+				    }
 				} catch (Exception e) {
-					e.printStackTrace();
-					response.sendRedirect("/error.jsp");
+				    e.printStackTrace();
+				    System.out.println("수정 중 발생한 오류: " + e.getMessage());
+				    e.getStackTrace();
+				    response.sendRedirect("/error123.jsp");
 				}
 			} else if (cmd.equals("/delete.do")) {
 
