@@ -394,36 +394,6 @@ body {
                 <div class="rankingboard">
                     <h3>🏆 랭킹 보드</h3>
 
-<<<<<<< HEAD
-				if (userId === "" || userPw === "") {
-					alert("아이디와 비밀번호를 입력하세요!");
-					return false;
-				}
-				$.ajax({
-					url : "/member/login.do",
-					method : "POST",
-					data : {
-						id : userId,
-						pw : userPw
-					},
-					dataType : "text"
-				}).done(function(resp) {
-					if (resp.trim() === "success") {
-						$(".loginbox").fadeOut();
-						$(".logbox-container").load("logbox.jsp", function() {
-							$(".logbox").fadeIn();
-						});
-					} else {
-						$("#loginResult").text("로그인 실패. 아이디/비밀번호를 확인하세요.");
-					}
-				}).fail(function(xhr, status, error) {
-					console.log("로그인 AJAX 실패:", error);
-				});
-			});
-		});
-	</script>
-	
-=======
                     <div class="ranking-tabs">
                         <button class="tab-btn active" data-game="game1">Game 1</button>
                         <button class="tab-btn" data-game="game2">Game 2</button>
@@ -505,6 +475,5 @@ body {
         });
 		</script>
 
->>>>>>> 6b6741a172efd22fb682dfc16568cb1285501746
 </body>
 </html>
