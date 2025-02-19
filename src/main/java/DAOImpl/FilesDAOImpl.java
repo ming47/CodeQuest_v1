@@ -11,7 +11,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import DAO.FilesDAO;
-import DTO.BoardDTO;
 import DTO.FilesDTO;
 
 public enum FilesDAOImpl implements FilesDAO {

@@ -12,7 +12,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import DAO.ReplyDAO;
-import DTO.BoardDTO;
 import DTO.ReplyDTO;
 
 public enum ReplyDAOImpl implements ReplyDAO {
@@ -67,11 +66,6 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			}
 		}
 	}
-	private int replyId;
-	private String name;
-	private int boardId;
-	private String contents;
-	private Timestamp regDate;
 
 	@Override
 	public int insert(ReplyDTO dto) throws Exception {
