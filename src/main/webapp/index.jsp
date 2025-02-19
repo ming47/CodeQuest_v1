@@ -24,24 +24,22 @@
 
 body {
 	display: flex;
+	width: 100%;
+	height: 100%;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
 	background: url('/allback.jpg') no-repeat center;
 	background-size: cover;
 }
 
 .container {
-	width: 90%;
-	max-width: 1660px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
 .header, .footer {
-	width: 100%;
-	height: 100px;
 	background: #1e201d;
 	display: flex;
 	align-items: center;
@@ -51,15 +49,26 @@ body {
 	font-family: "Press Start 2P", serif;
 	font-weight: 400;
 	font-style: normal;
-	font-size: 15px;
+	width: 100%;
 }
 
 .header {
-	width: 100%;
-	background: #1e201d;
+	height: 80px;
 	padding: 20px;
+	position: relative;
+}
+
+.footer {
+	height: 60px;
 	display: flex;
+	align-items: center;
 	justify-content: center;
+	font-size: 14px;
+	margin-top: 50px;
+}
+
+.header>.navi>.logo {
+	font-size: 20px;
 }
 
 .navi {
@@ -77,18 +86,19 @@ body {
 
 .menu li {
 	padding: 10px 15px;
-	background: white;
-	color: #b4c28a;
+	background: #717171;
+	color: white;
 	border-radius: 5px;
 	cursor: pointer;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+		black;
 }
 
 .menu li:hover {
-	background: #81a5bf;
+	background: #3c3b39;
 	color: white;
 }
 
-/* ✅ .body와 .right-content를 좌우 정렬 */
 .main-content {
 	display: flex;
 	width: 100%;
@@ -117,15 +127,20 @@ body {
 
 /* ✅ 로그인 박스 */
 .loginbox {
-	width: 100%;
-	background: url('/login.jpg') no-repeat center;
+	width: 80%; background : url('/login.jpg') no-repeat center;
 	background-size: cover;
-	padding: 20px;
+	padding: 10px;
 	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	font-family: "Jua", serif;
-	margin-bottom: 10px;
+	margin-bottom: 50px;
+	margin-top: 80px;
+	background: url('/login.jpg') no-repeat center; background-size : cover;
+	padding : 10px; border-radius : 20px; box-shadow : 0 0 10px rgba( 0, 0,
+	0, 0.1); text-align : center; font-family : "Jua", serif; margin-bottom
+	: 50px; margin-top : 80px;
+	margin-right: 75px;
 }
 
 /* ✅ 로그인 버튼 및 입력 필드 배치 */
@@ -152,12 +167,13 @@ body {
 .loginbox .input-group {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 5px;
 	justify-content: center;
 }
 
 .loginbox .input-group input {
 	width: 60%;
+	font-size: 13px;
 }
 
 .loginbox .input-group button {
@@ -176,34 +192,63 @@ body {
 	background: #3c3b39;
 }
 
+.login-links button {
+	margin: 10px;
+	border-radius: 10px;
+	padding: 8px;
+	transition: background 0.3s;
+	font-weight: bold;
+	background: #717171;
+	color: white;
+	font-family: "Jua", serif;
+	font-size: 17px;
+}
+
+.login-links button:hover {
+	background: #003f7f;
+	transform: scale(1.1);
+}
+
 .login-links {
 	margin: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* ✅ 로그인 전 랭킹보드 기본 크기 */
 .rankingboard {
-	width: 100%;
+	width: 80%;
+	height: 500px;
 	background: white;
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	transition: all 0.5s ease-in-out;
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 20px;
+	margin-top: 30px;
+	margin-right: 80px;
 }
 
 /* ✅ 로그인 후 랭킹보드 크기 조정 (body의 절반) */
 .rankingboard.expanded {
-	width: 100%;
+	width: 80%;
 	height: 50%;
 	padding: 30px;
+	margin-top:40px;
 }
 
 /* ✅ 랭킹 탭 버튼 스타일 */
 .ranking-tabs {
 	display: flex;
 	justify-content: center;
-	gap: 10px;
+	gap: 15px;
 	margin-bottom: 10px;
+	font-size: 17px;
 }
 
 .loginbox h2 {
@@ -221,6 +266,11 @@ body {
 	cursor: pointer;
 	border-radius: 5px;
 	transition: 0.3s;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 10px;
+	margin-top: 10px;
 }
 
 .tab-btn.active {
@@ -237,6 +287,12 @@ body {
 	background: #919190
 }
 
+.logbox-container {
+	position: absolute;
+	right: 10px;
+	bottom: -35px;
+}
+
 .rankingboard ul {
 	list-style: none;
 	padding: 0;
@@ -244,17 +300,20 @@ body {
 
 .rankingboard li {
 	padding: 5px;
-	font-size: 14px;
+	font-size: 17px;
 }
 
 /* ✅ 게임 리스트 */
 .gameList {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 20px;
+	gap: 25px;
 	padding: 10px;
-	width: 100%;
+	width: 90%;
 	font-family: "Press Start 2P", serif;
+	margin-top: 30px;
+		text-shadow: 0 1px 0 #a3a3a3, -1px 2px 0 #a3a3a3, 1px 4px 0 #a3a3a3, 0 3px 0
+		#a3a3a3;
 }
 
 .game {
@@ -275,6 +334,14 @@ body {
 	width: 100%;
 	height: 160px;
 	border-radius: 10px;
+}
+
+.game h3 {
+	margin: 10px;
+}
+
+.game p {
+	margin: 10px;
 }
 
 .game button {
@@ -298,7 +365,7 @@ body {
 }
 
 .boardlist {
-	width: 100%;
+	width: 90%;
 	background: url('/board.jpg') no-repeat center;
 	background-size: cover;
 	padding: 20px;
@@ -306,24 +373,25 @@ body {
 	text-align: center;
 	color: white;
 	margin-top: 20px;
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 20px;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 6px 0 black, 0 3px 0
+		black;
 }
 
-/* ✅ 푸터 */
-.footer {
-	width: 100%;
-	height: 80px;
-	background: #1e201d;
-	color: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-family: "Press Start 2P", serif;
-	font-weight: 400;
-	font-size: 14px;
-	margin-top: auto;
+.boardlist h3 {
+	margin-bottom: 20px;
+}
+
+.boardlist li {
+	margin-bottom: 10px;
 }
 </style>
 </head>
+
+
 <body>
 
 	<div class="container">
@@ -339,12 +407,12 @@ body {
 					<li>Service</li>
 				</ul>
 			</div>
+			<!-- ✅ 로그인 정보 -->
+			<div class="logbox-container">
+				<%@ include file="logbox.jsp"%>
+			</div>
 		</div>
 
-		<!-- ✅ 로그인 정보 -->
-		<div class="logbox-container">
-			<%@ include file="logbox.jsp"%>
-		</div>
 
 		<!-- ✅ 좌우 배치 레이아웃 -->
 		<div class="main-content">
@@ -413,7 +481,7 @@ body {
 
 					<div class="login-links">
 						<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
-							href="/member/findMember.do">ID/PW 찾기</a>
+							href="/member/findMember.do"><button>ID/PW 찾기</button></a>
 					</div>
 				</div>
 
@@ -453,6 +521,7 @@ body {
 	</div>
 
 	<script>
+
 	$(document).ready(function() {
 	    // ✅ 로그인 처리
 	    $("#loginBtn").click(function() {
@@ -547,5 +616,6 @@ body {
 	});
 
 		</script>
+
 </body>
 </html>
