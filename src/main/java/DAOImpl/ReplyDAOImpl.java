@@ -55,11 +55,11 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			try (ResultSet rs = pstat.executeQuery();) {
 				ReplyDTO rdto = null;
 				while (rs.next()) {
-					int replyId = rs.getInt("replyId");
+					int replyId = rs.getInt("reply_Id");
 					String name = rs.getString("name");
 					String contents = rs.getString("contents");
-					Timestamp regDate = rs.getTimestamp("regDate");
-					int boardId = rs.getInt("boardId");
+					Timestamp regDate = rs.getTimestamp("reg_Date");
+					int boardId = rs.getInt("board_Id");
 					rdto = new ReplyDTO(replyId,name,boardId,contents ,regDate);
 				}
 				return rdto;
