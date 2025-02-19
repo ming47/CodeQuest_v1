@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>list</title>
+
+<title>게시판 </title>
+
 </head>
 <body>
 

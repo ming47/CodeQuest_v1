@@ -10,6 +10,8 @@ public interface FilesDAO {
 	int insert(FilesDTO dto) throws Exception;
 	int update(FilesDTO dto) throws Exception;
 	int deleteById(int dto) throws Exception;
-	
+
 	List<FilesDTO> selectByBoardId(int boardId) throws Exception;	// 특정 게시글의 파일들을 검색
-}
+	}
+
+
