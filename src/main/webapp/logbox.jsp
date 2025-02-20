@@ -49,7 +49,7 @@
 </style>
 </head>
 <body>
-
+<c:set var="sessionLoginId" value="${sessionScope.sessionLoginId}" />
 	<%-- ✅ 로그인 상태에 따라 로그박스를 표시 --%>
 	<c:if test="${not empty sessionLoginId}">
 		<div class="logbox">
