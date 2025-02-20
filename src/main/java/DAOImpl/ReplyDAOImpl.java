@@ -25,8 +25,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	
 	@Override
 	public List<ReplyDTO>selectAll()throws Exception {
-
-		String sql = "select * from reply ";
+		String sql = "select * from reply";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			ResultSet rs = pstat.executeQuery();
 
@@ -120,5 +119,26 @@ public enum ReplyDAOImpl implements ReplyDAO {
 		}
 	}//ap만들어진 메서드가 dto로 지정되어있는데 나중에 수정하자고 하셔서 변수이름 dto로 사용
 	//댓글 아이디를 의미함 
+
+	@Override
+	public List<ReplyDTO> selectByBoardId(int boardId) throws Exception {	//댓글 출력
+		String sql = "select * from Reply where = board_id = ? order by reg_date desc";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, boardId);
+			try(ResultSet rs = pstat.executeQuery()){
+				List<ReplyDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					ReplyDTO dto = new ReplyDTO();
+					dto.setReplyId(rs.getInt("replyId"));
+					dto.setName(rs.getString("name"));
+					dto.setBoardId(rs.getInt("boardId"));
+					dto.setContents(rs.getString("contents"));
+					dto.setRegDate(rs.getTimestamp("regDate"));
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
 
 }
