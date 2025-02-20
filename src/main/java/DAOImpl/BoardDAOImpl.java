@@ -25,7 +25,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		return ds.getConnection();
 	}
 
-	//
+	
 	public List<BoardDTO> selectAll() throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id";
 		try (Connection con = this.getConnection(); 

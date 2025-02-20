@@ -3,11 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <head>
 <meta charset="UTF-8">
 <title>게시글 상세 보기</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 * {
    box-sizing: border-box;
@@ -220,10 +220,15 @@ window.onload = function(){
     // 댓글 목록 불러오기
     $.ajax({
         url: "/reply/ContentsAll.do",
-        data: { 'boardId': "${dto.boardId}" },
+        data: { 'boardId': ${dto.boardId} },
         type: "get"
     }).done(function(data) {
-        data = JSON.parse(data);
+       try{
+        data = JSON.parse(data);}
+       catch (e) {
+            console.error("Error parsing JSON: ", e);
+            return;
+        }
 
         for (let i = 0; i < data.length; i++) {
             let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].reply_id);
@@ -325,6 +330,8 @@ window.onload = function(){
       <input id=id type="hidden" name="id" value="${dto.boardId}">
       <input name =title type="hidden" id="hdtitle">
       <input name=contents type="hidden" id="hdcontents">
+
+
       
          <div class="header">
             <h1>게시글 상세 보기</h1>
@@ -410,36 +417,11 @@ window.onload = function(){
                   
                   location.href = "/delete.reply" + target;
 
-
-	<form action="/update.board" method="post" id="frm">
-		<div class="footer">
-
-			<button id="update" type="button">수정하기</button>
-			<button id="delete" type="button">삭제하기</button>
-			<script>
-					$("#inputbtn").on(
-							"click",
-							function() {
-								let commentText = $("#commentInput").val();
-								if (commentText == "") {
-									alert("댓글을 입력하세요")
-									return;
-								}
-								let updatecontents = $("<div>").addClass(
-										"comment-box");
-								$("#comments").append(updatecontents);
-								$("#commentsInput").val("");
-							});
-					$(".deletebtn").on("click", function(){
-						let target = $(this).attr("seq");
-						
-						location.href = "/delete.reply" + target;
-
-					});
-
-					$(".updatebtn").on("click",	function(){
-						
-								//댓글 수정하기 버튼 눌렀을때 	
+               let last_cpage = sessionStorage.getItem("last_cpage");
+               location.href = "/list.board?cpage=" + last_cpage;
+               $(".updatebtn").on("click",   function(){
+                  
+                        //댓글 수정하기 버튼 눌렀을때    
                            
                         $(".writerdiv").attr("contentEditable", "true").focus();
                         
@@ -553,11 +535,10 @@ window.onload = function(){
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/list.board?cpage=" + last_cpage;
 
-				});
-			</script>
-		</div>
-		</div>
-	</form>
-</body>
-
+            });
+         </script>
+      </div>
+      </form>
+   </div>
+   </body>
 </html>

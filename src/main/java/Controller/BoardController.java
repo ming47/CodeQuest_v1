@@ -52,83 +52,62 @@ public class BoardController extends HttpServlet {
 			
 			else if (cmd.equals("/board/printout.do")) {
 
+			
+				
 			} else if (cmd.equals("/board/list.do")) {// 게시글 목록 출력
-				// 페이징 유효성 검증
-				String scpage = (String) request.getParameter("cpage");
+	            String scpage = (String) request.getParameter("cpage");
 
-				if (scpage == null) {
-					scpage = "1";
-				}
-				int cpage = Integer.parseInt(scpage);
+	            if (scpage == null) {
+	               scpage = "1";
+	            }
+	            int cpage = Integer.parseInt(scpage);
 
-				int recordTotalCount = dao.getSize();
+	            int recordTotalCount = dao.getSize();
 
-				int pageTotalCount = 0;
-				if (recordTotalCount % Statics.recordCountPerPage > 0) {
-					pageTotalCount = recordTotalCount / Statics.recordCountPerPage + 1;
-				} else {
-					pageTotalCount = recordTotalCount / Statics.recordCountPerPage;
-				}
+	            int pageTotalCount = 0;
+	            if (recordTotalCount % Statics.recordCountPerPage > 0) {
+	               pageTotalCount = recordTotalCount / Statics.recordCountPerPage + 1;
+	            } else {
+	               pageTotalCount = recordTotalCount / Statics.recordCountPerPage;
+	            }
 
-				if (cpage < 1) {
-					cpage = 1;
-				} else if (cpage > pageTotalCount) {
-					cpage = pageTotalCount;
-				}
+	            if (cpage < 1) {
+	               cpage = 1;
+	            } else if (cpage > pageTotalCount) {
+	               cpage = pageTotalCount;
+	            }
 
-				int end = cpage * Statics.recordCountPerPage;
-				int start = end - (Statics.recordCountPerPage - 1);
+	            List<BoardDTO> list = dao.selectAll(cpage);
+	            request.setAttribute("list", list);
 
-				List<BoardDTO> list = dao.selectAll();
-
-				request.setAttribute("list", list);
-
-				int startNavi = (cpage - 1) / Statics.naviCountPerPage * Statics.naviCountPerPage + 1;
-				int endNavi = startNavi + Statics.naviCountPerPage - 1;
-
-				if (endNavi > pageTotalCount) {
-					endNavi = pageTotalCount;
-				}
-
-				boolean needPrev = true;
-				boolean needNext = true;
-				if (startNavi == 1) {
-					needPrev = false;
-				}
-				if (endNavi == pageTotalCount) {
-					needNext = false;
-				}
-
-				// request.setAttribute("list", list);
-				request.setAttribute("cpage", cpage);
-				request.setAttribute("startNavi", startNavi);
-				request.setAttribute("endNavi", endNavi);
-				request.setAttribute("needPrev", needPrev);
-				request.setAttribute("needNext", needNext);
-				request.getSession().getAttribute("member");
-
-				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+	            request.setAttribute("cpage", cpage);
+	            PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
+	            request.setAttribute("page", pageNavi.generate());
+	            
+	            request.getSession().getAttribute("dto");
+	            
+	            request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
 			} 
 			
-			
-			else if (cmd.equals("/ajax_list.board")) {// 게시물 목록
-				String scpage = (String) request.getParameter("cpage");
-				if (scpage == null) {
-					scpage = "1";
-				}
-
-				int cpage = Integer.parseInt(scpage);
-
-				int recordTotalCount = dao.getSize();
-
-				int pageTotalCount = 0;
-
-				PageNavi pageNavi = new PageNavi(cpage, dao.getSize(), 10, 5);
-				request.setAttribute("pageNavi", pageNavi);
-				request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);
-
-			} 
+//			
+//			else if (cmd.equals("/ajax_list.board")) {// 게시물 목록
+//				String cpage = (String) request.getParameter("page");
+//				if (cpage == null) {
+//					cpage = "1";
+//				}
+//
+//				int page = Integer.parseInt(cpage);
+//
+//				int recordTotalCount = dao.getSize();
+//
+//				int pageTotalCount = 0;
+//
+//				PageNavi pageNavi = new PageNavi(cpage, dao.getSize(), 10, 5);
+//				request.setAttribute("pageNavi", pageNavi);
+//				request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);
+//
+//			} 
 			
 
 			else if (cmd.equals("/board/detail.do")) { // 상세게시물
@@ -153,8 +132,8 @@ public class BoardController extends HttpServlet {
 
 				request.setAttribute("filelist", fdto);// jsp에 filelist 쓸수있게 속성 부여 ${filelist} 이렇게 써야됨
 
-//				int lastpage =(int)request.getSession().getAttribute("lastpage");
-//				request.setAttribute("lastpage", lastpage);//세션 생성 
+				int lastpage =(int)request.getSession().getAttribute("lastpage");
+				request.setAttribute("lastpage", lastpage);//세션 생성 
 
 				request.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(request, response);
 
@@ -186,18 +165,6 @@ public class BoardController extends HttpServlet {
 
 				request.getRequestDispatcher("/board/list.do").forward(request, response);
 
-			}
-
-			else if (cmd.equals("/board/update.do")) {// 게시글 수정
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-				String title = request.getParameter("title");
-				String contents = request.getParameter("contents");
-
-				BoardDTO dto = new BoardDTO(title, contents, boardId);
-
-				int result = dao.update(dto);
-
-				response.sendRedirect("/WEB-INF/views/board/list.board?cpage" + boardId);
 
 			} else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
@@ -238,10 +205,10 @@ public class BoardController extends HttpServlet {
 				// 로그인 검증
 				MemberDTO dto =(MemberDTO) request.getSession().getAttribute("member");
 
-//				if (dto == null) {
-//					response.sendRedirect("/");
-//					return;
-//				} // dto값이 없을 경우 페이지 이동 x
+				if (dto == null) {
+					response.sendRedirect("/");
+					return;
+				} // dto값이 없을 경우 페이지 이동 x
 
 				int maxSize = 1024 * 1024 * 10; // 파일 업로드 최대 사이즈(10mb)
 				String savePath = request.getServletContext().getRealPath("upload"); // 파일 업로드 경로
