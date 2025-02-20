@@ -2,6 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%
+String sessionLoginId = (String) session.getAttribute("sessionLoginId");
+boolean isLoggedIn = (sessionLoginId != null);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,7 +132,8 @@ body {
 
 /* ✅ 로그인 박스 */
 .loginbox {
-	width: 80%; background : url('/login.jpg') no-repeat center;
+	width: 80%;
+	background: url('/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
@@ -136,10 +142,15 @@ body {
 	font-family: "Jua", serif;
 	margin-bottom: 50px;
 	margin-top: 80px;
-	background: url('/login.jpg') no-repeat center; background-size : cover;
-	padding : 10px; border-radius : 20px; box-shadow : 0 0 10px rgba( 0, 0,
-	0, 0.1); text-align : center; font-family : "Jua", serif; margin-bottom
-	: 50px; margin-top : 80px;
+	background: url('/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	margin-top: 80px;
 	margin-right: 75px;
 }
 
@@ -239,7 +250,7 @@ body {
 	width: 80%;
 	height: 50%;
 	padding: 30px;
-	margin-top:40px;
+	margin-top: 40px;
 }
 
 /* ✅ 랭킹 탭 버튼 스타일 */
@@ -312,8 +323,8 @@ body {
 	width: 90%;
 	font-family: "Press Start 2P", serif;
 	margin-top: 30px;
-		text-shadow: 0 1px 0 #a3a3a3, -1px 2px 0 #a3a3a3, 1px 4px 0 #a3a3a3, 0 3px 0
-		#a3a3a3;
+	text-shadow: 0 1px 0 #a3a3a3, -1px 2px 0 #a3a3a3, 1px 4px 0 #a3a3a3, 0
+		3px 0 #a3a3a3;
 }
 
 .game {
@@ -537,10 +548,11 @@ body {
 	            url: "/member/login.do",
 	            method: "POST",
 	            data: { id: userId, pw: userPw },
-	            dataType: "text"
+	            dataType: "json"
 	        })
 	        .done(function(resp) {
-	            if (resp.trim() === "success") {
+	            if (resp.member) {
+	            	   sessionStorage.setItem("login-start-time", new Date().getTime());
 	                $(".loginbox").fadeOut(function() {
 	                    let bodyHeight = $(".body").height() / 2;  // ✅ outerHeight → height
 	                    $(".rankingboard").addClass("expanded").css("height", bodyHeight + "px");
@@ -556,6 +568,16 @@ body {
 	        .fail(function(xhr, status, error) {
 	            console.log("로그인 AJAX 실패:", error);
 	        });
+		    if ('<%=sessionLoginId%>' !== 'null') {
+		        $(".loginbox").hide();
+		    }
+	        let isLoggedIn = <%=isLoggedIn%>;
+
+	        if (isLoggedIn) {
+	            $(".loginbox").hide();
+	        } else {
+	            $(".loginbox").show();
+	        }
 	    });
 	    function loadRanking(gameId) {
 	    	console.log(gameId);
