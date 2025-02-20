@@ -67,7 +67,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	}
 
 	@Override
-	public int insert(ReplyDTO dto) throws Exception {
+	public int insert(ReplyDTO dto) throws Exception {	//DB에 저장
 		String sql = "insert into reply values(reply_id_seq.nextval, ?, ?,sysdate, ?)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
@@ -79,7 +79,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	}
 
 	@Override
-	public int update(ReplyDTO dto) throws Exception {
+	public int update(ReplyDTO dto) throws Exception {	//수정
 		String sql = "update reply set contents =? where reply_id=?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 
@@ -91,7 +91,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	}
 
 	@Override
-	public int deleteById(int dto) throws Exception {
+	public int deleteById(int dto) throws Exception {	//삭제
 		String sql = "delete reply where reply_id=?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 
@@ -101,6 +101,10 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	}//ap만들어진 메서드가 dto로 지정되어있는데 나중에 수정하자고 하셔서 변수이름 dto로 사용
 	//댓글 아이디를 의미함 
 
+	
+	
+	
+	
 	@Override
 	public List<ReplyDTO> selectByBoardId(int boardId) throws Exception {	//댓글 출력
 		String sql = "select * from Reply where = board_id = ? order by reg_date desc";
@@ -121,5 +125,6 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			}
 		}
 	}
+	
 
 }

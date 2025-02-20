@@ -245,6 +245,11 @@ window.onload = function(){
             commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
             $("#commentList").append(commentItem);
         }
+        $(function(){
+        	$.ajax({
+        		url:""
+        	})
+        })
 
         // 댓글 수정 기능
         $(".updatebtn").on("click", function() {
