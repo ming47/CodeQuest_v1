@@ -1,6 +1,8 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import com.google.gson.Gson;
 import Common.ConvertURL;
 import DAOImpl.GameImpl;
 import DAOImpl.ScoreDAOImpl;
+import DTO.ScoreDTO;
 
 @WebServlet("/score/*")
 public class ScoreController extends HttpServlet {
@@ -30,8 +33,20 @@ public class ScoreController extends HttpServlet {
 			
 			if (cmd.equals("/score/list/game.do")) {
 				String gameId = request.getParameter("id");
+				String userId = request.getParameter("user");
 				
-				response.getWriter().append(g.toJson(scoreDAO.selectByGameId(Integer.parseInt(gameId))));
+				List<ScoreDTO> dto = new ArrayList<>();
+				dto = (userId == null) ? 
+						scoreDAO.selectByGameId(Integer.parseInt(gameId)) : 
+						scoreDAO.selectByMemberIdAndGameId(Integer.parseInt(userId), Integer.parseInt(gameId));
+				
+				for(ScoreDTO score : dto) {
+					System.out.println(score.getScore() + " " + score.getUser());
+				}
+					
+				response.getWriter().append(g.toJson(dto));
+			} else if (cmd.equals("/score/list/game/user.do")) {
+				
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package DAOImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,7 @@ public enum ScoreDAOImpl implements ScoreDAO {
 					+ "INNER JOIN "
 					+ "(SELECT AVG(SCORE) AS \"SCORE\", MEMBER_ID, GAME_ID "
 					+ "FROM SCORE "
-					+ "WHERE GAME_ID = 800005 "
+					+ "WHERE GAME_ID = ? "
 					+ 	"AND MEMBER_ID IN ( "
 					+ 	"SELECT MEMBER_ID "
 					+ 	"FROM SCORE "
@@ -100,6 +101,10 @@ public enum ScoreDAOImpl implements ScoreDAO {
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, gameId);
 			
+			if (gameId >= 800004) {
+				pstat.setInt(2, gameId);
+			}
+			
 			try(ResultSet rs = pstat.executeQuery()) {
 				List<ScoreDTO> dto = new ArrayList<>();
 				while(rs.next()) {
@@ -113,7 +118,7 @@ public enum ScoreDAOImpl implements ScoreDAO {
 
 	@Override
 	public List<ScoreDTO> selectByMemberId(int memberId) throws Exception {
-		String sql = "SELECT * FROM SCORE WHERE MEMBER_ID = ?";
+		String sql = "SELECT * FROM SCORE S INNER JOIN MEMBERS M ON S.MEMBER_ID = M.MEMBER_ID WHERE MEMBER_ID = ?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -122,7 +127,7 @@ public enum ScoreDAOImpl implements ScoreDAO {
 			try(ResultSet rs = pstat.executeQuery()) {
 				List<ScoreDTO> dto = new ArrayList<>();
 				while(rs.next()) {
-					dto.add(null);
+					dto.add(ScoreDTO.of(rs));
 				}
 				
 				return dto;
@@ -132,17 +137,42 @@ public enum ScoreDAOImpl implements ScoreDAO {
 
 	@Override
 	public List<ScoreDTO> selectByMemberIdAndGameId(int memberId, int gameId) throws Exception {
-		String sql = "SELECT * FROM SCORE WHERE GAME_ID = ? AND MEMBER_ID = ?";
+		String sql = "";
+		if (gameId < 800004) {			
+			sql = "SELECT * "
+					+ "FROM SCORE S "
+					+ "INNER JOIN MEMBERS M "
+					+ "ON S.MEMBER_ID = M.MEMBER_ID "
+					+ "WHERE S.MEMBER_ID = ? AND GAME_ID = ? "
+					+ "ORDER BY SCORE DESC";
+		} else {
+			sql = "SELECT * "
+					+ "FROM MEMBERS M "
+					+ "INNER JOIN ("
+					+ "SELECT AVG(SCORE) SCORE, MEMBER_ID, GAME_ID "
+					+ "FROM SCORE "
+					+ "WHERE MEMBER_ID = ? AND GAME_ID = ? "
+					+ "GROUP BY MEMBER_ID, GAME_ID) S "
+					+ "ON M.MEMBER_ID = S.MEMBER_ID";
+		}
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setInt(1, gameId);
-			pstat.setInt(2, memberId);
+			pstat.setInt(1, memberId);
+			pstat.setInt(2, gameId);
 			
 			try(ResultSet rs = pstat.executeQuery()) {
 				List<ScoreDTO> dto = new ArrayList<>();
+				ResultSetMetaData metaData = rs.getMetaData();
+	            int columnCount = metaData.getColumnCount();
+	            
+	            for (int i = 1; i <= columnCount; i++) {
+	                String columnName = metaData.getColumnName(i);
+	                System.out.println("컬럼 " + i + ": " + columnName);
+	            }
+				
 				while(rs.next()) {
-					dto.add(null);
+					dto.add(ScoreDTO.of(rs));
 				}
 				
 				return dto;
