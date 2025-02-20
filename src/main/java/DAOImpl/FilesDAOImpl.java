@@ -70,7 +70,7 @@ public enum FilesDAOImpl implements FilesDAO {
 
 	@Override
 	public int insert(FilesDTO dto) throws Exception {
-		String sql = "insert into files values(files_seq.nextval, ?, ?, ?)";
+		String sql = "insert into files(file_id,original_name,system_name, board_id) values(file_id_seq.nextval, ?, ?, ?)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getOriname());
 			pstat.setString(2, dto.getSysname());
@@ -81,7 +81,7 @@ public enum FilesDAOImpl implements FilesDAO {
 
 	@Override
 	public int update(FilesDTO dto) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
@@ -93,8 +93,29 @@ public enum FilesDAOImpl implements FilesDAO {
 
 	@Override
 	public List<FilesDTO> selectByBoardId(int boardId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+String sql = "select * from files where board_id=?";
+		
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, boardId);
+		
+			
+			ResultSet rs = pstat.executeQuery();
+              List<FilesDTO> dto = new ArrayList<FilesDTO>();
+
+  		while(rs.next()) {
+
+  				int fileId = rs.getInt(1);
+  				String oriName = rs.getString(2);
+  				String sysName = rs.getString(3);
+ 				int board_Id = rs.getInt(4);
+ 				
+ 				FilesDTO fdto = new FilesDTO(fileId,board_Id,oriName,sysName);
+  				dto.add(fdto);
+ 			}
+  		
+           return dto;
+
+
 	}
 
 	public int getSize() throws Exception {

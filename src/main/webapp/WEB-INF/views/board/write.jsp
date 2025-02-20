@@ -144,7 +144,7 @@ textarea {
 	resize: none;
 }
 
-.button {
+button {
 	background-color: #1d1f30; /* 남색 */
 	color: white;
 	border: none;
@@ -216,8 +216,9 @@ a button:hover {
 	width: 100%; /* 버튼이 100%의 너비를 가지도록 수정 */
 }
 
-#listbtn {
+#backbtn {
 	width: 100%; /* 버튼이 100%의 너비를 가지도록 수정 */
+	
 }
 
 .note-editable {
@@ -275,10 +276,10 @@ a button:hover {
 				</div>
 				<div id="buttonbox">
 					<button class="button" id="writebtn" type="submit">작성완료</button>
-					<a href="/list.board?cpage=1">
+					
 
-						<button id="listbtn" type="button">목록으로</button>
-					</a>
+						<button id="back" type="button">목록으로</button>
+				
 
 
 				</div>
@@ -291,7 +292,7 @@ a button:hover {
 <script>
 
 	$('#contents').summernote(setSummerNote());
-	$('#contents').summernote('backColor', 'red');
+	
 
 	
 	$('form').on('submit', function() {
@@ -377,4 +378,14 @@ a button:hover {
 	$('form').on('submit', function() {
 		$('#input-contents').val($('#contents').summernote('code'));
 	});
+	
+	
+	
+     $("#back").on("click", function() {
+
+        let last_cpage = sessionStorage.getItem("last_cpage");
+        location.href = "/board/list.do?cpage=" +last_cpage;  });
+
+   
+
 </script>

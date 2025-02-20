@@ -132,9 +132,6 @@ public class BoardController extends HttpServlet {
 
 				request.setAttribute("filelist", fdto);// jsp에 filelist 쓸수있게 속성 부여 ${filelist} 이렇게 써야됨
 
-				int lastpage =(int)request.getSession().getAttribute("lastpage");
-				request.setAttribute("lastpage", lastpage);//세션 생성 
-
 				request.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(request, response);
 
 			}
