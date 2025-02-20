@@ -55,10 +55,10 @@ public enum FilesDAOImpl implements FilesDAO {
 			try (ResultSet rs = pstat.executeQuery();) {
 				FilesDTO fdto = null;
 				while (rs.next()) {
-					int fileId = rs.getInt("id");
+					int fileId = rs.getInt("file_id");
 					String oriName = rs.getString("oriname");
 					String sysName = rs.getString("sysname");
-					int boardId = rs.getInt("parent_seq");
+					int boardId = rs.getInt("board_id");
 					fdto = new FilesDTO(fileId, boardId, oriName, sysName);
 				}
 				return fdto;

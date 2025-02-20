@@ -194,7 +194,6 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 	}
 
-
 	@Override
 	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { //마이페이지 최근 작성한 게시글 5개 가져오기
 		String sql = "SELECT * FROM ( " +

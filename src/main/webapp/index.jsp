@@ -409,7 +409,7 @@ body {
 				<ul class="menu">
 					<li>Home</li>
 					<li>Game</li>
-					<li>Board</li>
+					<li><a href="/board/list.do">Board</a></li>
 					<li>Service</li>
 				</ul>
 			</div>
