@@ -6,15 +6,15 @@ import java.sql.Timestamp;
 
 public class PlaytimeDTO {
 	
-	private int playcountId;
+	private int playtimeId;
 	private int memberId;
 	private int gameId;
-	private Timestamp playtime;
+	private int playtime;
 	private Timestamp regDate;
 	
-	public PlaytimeDTO(int playcountId, int memberId, int gameId, Timestamp playtime, Timestamp regDate) {
+	public PlaytimeDTO(int playtimeId, int memberId, int gameId, int playtime, Timestamp regDate) {
 		super();
-		this.playcountId = playcountId;
+		this.playtimeId = playtimeId;
 		this.memberId = memberId;
 		this.gameId = gameId;
 		this.playtime = playtime;
@@ -25,12 +25,12 @@ public class PlaytimeDTO {
 		super();
 	}
 
-	public int getPlaycountId() {
-		return playcountId;
+	public int getPlaytimeId() {
+		return playtimeId;
 	}
 
-	public void setPlaycountId(int playcountId) {
-		this.playcountId = playcountId;
+	public void setPlaytimeId(int playtimeId) {
+		this.playtimeId = playtimeId;
 	}
 
 	public int getMemberId() {
@@ -49,11 +49,11 @@ public class PlaytimeDTO {
 		this.gameId = gameId;
 	}
 
-	public Timestamp getPlaytime() {
+	public int getPlaytime() {
 		return playtime;
 	}
 
-	public void setPlaytime(Timestamp playtime) {
+	public void setPlaytime(int playtime) {
 		this.playtime = playtime;
 	}
 
@@ -70,7 +70,7 @@ public class PlaytimeDTO {
 				rs.getInt("PLAY_TIME_ID"),
 				rs.getInt("MEMBER_ID"),
 				rs.getInt("GAME_ID"),
-				rs.getTimestamp("PLAY_TIME"),
+				rs.getInt("PLAY_TIME"),
 				rs.getTimestamp("REG_DATE"));
 	}
 }
