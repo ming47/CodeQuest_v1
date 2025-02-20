@@ -68,6 +68,7 @@ public class FileController extends HttpServlet {
 		            Map<String, Object> json = new HashMap<>();
 		            json.put("path", FileUtil.getPath(filePath.toString()));
 		            
+		            System.out.println(FileUtil.getPath(filePath.toString()));
 		            response.setContentType("application/json");
 		            response.getWriter().append(g.toJson(json));
 		        }
