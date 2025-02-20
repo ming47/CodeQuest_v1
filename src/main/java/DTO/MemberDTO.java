@@ -72,6 +72,7 @@ public class MemberDTO {
 		this.address = address;
 		this.detailAddress = detailAddress;
 	}
+	
 
 	public MemberDTO() {
 		super();
