@@ -63,7 +63,7 @@ public class MemberDTO {
 		this.role = role;
 		this.regDate = regDate;
 	}
-	public MemberDTO(String loginId, String nickname,String email, String phone, int zipCode, String address, String detailAddress) {	//수정
+	public MemberDTO(String loginId, String nickname,String email, String phone, int zipCode, String address, String detailAddress) {//회원 수정
 		this.loginId = loginId;
 		this.nickName = nickname;
 		this.email = email;
