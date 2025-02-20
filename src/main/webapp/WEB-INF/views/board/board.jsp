@@ -244,22 +244,20 @@ button:hover {
 					<td colspan="8">자유게시판</td>
 				</tr>
 				<tr id="title">
-					<th style="width: 10%;">번호</th>
-					<th style="width: 40%;">제목</th>
-					<th style="width: 15%;">작성자</th>
-					<th style="width: 15%;">날짜</th>
-					<th style="width: 10%;">조회</th>
-					<th style="width: 10%;">댓글수</th>
+					<th style="width: 12%;">번호</th>
+					<th style="width: 42%;">제목</th>
+					<th style="width: 17%;">작성자</th>
+					<th style="width: 17%;">날짜</th>
+					<th style="width: 12%;">조회</th>
 				</tr>
 
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td><a href="/board/detail.do?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title}</a></td>
+						<td><a href="/board/detail.do?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title} [${dto.replyCount}]</a></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
-						<td>${dto.replyCount}</td>
 					</tr>
 				</c:forEach>
 
