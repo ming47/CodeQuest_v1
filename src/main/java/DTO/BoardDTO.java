@@ -45,11 +45,11 @@ public class BoardDTO {
 	
 
 
-	public BoardDTO(int boardId,String title,String writer, String contents ) {
+	public BoardDTO(int boardId,String title,int memberId, String contents ) {
 
 		this.boardId = boardId;
 		this.title = title;
-		this.writer = writer;
+		this.memberId = memberId;
 		this.contents = contents;
 	}
 
