@@ -44,7 +44,6 @@ public class ReplyController extends HttpServlet {
 			}
 
 			else if (cmd.equals("/reply/ContentsAll.do")) {
-
 				int id = Integer.parseInt(request.getParameter("boardId"));
 				ReplyDTO rdto = rdao.selectById(id);
 				response.setContentType("text/html; charset=utf8");
