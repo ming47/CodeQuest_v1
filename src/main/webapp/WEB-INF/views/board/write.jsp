@@ -30,7 +30,7 @@ body {
 .container {
 	background-color: #2b2d42;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-	width: 800px;
+	width: 1000px;
 	padding: 40px;
 	color: white;
 	height: 100%;
@@ -140,7 +140,7 @@ textarea {
 	resize: none;
 }
 
-button {
+.button {
 	background-color: #1d1f30; /* 남색 */
 	color: white;
 	border: none;
@@ -217,7 +217,8 @@ a button:hover {
 }
 
 .note-editable {
-	background-color: background-color: #1f2335;
+	background-color: #1f2335 !important; 
+	color: white !important;
 }
 
 </style>
@@ -261,19 +262,17 @@ a button:hover {
                 <input type="file" name="file2" accept="image/*, .pdf, .docx">
          
            </div>
-
-
-					<div class="card-header">내용 입력</div>
 					<input type="hidden" name="contents" id="input-contents">
-					<div class="card-body" id="contents">
+					<div class="card-header">내용 입력</div>
+					<div class="card-body">
+						<div id="contents"></div>
 					</div>
 
 				</div>
 				<div id="buttonbox">
-					<button id="writebtn" type="submit">작성완료</button>
+					<button class="button" id="writebtn" type="submit">작성완료</button>
 					<a href="/list.board?cpage=1">
-					<button id="listbtn" type="button">목록으로</button></a>
-							
+					<button class="button" id="listbtn" type="button">목록으로</button></a>	
 				</div>
 			</form>
 		</div>
@@ -282,10 +281,9 @@ a button:hover {
 </body>
 </html>
 <script>
-	$('#contents').summernote(setSummerNote());
-	$('#contents').summernote('backColor', 'red');
+	$('#contents').summernote(setSummerNote($('#contents')));
 	
-	function setSummerNote() {
+	function setSummerNote(target) {
 		console.log('서머노트 세팅');
     	return {
         	placeholder: '내용을 입력하십시오',
@@ -305,6 +303,7 @@ a button:hover {
 			  ],
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+
         	callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 					onImageUpload : function(files) {
 						console.log(files[0],this);
@@ -335,7 +334,6 @@ a button:hover {
 			url: '/file/image/upload.do',
 			data: formData,
 			type: 'POST',
-			//dataType:"multipart/form-data", 
             contentType:false, 
             processData:false,
             error: function (request, status, error) {
