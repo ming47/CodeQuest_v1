@@ -270,7 +270,23 @@
             background: #b4c28a;
             color: white;
         }
+		#update_address {
+		    background: #b4c28a;
+		    color: white;
+		    border: none;
+		    border-radius: 6px;
+		    font-size: 20px;
+		    cursor: pointer;
+		    transition: 0.3s;
+		    width: 110px;     
+		    height: 48px;         
+		    margin-left: 10px;  
+		}
 
+		#update_address:hover {
+		    background: #346e30;
+		}
+        
         .buttons button:first-child:hover,
         .id-check-btn:hover {
             background: #346e30;
@@ -336,6 +352,7 @@
                 <fieldset>
                 <legend>기본정보</legend>
 				<form action="/member/update.do" method="post" id="frm">
+				<input type="hidden" name="memberId" value=${member.memberId}>
                     <div class="input-group">
                         <label for="login_id">아이디</label>
                         <input type="text" name="loginId" id="loginId" value=${member.loginId} readonly>
@@ -350,8 +367,7 @@
                     </div>
                     <div class="input-group">
                         <label for="ssn">주민번호</label>
-                        <input type="text" name="ssnFront" id="ssnFront" value="970311"style="width: 30%;"> <span> - </span> 
-                        <input type="text" name="ssnBack" id="ssnBack" value="1******" style="width: 30%;">
+                        <input type="text" name="ssn" id="ssn" value=${member.ssn} readonly>
                     </div>
                     <div class="input-group">
                         <label for="email">이메일</label>
@@ -363,9 +379,9 @@
                     </div>
                     <div class="input-group">
                         <label for="zipcode">우편번호</label>
-                        <input type="text" name="zipCode" id="zipCode" 
+                        <input type="text" name="zipCode" id="zipCode"
     					value="<c:choose><c:when test='${member.zipCode == 0}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.zipCode}</c:otherwise></c:choose>" readonly>
-
+                       <button type="button" id="update_address" style="visibility: hidden;">검색</button>
                     </div>
                     <div class="input-group">
                         <label for="address">주소</label>
@@ -376,8 +392,8 @@
                     <div class="input-group">
                         <label for="detail_address">상세주소</label>
                         <input type="text" name="detailAddress" id="detailAddress" 
-                        	value="<c:choose><c:when test='${member.detailAddress == null}'>입력된 정보가 없습니다</c:when>
-						              	<c:otherwise>${member.detailAddress}</c:otherwise></c:choose>" readonly>
+    					value="<c:choose><c:when test='${member.detailAddress == null}'>입력된 정보가 없습니다</c:when><c:otherwise>${member.detailAddress}</c:otherwise></c:choose>" readonly>
+
                     </div>
                     <div class="input-group">
                         <label for="join_date">가입날짜</label>
@@ -403,7 +419,7 @@
         </div>
     </div>
     <script>
-        $(".sidebar ul li").on("click",function () { //휴
+        $(".sidebar ul li").on("click",function () {
             let targetId = $(this).attr("data-target");
             let targetElement = $("#" + targetId);
             if (targetElement.length) {
@@ -413,7 +429,7 @@
             }
         });
         $("#update_btn").on("click",function() {
-       		$("input[readonly]").removeAttr("readonly");
+       		$("#nickName, #email, #phone, #address, #detailAddress").removeAttr("readonly");
        		
        		$("#update_btn").css("display","none");
        		$("#out_btn").css("display","none");
@@ -421,13 +437,23 @@
    			let updateOk = $("<button>").attr({ id: "update_ok_btn", type: "submit" }).html("수정완료");
    			
    			let updateCancel = $("<button>").attr("type","button").html("취소");
-   			
+   			   			
    			updateCancel.on("click", function() {
    				location.reload();
    			});
    			$(".buttons").append(updateOk,updateCancel);
+   			$("#update_address").css("visibility", "visible"); 
    			
         });
+		$("#update_address").on("click", function() {
+			new daum.Postcode({
+				oncomplete : function(data) {
+					$("#zipCode").val(data.zonecode);
+					$("#address").val(data.roadAddress);
+					$("#detailAddress").focus();
+				}
+			}).open();
+		});
         
     </script>
 </body>

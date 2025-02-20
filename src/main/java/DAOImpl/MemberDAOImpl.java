@@ -31,9 +31,34 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public MemberDTO selectById(int id) throws Exception {
-		// TODO Auto-generated method stub
+	public MemberDTO selectById(int id) throws Exception { //회원정보 수정 후 수정한 데이터로 세션 업데이트
+		String sql = "select * from members where member_id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, id);
+			try (ResultSet rs = pstat.executeQuery()) {
+				if (rs.next()) {
+					int memberId = rs.getInt("member_id");
+					String loginId = rs.getString("login_id");
+					String name = rs.getString("name");
+					String nickName = rs.getString("nickname");
+					String ssn = rs.getString("ssn");
+					String email = rs.getString("email");
+					String phone = rs.getString("phone");
+					int postcode = rs.getInt("zip_code");
+					String address = rs.getString("address");
+					String detail_address = rs.getString("detail_address");
+					String role = rs.getString("role");
+					Timestamp date = rs.getTimestamp("reg_date");
+					
+					MemberDTO member = new MemberDTO(memberId,loginId,name,nickName,ssn,
+													 email,phone,postcode,address,detail_address,
+													 role,date);
+					return member;
+
+			}
+		}
 		return null;
+		}
 	}
 	
 	//dao.insert(new MemberDTO(id,pw,name,ssn,email,phone,postcode,address1,address2,null)); //role은 정해진게없어서 null
