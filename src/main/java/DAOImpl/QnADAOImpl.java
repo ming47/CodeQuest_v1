@@ -74,8 +74,21 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public int update(QnADTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "UPDATE QNA SET CONTENT = ? WHERE QNA_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, dto.getContents());
+			pstat.setInt(2, dto.getQnaId());
+
+			int result = pstat.executeUpdate();
+			
+			if (result == 0) {
+				throw new IllegalArgumentException(dto + "에 해당하는 데이터가 없습니다. id를 다시 확인해주세요.");
+			} 
+			
+			return result;
+		}
 	}
 
 	@Override
@@ -202,5 +215,16 @@ public enum QnADAOImpl implements QnADAO {
 		}
 	}
 
-
+	@Override
+	public int getNextVal() throws Exception {
+		String sql = "SELECT QNA_ID_SEQ.NEXTVAL FROM DUAL";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			rs.next();
+			
+			return rs.getInt(1);
+		}
+	}
 }

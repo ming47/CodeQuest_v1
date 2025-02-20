@@ -18,4 +18,5 @@ public interface QnADAO {
 	List<QnADTO> selectByMemberId(int memberId) throws Exception;
 	
 	int getSize() throws Exception;
+	int getNextVal() throws Exception;
 }
