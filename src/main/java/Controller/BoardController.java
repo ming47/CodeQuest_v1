@@ -122,8 +122,6 @@ public class BoardController extends HttpServlet {
 				
 				request.setAttribute("loginID", dto);
 				request.setAttribute("dto", dao.selectById(boardId));// 세션에서 아이디값 가져옴
-
-				request.setAttribute("reply", rdao.selectById(boardId));
 				
 				int target = Integer.parseInt(request.getParameter("id"));// 게시물id 가져옴
 				List<FilesDTO> fdto = (List<FilesDTO>) fdao.selectByBoardId(target);// 파일을 업로드할 게시물 찾음

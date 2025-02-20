@@ -9,15 +9,18 @@ public class ReplyDTO {
 	private int boardId;
 	private String contents;
 	private Timestamp regDate;
+	private String writer;
 	
 	
-	public ReplyDTO(int replyId, int memberId, int boardId, String contents, Timestamp regDate) {
+
+	public ReplyDTO(int replyId, int memberId, int boardId, String contents, Timestamp regDate, String writer) {
 		super();
 		this.replyId = replyId;
 		this.memberId = memberId;
 		this.boardId = boardId;
 		this.contents = contents;
 		this.regDate = regDate;
+		this.writer=writer;
 	}
 	public ReplyDTO() {}
 	
@@ -61,7 +64,12 @@ public class ReplyDTO {
 		this.regDate = regDate;
 	}
 
-	
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 
 
 

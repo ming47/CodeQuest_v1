@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import DAO.ReplyDAO;
 import DAOImpl.ReplyDAOImpl;
 import DTO.MemberDTO;
 import DTO.ReplyDTO;
@@ -21,6 +20,8 @@ import DTO.ReplyDTO;
 @WebServlet("/reply/*")
 public class ReplyController extends HttpServlet {
 	ReplyDAOImpl rdao = ReplyDAOImpl.INSTANCE;
+	
+	Gson g = new Gson();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -33,16 +34,16 @@ public class ReplyController extends HttpServlet {
 
 			Gson g = new Gson();
 			if (cmd.equals("/reply/addContents.do")) {
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-				int memberId = Integer.parseInt(request.getParameter("name"));
-				String contents = request.getParameter("contents");
-				Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-
-				ReplyDTO dto = new ReplyDTO(0, memberId, boardId, contents, currentTimestamp);
-
-				rdao.insert(dto);
-
-				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
+//				int boardId = Integer.parseInt(request.getParameter("boardId"));
+//				int memberId = Integer.parseInt(request.getParameter("name"));
+//				String contents = request.getParameter("contents");
+//				Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+//
+//				ReplyDTO dto = new ReplyDTO(0, memberId, boardId, contents, currentTimestamp);
+//
+//				rdao.insert(dto);
+//
+//				response.getWriter().append(g.toJson(dto));
 
 			}
 

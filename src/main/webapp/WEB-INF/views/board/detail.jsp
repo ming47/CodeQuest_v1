@@ -498,16 +498,14 @@ window.onload = function(){
 
                    $(".btnbox").append(updateOK, updateCancel);
 
-                });
-              
-                   // "수정완료" 버튼 클릭 시 처리
+                // "수정완료" 버튼 클릭 시 처리                   
                    updateOK.on("click", function() {
                        let updatedContent = contentDiv.html(); // 수정된 내용을 가져옴
                        let replyId = commentItem.find("input[name='id']").val(); // 댓글 ID 가져옴
 
                        // AJAX 요청을 통해 서버에 수정된 댓글 전송
                        $.ajax({
-                           url: '/update.reply', // 댓글 수정 API URL
+                           url: '/reply/update.do', // 댓글 수정 API URL
                            type: 'POST',
                            data: {
                                id: replyId,
@@ -525,9 +523,10 @@ window.onload = function(){
                                updateCancel.remove();
                            }
                        });
-                   });
-
-                   // "취소" 버튼 클릭 시 처리
+                   });	
+                
+                
+                 // "취소" 버튼 클릭 시 처리
                    updateCancel.on("click", function() {
                        // 수정 취소 시 원래의 내용으로 되돌리기
                        contentDiv.html(contentDiv.attr("data-original-content"));
@@ -539,7 +538,15 @@ window.onload = function(){
                        updateOK.remove();
                        updateCancel.remove();
                    });
-               });
+               
+                
+                
+                });
+               
+                   
+                   
+                   
+                  
                
                $("#frm").on("submit", function() {
 
@@ -551,7 +558,7 @@ window.onload = function(){
                $("#contentsfrm").on("submit", function() {
 
                   $("#contentsreply").val($(".writerdiv").html())
-               })
+               })	
            </script> 
 
  </div>
