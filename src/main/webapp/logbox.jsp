@@ -49,12 +49,11 @@
 </style>
 </head>
 <body>
-<c:set var="sessionLoginId" value="${sessionScope.sessionLoginId}" />
+<c:set var="sessionLoginId" value="${member.loginId}" />
 	<%-- ✅ 로그인 상태에 따라 로그박스를 표시 --%>
-	<c:if test="${not empty sessionLoginId}">
+	<c:if test="${not empty member.loginId}">
 		<div class="logbox">
-			<span>${sessionLoginId} 님 환영합니다</span>
-
+			<span>${member.loginId} 님 환영합니다</span>
 			<div class="logbox-buttons">
 				<a href="/member/mypage.do">마이페이지</a> 
 				<a href="/member/logout.do">로그아웃</a>
