@@ -114,26 +114,22 @@ public class BoardController extends HttpServlet {
 
 				int boardId = Integer.parseInt(request.getParameter("id"));// jsp에서 url 뒤에 붙는 id
 
-				dao.viewCount(boardId);
+				dao.increaseViewCount(boardId);
 				
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("loginId");
 			
-//				int target = Integer.parseInt(request.getParameter("getId"));// 게시물id 가져옴
+			
 				
 				request.setAttribute("loginID", dto);
 				request.setAttribute("dto", dao.selectById(boardId));// 세션에서 아이디값 가져옴
-
-				request.setAttribute("reply", rdao.selectById(boardId));
-
-				List<FilesDTO> fdto = (List<FilesDTO>) fdao.selectById(boardId);// 파일을 업로드할 게시물 찾음
+				
+				int target = Integer.parseInt(request.getParameter("id"));// 게시물id 가져옴
+				List<FilesDTO> fdto = (List<FilesDTO>) fdao.selectByBoardId(target);// 파일을 업로드할 게시물 찾음
 
 			
 
 
 				request.setAttribute("filelist", fdto);// jsp에 filelist 쓸수있게 속성 부여 ${filelist} 이렇게 써야됨
-
-				int lastpage =(int)request.getSession().getAttribute("lastpage");
-				request.setAttribute("lastpage", lastpage);//세션 생성 
 
 				request.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(request, response);
 
@@ -203,7 +199,9 @@ public class BoardController extends HttpServlet {
 			if (cmd.equals("/board/add.do")) {// 게시글 추가
 
 				// 로그인 검증
-				MemberDTO dto =(MemberDTO) request.getSession().getAttribute("member");
+
+				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
+
 
 				if (dto == null) {
 					response.sendRedirect("/");
