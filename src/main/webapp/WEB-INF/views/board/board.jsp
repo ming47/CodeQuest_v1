@@ -254,7 +254,11 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td><a href="/board/detail.do?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title} [${dto.replyCount}]</a></td>
+						<td class="contents">
+							<span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
+							<span class="reply-count">[${dto.replyCount}]</span>
+						</td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
