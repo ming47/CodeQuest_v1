@@ -17,4 +17,5 @@ public interface BoardDAO {
 	List<BoardDTO> selectByMemberId(int memberId) throws Exception;
 	void increaseReplyCount(int boardId) throws Exception;
 	void increaseViewCount(int boardId) throws Exception;
+	List<BoardDTO> selectAllNotice() throws Exception;
 }

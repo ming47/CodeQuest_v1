@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import Common.Statics;
+
 import javax.naming.Context;
 
 import DAO.QnADAO;
@@ -74,8 +76,14 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public int update(QnADTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "UPDATE QNA SET CONTENT WHERE QNA_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, dto.getQnaId());
+			
+			return pstat.executeUpdate();
+		}
 	}
 
 	@Override
@@ -200,6 +208,58 @@ public enum QnADAOImpl implements QnADAO {
 			
 			return rs.getInt(1);
 		}
+	}
+
+	@Override
+	public List<QnADTO> selectAll(int page) throws Exception {
+		String sql = "select * "
+				+ "from "
+				+ "(select a.*, ROW_NUMBER() OVER (ORDER BY qna_id DESC) AS rnum "
+				+ "from "
+				+ "(select * "
+				+ "from qna q "
+				+ "inner join members m "
+				+ "on q.member_id = m.member_id) a) "
+				+ "WHERE rnum BETWEEN ? and ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > getSize()) ? getSize() : endIndex;
+
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, startIndex);
+			pstat.setInt(2, endIndex);
+			
+			try(ResultSet rs = pstat.executeQuery()) {				
+				List<QnADTO> dtos = new ArrayList<>();
+				while(rs.next()) {
+					dtos.add(QnADTO.of(rs));
+				}
+				
+				return dtos;
+			}
+		}
+			
+	}
+
+	@Override
+	public List<QnADTO> selectByResponseYN(String responseYN, int page) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<QnADTO> selectByWriterLike(String writer, int page) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<QnADTO> selectByContentLike(String content, int page) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
