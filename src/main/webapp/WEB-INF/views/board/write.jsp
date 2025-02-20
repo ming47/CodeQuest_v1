@@ -264,7 +264,7 @@ a button:hover {
 
 
 					<div class="card-header">내용 입력</div>
-					<input type="hidden" name="contents">
+					<input type="hidden" name="contents" id="input-contents">
 					<div class="card-body" id="contents">
 					</div>
 
@@ -347,4 +347,8 @@ a button:hover {
 			$(editor).summernote('insertImage', data.path);
 		});
 	}
+	
+	$('form').on('submit', function() {
+		$('#input-contents').val($('#contents').summernote('code'));
+	});
 </script>

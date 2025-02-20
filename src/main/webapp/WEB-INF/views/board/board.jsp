@@ -264,14 +264,7 @@ button:hover {
 				</c:forEach>
 
 				<tr id="number">
-					<td colspan="8" align="center">${navi}<c:if test="${needPrev}">
-							<span class="paging" page="${startNavi-1}"> < </span>
-						</c:if> <c:forEach var="i" begin="${startNavi}" end="${endNavi}">
-							<span class="paging" page="${i}">${i}</span>
-						</c:forEach> <c:if test="${needNext}">
-							<span class="paging" page="${endNavi+1}">></span>
-						</c:if>
-					</td>
+					<td colspan="8" align="center"></td>
 				</tr>
 
 			</table>
@@ -286,3 +279,40 @@ button:hover {
 </body>
 
 </html>
+						<script>
+						
+					    function makePageNavi(url) {
+					        const pageNavi = $('<div>');
+
+					        function makeSpan(content, index) {
+					            const span = $('<span>').html(content).addClass('page');
+
+					            span.on('click', function () {
+					                location.href = url + index;
+					            });
+
+					            return span;
+					        }
+
+					        if (${!pageNavi.isFirst}) {
+					            pageNavi.append(makeSpan('이전', ${pageNavi.startNavi - 1}));
+					        }
+
+					        for (let i = ${pageNavi.startNavi}; i <= ${pageNavi.endNavi}; i++) {
+					            pageNavi.append(makeSpan(i, i));
+					        }
+
+					        if (${!pageNavi.isEnd}) {
+					            pageNavi.append(makeSpan('다음', ${pageNavi.endNavi + 1}));
+					        }
+
+					        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
+					        const hover = '.page:hover { cursor: pointer; }'
+
+					        $('style').append(hover).append(indexCss);
+
+					        return pageNavi;
+					    }
+
+					    $('#number>td').append(makePageNavi('/board/list.do?cpage='));
+					</script>
