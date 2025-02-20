@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import javax.sql.DataSource;
 import DAO.PlaytimeDAO;
 import DTO.MemberDTO;
 import DTO.PlaytimeDTO;
+import enums.GENDER;
 
 public enum PlaytimeDAOImpl implements PlaytimeDAO {
 	INSTANCE;
@@ -41,12 +44,20 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 	@Override
 	public int insert(PlaytimeDTO dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "INSERT INTO PLAY_TIME(PLAY_TIME_ID, MEMBER_ID, GAME_ID, PLAY_TIME) VALUES(PLAY_TIME_ID_SEQ.NEXTVAL, ?, ?, ?)";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, dto.getMemberId());
+			pstat.setInt(2, dto.getGameId());
+			pstat.setInt(3, dto.getPlaytime());
+			
+			return pstat.executeUpdate();
+		}
 	}
 
 	@Override
-	public int sumByPlayTime() throws Exception {
+	public int sumAllPlaytime() throws Exception {
 		String sql = "SELECT SUM(PLAY_TIME) FROM PLAY_TIME";
 		
 		try(Connection con = getConnection();
@@ -54,7 +65,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 				ResultSet rs = pstat.executeQuery();) {
 			rs.next();
 			
-			return rs.getInt("SUM(PLAY_TIME)");
+			return rs.getInt("1");
 		}
 	}
 
@@ -120,9 +131,91 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 	}
 
 	@Override
-	public int sumPlayTimeByMemberIds(List<MemberDTO> memberDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public double avgAllPlaytime() throws Exception {
+		String sql = "SELECT AVG(PLAY_TIME) FROM PLAY_TIME";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			rs.next();
+			
+			return rs.getDouble("1");
+		}
 	}
 
+
+	@Override
+	public List<PlaytimeDTO> selectByMemberGender(GENDER gender) throws Exception {
+		String sql = "SELECT * "
+				+ 	"FROM PLAY_TIME P "
+				+ 	"INNER JOIN MEMBERS M "
+				+ 	"ON P.MEMBER_ID = M.MEMBER_ID "
+				+ 	"WHERE SSN LIKE ?";
+	
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, "%" + gender.getGenderFactor() + "______");
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				
+				List<PlaytimeDTO> dto = new ArrayList<>();
+				while(rs.next()) {
+					dto.add(PlaytimeDTO.of(rs));
+				}
+				
+				return dto;
+			}
+		}
+	}
+
+
+	@Override
+	public List<PlaytimeDTO> selectByMemberAgeRange(int startAge, int endAge) throws Exception {
+		String sql = "SELECT * "
+				+ "FROM PLAY_TIME "
+				+ "WHERE MEMBER_ID IN ("
+				+ "SELECT MEMBER_ID "
+				+ "FROM MEMBERS"
+				+ "WHERE floor(floor(months_between(sysdate, to_date(substr(ssn, 0, 6), 'rrmmdd')))/12) between ? and ?)";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, startAge);
+			pstat.setInt(2, endAge);
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				
+				List<PlaytimeDTO> dto = new ArrayList<>();
+				while(rs.next()) {
+					dto.add(PlaytimeDTO.of(rs));
+				}
+				
+				return dto;
+			}	
+		}
+	}
+
+
+	@Override
+	public List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception {
+		String sql = "SELECT * "
+				+ "FROM PLAY_TIME "
+				+ "WHERE REG_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 0.99999";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, date.toString());
+			pstat.setString(2, date.toString());
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				
+				List<PlaytimeDTO> dto = new ArrayList<>();
+				while(rs.next()) {
+					dto.add(PlaytimeDTO.of(rs));
+				}
+				
+				return dto;
+			}	
+		}
+	}
 }

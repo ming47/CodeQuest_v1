@@ -203,7 +203,9 @@ public class BoardController extends HttpServlet {
 			if (cmd.equals("/board/add.do")) {// 게시글 추가
 
 				// 로그인 검증
-				MemberDTO dto =(MemberDTO) request.getSession().getAttribute("member");
+
+				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
+
 
 				if (dto == null) {
 					response.sendRedirect("/");

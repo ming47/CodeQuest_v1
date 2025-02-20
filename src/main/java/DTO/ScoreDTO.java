@@ -67,6 +67,10 @@ public class ScoreDTO {
 		this.regDate = regDate;
 	}
 	
+	public String getUser() {
+		return user;
+	}
+	
 	public static ScoreDTO of(ResultSet rs) throws SQLException {
 		return new ScoreDTO(
 				rs.getInt("GAME_ID"),
