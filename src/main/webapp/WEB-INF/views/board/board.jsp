@@ -211,7 +211,7 @@ button:hover {
 <script>
 	$(function() {
 		// 페이지네이션 클릭 이벤트
-		$(".paging").on("click", function() {
+		$(".page").on("click", function() {
 			let pageNum = $(this).attr("page");
 			sessionStorage.setItem("last_cpage", pageNum);
 			location.href = "/list.board?cpage=" + pageNum;
@@ -283,7 +283,7 @@ button:hover {
 					        const pageNavi = $('<div>');
 
 					        function makeSpan(content, index) {
-					            const span = $('<span>').html(content).addClass('page');
+					            const span = $('<span>').html(content).addClass('page').attr('page', index);
 
 					            span.on('click', function () {
 					                location.href = url + index;
