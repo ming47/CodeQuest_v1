@@ -20,6 +20,14 @@ public class ServiceController extends HttpServlet {
 		
 		try {		
 			String cmd = ConvertURL.of(request);
+			
+			
+			if(cmd.equals("/service/qna/addForm.do")) {
+				System.out.println(cmd);
+				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
+			} else if(cmd.equals("/service/admin/main.do")) {
+				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
