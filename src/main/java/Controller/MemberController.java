@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import DAO.BoardDAO;
 import DAO.MemberDAO;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
+import DTO.BoardDTO;
 import DTO.MemberDTO;
 
 @WebServlet("/member/*")
@@ -62,6 +64,9 @@ Gson g = new Gson();
 					response.sendRedirect("/");
 					return;
 				}
+				int memberId = member.getMemberId();
+				List<BoardDTO> recentPost = boardDao.selectByMemberId(memberId);
+				request.setAttribute("recentPost", recentPost);
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
