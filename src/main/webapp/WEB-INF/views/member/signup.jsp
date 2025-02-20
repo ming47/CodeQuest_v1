@@ -289,8 +289,7 @@ input[disabled] {
 				<div class="input-group">
 					<input type="text" name="postcode" id="postcode" placeholder="우편번호"
 						readonly>
-					<button type="button" class="postcode-btn" id="searchbnt">우편번호
-						검색</button>
+					<button type="button" class="postcode-btn" id="searchbnt">우편번호 검색</button>
 				</div>
 				<input type="text" name="address1" id="address1"
 					placeholder="주소를 입력하세요" readonly> <input type="text"

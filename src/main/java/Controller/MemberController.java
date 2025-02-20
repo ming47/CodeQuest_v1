@@ -54,6 +54,11 @@ Gson g = new Gson();
 			    	}
 			    }
 			} else if (cmd.equals("/member/mypage.do")) { //마이페이지 폼
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				if (member == null) {
+					response.sendRedirect("/");
+					return;
+				}
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
@@ -83,7 +88,7 @@ Gson g = new Gson();
 		try {
 			String cmd = ConvertURL.of(request);
 			System.out.println(cmd);
-			if (cmd.equals("/member/add.do")) {
+			if (cmd.equals("/member/add.do")) { //회원가입
 
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
@@ -118,11 +123,10 @@ Gson g = new Gson();
 					System.out.println("가입성공!");
 				}
 				response.sendRedirect("/");
-			} else if (cmd.equals("/member/login.do")) {
+			} else if (cmd.equals("/member/login.do")) { //로그인
 
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
-
 				String encryptPw = SecurityUtil.hashPassword(pw);
 
 				Map<String, Object> json = new HashMap<>();
@@ -144,6 +148,30 @@ Gson g = new Gson();
 			} else if (cmd.equals("/printout.do")) { // 출력
 
 			} else if (cmd.equals("/member/update.do")) { // 수정
+				int memberId = Integer.parseInt(request.getParameter("memberId"));
+				String loginId = request.getParameter("loginId");
+				String nickName = request.getParameter("nickName");
+				String email = request.getParameter("email");
+				String phone = request.getParameter("phone");
+				String zipCodeStr = request.getParameter("zipCode");
+				System.out.println(zipCodeStr);
+				int postcode = 0;
+				if(zipCodeStr.equals("입력된 정보가 없습니다.")) {
+					postcode = 0;
+				} else {
+					postcode = Integer.parseInt(zipCodeStr);
+				}
+				
+				String address = request.getParameter("address");
+				String detailAddress = request.getParameter("detailAddress");
+				
+				int result = dao.update(new MemberDTO(loginId,nickName,email,phone,postcode,address,detailAddress));
+				if(result > 0) {
+					System.out.println("수정성공!");
+					MemberDTO member = dao.selectById(memberId);
+					request.getSession().setAttribute("member", member);
+				}
+				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 				
 			} else if (cmd.equals("/delete.do")) {
 
