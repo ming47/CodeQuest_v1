@@ -412,6 +412,22 @@
             </div>
             <div class="content" id="my_posts">
                 <h2 style="font-size: 50px;">내 게시글</h2>
+                <table>
+                	<tr>
+                		<th>번호</th>
+                		<th>제목</th>
+                		<th>날짜</th>
+                		<th>조회수</th>                		
+                <c:forEach var="list" items="${recentPost}">
+					<tr>
+						<td>${list.boardId}</td>
+						<td><a href="/board/detail.do?id=${list.boardId}">${list.title}</a></td>
+						<td>${list.regDate}</td>
+						<td>${list.viewCount}</td>
+					</tr>
+				</c:forEach>
+				</table>
+                
             </div>
             <div class="content" id="my_qna">
                 <h2 style="font-size: 50px;">내 문의내역</h2>
