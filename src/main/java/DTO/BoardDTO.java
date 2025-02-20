@@ -33,24 +33,25 @@ public class BoardDTO {
 	}
 	
 	public BoardDTO(String title,  String contents ,int board_id) {
-
 		this.boardId = board_id;
-	
 		this.title = title;
-
 		this.contents = contents;
-
-
 	}
 	
 
-
-	public BoardDTO(int boardId,String title,String writer, String contents ) {
+	public BoardDTO(int boardId,String title,int memberId, String contents ) {
 
 		this.boardId = boardId;
 		this.title = title;
-		this.writer = writer;
+		this.memberId = memberId;
 		this.contents = contents;
+	}
+	
+	public BoardDTO(int boardId, String title,Timestamp regDate, int viewCount) { //마이페이지
+		this.boardId = boardId;
+		this.title = title;
+		this.regDate = regDate;
+		this.viewCount = viewCount;
 	}
 
 	

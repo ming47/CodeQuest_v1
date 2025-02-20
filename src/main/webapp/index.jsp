@@ -127,7 +127,8 @@ body {
 
 /* ✅ 로그인 박스 */
 .loginbox {
-	width: 80%; background : url('/login.jpg') no-repeat center;
+	width: 80%;
+	background: url('/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
@@ -136,10 +137,15 @@ body {
 	font-family: "Jua", serif;
 	margin-bottom: 50px;
 	margin-top: 80px;
-	background: url('/login.jpg') no-repeat center; background-size : cover;
-	padding : 10px; border-radius : 20px; box-shadow : 0 0 10px rgba( 0, 0,
-	0, 0.1); text-align : center; font-family : "Jua", serif; margin-bottom
-	: 50px; margin-top : 80px;
+	background: url('/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	margin-top: 80px;
 	margin-right: 75px;
 }
 
@@ -239,7 +245,7 @@ body {
 	width: 80%;
 	height: 50%;
 	padding: 30px;
-	margin-top:40px;
+	margin-top: 40px;
 }
 
 /* ✅ 랭킹 탭 버튼 스타일 */
@@ -312,8 +318,8 @@ body {
 	width: 90%;
 	font-family: "Press Start 2P", serif;
 	margin-top: 30px;
-		text-shadow: 0 1px 0 #a3a3a3, -1px 2px 0 #a3a3a3, 1px 4px 0 #a3a3a3, 0 3px 0
-		#a3a3a3;
+	text-shadow: 0 1px 0 #a3a3a3, -1px 2px 0 #a3a3a3, 1px 4px 0 #a3a3a3, 0
+		3px 0 #a3a3a3;
 }
 
 .game {
@@ -408,9 +414,11 @@ body {
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
-			<div class="logbox-container">
-				<%@ include file="logbox.jsp"%>
-			</div>
+			    <c:if test="${member.loginId != null}">
+			        <div class="logbox-container">
+			            <%@ include file="logbox.jsp" %>
+			        </div>
+			    </c:if>
 		</div>
 
 
@@ -469,22 +477,25 @@ body {
 			</div>
 
 			<!-- ✅ 오른쪽 로그인 + 랭킹보드 -->
+
 			<div class="right-content">
-				<div class="loginbox">
-					<h2>로그인</h2>
+				<c:if test="${member.loginId==null}">
+					<div class="loginbox">
+						<h2>로그인</h2>
+						<form action="/member/login.do" method="post" id="frm">
+							<div class="input-group">
+								<input type="text" name="id" id="id" placeholder="아이디"> 
+								<input type="password" name="pw" id="pw" placeholder="비밀번호">
+								<button id="loginBtn">로그인</button>
+							</div>
+						</form>
 
-					<div class="input-group">
-						<input type="text" id="id" placeholder="아이디"> <input
-							type="password" id="pw" placeholder="비밀번호">
-						<button id="loginBtn">로그인</button>
+						<div class="login-links">
+							<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
+								href="/member/findMember.do"><button>ID/PW 찾기</button></a>
+						</div>
 					</div>
-
-					<div class="login-links">
-						<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
-							href="/member/findMember.do"><button>ID/PW 찾기</button></a>
-					</div>
-				</div>
-
+				</c:if>
 				<div class="rankingboard">
 					<h3>🏆 랭킹 보드</h3>
 
@@ -523,40 +534,6 @@ body {
 	<script>
 
 	$(document).ready(function() {
-	    // ✅ 로그인 처리
-	    $("#loginBtn").click(function() {
-	        let userId = $("#id").val().trim();
-	        let userPw = $("#pw").val().trim();
-
-	        if (userId === "" || userPw === "") {
-	            alert("아이디와 비밀번호를 입력하세요!");
-	            return false;
-	        }
-
-	        $.ajax({
-	            url: "/member/login.do",
-	            method: "POST",
-	            data: { id: userId, pw: userPw },
-	            dataType: "text"
-	        })
-	        .done(function(resp) {
-	            if (resp.trim() === "success") {
-	                $(".loginbox").fadeOut(function() {
-	                    let bodyHeight = $(".body").height() / 2;  // ✅ outerHeight → height
-	                    $(".rankingboard").addClass("expanded").css("height", bodyHeight + "px");
-	                });
-
-	                $(".logbox-container").load("logbox.jsp", function() {
-	                    $(".logbox").fadeIn();
-	                });
-	            } else {
-	                alert("로그인 실패. 아이디/비밀번호를 확인하세요.");
-	            }
-	        })
-	        .fail(function(xhr, status, error) {
-	            console.log("로그인 AJAX 실패:", error);
-	        });
-	    });
 	    function loadRanking(gameId) {
 	    	console.log(gameId);
 	    	

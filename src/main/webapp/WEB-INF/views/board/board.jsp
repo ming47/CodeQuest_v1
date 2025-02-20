@@ -211,7 +211,7 @@ button:hover {
 <script>
 	$(function() {
 		// 페이지네이션 클릭 이벤트
-		$(".paging").on("click", function() {
+		$(".page").on("click", function() {
 			let pageNum = $(this).attr("page");
 			sessionStorage.setItem("last_cpage", pageNum);
 			location.href = "/list.board?cpage=" + pageNum;
@@ -244,22 +244,20 @@ button:hover {
 					<td colspan="8">자유게시판</td>
 				</tr>
 				<tr id="title">
-					<th style="width: 10%;">번호</th>
-					<th style="width: 40%;">제목</th>
-					<th style="width: 15%;">작성자</th>
-					<th style="width: 15%;">날짜</th>
-					<th style="width: 10%;">조회</th>
-					<th style="width: 10%;">댓글수</th>
+					<th style="width: 12%;">번호</th>
+					<th style="width: 42%;">제목</th>
+					<th style="width: 17%;">작성자</th>
+					<th style="width: 17%;">날짜</th>
+					<th style="width: 12%;">조회</th>
 				</tr>
 
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td><a href="/board/detail.do?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title}</a></td>
+						<td><a href="/board/detail.do?id=${dto.boardId}">${(dto.role == 'user') ? '게시글' : '공지'} ${dto.title} [${dto.replyCount}]</a></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
-						<td>${dto.replyCount}</td>
 					</tr>
 				</c:forEach>
 
@@ -269,7 +267,7 @@ button:hover {
 
 			</table>
 			<div colspan="3" id="buttonbox">
-				<a href="/board/add.do" method="get">
+				<a href="/board/addform.do" method="get">
 					<button>작성하기</button>
 				</a>
 			</div>
@@ -285,7 +283,7 @@ button:hover {
 					        const pageNavi = $('<div>');
 
 					        function makeSpan(content, index) {
-					            const span = $('<span>').html(content).addClass('page');
+					            const span = $('<span>').html(content).addClass('page').attr('page', index);
 
 					            span.on('click', function () {
 					                location.href = url + index;
@@ -293,17 +291,18 @@ button:hover {
 
 					            return span;
 					        }
+					        <%= request.getAttribute("start") %>
 
-					        if (${!pageNavi.isFirst}) {
-					            pageNavi.append(makeSpan('이전', ${pageNavi.startNavi - 1}));
+					        if (${!page.isFirst}) {
+					            page.append(makeSpan('이전', ${page.startNavi - 1}));
 					        }
 
-					        for (let i = ${pageNavi.startNavi}; i <= ${pageNavi.endNavi}; i++) {
+					        for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
 					            pageNavi.append(makeSpan(i, i));
 					        }
 
-					        if (${!pageNavi.isEnd}) {
-					            pageNavi.append(makeSpan('다음', ${pageNavi.endNavi + 1}));
+					        if (${!page.isEnd}) {
+					            page.append(makeSpan('다음', ${page.endNavi + 1}));
 					        }
 
 					        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'

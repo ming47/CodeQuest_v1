@@ -76,6 +76,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public int insert(ReplyDTO dto) throws Exception {	//DB에 저장
 		String sql = "insert into reply(reply_id,member_id,contents,reg_date,board_id) values(reply_id_seq.nextval, ?, ?,sysdate, ?)";
+
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
 			pstat.setInt(1, dto.getMemberId());
@@ -100,6 +101,23 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			return pstat.executeUpdate();
 		}
 	}
+//	public int getSize() throws Exception {
+//	    String sql = "SELECT COUNT(*) FROM reply";
+//	    try (Connection con = this.getConnection();
+//	         PreparedStatement pstat = con.prepareStatement(sql);
+//	         ResultSet rs = pstat.executeQuery()) {
+//	        
+//	        if (rs.next()) {
+//	            return rs.getInt(1);  // count 값 반환
+//	        } else {
+//	            return 0;  // 조회된 값이 없으면 기본값 0 반환
+//	        }
+//	        
+//	    } catch (Exception e) {
+//	        e.printStackTrace();  // 예외 로깅
+//	        return 0;  // 오류 발생 시 0 반환
+//	    }
+//	}
 
 	@Override
 	public int deleteById(int dto) throws Exception {	//삭제

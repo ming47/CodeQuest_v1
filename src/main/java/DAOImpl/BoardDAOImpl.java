@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import Common.Statics;
 import DAO.BoardDAO;
 import DTO.BoardDTO;
+import DTO.MemberDTO;
 
 
 public enum BoardDAOImpl implements BoardDAO {
@@ -25,7 +26,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		return ds.getConnection();
 	}
 
-	//
+
 	public List<BoardDTO> selectAll() throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id";
 		try (Connection con = this.getConnection(); 
@@ -45,7 +46,7 @@ public enum BoardDAOImpl implements BoardDAO {
 				int viewCount = rs.getInt("view_count");
 				int replyCount = rs.getInt("reply_count");
 				String role = rs.getString("role");
-				
+
 				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
 			}
 			return dto;
@@ -73,17 +74,17 @@ public enum BoardDAOImpl implements BoardDAO {
 					int viewCount = rs.getInt("view_count");
 					int replyCount = rs.getInt("reply_count");
 					String role = rs.getString("role");
-					
+
 					dto = new BoardDTO(boardId, memberId, title, regDate, contents, viewCount,replyCount, writer, role);
 				}
 				return dto;
 			}
-			
-			
+
+
 		}
-	
+
 	}
-	
+
 	public int getSize() throws Exception {
 		String sql = "select count(*) from board";
 		try (Connection con = this.getConnection();
@@ -102,7 +103,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 	}
 
-	
+
 	public void viewCount(int boardId) throws Exception {
 		String sql = "update board set view_count = view_count + 1 where board_Id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -113,14 +114,14 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int insert(BoardDTO dto) throws Exception {
-		String sql = "insert into board (board_id, title, name, contents, reg_date, view_count,reply_count) values (?, ?, ?, ?, sysdate, 0,0)";
+		String sql = "insert into board (board_id, title, member_id, contents, reg_date, view_count,reply_count) values (?, ?, ?, ?, sysdate, 0,0)";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, dto.getBoardId());
 			pstat.setString(2, dto.getTitle());
-			pstat.setString(3, dto.getWriter());
+			pstat.setInt(3, dto.getMemberId());
 			pstat.setString(4, dto.getContents());
-			
+
 			return pstat.executeUpdate();
 		}
 	}
@@ -159,17 +160,17 @@ public enum BoardDAOImpl implements BoardDAO {
 				+ "inner join members m "
 				+ "on b.member_id = m.member_id) a) "
 				+ "WHERE rnum BETWEEN ? and ?";
-		
+
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
 		int endIndex = startIndex + Statics.recordCountPerPage - 1;
-		
+
 		endIndex = (endIndex > getSize()) ? getSize() : endIndex;
-		
+
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, startIndex);
 			pstat.setInt(2, endIndex);
-			
+
 			System.out.println(startIndex + " " + endIndex);
 			try(ResultSet rs = pstat.executeQuery()) {
 				List<BoardDTO> dto = new ArrayList<BoardDTO>();
@@ -184,13 +185,37 @@ public enum BoardDAOImpl implements BoardDAO {
 					int viewCount = rs.getInt("view_count");
 					int replyCount = rs.getInt("reply_count");
 					String role = rs.getString("role");
-					
+
 					dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
 				}
 				return dto;
 			}
 		}
 	}
+
+	@Override
+	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { //마이페이지 최근 작성한 게시글 5개 가져오기
+		String sql = "SELECT * FROM ( " +
+				"  SELECT BOARD_ID, MEMBER_ID, TITLE, REG_DATE, CONTENTS, VIEW_COUNT, REPLY_COUNT " +
+				"    FROM board " +
+				"   WHERE MEMBER_ID = ? " +
+				"   ORDER BY BOARD_ID DESC " +
+				") WHERE ROWNUM <= 5";
+		try (Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)) {
+			pstat.setInt(1, memberId);
+			try (ResultSet rs = pstat.executeQuery()) {
+				List<BoardDTO> list = new ArrayList<>();
+				while (rs.next()) {
+					int boardId = rs.getInt("board_id");
+					String title = rs.getString("title");
+					Timestamp regDate = rs.getTimestamp("reg_date");
+					int viewCount = rs.getInt("view_count");
+					BoardDTO member = new BoardDTO(boardId,title,regDate,viewCount);
+					list.add(member);
+				}
+				return list;
+			}
+		}
+	}
 }
-
-
