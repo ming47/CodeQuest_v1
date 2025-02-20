@@ -415,7 +415,9 @@ body {
 			</div>
 			<!-- ✅ 로그인 정보 -->
 			<div class="logbox-container">
-				<%@ include file="logbox.jsp"%>
+				<c:if test="${not empty sessionScope.sessionLoginId}">
+					<%@ include file="logbox.jsp"%>
+				</c:if>
 			</div>
 		</div>
 
@@ -531,6 +533,18 @@ body {
 	<script>
 
 	$(document).ready(function() {
+	    // ✅ 로그인 상태 체크 후 UI 반영
+	    function checkLoginState() {
+	        if (sessionStorage.getItem("isLoggedIn") === "true") {
+	            $(".loginbox").hide();
+	            $(".logbox-container").load("logbox.jsp"); // ✅ 로그인 상태 반영
+	        } else {
+	            $(".loginbox").show();
+	            $(".logbox-container").html(""); // ✅ 로그아웃 상태 반영
+	        }
+	    }
+	    checkLoginState(); // ✅ 페이지 로드 시 실행
+
 	    // ✅ 로그인 처리
 	    $("#loginBtn").click(function() {
 	        let userId = $("#id").val().trim();
@@ -546,26 +560,37 @@ body {
 	            method: "POST",
 	            data: { id: userId, pw: userPw },
 	            dataType: "json"
-	        })
-	        .done(function(resp) {
-	            if (resp!==null) {
-	            	   sessionStorage.setItem("login-start-time", new Date().getTime());
-	                $(".loginbox").fadeOut(function() {
-	                    let bodyHeight = $(".body").height() / 2;  // ✅ outerHeight → height
-	                    $(".rankingboard").addClass("expanded").css("height", bodyHeight + "px");
-	                });
+	        }).done(function(resp) {
+	            if (resp.member) {
+	                sessionStorage.setItem("isLoggedIn", "true"); // ✅ 로그인 상태 저장
+	                sessionStorage.setItem("login-start-time", new Date().getTime());
 
-	                $(".logbox-container").load("logbox.jsp", function() {
-	                    $(".logbox").fadeIn();
-	                });
+	                $(".loginbox").fadeOut();
+	                $(".logbox-container").load("logbox.jsp"); // ✅ logbox 갱신
+
 	            } else {
 	                alert("로그인 실패. 아이디/비밀번호를 확인하세요.");
 	            }
-	        })
-	        .fail(function(xhr, status, error) {
+	        }).fail(function(xhr, status, error) {
 	            console.log("로그인 AJAX 실패:", error);
 	        });
 	    });
+
+	    // ✅ 로그아웃 처리
+	    $(document).on("click", "#logoutBtn", function() {
+	        $.ajax({
+	            url: "/member/logout.do",
+	            method: "GET",
+	            success: function() {
+	                sessionStorage.removeItem("isLoggedIn");
+	                sessionStorage.removeItem("login-start-time");
+
+	                $(".logbox-container").html(""); // ✅ 로그아웃 시 logbox 제거
+	                $(".loginbox").fadeIn();
+	            }
+	        });
+	    });
+
 	    function loadRanking(gameId) {
 	    	console.log(gameId);
 	    	
