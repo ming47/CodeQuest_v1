@@ -135,6 +135,20 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/printout.do")) { // 출력
 
 			} else if (cmd.equals("/member/update.do")) { // 수정
+				String loginId = request.getParameter("loginId");
+				String name = request.getParameter("name");
+				String nickName = request.getParameter("nickName");
+				String ssn = request.getParameter("ssn");
+				String email = request.getParameter("email");
+				String phone = request.getParameter("phone");
+				String zipCode = request.getParameter("zipCode");
+				String address = request.getParameter("address");
+				String detailAddress = request.getParameter("detailAddress");
+				String regDate = request.getParameter("regDate");
+				System.out.println("로그인ID"+loginId);
+				System.out.println("name"+name);
+				System.out.println("nickName"+nickName);
+
 				
 			} else if (cmd.equals("/delete.do")) {
 

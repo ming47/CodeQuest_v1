@@ -334,10 +334,11 @@
             <div class="content" id="edit">
                 <h2 style="font-size: 50px;">내 정보</h2><br>
                 <fieldset>
-                    <legend>기본정보</legend>
+                <legend>기본정보</legend>
+				<form action="/member/update.do" method="post" id="frm">
                     <div class="input-group">
                         <label for="login_id">아이디</label>
-                        <input type="text" name="login_id" id="login_id" value=${member.loginId} readonly>
+                        <input type="text" name="loginId" id="loginId" value=${member.loginId} readonly>
                     </div>
                     <div class="input-group">
                         <label for="name">이름</label>
@@ -345,7 +346,7 @@
                     </div>
                     <div class="input-group">
                         <label for="nickname">닉네임</label>
-                        <input type="text" name="nickname" id="nickname" value=${member.nickName} readonly>
+                        <input type="text" name="nickName" id="nickName" value=${member.nickName} readonly>
                     </div>
                     <div class="input-group">
                         <label for="ssn">주민번호</label>
@@ -362,31 +363,31 @@
                     </div>
                     <div class="input-group">
                         <label for="zipcode">우편번호</label>
-                        <input type="text" name="zipcode" id="zipcode" 
-    					value="<c:choose><c:when test='${member.zipCode == 0}'>값이 없습니다</c:when><c:otherwise>${member.zipCode}</c:otherwise></c:choose>" readonly>
+                        <input type="text" name="zipCode" id="zipCode" 
+    					value="<c:choose><c:when test='${member.zipCode == 0}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.zipCode}</c:otherwise></c:choose>" readonly>
 
                     </div>
                     <div class="input-group">
                         <label for="address">주소</label>
                         <input type="text" name="address" id="address" 
-    					value="<c:choose><c:when test='${member.address == null}'>값이 없습니다</c:when><c:otherwise>${member.address}</c:otherwise></c:choose>" readonly>
+    					value="<c:choose><c:when test='${member.address == null}'>입력된 정보가 없습니다</c:when><c:otherwise>${member.address}</c:otherwise></c:choose>" readonly>
 
                     </div>
                     <div class="input-group">
                         <label for="detail_address">상세주소</label>
                         <input type="text" name="detailAddress" id="detailAddress" 
-                        	value="<c:choose><c:when test='${member.detailAddress == null}'>값이 없습니다</c:when>
+                        	value="<c:choose><c:when test='${member.detailAddress == null}'>입력된 정보가 없습니다</c:when>
 						              	<c:otherwise>${member.detailAddress}</c:otherwise></c:choose>" readonly>
                     </div>
                     <div class="input-group">
                         <label for="join_date">가입날짜</label>
-                        <input type="text" name="join_date" id="join_date" value=${member.regDate} readonly>
+                        <input type="text" name="regDate" id="regDate" value=${member.regDate} readonly>
                     </div>
                     <div class="buttons">
-                        <button type="button">수정하기</button>
-                        <button type="button">회원탈퇴</button>
+                        <button type="button" id="update_btn">수정하기</button>
+                        <button type="button" id="out_btn">회원탈퇴</button>
                     </div>
-
+                </form>
                 </fieldset>
 
             </div>
@@ -402,7 +403,7 @@
         </div>
     </div>
     <script>
-        $(".sidebar ul li ").click(function () { //휴
+        $(".sidebar ul li").on("click",function () { //휴
             let targetId = $(this).attr("data-target");
             let targetElement = $("#" + targetId);
             if (targetElement.length) {
@@ -411,7 +412,23 @@
                 );
             }
         });
+        $("#update_btn").on("click",function() {
+       		$("input[readonly]").removeAttr("readonly");
+       		
+       		$("#update_btn").css("display","none");
+       		$("#out_btn").css("display","none");
+       		
+   			let updateOk = $("<button>").attr({ id: "update_ok_btn", type: "submit" }).html("수정완료");
+   			
+   			let updateCancel = $("<button>").attr("type","button").html("취소");
+   			
+   			updateCancel.on("click", function() {
+   				location.reload();
+   			});
+   			$(".buttons").append(updateOk,updateCancel);
+   			
+        });
+        
     </script>
 </body>
-
 </html>
