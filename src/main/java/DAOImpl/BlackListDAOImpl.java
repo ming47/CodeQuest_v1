@@ -73,7 +73,7 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public List<BlackListDTO> selectByMemberId(int memberId) throws Exception {
-		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM BLACK_LIST WHERE MEMBER_ID = ?";
 		return null;
 	}
 
