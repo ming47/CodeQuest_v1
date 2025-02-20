@@ -414,11 +414,11 @@ body {
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
-			<div class="logbox-container">
-				<c:if test="${not empty sessionScope.sessionLoginId}">
-					<%@ include file="logbox.jsp"%>
-				</c:if>
-			</div>
+			    <c:if test="${member.loginId != null}">
+			        <div class="logbox-container">
+			            <%@ include file="logbox.jsp" %>
+			        </div>
+			    </c:if>
 		</div>
 
 
@@ -479,15 +479,16 @@ body {
 			<!-- ✅ 오른쪽 로그인 + 랭킹보드 -->
 
 			<div class="right-content">
-				<c:if test="${sessionLoginId==null}">
+				<c:if test="${member.loginId==null}">
 					<div class="loginbox">
 						<h2>로그인</h2>
-
-						<div class="input-group">
-							<input type="text" id="id" placeholder="아이디"> <input
-								type="password" id="pw" placeholder="비밀번호">
-							<button id="loginBtn">로그인</button>
-						</div>
+						<form action="/member/login.do" method="post" id="frm">
+							<div class="input-group">
+								<input type="text" name="id" id="id" placeholder="아이디"> 
+								<input type="password" name="pw" id="pw" placeholder="비밀번호">
+								<button id="loginBtn">로그인</button>
+							</div>
+						</form>
 
 						<div class="login-links">
 							<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
@@ -533,64 +534,6 @@ body {
 	<script>
 
 	$(document).ready(function() {
-	    // ✅ 로그인 상태 체크 후 UI 반영
-	    function checkLoginState() {
-	        if (sessionStorage.getItem("isLoggedIn") === "true") {
-	            $(".loginbox").hide();
-	            $(".logbox-container").load("logbox.jsp"); // ✅ 로그인 상태 반영
-	        } else {
-	            $(".loginbox").show();
-	            $(".logbox-container").html(""); // ✅ 로그아웃 상태 반영
-	        }
-	    }
-	    checkLoginState(); // ✅ 페이지 로드 시 실행
-
-	    // ✅ 로그인 처리
-	    $("#loginBtn").click(function() {
-	        let userId = $("#id").val().trim();
-	        let userPw = $("#pw").val().trim();
-
-	        if (userId === "" || userPw === "") {
-	            alert("아이디와 비밀번호를 입력하세요!");
-	            return false;
-	        }
-
-	        $.ajax({
-	            url: "/member/login.do",
-	            method: "POST",
-	            data: { id: userId, pw: userPw },
-	            dataType: "json"
-	        }).done(function(resp) {
-	            if (resp.member) {
-	                sessionStorage.setItem("isLoggedIn", "true"); // ✅ 로그인 상태 저장
-	                sessionStorage.setItem("login-start-time", new Date().getTime());
-
-	                $(".loginbox").fadeOut();
-	                $(".logbox-container").load("logbox.jsp"); // ✅ logbox 갱신
-
-	            } else {
-	                alert("로그인 실패. 아이디/비밀번호를 확인하세요.");
-	            }
-	        }).fail(function(xhr, status, error) {
-	            console.log("로그인 AJAX 실패:", error);
-	        });
-	    });
-
-	    // ✅ 로그아웃 처리
-	    $(document).on("click", "#logoutBtn", function() {
-	        $.ajax({
-	            url: "/member/logout.do",
-	            method: "GET",
-	            success: function() {
-	                sessionStorage.removeItem("isLoggedIn");
-	                sessionStorage.removeItem("login-start-time");
-
-	                $(".logbox-container").html(""); // ✅ 로그아웃 시 logbox 제거
-	                $(".loginbox").fadeIn();
-	            }
-	        });
-	    });
-
 	    function loadRanking(gameId) {
 	    	console.log(gameId);
 	    	
