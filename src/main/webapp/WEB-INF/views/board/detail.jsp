@@ -95,7 +95,7 @@ td#contents {
 #commentSection {
    margin-top: 20px;
    padding: 15px;
-   background: #f9f9f9;
+   background: #f9f9
    border-radius: 10px;
 }
 
@@ -247,6 +247,7 @@ window.onload = function(){
             commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
             $("#commentList").append(commentItem);
         }
+        
 
         // 댓글 수정 기능
         $(".updatebtn").on("click", function() {
@@ -334,9 +335,9 @@ window.onload = function(){
 
 <div class="container">
    <form action="/update.board" method="post" id="frm">
-      <input id=id type="hidden" name="id" value="${dto.boardId}">
-      <input name =title type="hidden" id="hdtitle">
-      <input name=contents type="hidden" id="hdcontents">
+      <input id="id" type="hidden" name="id" value="${dto.boardId}">
+      <input name="title" type="hidden" id="hdtitle">
+      <input name="contents" type="hidden" id="hdcontents">
 
 
       
@@ -370,6 +371,7 @@ window.onload = function(){
                
             <tr>
             
+            
                <th>제목</th>
                <td class="change" id="board_title">${dto.title}</td>
             </tr>
@@ -388,12 +390,11 @@ window.onload = function(){
          </form>
          <div class="commentSection">
    
-   <form action="/addContents.reply" method="post" id="frm">
-      <ul id="commentList"></ul>
+   <form action="/reply/add.do" method="post" id="frm">
       <!-- 댓글 목록 -->
       <div id="commentInputContainer">
          <input name="parent_seq" type="hidden" value="${dto.boardId}"> 
-         <input name="id" type="hidden" value="${id}"> 
+         <input type="hidden" id="memberId" name="memberId" value="${sessionScope.MemberId}">
          <input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
          <button id="inputbtn">등록</button>
       </div>
@@ -409,8 +410,8 @@ window.onload = function(){
  <button type="button" id="back">목록으로</button>
             <button id="update" type="button">수정하기</button>
             <button id="delete" type="button">삭제하기</button>
-            
-            <script>
+
+           <script>
                $("#inputbtn").on(
                      "click",
                      function() {
@@ -424,14 +425,42 @@ window.onload = function(){
                         $("#comments").append(updatecontents);
                         $("#commentsInput").val("");
                      });
-               $(".deletebtn").on("click", function(){
+               
+              $(".deletebtn").on("click", function(){
                   let target = $(this).attr("seq");
                   
                   location.href = "/delete.reply" + target;
 
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/list.board?cpage=" + last_cpage;
+              });
              
+               $(".updatebtn").on("click",   function(){
+                  
+                        //댓글 수정하기 버튼 눌렀을때    
+                           
+                        $(".writerdiv").attr("contentEditable", "true").focus();
+                        
+
+                        $(".updatebtn,.deletebtn").hide();
+                        //기존에 있던 버튼 숨기기 
+                        let updateOK = $("<button>");
+                        updateOK.html("수정완료").attr("id", "updateOK");
+
+                        let updateCancel = $("<button>");
+                        updateCancel.html("취소").attr("id","updateCancel")
+                              
+
+                        updateCancel.attr("type", "button");
+
+                        updateCancel.on("click", function() {
+                           location.reload();
+                        });
+
+                        $(".btnbox").append(updateOK, updateCancel);
+
+                     });
+
 
                $("#delete").on("click", function() {
                   let result = confirm("정말 삭제하시겠습니까")
@@ -469,16 +498,14 @@ window.onload = function(){
 
                    $(".btnbox").append(updateOK, updateCancel);
 
-                });
-              
-                   // "수정완료" 버튼 클릭 시 처리
+                // "수정완료" 버튼 클릭 시 처리                   
                    updateOK.on("click", function() {
                        let updatedContent = contentDiv.html(); // 수정된 내용을 가져옴
                        let replyId = commentItem.find("input[name='id']").val(); // 댓글 ID 가져옴
 
                        // AJAX 요청을 통해 서버에 수정된 댓글 전송
                        $.ajax({
-                           url: '/update.reply', // 댓글 수정 API URL
+                           url: '/reply/update.do', // 댓글 수정 API URL
                            type: 'POST',
                            data: {
                                id: replyId,
@@ -496,9 +523,10 @@ window.onload = function(){
                                updateCancel.remove();
                            }
                        });
-                   });
-
-                   // "취소" 버튼 클릭 시 처리
+                   });	
+                
+                
+                 // "취소" 버튼 클릭 시 처리
                    updateCancel.on("click", function() {
                        // 수정 취소 시 원래의 내용으로 되돌리기
                        contentDiv.html(contentDiv.attr("data-original-content"));
@@ -510,7 +538,15 @@ window.onload = function(){
                        updateOK.remove();
                        updateCancel.remove();
                    });
-               });
+               
+                
+                
+                });
+               
+                   
+                   
+                   
+                  
                
                $("#frm").on("submit", function() {
 
@@ -522,8 +558,8 @@ window.onload = function(){
                $("#contentsfrm").on("submit", function() {
 
                   $("#contentsreply").val($(".writerdiv").html())
-               })
-            </script>
+               })	
+           </script> 
 
  </div>
       </form>

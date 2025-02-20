@@ -194,7 +194,6 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 	}
 
-
 	@Override
 	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { //마이페이지 최근 작성한 게시글 5개 가져오기
 		String sql = "SELECT * FROM ( " +
@@ -202,7 +201,7 @@ public enum BoardDAOImpl implements BoardDAO {
 				"    FROM board " +
 				"   WHERE MEMBER_ID = ? " +
 				"   ORDER BY BOARD_ID DESC " +
-				") WHERE ROWNUM <= 5";
+				") WHERE ROWNUM <= 6";
 		try (Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, memberId);
@@ -227,6 +226,33 @@ public enum BoardDAOImpl implements BoardDAO {
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, boardId);
 			pstat.executeUpdate();
+		}
+	}
+
+
+	@Override
+	public List<BoardDTO> selectAllNotice() throws Exception {
+		String sql = "SELECT * FROM BOARD B INNER JOIN MEMBERS M ON B.MEMBER_ID = M.MEMBER_ID WHERE ROLE = 'admin'";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			List<BoardDTO> dto = new ArrayList<>();
+			
+			while(rs.next()) {
+				dto.add(new BoardDTO(
+						rs.getInt("BOARD_ID"),
+						rs.getInt("MEMBER_ID"),
+						rs.getString("TITLE"),
+						rs.getTimestamp("REG_DATE"),
+						rs.getString("CONTENTS"),
+						rs.getInt("VIEW_COUNT"),
+						rs.getInt("REPLY_COUNT"),
+						rs.getString("NICKNAME"),
+						rs.getString("ROLE")));
+			}
+			
+			return dto;
 		}
 	}
 }

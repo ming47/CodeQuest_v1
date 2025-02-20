@@ -67,8 +67,14 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 
 	@Override
 	public int deleteById(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "DELETE FROM QNA_REPLY WHERE QNA_REPLY_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, id);
+			
+			return pstat.executeUpdate();
+		}
 	}
 
 	@Override
