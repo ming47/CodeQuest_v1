@@ -362,7 +362,7 @@ window.onload = function(){
                <th>첨부된 파일:</th>
          <td>
          <c:forEach var="i" items="${filelist}">   
-         <a href="/download.files?filename=${i.sysName}&oriname=${i.oriName}">${i.oriName}
+         <a href="/file/download.do?filename=${i.sysname}&oriname=${i.oriname}">${i.oriname}
          </a><br>   
          </c:forEach>
          </td>
@@ -380,6 +380,11 @@ window.onload = function(){
             </tr>
             
          </table>
+         
+         
+         
+         
+         
          </form>
          <div class="commentSection">
    

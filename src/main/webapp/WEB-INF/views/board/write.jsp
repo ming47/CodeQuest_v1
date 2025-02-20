@@ -216,9 +216,8 @@ a button:hover {
 	width: 100%; /* 버튼이 100%의 너비를 가지도록 수정 */
 }
 
-#backbtn {
+#listbtn {
 	width: 100%; /* 버튼이 100%의 너비를 가지도록 수정 */
-	
 }
 
 .note-editable {
@@ -260,8 +259,6 @@ a button:hover {
 					</div>
 
 
-
-
 					<div class="card-header">파일 첨부</div>
 					<div class="card-body">
 						<input type="file" name="file2" accept="image/*, .pdf, .docx">
@@ -277,8 +274,10 @@ a button:hover {
 				<div id="buttonbox">
 					<button class="button" id="writebtn" type="submit">작성완료</button>
 					
+	                   <a href="/list.board?cpage=1">
 
-						<button id="back" type="button">목록으로</button>
+						<button id="listbtn" type="button">목록으로</button>
+					  </a>
 				
 
 
@@ -294,10 +293,6 @@ a button:hover {
 	$('#contents').summernote(setSummerNote());
 	
 
-	
-	$('form').on('submit', function() {
-		$('#input-contents').val($('#contents').summernote('code'));
-	});
 	
 
 	
@@ -375,17 +370,17 @@ a button:hover {
 		});
 	}
 	
+	
 	$('form').on('submit', function() {
 		$('#input-contents').val($('#contents').summernote('code'));
 	});
 	
-	
-	
-     $("#back").on("click", function() {
+	   $("#listbtn").on("click", function() {
 
-        let last_cpage = sessionStorage.getItem("last_cpage");
-        location.href = "/board/list.do?cpage=" +last_cpage;  });
+	        let last_cpage = sessionStorage.getItem("last_cpage");
+	        location.href = "/board/list.do?cpage=" +last_cpage;});
 
+  
    
 
 </script>
