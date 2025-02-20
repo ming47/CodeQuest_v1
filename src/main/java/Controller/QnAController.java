@@ -67,7 +67,6 @@ public class QnAController<QnADAO> extends HttpServlet {
 				
 				Map<String, Object> json = new HashMap<>();
 				
-				
 				List<QnADTO> dtos = new ArrayList<>();
 				if(conditions.equals("writer")) {
 					dtos = dao.selectByWriterLike(searchKey);
@@ -89,6 +88,20 @@ public class QnAController<QnADAO> extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
+		try {		
+			String cmd = ConvertURL.of(request);
+			
+			if(cmd.equals("/qna/add.do")) {
+				
+			} else if(cmd.equals("/qna/update.do")) {
+				
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 
