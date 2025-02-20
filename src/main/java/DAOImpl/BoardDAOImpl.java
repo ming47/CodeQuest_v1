@@ -201,7 +201,7 @@ public enum BoardDAOImpl implements BoardDAO {
 				"    FROM board " +
 				"   WHERE MEMBER_ID = ? " +
 				"   ORDER BY BOARD_ID DESC " +
-				") WHERE ROWNUM <= 5";
+				") WHERE ROWNUM <= 6";
 		try (Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, memberId);

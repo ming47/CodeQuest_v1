@@ -84,19 +84,20 @@ body {
 	gap: 20px;
 }
 
-.menu li {
-	padding: 10px 15px;
-	background: #717171;
-	color: white;
-	border-radius: 5px;
-	cursor: pointer;
-	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
-		black;
+.menu li a {
+   padding: 10px 15px;
+   background: #717171;
+   color: white;
+   border-radius: 5px;
+   cursor: pointer;
+   text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+      black;
+   text-decoration: none;
 }
 
-.menu li:hover {
-	background: #3c3b39;
-	color: white;
+.menu li:hover a{
+   background: #3c3b39;
+   color: white;
 }
 
 .main-content {
@@ -407,10 +408,18 @@ body {
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
-					<li>Home</li>
-					<li>Game</li>
-					<li>Board</li>
-					<li>Service</li>
+					<li>
+					<a href="/">Home</a>
+					</li>
+					<li>
+					<a href="/game/list.do">Service</a>
+					</li>
+					<li>
+					<a href="/board/list.do">Board</a>
+					</li>
+					<li>
+					<a href="/service/list.do">Service</a>
+					</li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
@@ -491,8 +500,8 @@ body {
 						</form>
 
 						<div class="login-links">
-							<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
-								href="/member/findMember.do"><button>ID/PW 찾기</button></a>
+							<a href="/member/addForm.do"><button>회원가입</button></a><br> 
+							<button type="button" id="pwFinder">비밀번호 재설정</button>
 						</div>
 					</div>
 				</c:if>
@@ -531,7 +540,10 @@ body {
 
 	</div>
 
-	<script>
+<script>
+	$("#pwFinder").on("click",function(){
+		window.open("/member/pwResetForm.do", "", "width=400, height=300");
+	});
 
 	$(document).ready(function() {
 	    function loadRanking(gameId) {
@@ -587,12 +599,11 @@ body {
 	            gameId = gameId.replace("game", "");
 	            gameId = Number(80000 + gameId);
 	        }
-
 	        loadRanking(gameId);
 	    });
 	});
 
-		</script>
+</script>
 
 </body>
 </html>
