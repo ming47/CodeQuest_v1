@@ -1,13 +1,16 @@
 package Controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import Common.ConvertURL;
 import Common.SecurityUtil;
@@ -17,7 +20,7 @@ import DTO.MemberDTO;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
-
+Gson g = new Gson();
 	private MemberDAO dao = MemberDAOImpl.INSTANCE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -122,11 +125,17 @@ public class MemberController extends HttpServlet {
 
 				String encryptPw = SecurityUtil.hashPassword(pw);
 
+				Map<String, Object> json = new HashMap<>();
+				
 				MemberDTO member = dao.login(id, encryptPw);
 				if (member != null) {
 					System.out.println("로그인성공!");
 					request.getSession().setAttribute("member", member);
-					response.getWriter().write("success");
+					request.getSession().setAttribute("sessionLoginId", member.getLoginId());
+					json.put("member", member);
+					json.put("result", "success");
+					
+					response.getWriter().append(g.toJson(json));
 				} else {
 					response.getWriter().write("fail");
 				}
