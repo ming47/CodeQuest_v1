@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import Common.Statics;
 import DAO.BoardDAO;
 import DTO.BoardDTO;
+import DTO.MemberDTO;
 
 
 public enum BoardDAOImpl implements BoardDAO {
@@ -191,9 +192,33 @@ public enum BoardDAOImpl implements BoardDAO {
 			}
 		}
 	}
-	
 
 
+	@Override
+	public BoardDTO selectByMemberId(int memberId) throws Exception { //마이페이지 최근 작성한 게시글 5개 가져오기
+	    String sql = "SELECT * FROM ( " +
+	                 "  SELECT BOARD_ID, MEMBER_ID, TITLE, REG_DATE, CONTENTS, VIEW_COUNT, REPLY_COUNT " +
+	                 "    FROM board " +
+	                 "   WHERE MEMBER_ID = ? " +
+	                 "   ORDER BY BOARD_ID DESC " +
+	                 ") WHERE ROWNUM <= 5";
+	    try (Connection con = getConnection();
+	         PreparedStatement pstat = con.prepareStatement(sql)) {
+	        pstat.setInt(1, memberId);
+	        
+	        try (ResultSet rs = pstat.executeQuery()) {
+	            List<BoardDTO> list = new ArrayList<>();
+	            if (rs.next()) {
+	            	String title = rs.getString("title");
+					Timestamp regDate = rs.getTimestamp("reg_date");
+					int viewCount = rs.getInt("view_count");
+					BoardDTO member = new BoardDTO(title,regDate,viewCount);
+	            	return member;
+	            }
+	        }
+	        return null;
+	    }
+	}
 }
 
 

@@ -14,7 +14,9 @@ import com.google.gson.Gson;
 
 import Common.ConvertURL;
 import Common.SecurityUtil;
+import DAO.BoardDAO;
 import DAO.MemberDAO;
+import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DTO.MemberDTO;
 
@@ -22,6 +24,7 @@ import DTO.MemberDTO;
 public class MemberController extends HttpServlet {
 Gson g = new Gson();
 	private MemberDAO dao = MemberDAOImpl.INSTANCE;
+	private BoardDAO boardDao = BoardDAOImpl.INSTANCE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
