@@ -33,12 +33,12 @@ public enum ReplyDAOImpl implements ReplyDAO {
 
 			while (rs.next()) {
 					int reply_id = rs.getInt("id");
-					String name = rs.getString("writer");
+					int member_id = rs.getInt("memberId");
 					int board_id = rs.getInt("board_id");
 					String contents = rs.getString("contents");
 					Timestamp regdate = rs.getTimestamp("reg_date");
 
-					list.add(new ReplyDTO(reply_id, name, board_id, contents, regdate));
+					list.add(new ReplyDTO(reply_id, member_id, board_id, contents, regdate));
 				}
 			rs.close();
 			return list;
@@ -55,11 +55,18 @@ public enum ReplyDAOImpl implements ReplyDAO {
 				ReplyDTO rdto = null;
 				while (rs.next()) {
 					int replyId = rs.getInt("reply_Id");
-					String name = rs.getString("name");
+					int memberId = rs.getInt("name");
 					String contents = rs.getString("contents");
 					Timestamp regDate = rs.getTimestamp("reg_Date");
 					int boardId = rs.getInt("board_Id");
-					rdto = new ReplyDTO(replyId,name,boardId,contents ,regDate);
+					System.out.println("-00000000000000000000000000----");
+					System.out.println(replyId);
+					System.out.println(memberId);
+					System.out.println(contents);
+					System.out.println(regDate);
+					System.out.println(boardId);
+					rdto = new ReplyDTO(replyId,memberId,boardId,contents ,regDate);
+					System.out.println(rdto);
 				}
 				return rdto;
 			}
@@ -68,12 +75,16 @@ public enum ReplyDAOImpl implements ReplyDAO {
 
 	@Override
 	public int insert(ReplyDTO dto) throws Exception {	//DB에 저장
-		String sql = "insert into reply values(reply_id_seq.nextval, ?, ?,sysdate, ?)";
+		String sql = "insert into reply(reply_id,member_id,contents,reg_date,board_id) values(reply_id_seq.nextval, ?, ?,sysdate, ?)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
-			pstat.setString(1, dto.getName());
+			pstat.setInt(1, dto.getMemberId());
 			pstat.setString(2, dto.getContents());
 			pstat.setInt(3, dto.getBoardId());
+			System.out.println("------------------");
+			System.out.println(dto.getMemberId());
+			System.out.println(dto.getContents());
+			System.out.println(dto.getBoardId());
 			return pstat.executeUpdate();
 		}
 	}
@@ -107,7 +118,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	
 	@Override
 	public List<ReplyDTO> selectByBoardId(int boardId) throws Exception {	//댓글 출력
-		String sql = "select * from Reply where = board_id = ? order by reg_date desc";
+		String sql = "select * from Reply where board_id = ? order by reg_date desc";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, boardId);
 			try(ResultSet rs = pstat.executeQuery()){
@@ -115,11 +126,12 @@ public enum ReplyDAOImpl implements ReplyDAO {
 				while(rs.next()) {
 					ReplyDTO dto = new ReplyDTO();
 					dto.setReplyId(rs.getInt("replyId"));
-					dto.setName(rs.getString("name"));
+					dto.setMemberId(rs.getInt("memberId"));;
 					dto.setBoardId(rs.getInt("boardId"));
 					dto.setContents(rs.getString("contents"));
 					dto.setRegDate(rs.getTimestamp("regDate"));
 					list.add(dto);
+					System.out.println(list);
 				}
 				return list;
 			}

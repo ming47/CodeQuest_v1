@@ -191,9 +191,6 @@ public enum BoardDAOImpl implements BoardDAO {
 			}
 		}
 	}
-	
-
-
 }
 
 

@@ -95,7 +95,7 @@ td#contents {
 #commentSection {
    margin-top: 20px;
    padding: 15px;
-   background: #f9f9f9;
+   background: #f9f9
    border-radius: 10px;
 }
 
@@ -245,11 +245,7 @@ window.onload = function(){
             commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
             $("#commentList").append(commentItem);
         }
-        $(function(){
-        	$.ajax({
-        		url:""
-        	})
-        })
+        
 
         // 댓글 수정 기능
         $(".updatebtn").on("click", function() {
@@ -332,9 +328,9 @@ window.onload = function(){
 <body>
 <div class="container">
    <form action="/update.board" method="post" id="frm">
-      <input id=id type="hidden" name="id" value="${dto.boardId}">
-      <input name =title type="hidden" id="hdtitle">
-      <input name=contents type="hidden" id="hdcontents">
+      <input id="id" type="hidden" name="id" value="${dto.boardId}">
+      <input name="title" type="hidden" id="hdtitle">
+      <input name="contents" type="hidden" id="hdcontents">
 
 
       
@@ -368,6 +364,7 @@ window.onload = function(){
                
             <tr>
             
+            
                <th>제목</th>
                <td class="change" id="title">${dto.title}</td>
             </tr>
@@ -381,12 +378,11 @@ window.onload = function(){
          </form>
          <div class="commentSection">
    
-   <form action="/addContents.reply" method="post" id="frm">
-      <ul id="commentList"></ul>
+   <form action="/reply/add.do" method="post" id="frm">
       <!-- 댓글 목록 -->
       <div id="commentInputContainer">
          <input name="parent_seq" type="hidden" value="${dto.boardId}"> 
-         <input name="id" type="hidden" value="${id}"> 
+         <input type="hidden" id="memberId" name="memberId" value="${sessionScope.MemberId}">
          <input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
          <button id="inputbtn">등록</button>
       </div>
@@ -399,11 +395,11 @@ window.onload = function(){
    </div>
    <form action="/update.board" method="post" id="frm">
       <div class="footer">
-            <button type="button" id="back">목록으로</button>
+            <button type="button" id="back">목록으로</button>        
             <button id="update" type="button">수정하기</button>
             <button id="delete" type="button">삭제하기</button>
-            
-            <script>
+
+           <script>
                $("#inputbtn").on(
                      "click",
                      function() {
@@ -417,13 +413,16 @@ window.onload = function(){
                         $("#comments").append(updatecontents);
                         $("#commentsInput").val("");
                      });
-               $(".deletebtn").on("click", function(){
+               
+              $(".deletebtn").on("click", function(){
                   let target = $(this).attr("seq");
                   
                   location.href = "/delete.reply" + target;
 
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/list.board?cpage=" + last_cpage;
+              });
+             
                $(".updatebtn").on("click",   function(){
                   
                         //댓글 수정하기 버튼 눌렀을때    
@@ -531,7 +530,7 @@ window.onload = function(){
 
                   $("#contentsreply").val($(".writerdiv").html())
                })
-            </script>
+           </script> 
 
 
          <script>
