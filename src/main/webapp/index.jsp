@@ -2,11 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%
-String sessionLoginId = (String) session.getAttribute("sessionLoginId");
-boolean isLoggedIn = (sessionLoginId != null);
-%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -480,22 +475,24 @@ body {
 			</div>
 
 			<!-- ✅ 오른쪽 로그인 + 랭킹보드 -->
+
 			<div class="right-content">
-				<div class="loginbox">
-					<h2>로그인</h2>
+				<c:if test="${sessionLoginId==null}">
+					<div class="loginbox">
+						<h2>로그인</h2>
 
-					<div class="input-group">
-						<input type="text" id="id" placeholder="아이디"> <input
-							type="password" id="pw" placeholder="비밀번호">
-						<button id="loginBtn">로그인</button>
+						<div class="input-group">
+							<input type="text" id="id" placeholder="아이디"> <input
+								type="password" id="pw" placeholder="비밀번호">
+							<button id="loginBtn">로그인</button>
+						</div>
+
+						<div class="login-links">
+							<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
+								href="/member/findMember.do"><button>ID/PW 찾기</button></a>
+						</div>
 					</div>
-
-					<div class="login-links">
-						<a href="/member/addForm.do"><button>회원가입</button></a><br> <a
-							href="/member/findMember.do"><button>ID/PW 찾기</button></a>
-					</div>
-				</div>
-
+				</c:if>
 				<div class="rankingboard">
 					<h3>🏆 랭킹 보드</h3>
 
@@ -551,7 +548,7 @@ body {
 	            dataType: "json"
 	        })
 	        .done(function(resp) {
-	            if (resp.member) {
+	            if (resp!==null) {
 	            	   sessionStorage.setItem("login-start-time", new Date().getTime());
 	                $(".loginbox").fadeOut(function() {
 	                    let bodyHeight = $(".body").height() / 2;  // ✅ outerHeight → height
@@ -568,16 +565,6 @@ body {
 	        .fail(function(xhr, status, error) {
 	            console.log("로그인 AJAX 실패:", error);
 	        });
-		    if ('<%=sessionLoginId%>' !== 'null') {
-		        $(".loginbox").hide();
-		    }
-	        let isLoggedIn = <%=isLoggedIn%>;
-
-	        if (isLoggedIn) {
-	            $(".loginbox").hide();
-	        } else {
-	            $(".loginbox").show();
-	        }
 	    });
 	    function loadRanking(gameId) {
 	    	console.log(gameId);

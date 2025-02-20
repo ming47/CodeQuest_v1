@@ -2,9 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 
 <%-- ✅ 세션에서 로그인 정보 확인 --%>
-<%
-
-%>
 
 <!DOCTYPE html>
 <html>
@@ -54,9 +51,9 @@
 <body>
 
 	<%-- ✅ 로그인 상태에 따라 로그박스를 표시 --%>
-	<c:if test="${not empty member}">
+	<c:if test="${not empty sessionLoginId}">
 		<div class="logbox">
-			<span>${member.loginId} 님 환영합니다</span>
+			<span>${sessionLoginId} 님 환영합니다</span>
 
 			<div class="logbox-buttons">
 				<a href="/member/mypage.do">마이페이지</a> 
