@@ -114,7 +114,7 @@ public class BoardController extends HttpServlet {
 
 				int boardId = Integer.parseInt(request.getParameter("id"));// jsp에서 url 뒤에 붙는 id
 
-				dao.viewCount(boardId);
+				dao.increaseViewCount(boardId);
 				
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("loginId");
 			

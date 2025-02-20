@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.el.ELException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -104,7 +105,7 @@ public enum BoardDAOImpl implements BoardDAO {
 	}
 
 
-	public void viewCount(int boardId) throws Exception {
+	public void increaseViewCount(int boardId) throws Exception {
 		String sql = "update board set view_count = view_count + 1 where board_Id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, boardId);
@@ -217,6 +218,15 @@ public enum BoardDAOImpl implements BoardDAO {
 				}
 				return list;
 			}
+		}
+	}
+
+	@Override
+	public void increaseReplyCount(int boardId) throws Exception {
+		String sql = "update board set reply_count = reply_count + 1 where board_Id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, boardId);
+			pstat.executeUpdate();
 		}
 	}
 }
