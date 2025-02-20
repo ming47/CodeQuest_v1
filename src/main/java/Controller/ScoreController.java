@@ -39,11 +39,7 @@ public class ScoreController extends HttpServlet {
 				dto = (userId == null) ? 
 						scoreDAO.selectByGameId(Integer.parseInt(gameId)) : 
 						scoreDAO.selectByMemberIdAndGameId(Integer.parseInt(userId), Integer.parseInt(gameId));
-				
-				for(ScoreDTO score : dto) {
-					System.out.println(score.getScore() + " " + score.getUser());
-				}
-					
+
 				response.getWriter().append(g.toJson(dto));
 			} else if (cmd.equals("/score/list/game/user.do")) {
 				
@@ -58,5 +54,4 @@ public class ScoreController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	
 }
