@@ -136,23 +136,14 @@ Gson g = new Gson();
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw");
 				String encryptPw = SecurityUtil.hashPassword(pw);
-
-				Map<String, Object> json = new HashMap<>();
 				
 				MemberDTO member = dao.login(id, encryptPw);
 				if (member != null) {
 					System.out.println("로그인성공!");
 					request.getSession().setAttribute("member", member);
-					request.getSession().setAttribute("sessionLoginId", member.getLoginId());
-					json.put("member", member);
-					json.put("result", "success");
-					
-					response.getWriter().append(g.toJson(json));
-				} else {
-					response.getWriter().write("fail");
 				}
+				response.sendRedirect("/");
 				
-
 			} else if (cmd.equals("/printout.do")) { // 출력
 
 			} else if (cmd.equals("/member/update.do")) { // 수정
