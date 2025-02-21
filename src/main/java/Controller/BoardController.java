@@ -49,113 +49,67 @@ public class BoardController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/board/write.jsp").forward(request, response);
 
 			}
-			
+
 			else if (cmd.equals("/board/printout.do")) {
 
-			
-				
 			} else if (cmd.equals("/board/list.do")) {// 게시글 목록 출력
-	            String scpage = (String) request.getParameter("cpage");
+				String scpage = (String) request.getParameter("cpage");
 
-	            if (scpage == null) {
-	               scpage = "1";
-	            }
-	            int cpage = Integer.parseInt(scpage);
+				if (scpage == null || scpage.equals("null")) {
+					scpage = "1";
+				}
+				int cpage = Integer.parseInt(scpage);
 
-	            int recordTotalCount = dao.getSize();
+				int recordTotalCount = dao.getSize();
 
-	            int pageTotalCount = 0;
-	            if (recordTotalCount % Statics.recordCountPerPage > 0) {
-	               pageTotalCount = recordTotalCount / Statics.recordCountPerPage + 1;
-	            } else {
-	               pageTotalCount = recordTotalCount / Statics.recordCountPerPage;
-	            }
+				int pageTotalCount = 0;
+				if (recordTotalCount % Statics.recordCountPerPage > 0) {
+					pageTotalCount = recordTotalCount / Statics.recordCountPerPage + 1;
+				} else {
+					pageTotalCount = recordTotalCount / Statics.recordCountPerPage;
+				}
 
-	            if (cpage < 1) {
-	               cpage = 1;
-	            } else if (cpage > pageTotalCount) {
-	               cpage = pageTotalCount;
-	            }
-	            
-	            List<BoardDTO> noticeList = dao.selectAllNotice();
-	            request.setAttribute("noticeList", noticeList);
+				if (cpage < 1) {
+					cpage = 1;
+				} else if (cpage > pageTotalCount) {
+					cpage = pageTotalCount;
+				}
 
-	            List<BoardDTO> list = dao.selectAll(cpage);
-	            request.setAttribute("list", list);
+				List<BoardDTO> noticeList = dao.selectAllNotice();
+				request.setAttribute("noticeList", noticeList);
 
-	            request.setAttribute("cpage", cpage);
-	            PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
-	            request.setAttribute("page", pageNavi.generate());
-	            
-	            request.getSession().getAttribute("dto");
-	            
-	            request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+				List<BoardDTO> list = dao.selectAll(cpage);
+				request.setAttribute("list", list);
 
-			} 
+				request.setAttribute("cpage", cpage);
+				PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
+				request.setAttribute("page", pageNavi.generate());
+
+				request.getSession().getAttribute("dto");
+
+				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+
+			}
 
 			else if (cmd.equals("/board/detail.do")) { // 상세게시물
 
 				int boardId = Integer.parseInt(request.getParameter("id"));// jsp에서 url 뒤에 붙는 id
 
 				dao.increaseViewCount(boardId);
-				
-				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("loginId");
-			
-			
-				
-				request.setAttribute("loginID", dto);
+
+				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
+
+				request.setAttribute("member", dto);
 				request.setAttribute("dto", dao.selectById(boardId));// 세션에서 아이디값 가져옴
-				
+
 				int target = Integer.parseInt(request.getParameter("id"));// 게시물id 가져옴
 				List<FilesDTO> fdto = (List<FilesDTO>) fdao.selectByBoardId(target);// 파일을 업로드할 게시물 찾음
-
-			
-
 
 				request.setAttribute("filelist", fdto);// jsp에 filelist 쓸수있게 속성 부여 ${filelist} 이렇게 써야됨
 
 				request.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(request, response);
 
-			}
-
-			else if (cmd.equals("/board/update.do")) {// 게시글 수정
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-				String title = request.getParameter("title");
-				String contents = request.getParameter("contents");
-
-				BoardDTO dto = new BoardDTO(title, contents, boardId);
-
-				int result = dao.update(dto);
-
-				response.sendRedirect("/WEB-INF/views/board/list.board?cpage" + boardId);
-
-			}
-
-			else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-				int result = dao.deleteById(boardId);
-
-				if (result == 0) {
-					System.out.println("삭제 실패");
-				} else if (result > 0) {
-
-					System.out.println(result + "개 삭제 성공");
-				}
-
-				request.getRequestDispatcher("/board/list.do").forward(request, response);
-
-
-			} else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-
-				BoardDTO dto = dao.selectById(boardId);
-
-				MemberDTO member = (MemberDTO) request.getSession().getAttribute("dto");
-
-				int result = dao.deleteById(boardId);
-
-				response.sendRedirect("/WEB-INF/views/board/list.board?cpage=1");
-
+		
 			} else if (cmd.equals("/board/mypage.do")) {
 
 			}
@@ -226,6 +180,39 @@ public class BoardController extends HttpServlet {
 
 				}
 				response.sendRedirect("/board/list.do");
+				
+			} else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
+				int boardId = Integer.parseInt(request.getParameter("boardId"));
+
+				BoardDTO dto = dao.selectById(boardId);
+
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+
+				int result = dao.deleteById(boardId);
+
+				response.sendRedirect("/WEB-INF/views/board/list.board?cpage=1");
+
+				
+			} else if (cmd.equals("/board/update.do")) {// 게시글 수정
+				
+			   
+				int boardId = Integer.parseInt(request.getParameter("id"));
+				String title = request.getParameter("title");
+				String contents = request.getParameter("contents");
+
+				BoardDTO dto = new BoardDTO(title, contents, boardId);
+				MemberDTO member = (MemberDTO)request.getSession().getAttribute("dto");
+				
+				 if (member != null && (member.getMemberId() == dto.getMemberId() || member.getRole().equals("ADMIN"))) {
+			        // 수정 처리
+				int result = dao.update(dto);
+				 System.out.println("수정 완료 회원입니다");
+				response.sendRedirect("/board/detail.do?id=" + boardId);
+				 }
+				 else {
+					 System.out.println("수정 불가 비회원입니다");
+						response.sendRedirect("/board/detail.do?id=" + boardId);
+				 }
 			}
 		}
 

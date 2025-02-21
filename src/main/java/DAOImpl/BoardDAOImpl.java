@@ -127,7 +127,9 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int update(BoardDTO dto) throws Exception {
-		String sql = "update board set title =?, contents=? where seq = ?";
+		
+		
+		String sql = "update board set title =?, contents=? where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getTitle());
 			pstat.setString(2, dto.getContents());

@@ -534,6 +534,13 @@
 
 	<script>
 
+
+		$("#pwFinder").on("click", function() {
+			window.open("/member/pwResetForm.do", "", "width=400, height=300");
+		});
+
+		$(document).ready(
+				function() {
 					if (sessionStorage.getItem("enteredGame") === "true") {
 						$(".starter").hide();
 						$(".container").show();
