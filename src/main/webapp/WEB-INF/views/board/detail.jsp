@@ -95,7 +95,7 @@ td#contents {
 #commentSection {
    margin-top: 20px;
    padding: 15px;
-   background: #f9f9f9;
+   background: #f9f9
    border-radius: 10px;
 }
 
@@ -231,13 +231,15 @@ window.onload = function(){
             console.error("Error parsing JSON: ", e);
             return;
         }
+       
+       console.log(data);
 
         for (let i = 0; i < data.length; i++) {
-            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].reply_id);
+            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
             
             let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
             let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].reg_date);
+            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
             
             let btnBox = $("<div>").addClass("btnbox");
             let updateBtn = $("<button>").addClass("updatebtn").text("수정");
@@ -247,6 +249,7 @@ window.onload = function(){
             commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
             $("#commentList").append(commentItem);
         }
+        
 
         // 댓글 수정 기능
         $(".updatebtn").on("click", function() {
@@ -271,21 +274,25 @@ window.onload = function(){
             updateOK.on("click", function() {
                 let updatedContent = contentDiv.html();
                 let replyId = commentItem.attr("data-id");
-
+                console.log(updatedContent+" : updatedContent");
+                console.log(replyId+" : replyId");
                 // 서버로 수정 요청
                 $.ajax({
-                    url: "/update.reply",
-                    type: "POST",
+                    url: "/reply/update.do",
+                    type: "get",
                     data: { id: replyId, contents: updatedContent },
                     success: function(response) {
                         // 성공하면 수정된 내용 유지
+                        if(response){
                         contentDiv.attr("contentEditable", "false");
                         contentDiv.attr("data-original", updatedContent);
-
                         // 버튼 복구
                         commentItem.find(".updatebtn, .deletebtn").show();
                         updateOK.remove();
                         updateCancel.remove();
+                        }else{
+                        	alert("수정을 못했습니다.");
+                        }
                     }
                 });
             });
@@ -310,12 +317,18 @@ window.onload = function(){
 
             if (confirm("정말 삭제하시겠습니까?")) {
                 $.ajax({
-                    url: "/delete.reply",
-                    type: "POST",
+                    url: "/reply/delete.do",
+                    type: "get",
                     data: { id: replyId },
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
-                        commentItem.remove();
+                        if(response) {                        	
+                        	commentItem.remove();
+                        } else {
+                        	alert("삭제하지 못했습니다.");
+                        }
+                        
+                    	
                     }
                 });
             }
@@ -333,6 +346,13 @@ window.onload = function(){
 <body>
 
 <div class="container">
+<<<<<<< HEAD
+=======
+   <form action="/update.board" method="post" id="frm">
+      <input id="id" type="hidden" name="id" value="${dto.boardId}">
+      <input name="title" type="hidden" id="hdtitle">
+      <input name="contents" type="hidden" id="hdcontents">
+>>>>>>> 16e16af5b4f628856a4229f53537d45ad6e8d567
 
 
       
@@ -366,6 +386,7 @@ window.onload = function(){
                
             <tr>
             
+            
                <th>제목</th>
                <td class="change" id="board_title">${dto.title}</td>
             </tr>
@@ -384,12 +405,11 @@ window.onload = function(){
          </form>
          <div class="commentSection">
    
-   <form action="/addContents.reply" method="post" id="frm">
-      <ul id="commentList"></ul>
+   <form action="/reply/add.do" method="post" id="frm">
       <!-- 댓글 목록 -->
       <div id="commentInputContainer">
          <input name="parent_seq" type="hidden" value="${dto.boardId}"> 
-         <input name="id" type="hidden" value="${id}"> 
+         <input type="hidden" id="memberId" name="memberId" value="${sessionScope.MemberId}">
          <input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
          <button id="inputbtn">등록</button>
       </div>
@@ -405,8 +425,8 @@ window.onload = function(){
  <button type="button" id="back">목록으로</button>
             <button id="update" type="button">수정하기</button>
             <button id="delete" type="button">삭제하기</button>
-            
-            <script>
+
+           <script>
                $("#inputbtn").on(
                      "click",
                      function() {
@@ -420,14 +440,42 @@ window.onload = function(){
                         $("#comments").append(updatecontents);
                         $("#commentsInput").val("");
                      });
-               $(".deletebtn").on("click", function(){
+               
+              $(".deletebtn").on("click", function(){
                   let target = $(this).attr("seq");
                   
                   location.href = "/delete.reply" + target;
 
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/list.board?cpage=" + last_cpage;
+              });
              
+               $(".updatebtn").on("click",   function(){
+                  
+                        //댓글 수정하기 버튼 눌렀을때    
+                           
+                        $(".writerdiv").attr("contentEditable", "true").focus();
+                        
+
+                        $(".updatebtn,.deletebtn").hide();
+                        //기존에 있던 버튼 숨기기 
+                        let updateOK = $("<button>");
+                        updateOK.html("수정완료").attr("id", "updateOK");
+
+                        let updateCancel = $("<button>");
+                        updateCancel.html("취소").attr("id","updateCancel")
+                              
+
+                        updateCancel.attr("type", "button");
+
+                        updateCancel.on("click", function() {
+                           location.reload();
+                        });
+
+                        $(".btnbox").append(updateOK, updateCancel);
+
+                     });
+
 
                $("#delete").on("click", function() {
                   let result = confirm("정말 삭제하시겠습니까")
@@ -465,16 +513,14 @@ window.onload = function(){
 
                    $(".btnbox").append(updateOK, updateCancel);
 
-                });
-              
-                   // "수정완료" 버튼 클릭 시 처리
+                // "수정완료" 버튼 클릭 시 처리                   
                    updateOK.on("click", function() {
                        let updatedContent = contentDiv.html(); // 수정된 내용을 가져옴
                        let replyId = commentItem.find("input[name='id']").val(); // 댓글 ID 가져옴
 
                        // AJAX 요청을 통해 서버에 수정된 댓글 전송
                        $.ajax({
-                           url: '/update.reply', // 댓글 수정 API URL
+                           url: '/reply/update.do', // 댓글 수정 API URL
                            type: 'POST',
                            data: {
                                id: replyId,
@@ -492,9 +538,10 @@ window.onload = function(){
                                updateCancel.remove();
                            }
                        });
-                   });
-
-                   // "취소" 버튼 클릭 시 처리
+                   });	
+                
+                
+                 // "취소" 버튼 클릭 시 처리
                    updateCancel.on("click", function() {
                        // 수정 취소 시 원래의 내용으로 되돌리기
                        contentDiv.html(contentDiv.attr("data-original-content"));
@@ -506,7 +553,15 @@ window.onload = function(){
                        updateOK.remove();
                        updateCancel.remove();
                    });
-               });
+               
+                
+                
+                });
+               
+                   
+                   
+                   
+                  
                
                
                $('#update-form').on('submit', function() {

@@ -3,7 +3,6 @@ package DAO;
 import java.util.List;
 
 import DTO.BoardDTO;
-import DTO.MemberDTO;
 
 public interface BoardDAO {
 	List<BoardDTO> selectAll() throws Exception;
@@ -16,4 +15,7 @@ public interface BoardDAO {
 	List<BoardDTO> selectAll(int page) throws Exception; // 페이징 처리된 값 가져오기
 	
 	List<BoardDTO> selectByMemberId(int memberId) throws Exception;
+	void increaseReplyCount(int boardId) throws Exception;
+	void increaseViewCount(int boardId) throws Exception;
+	List<BoardDTO> selectAllNotice() throws Exception;
 }

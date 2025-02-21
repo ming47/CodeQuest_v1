@@ -89,32 +89,12 @@ public class BoardController extends HttpServlet {
 	            request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
 			} 
-			
-//			
-//			else if (cmd.equals("/ajax_list.board")) {// 게시물 목록
-//				String cpage = (String) request.getParameter("page");
-//				if (cpage == null) {
-//					cpage = "1";
-//				}
-//
-//				int page = Integer.parseInt(cpage);
-//
-//				int recordTotalCount = dao.getSize();
-//
-//				int pageTotalCount = 0;
-//
-//				PageNavi pageNavi = new PageNavi(cpage, dao.getSize(), 10, 5);
-//				request.setAttribute("pageNavi", pageNavi);
-//				request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);
-//
-//			} 
-			
 
 			else if (cmd.equals("/board/detail.do")) { // 상세게시물
 
 				int boardId = Integer.parseInt(request.getParameter("id"));// jsp에서 url 뒤에 붙는 id
 
-				dao.viewCount(boardId);
+				dao.increaseViewCount(boardId);
 				
 				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("loginId");
 			
@@ -122,8 +102,6 @@ public class BoardController extends HttpServlet {
 				
 				request.setAttribute("loginID", dto);
 				request.setAttribute("dto", dao.selectById(boardId));// 세션에서 아이디값 가져옴
-
-				request.setAttribute("reply", rdao.selectById(boardId));
 				
 				int target = Integer.parseInt(request.getParameter("id"));// 게시물id 가져옴
 				List<FilesDTO> fdto = (List<FilesDTO>) fdao.selectByBoardId(target);// 파일을 업로드할 게시물 찾음
