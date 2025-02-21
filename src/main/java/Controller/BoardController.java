@@ -89,26 +89,6 @@ public class BoardController extends HttpServlet {
 	            request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
 			} 
-			
-//			
-//			else if (cmd.equals("/ajax_list.board")) {// 게시물 목록
-//				String cpage = (String) request.getParameter("page");
-//				if (cpage == null) {
-//					cpage = "1";
-//				}
-//
-//				int page = Integer.parseInt(cpage);
-//
-//				int recordTotalCount = dao.getSize();
-//
-//				int pageTotalCount = 0;
-//
-//				PageNavi pageNavi = new PageNavi(cpage, dao.getSize(), 10, 5);
-//				request.setAttribute("pageNavi", pageNavi);
-//				request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);
-//
-//			} 
-			
 
 			else if (cmd.equals("/board/detail.do")) { // 상세게시물
 

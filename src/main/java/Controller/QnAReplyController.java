@@ -32,6 +32,10 @@ public class QnAReplyController extends HttpServlet {
 				
 				QnAReplyDTO dto = qnaReplyDAO.selectByQnAId(qnaId);
 				response.getWriter().append(g.toJson(dto));
+			} else if(cmd.equals("/qna_reply/delete.do")) {
+				int id = Integer.parseInt(request.getParameter("id"));
+				
+				qnaReplyDAO.deleteById(id);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -51,6 +55,11 @@ public class QnAReplyController extends HttpServlet {
 				
 				qnaReplyDAO.insert(new QnAReplyDTO(qnaId, 100001, context));
 				qnaDAO.updateResponseYNById(qnaId, "Y");
+			} else if (cmd.equals("/qna_reply/update.do")) {
+				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
+				String context = request.getParameter("context");
+				
+				qnaReplyDAO.update(new QnAReplyDTO(qnaId, 100001, context));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

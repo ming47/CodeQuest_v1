@@ -14,4 +14,5 @@ public interface BlackListDAO {
 	
 	List<BlackListDTO> selectByMemberId(int memberId) throws Exception;	// 특정 유저의 차단 목록을 검색
 	List<BlackListDTO> selectByPeriod(Date startTime, Date endTime) throws Exception;	// 특정 기간의 차단 목록을 검색
+	boolean isBanned(int memberId) throws Exception;
 }

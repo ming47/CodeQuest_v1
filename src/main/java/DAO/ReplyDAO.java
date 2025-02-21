@@ -12,4 +12,5 @@ public interface ReplyDAO {
    int deleteById(int dto) throws Exception;
    
    List<ReplyDTO> selectByBoardId(int boardId) throws Exception;
+   List<ReplyDTO> selectByBoardId(int boardId, int page) throws Exception;
 }
