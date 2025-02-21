@@ -196,28 +196,6 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 
 	@Override
-	public List<PlaytimeDTO> selectByDate(Timestamp date) throws Exception {
-		String sql = "SELECT * "
-				+ "FROM PLAY_TIME "
-				+ "WHERE REG_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 0.99999";
-		
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setTimestamp(1, date);
-			pstat.setTimestamp(2, date);
-			
-			try(ResultSet rs = pstat.executeQuery()) {
-				
-				List<PlaytimeDTO> dto = new ArrayList<>();
-				while(rs.next()) {
-					dto.add(PlaytimeDTO.of(rs));
-				}
-				
-				return dto;
-			}	
-		}
-	}
-	
 	public List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception {
 		String sql = "SELECT * "
 				+ "FROM PLAY_TIME "
@@ -237,6 +215,35 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 				
 				return dto;
 			}	
+		}
+	}
+
+
+	@Override
+	public double selectAnaByDate(String type, LocalDate date) throws Exception {
+		String insertString = "";
+		
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertString = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertString = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertString = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertString + " FROM PLAY_TIME WHERE REG_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 0.99999";
+				
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, date.toString());
+			pstat.setString(2, date.toString());
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				rs.next();
+				
+				return rs.getDouble(1);
+			}
 		}
 	}
 }

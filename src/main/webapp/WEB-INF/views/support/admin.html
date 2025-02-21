@@ -684,7 +684,7 @@
         	let item = day.getFullYear() + "-" + String(day.getMonth() + 1).padStart(2, '0') +  '-' + day.getDate();
         	
         	$.ajax({
-        		url: '/service/admin/playtime/sum/search.do?date=' + item,
+        		url: '/service/admin/playtime/search.do?type=count&date=' + item,
         		type: 'GET'
         	}).done(function(data) {
         		data = JSON.parse(data);
