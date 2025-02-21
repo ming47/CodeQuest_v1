@@ -440,7 +440,11 @@ h1 {
 
 
 <body>
+	<div class="starter" style="display: flex">
+		<%@ include file="intro.jsp"%>
+	</div>
 
+<<<<<<< HEAD
 	<div id="intro" style="text-align: center;">
 		<h1>Enter the World of Code Quest</h1>
 		<button id="start"></button>
@@ -448,6 +452,9 @@ h1 {
 
 
 	<div class="container" id="container" style="display: none;">
+=======
+	<div class="container" style="display: none">
+>>>>>>> 16e16af5b4f628856a4229f53537d45ad6e8d567
 
 		<!-- ✅ 헤더 -->
 		<div class="header">
@@ -579,17 +586,69 @@ h1 {
 	</div>
 
 	<script>
+<<<<<<< HEAD
 		/* start버튼 눌려야 메인 UI 보이도록 */
 		document.getElementById('start').addEventListener('click', function() {
 			document.getElementById('intro').style.display = 'none'; // 시작 화면 숨기기
 			document.getElementById('container').style.display = 'block'; // 메인 화면 표시
 		});
+=======
+>>>>>>> 16e16af5b4f628856a4229f53537d45ad6e8d567
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=400, height=300");
 		});
 
 		$(document).ready(
 				function() {
+
+<<<<<<< HEAD
+					function loadRanking(gameId) {
+						console.log(gameId);
+
+						$.ajax({
+							url : "/score/list/game.do?id=" + gameId,
+							type : "GET",
+							dataType : "json"
+						}).done(
+								function(data) {
+									console.log(data);
+									let rankingList = $('.ranking-list');
+
+									rankingList.html('');
+									if (!data || data.length === 0) {
+										rankingList
+												.append("<li>랭킹 데이터 없음</li>");
+										return;
+									}
+
+									for (let i = 0; i < 10; i++) {
+										console.log(data[i]);
+
+										const li = $('<li>').html(
+												i + 1 + '위 ' + data[i].user
+														+ '(' + data[i].score
+														+ '점)');
+										$('.ranking-list').append(li);
+									}
+									/*
+									 $.each(data, function(index, player) {
+									 console.log(index, player);
+									
+									 const li = $('<li>').html(index + 1 + '위 ' + player.user + '(' + player.score + '점)');
+									 $('.ranking-list').append(li);
+									 // rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
+									 });
+									 */
+								}).fail(function(xhr, status, error) {
+							console.log("랭킹 데이터 불러오기 실패:", error);
+						});
+					}
+
+=======
+					if (sessionStorage.getItem("enteredGame") === "true") {
+						$(".starter").hide();
+						$(".container").show();
+					}
 
 					function loadRanking(gameId) {
 						console.log(gameId);
@@ -633,6 +692,7 @@ h1 {
 						});
 					}
 
+>>>>>>> 16e16af5b4f628856a4229f53537d45ad6e8d567
 					// ✅ 초기에 첫 번째 게임 랭킹 불러오기
 					let defaultGameId = "800001"; // ✅ 초기값 설정
 					loadRanking(defaultGameId);
