@@ -26,24 +26,25 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public List<ReplyDTO>selectAll()throws Exception {
 		String sql = "select * from Reply r inser join on members m on r.member_id = m.member_id";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			ResultSet rs = pstat.executeQuery();
+		try (Connection con = this.getConnection(); 
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
 
 			List<ReplyDTO> list = new ArrayList<ReplyDTO>();
-
 			while (rs.next()) {
-					int reply_id = rs.getInt("id");
-					int member_id = rs.getInt("memberId");
-					int board_id = rs.getInt("board_id");
-					String contents = rs.getString("contents");
-					Timestamp regdate = rs.getTimestamp("reg_date");
-					String writer = rs.getString(rs.getString("nickName"));
-					list.add(new ReplyDTO(reply_id, member_id, board_id, contents, regdate,writer));
-				}
-			rs.close();
-			return list;
+				int reply_id = rs.getInt("id");
+				int member_id = rs.getInt("memberId");
+				int board_id = rs.getInt("board_id");
+				String contents = rs.getString("contents");
+				Timestamp regdate = rs.getTimestamp("reg_date");
+				String writer = rs.getString(rs.getString("nickName"));
+				
+				list.add(new ReplyDTO(reply_id, member_id, board_id, contents, regdate,writer));
 			}
+			
+			return list;
 		}
+	}
 
 	@Override
 	public ReplyDTO selectById(int id) throws Exception {
@@ -62,6 +63,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 					String writer = rs.getString("nickName");
 					rdto = new ReplyDTO(replyId,memberId,boardId,contents ,regDate, writer);
 				}
+				
 				return rdto;
 			}
 		}
@@ -90,6 +92,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			return pstat.executeUpdate();
 		}
 	}
+
 
 	@Override
 	public int deleteById(int dto) throws Exception {	//삭제
@@ -124,10 +127,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 
 
 
-	
-	
-	
-	
+
 	@Override
 	public List<ReplyDTO> selectByBoardId(int boardId) throws Exception {	//댓글 출력
 		String sql = "select * from Reply r inner join members m on r.member_id = m.member_id "
@@ -149,6 +149,12 @@ public enum ReplyDAOImpl implements ReplyDAO {
 				return list;
 			}
 		}
+	}
+
+	@Override
+	public List<ReplyDTO> selectByBoardId(int boardId, int page) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

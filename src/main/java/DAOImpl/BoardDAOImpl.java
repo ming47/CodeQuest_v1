@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.el.ELException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -15,7 +14,6 @@ import javax.sql.DataSource;
 import Common.Statics;
 import DAO.BoardDAO;
 import DTO.BoardDTO;
-import DTO.MemberDTO;
 
 
 public enum BoardDAOImpl implements BoardDAO {
@@ -87,7 +85,7 @@ public enum BoardDAOImpl implements BoardDAO {
 	}
 
 	public int getSize() throws Exception {
-		String sql = "select count(*) from board";
+		String sql = "select count(*) from board b inner join members m on b.member_id = m.member_id where role = 'user'";
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
@@ -159,7 +157,8 @@ public enum BoardDAOImpl implements BoardDAO {
 				+ "(select * "
 				+ "from board b "
 				+ "inner join members m "
-				+ "on b.member_id = m.member_id) a) "
+				+ "on b.member_id = m.member_id "
+				+ "WHERE ROLE = 'user') a) "
 				+ "WHERE rnum BETWEEN ? and ?";
 
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
@@ -226,6 +225,33 @@ public enum BoardDAOImpl implements BoardDAO {
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, boardId);
 			pstat.executeUpdate();
+		}
+	}
+
+
+	@Override
+	public List<BoardDTO> selectAllNotice() throws Exception {
+		String sql = "SELECT * FROM BOARD B INNER JOIN MEMBERS M ON B.MEMBER_ID = M.MEMBER_ID WHERE ROLE = 'admin'";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			List<BoardDTO> dto = new ArrayList<>();
+			
+			while(rs.next()) {
+				dto.add(new BoardDTO(
+						rs.getInt("BOARD_ID"),
+						rs.getInt("MEMBER_ID"),
+						rs.getString("TITLE"),
+						rs.getTimestamp("REG_DATE"),
+						rs.getString("CONTENTS"),
+						rs.getInt("VIEW_COUNT"),
+						rs.getInt("REPLY_COUNT"),
+						rs.getString("NICKNAME"),
+						rs.getString("ROLE")));
+			}
+			
+			return dto;
 		}
 	}
 }

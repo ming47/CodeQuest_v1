@@ -31,4 +31,39 @@ public class TimeUtil {
     public static String getFileDate() {
     	return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
+    
+    public static String toString(long millisec) {
+    	int hours = 0;
+    	int minutes = 0;
+    	int sec = 0;
+    	int milli = (int) millisec;
+    	
+    	if (millisec >= 1000) {    		
+    		sec = (int) (millisec / 1000);
+    		milli = (int) millisec % 1000;
+    	}
+    	
+    	System.out.println(sec + " " + milli);
+    	
+    	if (sec >= 60) {
+    		minutes = (int) (sec / 60);
+    		sec = sec % 60;
+    	}
+    	
+    	if (minutes >= 60) {
+    		hours = (int) (minutes / 60);
+    		minutes = minutes % 60;
+    	}
+    	
+    	String smillisec = String.valueOf(milli);
+    	if (milli < 100) {
+    		smillisec = "0" + String.valueOf(milli);
+    		
+    		if (milli < 10) {
+    			smillisec = "00" + String.valueOf(milli);
+    		}
+    	}
+    	
+    	return String.format("%d시간 %d분 %d.%s초", hours, minutes, sec, smillisec);
+    }
 }

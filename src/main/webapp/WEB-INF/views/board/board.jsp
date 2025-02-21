@@ -181,6 +181,10 @@ button:hover {
 	border: none;
 }
 
+	.notice {
+		background-color: 'red';
+	}
+
 /* 반응형 디자인 설정 */
 @media screen and (max-width: 768px) {
 	.header ul {
@@ -214,7 +218,6 @@ button:hover {
 		$(".page").on("click", function() {
 			let pageNum = $(this).attr("page");
 			sessionStorage.setItem("last_cpage", pageNum);
-			location.href = "/list.board?cpage=" + pageNum;
 		});
 	});
 </script>
@@ -224,7 +227,7 @@ button:hover {
 		<div class="header">
 			<div class="logo">Team CodeQuest</div>
 			<ul>
-				<li onclick="location.href='index.jsp'">Home</li>
+				<li onclick="location.href='/'">Home</li>
 				<li>Game</li>
 				<li>Board</li>
 				<li>Service</li>
@@ -250,7 +253,19 @@ button:hover {
 					<th style="width: 17%;">날짜</th>
 					<th style="width: 12%;">조회</th>
 				</tr>
-
+				<c:forEach var="dto" items="${noticeList}">
+					<tr>
+						<td>${dto.boardId}</td>
+						<td class="contents notice">
+							<span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
+							<span class="reply-count">[${dto.replyCount}]</span>
+						</td>
+						<td>${dto.writer}</td>
+						<td>${dto.regDate}</td>
+						<td>${dto.viewCount}</td>
+					</tr>
+				</c:forEach>
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
