@@ -316,7 +316,7 @@ button:hover {
 
 					            return span;
 					        }
-					        request.getAttribute("start")
+					       
 
 					        if (${!page.isFirst}) {
 					            page.append(makeSpan('ÀÌÀü', ${page.startNavi - 1}));

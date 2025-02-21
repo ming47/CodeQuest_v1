@@ -488,16 +488,12 @@ window.onload = function(){
                      });
 
                  // 게시물 삭제하기 눌렀을때
-               $("#delete").on("click", function() {
-                   let result = confirm("정말 삭제하시겠습니까")
-                   if (result == true) {
-                      location.href = "/board/delete.do?id=${dto.boardId}"
-                   }
-                 
+               $("#delete").on("click", function() {                 
+                   if (confirm("정말 삭제하시겠습니까")) {
+                      location.href = "/board/delete.do?id=${dto.boardId}";
+                   }                 
                 }); 
-                
-           
-               
+          
              
                 
              // 게시물 수정하기 눌렀을때 
@@ -526,9 +522,7 @@ window.onload = function(){
                  
                
                 });
-               }
-                
-                
+            
                 
                 
                 //댓글 수정하기 버튼 눌렀을때   
