@@ -18,7 +18,6 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import Common.ConvertURL;
 import Common.PageNavi;
 import Common.Statics;
-import Common.TimeUtil;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.FilesDAOImpl;
 import DAOImpl.ReplyDAOImpl;
