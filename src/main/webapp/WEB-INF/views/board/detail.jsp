@@ -231,8 +231,8 @@ window.onload = function(){
             console.error("Error parsing JSON: ", e);
             return;
         }
-			let UserName = "${member.name}";	//작성자
-			let Master = "${member.nickName}";	// 관리자
+			let UserName = "${member.nickName}";	//작성자
+			let Master = "${member.role}";	// 관리자
 
         for (let i = 0; i < data.length; i++) {
             let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
@@ -244,7 +244,7 @@ window.onload = function(){
             let btnBox = $("<div>").addClass("btnbox");
 
 
-            if (data[i].writer === UserName || data[i].Master === "관리자") {
+            if (data[i].writer === UserName || Master === "admin") {	//관리자이거나 작성자일 경우 보이게하기
                 let updateBtn = $("<button>").addClass("updatebtn").text("수정");
                 let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
                 btnBox.append(updateBtn, deleteBtn);
