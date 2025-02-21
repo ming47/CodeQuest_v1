@@ -111,6 +111,10 @@ public class ReplyController extends HttpServlet {
 				dto.setMemberId(member.getMemberId());
 				dto.setContents(contents);
 
+				
+				
+				
+				
 				try {
 					ReplyDAOImpl dao = ReplyDAOImpl.INSTANCE;
 					dao.insert(dto);
