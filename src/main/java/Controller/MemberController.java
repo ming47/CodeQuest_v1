@@ -23,8 +23,8 @@ import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+//import io.jsonwebtoken.Jwts;
+//import io.jsonwebtoken.SignatureAlgorithm;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
@@ -177,7 +177,7 @@ public class MemberController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
 			} else if (cmd.equals("/delete.do")) {
-
+/*
 			}else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
 				System.out.println("비밀번호 찾기 호출! " + email);
@@ -210,7 +210,7 @@ public class MemberController extends HttpServlet {
 				// 여기서는 테스트용으로 링크를 응답합니다.
 				response.getWriter().write("인증 링크가 전송되었습니다. 링크: " + resetLink);
 				
-				
+				*/
 			} else if (cmd.equals("/shortvalid.do")) {
 
 			}

@@ -76,7 +76,6 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public int update(QnADTO dto) throws Exception {
-<<<<<<< HEAD
 		String sql = "UPDATE QNA SET CONTENT = ? WHERE QNA_ID = ?";
 		
 		try(Connection con = getConnection();
@@ -91,15 +90,6 @@ public enum QnADAOImpl implements QnADAO {
 			} 
 			
 			return result;
-=======
-		String sql = "UPDATE QNA SET CONTENT WHERE QNA_ID = ?";
-		
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setInt(1, dto.getQnaId());
-			
-			return pstat.executeUpdate();
->>>>>>> 76514e1abb1178ddf5870ad8e530e6b272fdcb03
 		}
 	}
 
@@ -228,7 +218,6 @@ public enum QnADAOImpl implements QnADAO {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public int getNextVal() throws Exception {
 		String sql = "SELECT QNA_ID_SEQ.NEXTVAL FROM DUAL";
 		
@@ -240,7 +229,7 @@ public enum QnADAOImpl implements QnADAO {
 			return rs.getInt(1);
 		}
 	}
-=======
+
 	public List<QnADTO> selectAll(int page) throws Exception {
 		String sql = "select * "
 				+ "from "
@@ -291,7 +280,4 @@ public enum QnADAOImpl implements QnADAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
->>>>>>> 76514e1abb1178ddf5870ad8e530e6b272fdcb03
 }

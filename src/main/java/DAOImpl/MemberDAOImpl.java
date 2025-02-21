@@ -257,4 +257,10 @@ public enum MemberDAOImpl implements MemberDAO {
 	    }
 	}
 
+	@Override
+	public List<MemberDTO> selectFromBlackList() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
