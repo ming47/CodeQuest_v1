@@ -20,4 +20,5 @@ public interface MemberDAO {
 	boolean isAdmin(int memberId) throws Exception;	// 관리자인지 확인 
 	String getNickNameByLoginId(String loginId) throws Exception;	//댓글에서 로그인 ID 찾기
 	List<MemberDTO> selectFromBlackList() throws Exception;
+	int updatePw(String email,String pw) throws Exception; //비밀번호 재설정
 }
