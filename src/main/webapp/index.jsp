@@ -418,7 +418,15 @@ body {
 					<a href="/board/list.do">Board</a>
 					</li>
 					<li>
-					<a href="/service/list.do">Service</a>
+					<c:choose>					
+						<c:when test="${member.role == 'admin'}">
+							<a href="/service/admin/main.do">
+					 	</c:when>
+					 	<c:otherwise>					 	
+							<a href="/service/qna/addForm.do">
+					 	</c:otherwise>
+					</c:choose>
+						Service</a>
 					</li>
 				</ul>
 			</div>
