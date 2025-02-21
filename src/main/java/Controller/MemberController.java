@@ -190,25 +190,25 @@ public class MemberController extends HttpServlet {
 				Date expiry = new Date(now.getTime() + 3600000); // 1시간 = 3600000ms
 
 				// JWT 토큰 생성: subject에 이메일을 담고, 발행 시간 및 만료 시간을 설정
-//				String token = Jwts.builder()
-//						.setSubject(email)
-//						.setIssuedAt(now)
-//						.setExpiration(expiry)
-//						.signWith(SignatureAlgorithm.HS256, secretKey)
-//						.compact();
-//
-//				// 재설정 링크 구성 (토큰을 URL 인코딩 처리)
-//				String resetLink = request.getScheme() + "://" +
-//						request.getServerName() + ":" +
-//						request.getServerPort() +
-//						request.getContextPath() +
-//						"/member/resetPassword.do?token=" + URLEncoder.encode(token, "UTF-8");
-//
-//				System.out.println("Reset link: " + resetLink);
-//
-//				// 실제 운영에서는 EmailUtil.sendResetEmail() 등을 통해 메일 전송 처리
-//				// 여기서는 테스트용으로 링크를 응답합니다.
-//				response.getWriter().write("인증 링크가 전송되었습니다. 링크: " + resetLink);
+				String token = Jwts.builder()
+						.setSubject(email)
+						.setIssuedAt(now)
+						.setExpiration(expiry)
+						.signWith(SignatureAlgorithm.HS256, secretKey)
+						.compact();
+
+				// 재설정 링크 구성 (토큰을 URL 인코딩 처리)
+				String resetLink = request.getScheme() + "://" +
+						request.getServerName() + ":" +
+						request.getServerPort() +
+						request.getContextPath() +
+						"/member/resetPassword.do?token=" + URLEncoder.encode(token, "UTF-8");
+
+				System.out.println("Reset link: " + resetLink);
+
+				// 실제 운영에서는 EmailUtil.sendResetEmail() 등을 통해 메일 전송 처리
+				// 여기서는 테스트용으로 링크를 응답합니다.
+				response.getWriter().write("인증 링크가 전송되었습니다. 링크: " + resetLink);
 				
 				
 			} else if (cmd.equals("/shortvalid.do")) {
