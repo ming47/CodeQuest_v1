@@ -62,6 +62,20 @@
         .pw-container button:hover {
             background: #346e30;
         }
+        .pw-container input[type="password"] {
+		    width: 80%;
+		    padding: 12px;
+		    margin-bottom: 20px;
+		    font-size: 14px;
+		    border: 1px solid #ddd;
+		    border-radius: 6px;
+		    outline: none;
+		}
+		.pw-container input[type="password"]:focus {
+		    border-color: #b4c28a;
+		    box-shadow: 0 0 5px rgba(180, 194, 138, 0.3);
+		}
+        
     </style>
 </head>
 <body>
@@ -81,8 +95,9 @@
 	<div class="pw-container">
         <h2>비밀번호 재설정</h2>
         <p>전송된 인증 암호를 입력해주세요</p>
-            <input type="text" name="auth" id="auth" placeholder="인증 암호를 입력해주세요.">
+            <input type="text" name="auth" id="auth" placeholder="인증 코드를 입력해주세요.">
             <input type="hidden" name="authCode" id="authCode" value="${authCode}">
+            <br>
             <span id="result_auth"></span>
         <form action="/member/pwReset.do" method="post" id="frm2">
             <input type="password" name="pw" id="pw" placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요">
@@ -138,9 +153,10 @@
 		    $("#result_auth").css({
 		        "color": "green",
 		        "font-size": "14px"
-		    }).html("일치!");
+		    }).html("인증코드가 일치합니다.");
 		    auth_val = true;
 		}
+
 	});
 	
 	$("#pw").on("keyup", function() {
