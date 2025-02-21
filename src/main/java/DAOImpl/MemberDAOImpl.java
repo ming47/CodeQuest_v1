@@ -239,28 +239,37 @@ public enum MemberDAOImpl implements MemberDAO {
 			}
 		}
 	}
-	
-	public String getNickNameByLoginId(String loginId) throws Exception {	//DB에서 닉네임만 뽑아서 댓글쓰기
-	    String sql = "SELECT nickname FROM members WHERE MEMBER_ID = ?";
-	    
-	    try (Connection conn = this.getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	        
-	        pstmt.setString(1, loginId);
-	        
-	        try (ResultSet rs = pstmt.executeQuery()) {
-	            if (rs.next()) {
-	                return rs.getString("nickname");
-	            }
-	            return null; // 해당 login_id가 없는 경우
-	        }
-	    }
-	}
 
 	@Override
-	public List<MemberDTO> selectFromBlackList() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MemberDTO> selectByIsBanned(boolean isBanned) throws Exception {
+		String insertString = (isBanned) ? "" : "not";
+		String sql = "SELECT * FROM MEMBERS WHERE MEMBER_ID " + insertString + " IN (SELECT MEMBER_ID FROM BLACK_LIST WHERE END_DATE >= SYSTIMESTAMP";
+		
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			try (ResultSet rs = pstat.executeQuery()) {
+				
+				List<MemberDTO> dto = new ArrayList<>();
+				while (rs.next()) {
+					int memberId = rs.getInt("member_id");
+					String loginId = rs.getString("login_id");
+					String name = rs.getString("name");
+					String nickName = rs.getString("nickname");
+					String ssn = rs.getString("ssn");
+					String email = rs.getString("email");
+					String phone = rs.getString("phone");
+					int postcode = rs.getInt("zip_code");
+					String address = rs.getString("address");
+					String detail_address = rs.getString("detail_address");
+					String role = rs.getString("role");
+					Timestamp date = rs.getTimestamp("reg_date");
+					
+					dto.add(new MemberDTO(memberId,loginId,name,nickName,ssn,
+						email,phone,postcode,address,detail_address, role,date));
+				}
+				
+				return dto;
+			}
+		}
 	}
 
 }
