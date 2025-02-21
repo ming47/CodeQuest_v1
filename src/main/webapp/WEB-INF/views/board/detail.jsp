@@ -333,10 +333,6 @@ window.onload = function(){
 <body>
 
 <div class="container">
-   <form action="/update.board" method="post" id="frm">
-      <input id=id type="hidden" name="id" value="${dto.boardId}">
-      <input name =title type="hidden" id="hdtitle">
-      <input name=contents type="hidden" id="hdcontents">
 
 
       
@@ -512,17 +508,24 @@ window.onload = function(){
                    });
                });
                
+               
+               $('#update-form').on('submit', function() {
+            	   $("#hdcontents").val($(".change").html());
+         
+               });
+               
                $("#frm").on("submit", function() {
 
-                  $("#hdtitle").val($("#title").html())
-                  $("#hdcontents").val($("#contents").html())
-                  $(".idreply").val("iid")
+                  $("#hdtitle").val($("#board_title").html())
+                  $("#hdcontents").val($("#board_contents").html())
+            
                })
 
                $("#contentsfrm").on("submit", function() {
 
                   $("#contentsreply").val($(".writerdiv").html())
-               })
+
+               })	
             </script>
 
  </div>
