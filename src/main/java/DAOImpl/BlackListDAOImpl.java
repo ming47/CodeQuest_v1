@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.Context;
@@ -74,7 +75,22 @@ public enum BlackListDAOImpl implements BlackListDAO {
 	@Override
 	public List<BlackListDTO> selectByMemberId(int memberId) throws Exception {
 		String sql = "SELECT * FROM BLACK_LIST WHERE MEMBER_ID = ?";
-		return null;
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, memberId);
+			
+			try(ResultSet rs = pstat.executeQuery()) {		
+				
+				List<BlackListDTO> dto = new ArrayList<>();
+				while(rs.next()) {
+					dto.add(BlackListDTO.of(rs));
+				}
+				
+				return dto;
+			}
+			
+		}
 	}
 
 	@Override
@@ -85,16 +101,14 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public boolean isBanned(int memberId) throws Exception {
-		String sql = "SELECT COUNT(*) FROM BLACK_LIST WHERE MEMBER_ID = ?";
+		String sql = "SELECT * FROM BLACK_LIST WHERE END_DATE >= SYSTIMESTAMP AND MEMBER_ID = ?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, memberId);
 			
 			try(ResultSet rs = pstat.executeQuery()) {
-				rs.next();
-				
-				return rs.getInt(1) != 0;
+				return rs.next();
 			}
 		}
 	}

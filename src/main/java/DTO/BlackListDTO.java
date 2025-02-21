@@ -1,5 +1,7 @@
 package DTO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class BlackListDTO {
@@ -51,5 +53,14 @@ public class BlackListDTO {
 	
 	public BlackListDTO() {
 		super();
+	}
+	
+	public static BlackListDTO of(ResultSet rs) throws SQLException {
+		return new BlackListDTO(
+				rs.getInt("BLACK_ID"),
+				rs.getInt("MEMBER_ID"),
+				rs.getString("REASON"),
+				rs.getTimestamp("START_DATE"),
+				rs.getTimestamp("END_DATE"));
 	}
 }

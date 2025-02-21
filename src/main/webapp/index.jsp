@@ -22,7 +22,11 @@
 	box-sizing: border-box;
 }
 
-body {
+.container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	display: flex;
 	width: 100%;
 	height: 100%;
@@ -30,13 +34,6 @@ body {
 	align-items: center;
 	background: url('/allback.jpg') no-repeat center;
 	background-size: cover;
-}
-
-.container {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 }
 
 .header, .footer {
@@ -113,7 +110,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: flex-start; /* ✅ 상단 정렬 문제 해결 */
+	justify-content: flex-start; 
 	flex: 1;
 	min-width: 300px;
 }
@@ -536,6 +533,7 @@ body {
 	</div>
 
 	<script>
+
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=400, height=300");
 		});
@@ -589,6 +587,7 @@ body {
 							console.log("랭킹 데이터 불러오기 실패:", error);
 						});
 					}
+
 
 					// ✅ 초기에 첫 번째 게임 랭킹 불러오기
 					let defaultGameId = "800001"; // ✅ 초기값 설정
