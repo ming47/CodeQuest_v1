@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import DAOImpl.BoardDAOImpl;
 import DAOImpl.ReplyDAOImpl;
 import DTO.MemberDTO;
 import DTO.ReplyDTO;
@@ -21,7 +22,7 @@ import DTO.ReplyDTO;
 @WebServlet("/reply/*")
 public class ReplyController extends HttpServlet {
 	ReplyDAOImpl rdao = ReplyDAOImpl.INSTANCE;
-
+	BoardDAOImpl bdao = BoardDAOImpl.INSTANCE;
 	Gson g = new Gson();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -82,6 +83,7 @@ public class ReplyController extends HttpServlet {
 				dto.setMemberId(member.getMemberId());
 				dto.setContents(contents);
 				rdao.insert(dto);
+				bdao.increaseReplyCount(boardId);	//댓글 카운트 추가
 				response.sendRedirect("/board/detail.do?id=" + boardId);
 			} else if (cmd.equals("/reply/delete.do")) { // 삭제 내일 다시와서 볼것
 				int dto = Integer.parseInt(request.getParameter("id"));
@@ -97,9 +99,9 @@ public class ReplyController extends HttpServlet {
 				
 				
 				int result = rdao.deleteById(dto);
-
+				bdao.increaseReplyCount(dto);	//댓글 카운트 삭제
 				response.getWriter().append(String.valueOf((result != 0)));
-
+				
 			} else if (cmd.equals("/reply/update.do")) { // 수정
 
 				int replyId = Integer.parseInt(request.getParameter("id"));
@@ -120,7 +122,7 @@ public class ReplyController extends HttpServlet {
 
 				ReplyDTO dto = new ReplyDTO(replyId, contents);
 				int result = rdao.update(dto);
-
+				
 //				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
 				response.getWriter().append(String.valueOf((result != 0)));
 			}

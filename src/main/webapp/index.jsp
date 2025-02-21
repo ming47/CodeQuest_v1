@@ -581,7 +581,6 @@
 						});
 					}
 
->>>>>>> 16e16af5b4f628856a4229f53537d45ad6e8d567
 					// ✅ 초기에 첫 번째 게임 랭킹 불러오기
 					let defaultGameId = "800001"; // ✅ 초기값 설정
 					loadRanking(defaultGameId);
