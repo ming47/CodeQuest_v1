@@ -22,49 +22,6 @@
 	box-sizing: border-box;
 }
 
-#intro {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: url('/메인.gif') no-repeat center center;
-	background-size: cover;
-	text-align: center;
-	flex-direction: column;
-}
-
-h1 {
-	font-size: 2rem;
-	text-shadow: 2px 2px 8px rgba(0, 0, 0, 1), 0 0 12px rgba(0, 0, 0, 0.9),
-		0 0 16px rgba(0, 0, 0, 0.8);
-	font-family: "Press Start 2P", serif; 
-	font-weight : 400; 
-	font-style :normal;
-	color: #eceec4;
-}
-
-#start {
-	width: 220px;
-	height: 120px;
-	padding: 15px 30px;
-	color: white;
-	background: url('/스타트.png') no-repeat center center;
-	background-size: cover;
-	border: none;
-	border-radius: 10px;
-	cursor: pointer;
-	transition: background 0.3s ease;
-	transition: transform 0.5s ease, box-shadow 0.5s ease;
-}
-
-#start:hover {
-	background: url('/스타트.png') no-repeat center center;
-	transform: scale(1.2);
-}
-
 .container {
 	width: 100%;
 	display: flex;
