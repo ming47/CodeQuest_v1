@@ -112,11 +112,14 @@ public enum ReplyDAOImpl implements ReplyDAO {
 
 	@Override
 	public int deleteById(int dto) throws Exception {	//삭제
-		String sql = "delete reply where reply_id=?";
+		String sql = "delete from reply where reply_id=?";
+		System.out.println("안녕?삭제");
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-
 			pstat.setInt(1, dto);
+			System.out.println("삭제완료 : "+ dto);
+			
 			return pstat.executeUpdate();
+			
 		}
 	}//ap만들어진 메서드가 dto로 지정되어있는데 나중에 수정하자고 하셔서 변수이름 dto로 사용
 	//댓글 아이디를 의미함 
