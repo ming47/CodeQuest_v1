@@ -321,7 +321,7 @@ window.onload = function(){
                 $.ajax({
                     url: "/reply/delete.do",
                     type: "post",
-                    data: { id: replyId },
+                    data: { id: replyId, boardId : ${dto.boardId}},
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
                         if(response) {                        	
