@@ -1,6 +1,6 @@
 package DAO;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.List;
 
 import DTO.PlaytimeDTO;
@@ -19,5 +19,5 @@ public interface PlaytimeDAO {
 	double avgAllPlaytime() throws Exception;  // 전체 플레이타임의 평균
 	List<PlaytimeDTO> selectByMemberGender(GENDER gender) throws Exception;	// 성별에 따른 유저 플레이타임
 	List<PlaytimeDTO> selectByMemberAgeRange(int startAge, int endAge) throws Exception; // 나이대에 따른 유저 플레이타임
-	List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception; // 특정 날짜의 유저 플레이타임
+	List<PlaytimeDTO> selectByDate(Timestamp date) throws Exception; // 특정 날짜의 유저 플레이타임
 }

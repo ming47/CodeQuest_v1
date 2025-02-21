@@ -2,8 +2,6 @@ package Controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import Common.ConvertURL;
 import Common.TimeUtil;
+import DAOImpl.PlaytimeDAOImpl;
 
 
 @WebServlet("/service/*")
 public class ServiceController extends HttpServlet {
-	
+	PlaytimeDAOImpl playtimeDAO = PlaytimeDAOImpl.INSTANCE;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -40,6 +39,8 @@ public class ServiceController extends HttpServlet {
 				if (sdate != null) {
 					date = TimeUtil.toTimestamp(sdate);
 					System.out.println(date);
+					
+					playtimeDAO.selectByDate(date);
 				}
 			}
 		} catch(Exception e) {

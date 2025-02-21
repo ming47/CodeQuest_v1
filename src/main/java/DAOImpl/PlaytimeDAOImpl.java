@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import DAO.PlaytimeDAO;
-import DTO.MemberDTO;
 import DTO.PlaytimeDTO;
 import enums.GENDER;
 
@@ -197,7 +195,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 
 	@Override
-	public List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception {
+	public List<PlaytimeDTO> selectByDate(Timestamp date) throws Exception {
 		String sql = "SELECT * "
 				+ "FROM PLAY_TIME "
 				+ "WHERE REG_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 0.99999";
