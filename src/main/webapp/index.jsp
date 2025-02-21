@@ -534,13 +534,13 @@
 
 	<script>
 
+
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=550, height=300");
 		});
 
 		$(document).ready(
 				function() {
-
 					if (sessionStorage.getItem("enteredGame") === "true") {
 						$(".starter").hide();
 						$(".container").show();
@@ -587,7 +587,6 @@
 							console.log("랭킹 데이터 불러오기 실패:", error);
 						});
 					}
-
 
 					// ✅ 초기에 첫 번째 게임 랭킹 불러오기
 					let defaultGameId = "800001"; // ✅ 초기값 설정

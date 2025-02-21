@@ -256,4 +256,15 @@ public enum BoardDAOImpl implements BoardDAO {
 			return dto;
 		}
 	}
+
+
+	@Override
+	public void decreaseReplyCount(int boardId) throws Exception {
+		String sql = "update board set reply_count = reply_count - 1 where board_Id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, boardId);
+			pstat.executeUpdate();
+		}
+		
+	}
 }
