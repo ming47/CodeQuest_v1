@@ -215,21 +215,6 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 	
-	public String getNickNameByLoginId(String loginId) throws Exception {	//DB에서 닉네임만 뽑아서 댓글쓰기
-	    String sql = "SELECT nickname FROM members WHERE MEMBER_ID = ?";
-	    
-	    try (Connection conn = this.getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-	        
-	        pstmt.setString(1, loginId);
-	        
-	        try (ResultSet rs = pstmt.executeQuery()) {
-	            if (rs.next()) {
-	                return rs.getString("nickname");
-	            }
-	            return null; // 해당 login_id가 없는 경우
-	        }
-	    }
-	}
+
 
 }

@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -53,32 +54,6 @@ public class ReplyController extends HttpServlet {
 				response.setContentType("text/html; charset=utf8");
 				response.getWriter().append(g.toJson(rdto));
 			}
-
-			else if (cmd.equals("/reply/update.do")) { // 수정
-
-				int replyId = Integer.parseInt(request.getParameter("id"));
-
-				String contents = request.getParameter("contents");
-//				int boardId = Integer.parseInt(request.getParameter("BoardId"));
-
-				ReplyDTO dto = new ReplyDTO(replyId, contents);
-				System.out.println("여기오냐?!");
-				int result = rdao.update(dto);
-
-//				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
-				response.getWriter().append(String.valueOf((result != 0)));
-				System.out.println("컨트롤러");
-			} else if (cmd.equals("/reply/delete.do")) { // 삭제		내일 다시와서 볼것
-				int dto = Integer.parseInt(request.getParameter("id"));
-				System.out.println(dto + ": dto");
-				
-				int result = rdao.deleteById(dto);
-				
-				response.getWriter().append(String.valueOf((result != 0)));
-			
-			}
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,35 +69,62 @@ public class ReplyController extends HttpServlet {
 		try {
 			if (cmd.equals("/reply/add.do")) { // 댓글 출력
 				int boardId = Integer.parseInt(request.getParameter("parent_seq"));
-				System.out.println(boardId + ": boardId");
 				String contents = request.getParameter("contents");
-				System.out.println(contents + ": contents");
-
 				HttpSession session = request.getSession();
 				MemberDTO member = (MemberDTO) session.getAttribute("member");
 				if (member == null) {
 					response.sendRedirect("/login.do");
 					return;
 				}
-				System.out.println(member.getMemberId() + ": memberId");
-
 				ReplyDTO dto = new ReplyDTO();
 				dto.setBoardId(boardId);
 				dto.setMemberId(member.getMemberId());
 				dto.setContents(contents);
+				rdao.insert(dto);
+				response.sendRedirect("/board/detail.do?id=" + boardId);
+			} else if (cmd.equals("/reply/delete.do")) { // 삭제 내일 다시와서 볼것
+				int dto = Integer.parseInt(request.getParameter("id"));
 
-				try {
-					ReplyDAOImpl dao = ReplyDAOImpl.INSTANCE;
-					dao.insert(dto);
-					response.sendRedirect("/board/detail.do?id=" + boardId);
-				} catch (Exception e) {
-					e.printStackTrace();
+				HttpSession session = request.getSession();						
+				MemberDTO member = (MemberDTO) session.getAttribute("member");
+				if(member.getMemberId() == rdao.selectById(dto).getMemberId() ||
+						member.getRole().equals("admin")) {
+					// 관리자 및 작성자 삭제
+				}else {
+					return;
 				}
-			}
-		} catch (
+				
+				
+				int result = rdao.deleteById(dto);
 
-		Exception e) {
-			// TODO: handle exception
+				response.getWriter().append(String.valueOf((result != 0)));
+
+			} else if (cmd.equals("/reply/update.do")) { // 수정
+
+				int replyId = Integer.parseInt(request.getParameter("id"));
+
+//				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");		// 해당 로그인한 세션
+				HttpSession session = request.getSession();						
+				MemberDTO member = (MemberDTO) session.getAttribute("member");
+				if (member.getMemberId() == rdao.selectById(replyId).getMemberId()
+						|| member.getRole().equals("admin")) {
+					// TODO: 업데이트 실행
+
+				} else {
+					return;
+				}
+
+				String contents = request.getParameter("contents");
+//				int boardId = Integer.parseInt(request.getParameter("BoardId"));
+
+				ReplyDTO dto = new ReplyDTO(replyId, contents);
+				int result = rdao.update(dto);
+
+//				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
+				response.getWriter().append(String.valueOf((result != 0)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}

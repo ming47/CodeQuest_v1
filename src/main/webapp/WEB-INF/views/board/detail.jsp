@@ -274,12 +274,11 @@ window.onload = function(){
             updateOK.on("click", function() {
                 let updatedContent = contentDiv.html();
                 let replyId = commentItem.attr("data-id");
-                console.log(updatedContent+" : updatedContent");
-                console.log(replyId+" : replyId");
+
                 // 서버로 수정 요청
                 $.ajax({
                     url: "/reply/update.do",
-                    type: "get",
+                    type: "post",
                     data: { id: replyId, contents: updatedContent },
                     success: function(response) {
                         // 성공하면 수정된 내용 유지
@@ -318,7 +317,7 @@ window.onload = function(){
             if (confirm("정말 삭제하시겠습니까?")) {
                 $.ajax({
                     url: "/reply/delete.do",
-                    type: "get",
+                    type: "post",
                     data: { id: replyId },
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
