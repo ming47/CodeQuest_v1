@@ -408,7 +408,9 @@
                                                 <button class="playtime-button" id="group-gender">성별별</button>
                                                 <button class="playtime-button" id="group-age">나이별</button>
                                             </div>
-                                            <div class="playtime"></div>
+                                            <div class="playtime">
+                                            	<canvas id="playtime-chart"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="detail-dashboard-bottom-right"></div>
@@ -606,6 +608,21 @@
 </body>
 
 </html>
+<script tag="chart">
+function Dataset() {
+	this.data = [];
+	this.label = [];
+	
+	this.update = function(chart, target, item) {
+		const index = this.label.indexOf(target);
+		console.log(index);
+		
+		this.data[index] = item;
+		chart.update();
+	}
+}
+
+</script>
 <script tag="common">
     $('.selector').on('click', function () {
         const select = $(this).attr('value');
@@ -669,50 +686,43 @@
                 }).done(function (data) {
                     data = JSON.parse(data);
                     makeQnAList(data.qnaList);
-                })
+                });
             });
         });
         
-        const dauLabel = [];
-        const dauData = [];
 
-        let currentDate = new Date();
-        for(let i = 6; i >=0; i--) {
-        	let day = new Date();
-        	day.setDate(currentDate.getDate() - i);
-      
-        	let item = day.getFullYear() + "-" + String(day.getMonth() + 1).padStart(2, '0') +  '-' + day.getDate();
-        	
-        	$.ajax({
-        		url: '/service/admin/playtime/search.do?type=count&date=' + item,
-        		type: 'GET'
-        	}).done(function(data) {
-        		data = JSON.parse(data);
-                console.log(data);
+        let currentDate = new Date().toISOString().replace("T", " ").substring(0, 19); 
+
+        $.ajax({
+        	url: '/service/admin/playtime/all/search.do?type=count&date=' + currentDate,
+        	type: 'GET'
+        }).done(function(data) {
+        	data = JSON.parse(data);
+            console.log(data);
         		
-        		dauData.push(data.length);
-        	});
+        	for(let i = 0; i < data.length; i++) {
+        		console.log(data[i]);
+        		
+        		dauDataset.data.push(data[i].data);
+        		dauDataset.label.push(data[i].label);
+        	}
         	
-        	dauLabel.push(item);
-        }
-
-        console.log(dauLabel, dauData);
+            const dauDataset = new Dataset();
+        	
+            let myChart = new Chart(mau, {
+                type: 'bar',
+                data: {
+                  labels: dauDataset.label,
+                  datasets: [
+                    {
+                      label: 'Dataset',
+                      data: dauDataset.data,
+                    }
+                  ]
+                }
+              });
+        });        	
     }
-</script>
-<script tag="chart">
-function Dataset(data, label) {
-	this.data = data;
-	this.label = label;
-	
-	this.update = function(chart, target, item) {
-		const index = this.label.indexOf(target);
-		console.log(index);
-		
-		this.data[index] = item;
-		chart.update();
-	}
-}
-
 </script>
 <script tag="game">
 
@@ -735,34 +745,7 @@ function Dataset(data, label) {
     
     let mau = $('#mau-chart');
     
-   // let label = ['02-21', '02-22', '02-23', '02-24'];
-   // let data = [10, 10, 10 , 10];
-    
-    const dataset = new Dataset([], []);
-
-    let myChart = new Chart(mau, {
-      type: 'bar',
-      data: {
-        labels: dataset.label,
-        datasets: [
-          {
-            label: 'Dataset',
-            data: dataset.data,
-          }
-        ]
-      },
-      options: {
-    	  responsive: true
-      }
-    });
-    
-    $('li').on('click', function() {
-    	const currentData = dataset.data[3] + 1;
-    	dataset.update(myChart, '02-24', currentData);
-    	
-    	console.log(dataset);
-    	myChart.update();
-    });
+    console.log(dauDataset);
 </script>
 <script tage="user">
 

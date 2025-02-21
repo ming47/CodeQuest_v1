@@ -1,8 +1,10 @@
 package DAO;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
+import DTO.AnalyzeDTO;
 import DTO.PlaytimeDTO;
 import enums.GENDER;
 
@@ -22,4 +24,5 @@ public interface PlaytimeDAO {
 	List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception; // 특정 날짜의 유저 플레이타임
 	
 	double selectAnaByDate(String type, LocalDate date) throws Exception;  // 특정 날짜의 플레이 통계
+	List<AnalyzeDTO> selectAna7daysByDate(String type, Timestamp date) throws Exception;
 }

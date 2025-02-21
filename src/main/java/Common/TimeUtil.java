@@ -34,7 +34,7 @@ public class TimeUtil {
     }
     
     public static Timestamp toTimestamp(String date) {
-    	LocalDateTime localDateTime = LocalDateTime.parse(date + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    	LocalDateTime localDateTime = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     	
     	return Timestamp.valueOf(localDateTime);
     }

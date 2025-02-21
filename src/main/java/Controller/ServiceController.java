@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,25 @@ public class ServiceController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
+			} else if(cmd.equals("/service/admin/playtime/all/search.do")) {
+				String sdate = request.getParameter("date");
+				String type = request.getParameter("type");
+				
+				System.out.println(sdate);
+				
+				Timestamp date = null;
+				List<AnalyzeDTO> dto = new ArrayList<>();
+				if (sdate != null) {
+					date = TimeUtil.toTimestamp(sdate);
+					
+					dto = playtimeDAO.selectAna7daysByDate(type, date);
+					
+					for(AnalyzeDTO a : dto) {
+						System.out.println(a.getData()+ " : " + a.getLabel());
+					}
+				}
+
+				response.getWriter().append(g.toJson(dto));
 			} else if(cmd.equals("/service/admin/playtime/search.do")) {
 				String sdate = request.getParameter("date");
 				String type = request.getParameter("type");
@@ -66,7 +86,7 @@ public class ServiceController extends HttpServlet {
 				
 				response.getWriter().append(g.toJson(json));
 				*/
-			}
+			} 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

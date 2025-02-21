@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import DAO.PlaytimeDAO;
+import DTO.AnalyzeDTO;
 import DTO.PlaytimeDTO;
 import enums.GENDER;
 
@@ -244,6 +245,43 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 				
 				return rs.getDouble(1);
 			}
+		}
+	}
+
+
+	@Override
+	public List<AnalyzeDTO> selectAna7daysByDate(String type, Timestamp date) throws Exception {
+		String insertString = "";
+		
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertString = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertString = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertString = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertString + ", TRUNC(REG_DATE) AS 일자"
+				+ " FROM PLAY_TIME "
+				+ "WHERE TRUNC(REG_DATE) "
+				+ "BETWEEN TRUNC(? - INTERVAL '7' DAY) AND TRUNC(?) "
+				+ "GROUP BY TRUNC(REG_DATE) "
+				+ "ORDER BY 일자";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setTimestamp(1, date);
+			pstat.setTimestamp(2, date);
+			
+			List<AnalyzeDTO> dto = new ArrayList<>();
+			try(ResultSet rs = pstat.executeQuery()) {
+				while(rs.next()) {					
+					dto.add(AnalyzeDTO.of(rs));
+				}
+			}
+			
+			return dto;
 		}
 	}
 }

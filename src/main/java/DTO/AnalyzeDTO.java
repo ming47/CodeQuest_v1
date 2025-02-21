@@ -1,5 +1,8 @@
 package DTO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class AnalyzeDTO {
 	private double data;
 	private String label;
@@ -15,5 +18,11 @@ public class AnalyzeDTO {
 	
 	public String getLabel() {
 		return label;
+	}
+	
+	public static AnalyzeDTO of(ResultSet rs) throws SQLException {
+		return new AnalyzeDTO(
+				rs.getDouble(1),
+				rs.getString(2));
 	}
 }

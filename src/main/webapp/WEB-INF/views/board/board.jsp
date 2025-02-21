@@ -316,10 +316,9 @@ button:hover {
 
 					            return span;
 					        }
-					        request.getAttribute("start")
 
 					        if (${!page.isFirst}) {
-					            page.append(makeSpan('이전', ${page.startNavi - 1}));
+					            pageNavi.append(makeSpan('이전', ${page.startNavi - 1}));
 					        }
 
 					        for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
@@ -327,7 +326,7 @@ button:hover {
 					        }
 
 					        if (${!page.isEnd}) {
-					            page.append(makeSpan('다음', ${page.endNavi + 1}));
+					            pageNavi.append(makeSpan('다음', ${page.endNavi + 1}));
 					        }
 
 					        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
