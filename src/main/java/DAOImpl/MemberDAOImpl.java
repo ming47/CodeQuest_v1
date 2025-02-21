@@ -17,7 +17,7 @@ import enums.GENDER;
 
 public enum MemberDAOImpl implements MemberDAO {
 	INSTANCE;
-	
+
 	private Connection getConnection() throws Exception {
 		Context ctx = new InitialContext();
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/orcl");
@@ -27,10 +27,10 @@ public enum MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<MemberDTO> selectAll() throws Exception {
 		String sql = "select * from members";
-		
+
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			try (ResultSet rs = pstat.executeQuery()) {
-				
+
 				List<MemberDTO> dto = new ArrayList<>();
 				while (rs.next()) {
 					int memberId = rs.getInt("member_id");
@@ -45,11 +45,11 @@ public enum MemberDAOImpl implements MemberDAO {
 					String detail_address = rs.getString("detail_address");
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
-					
+
 					dto.add(new MemberDTO(memberId,loginId,name,nickName,ssn,
-						email,phone,postcode,address,detail_address, role,date));
+							email,phone,postcode,address,detail_address, role,date));
 				}
-				
+
 				return dto;
 			}
 		}
@@ -74,20 +74,20 @@ public enum MemberDAOImpl implements MemberDAO {
 					String detail_address = rs.getString("detail_address");
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
-					
+
 					MemberDTO member = new MemberDTO(memberId,loginId,name,nickName,ssn,
-													 email,phone,postcode,address,detail_address,
-													 role,date);
+							email,phone,postcode,address,detail_address,
+							role,date);
 					return member;
 
+				}
 			}
-		}
-		return null;
+			return null;
 		}
 	}
-	
+
 	//dao.insert(new MemberDTO(id,pw,name,ssn,email,phone,postcode,address1,address2,null)); //role은 정해진게없어서 null
-	
+
 	@Override
 	public int insert(MemberDTO dto) throws Exception {
 		String sql = "insert into members "
@@ -111,7 +111,7 @@ public enum MemberDAOImpl implements MemberDAO {
 			return pstat.executeUpdate();
 		}
 	}
-	
+
 	public boolean idVali(String id) throws Exception {// ID검증
 		String sql = "select login_id from members where login_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
@@ -121,18 +121,18 @@ public enum MemberDAOImpl implements MemberDAO {
 			}
 		}
 	}
-	
+
 	public boolean isDuplicate(String column, String value) throws Exception {
-	    String sql = "select " + column + " from members where " + column + " = ?";
-	    try (Connection con = this.getConnection(); 
-	         PreparedStatement pstat = con.prepareStatement(sql)) {
-	        pstat.setString(1, value);
-	        try (ResultSet rs = pstat.executeQuery()) {
-	            return rs.next();
-	        }
-	    }
+		String sql = "select " + column + " from members where " + column + " = ?";
+		try (Connection con = this.getConnection(); 
+				PreparedStatement pstat = con.prepareStatement(sql)) {
+			pstat.setString(1, value);
+			try (ResultSet rs = pstat.executeQuery()) {
+				return rs.next();
+			}
+		}
 	}
-	
+
 	@Override
 	public MemberDTO login(String inputId, String inputPw) throws Exception {
 		String sql = "select * from members where login_id = ? and password = ?";
@@ -153,15 +153,15 @@ public enum MemberDAOImpl implements MemberDAO {
 					String detail_address = rs.getString("detail_address");
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
-					
+
 					MemberDTO member = new MemberDTO(memberId,loginId,name,nickName,ssn,
-													 email,phone,postcode,address,detail_address,
-													 role,date);
+							email,phone,postcode,address,detail_address,
+							role,date);
 					return member;
 
+				}
 			}
-		}
-		return null;
+			return null;
 		}
 	}
 
@@ -176,7 +176,7 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setString(5, dto.getAddress());
 			pstat.setString(6, dto.getDetailAddress());
 			pstat.setString(7, dto.getLoginId());
-			
+
 			return pstat.executeUpdate();
 		}
 		// TODO Auto-generated method stub
@@ -191,12 +191,12 @@ public enum MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<MemberDTO> selectByGender(GENDER gender) throws Exception {		
 		String sql = "SELECT * FROM Members WHERE SSN LIKE ?";
-		
+
 		String target = String.format("%%%d______", gender.getGenderFactor());
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, target);
-			
+
 			List<MemberDTO> dto = new ArrayList<>();
 			try (ResultSet rs = pstat.executeQuery()) {
 				while (rs.next()) {
@@ -210,11 +210,11 @@ public enum MemberDAOImpl implements MemberDAO {
 					String detail_address = rs.getString("detail_address");
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
-					
+
 					dto.add(new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date));
 
 				}
-				
+
 				return dto;
 			}
 		}
@@ -229,11 +229,11 @@ public enum MemberDAOImpl implements MemberDAO {
 	@Override
 	public boolean isAdmin(int memberId) throws Exception {
 		String sql = "SELECT * FROM MEMBERS WHERE MEMBER_ID = ?";
-		
+
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, memberId);
-			
+
 			try(ResultSet rs = pstat.executeQuery()) {
 				return (rs.getString("ROLE").equals("ADMIN"));
 			}
@@ -272,4 +272,14 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 
+	@Override
+	public int updatePw(String email, String pw) throws Exception {
+		String sql = "update members set password = ? where email = ?";
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)) {
+			pstat.setString(1, pw);
+			pstat.setString(2, email);
+			return pstat.executeUpdate();
+		}
+	}
 }

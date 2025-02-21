@@ -57,7 +57,7 @@ public class BoardController extends HttpServlet {
 			} else if (cmd.equals("/board/list.do")) {// 게시글 목록 출력
 	            String scpage = (String) request.getParameter("cpage");
 
-	            if (scpage == null) {
+	            if (scpage == null || scpage.equals("null") ) {
 	               scpage = "1";
 	            }
 	            int cpage = Integer.parseInt(scpage);
@@ -99,11 +99,11 @@ public class BoardController extends HttpServlet {
 
 				dao.increaseViewCount(boardId);
 				
-				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("loginId");
+				MemberDTO dto = (MemberDTO)request.getSession().getAttribute("member");
 			
 			
 				
-				request.setAttribute("loginID", dto);
+				request.setAttribute("member", dto);
 				request.setAttribute("dto", dao.selectById(boardId));// 세션에서 아이디값 가져옴
 				
 				int target = Integer.parseInt(request.getParameter("id"));// 게시물id 가져옴
@@ -118,21 +118,8 @@ public class BoardController extends HttpServlet {
 
 			}
 
-			else if (cmd.equals("/board/update.do")) {// 게시글 수정
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-				String title = request.getParameter("title");
-				String contents = request.getParameter("contents");
-
-				BoardDTO dto = new BoardDTO(title, contents, boardId);
-
-				int result = dao.update(dto);
-
-				response.sendRedirect("/WEB-INF/views/board/list.board?cpage" + boardId);
-
-			}
-
 			else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
+				int boardId = Integer.parseInt(request.getParameter("id"));
 				int result = dao.deleteById(boardId);
 
 				if (result == 0) {
@@ -226,6 +213,17 @@ public class BoardController extends HttpServlet {
 
 				}
 				response.sendRedirect("/board/list.do");
+			} else if (cmd.equals("/board/update.do")) {// 게시글 수정
+				int boardId = Integer.parseInt(request.getParameter("id"));
+				String title = request.getParameter("title");
+				String contents = request.getParameter("contents");
+
+				BoardDTO dto = new BoardDTO(title, contents, boardId);
+
+				int result = dao.update(dto);
+
+				response.sendRedirect("/board/detail.do?id=" + boardId);
+
 			}
 		}
 

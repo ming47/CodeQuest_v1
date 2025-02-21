@@ -542,12 +542,6 @@
 	</div>
 
 	<script>
-		/* start버튼 눌려야 메인 UI 보이도록 */
-		document.getElementById('start').addEventListener('click', function() {
-			document.getElementById('intro').style.display = 'none'; // 시작 화면 숨기기
-			document.getElementById('container').style.display = 'block'; // 메인 화면 표시
-		});
-
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=400, height=300");
 		});
@@ -601,6 +595,10 @@
 						});
 					}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d18a840917133bc9704c0abc2b380cf91e396660
 					// ✅ 초기에 첫 번째 게임 랭킹 불러오기
 					let defaultGameId = "800001"; // ✅ 초기값 설정
 					loadRanking(defaultGameId);

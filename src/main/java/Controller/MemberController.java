@@ -1,7 +1,9 @@
 package Controller;
 
 import java.io.IOException;
+
 import java.net.URLEncoder;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import Common.ConvertURL;
+import Common.EmailUtil;
 import Common.SecurityUtil;
 import DAO.BoardDAO;
 import DAO.MemberDAO;
@@ -23,8 +26,6 @@ import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
-//import io.jsonwebtoken.Jwts;
-//import io.jsonwebtoken.SignatureAlgorithm;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
@@ -177,74 +178,46 @@ public class MemberController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
 			} else if (cmd.equals("/delete.do")) {
-/*
-			}else if (cmd.equals("/member/sendResetEmail.do")) {
+
+			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
-				System.out.println("비밀번호 찾기 호출! " + email);
 
-				// JWT를 생성하기 위한 비밀키 (실제 운영에서는 안전하게 관리)
-				String secretKey = "mySuperSecretKey";  
+				// 1. 인증코드 생성
+				int authCode = (int)(Math.random() * 900000) + 100000; 
+				String codeStr = String.valueOf(authCode);
+				System.out.println("컨트롤러 인증코드 : " + codeStr);
 
-				// 현재 시간과 만료시간(1시간 후) 설정
-				Date now = new Date();
-				Date expiry = new Date(now.getTime() + 3600000); // 1시간 = 3600000ms
+				// 2. 세션에 인증 코드와 이메일 저장 (유효기간은 세션 타임아웃으로 대체 가능)
+				request.setAttribute("authEmail", email);
+				request.setAttribute("authCode", codeStr);
 
-				// JWT 토큰 생성: subject에 이메일을 담고, 발행 시간 및 만료 시간을 설정
-				String token = Jwts.builder()
-						.setSubject(email)
-						.setIssuedAt(now)
-						.setExpiration(expiry)
-						.signWith(SignatureAlgorithm.HS256, secretKey)
-						.compact();
+				// 3. 이메일 전송
+				boolean emailSent = EmailUtil.sendResetEmail(email, codeStr);
+				if(emailSent) {
+					System.out.println("메일전송");
+				} else {
+					System.out.println("메일전송 실패");
+				}
+				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
 
-				// 재설정 링크 구성 (토큰을 URL 인코딩 처리)
-				String resetLink = request.getScheme() + "://" +
-						request.getServerName() + ":" +
-						request.getServerPort() +
-						request.getContextPath() +
-						"/member/resetPassword.do?token=" + URLEncoder.encode(token, "UTF-8");
-
-				System.out.println("Reset link: " + resetLink);
-
-				// 실제 운영에서는 EmailUtil.sendResetEmail() 등을 통해 메일 전송 처리
-				// 여기서는 테스트용으로 링크를 응답합니다.
-				response.getWriter().write("인증 링크가 전송되었습니다. 링크: " + resetLink);
+			} else if (cmd.equals("/member/pwReset.do")) {
+				System.out.println("호출!");
+				String pw = request.getParameter("pw");
+				System.out.println("넘어온 pw: "+pw);
+				String encryptPw = SecurityUtil.hashPassword(pw);
+				String email = request.getParameter("resetEmail");
+				System.out.println("넘어온 email: "+email);
 				
-				*/
-			} else if (cmd.equals("/shortvalid.do")) {
-
+				int result = dao.updatePw(email,encryptPw);
+				if(result > 0) {
+					System.out.println("패스워드 변경 성공!");
+			        response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
+				}
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-	}
-
-	public static void main(String[] args) {
-		for (int i = 0; i < 100; i++) {
-			String id = "USER" + i;
-
-			String sql = String.format("INSERT INTO MEMBERS (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, NICKNAME, SSN, EMAIL, PHONE, ROLE) VALUES (MEMBER_ID_SEQ.NEXTVAL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', 'user');", 
-					id, SecurityUtil.hashPassword(id), id, id, generateSSN(), id + "@" + id + ".com", generatePhoneNumber());
-
-			System.out.println(sql);
-		}
-	}
-
-	public static String generateSSN() {
-		String year = String.valueOf((int) (Math.random() * 29 + 70));      
-		int month = (int) (Math.random() * 11 + 1);
-		int day = (int) (Math.random() * 27 + 1);
-
-		int gender = (Math.random() < 0.5) ? 1 : 2;
-
-		String monthStr = (month < 10) ? '0' + String.valueOf(month) : String.valueOf(month);
-		String dayStr = (day < 10) ? '0' + String.valueOf(day) : String.valueOf(day);
-
-		return year + monthStr + dayStr + "-" + gender + "******";
-	}
-
-	public static String generatePhoneNumber() {
-		return "010-" + String.valueOf((int) (Math.random() * 8000 + 1000)) + "-" + String.valueOf((int) (Math.random() * 8000 + 1000));
 	}
 }

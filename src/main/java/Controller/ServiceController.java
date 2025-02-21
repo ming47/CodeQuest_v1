@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Common.ConvertURL;
-import Common.SecurityUtil;
+import Common.TimeUtil;
 
 
 @WebServlet("/service/*")
 public class ServiceController extends HttpServlet {
+	
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -31,12 +32,14 @@ public class ServiceController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
-			} else if(cmd.equals("/service/admin/playtime/sum")) {
+			} else if(cmd.equals("/service/admin/playtime/sum/search.do")) {
 				String sdate = request.getParameter("date");
+				System.out.println(sdate);
 				
 				Timestamp date = null;
 				if (sdate != null) {
-					date = Timestamp.valueOf(sdate);
+					date = TimeUtil.toTimestamp(sdate);
+					System.out.println(date);
 				}
 			}
 		} catch(Exception e) {
