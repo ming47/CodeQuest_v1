@@ -85,7 +85,7 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public boolean isBanned(int memberId) throws Exception {
-		String sql = "SELECT COUNT(*) FROM BLACK_LIST WHERE MEMBER_ID = ?";
+		String sql = "SELECT COUNT(*) FROM BLACK_LIST WHERE END_DATE >= SYSTIMESTAMP AND MEMBER_ID = ?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
