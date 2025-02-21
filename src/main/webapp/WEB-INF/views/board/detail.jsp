@@ -274,21 +274,25 @@ window.onload = function(){
             updateOK.on("click", function() {
                 let updatedContent = contentDiv.html();
                 let replyId = commentItem.attr("data-id");
-
+                console.log(updatedContent+" : updatedContent");
+                console.log(replyId+" : replyId");
                 // 서버로 수정 요청
                 $.ajax({
-                    url: "/update.reply",
-                    type: "POST",
+                    url: "/reply/update.do",
+                    type: "get",
                     data: { id: replyId, contents: updatedContent },
                     success: function(response) {
                         // 성공하면 수정된 내용 유지
+                        if(response){
                         contentDiv.attr("contentEditable", "false");
                         contentDiv.attr("data-original", updatedContent);
-
                         // 버튼 복구
                         commentItem.find(".updatebtn, .deletebtn").show();
                         updateOK.remove();
                         updateCancel.remove();
+                        }else{
+                        	alert("수정을 못했습니다.");
+                        }
                     }
                 });
             });
@@ -318,7 +322,6 @@ window.onload = function(){
                     data: { id: replyId },
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
-                        console.log(response);
                         if(response) {                        	
                         	commentItem.remove();
                         } else {

@@ -88,7 +88,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 
 			pstat.setString(1, dto.getContents());
 			pstat.setInt(2, dto.getReplyId());
-
+			System.out.println("DAO");
 			return pstat.executeUpdate();
 		}
 	}
@@ -113,7 +113,6 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public int deleteById(int dto) throws Exception {	//삭제
 		String sql = "delete from reply where reply_id=?";
-		System.out.println("안녕?삭제");
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, dto);
 			System.out.println("삭제완료 : "+ dto);

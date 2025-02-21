@@ -55,16 +55,19 @@ public class ReplyController extends HttpServlet {
 			}
 
 			else if (cmd.equals("/reply/update.do")) { // 수정
-				int replyId = Integer.parseInt(request.getParameter("replyId"));
 
-				String contents = request.getParameter("writerdiv");
-				int boardId = Integer.parseInt(request.getParameter("BoardId"));
+				int replyId = Integer.parseInt(request.getParameter("id"));
+
+				String contents = request.getParameter("contents");
+//				int boardId = Integer.parseInt(request.getParameter("BoardId"));
 
 				ReplyDTO dto = new ReplyDTO(replyId, contents);
+				System.out.println("여기오냐?!");
+				int result = rdao.update(dto);
 
-				rdao.update(dto);
-
-				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
+//				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
+				response.getWriter().append(String.valueOf((result != 0)));
+				System.out.println("컨트롤러");
 			} else if (cmd.equals("/reply/delete.do")) { // 삭제		내일 다시와서 볼것
 				int dto = Integer.parseInt(request.getParameter("id"));
 				System.out.println(dto + ": dto");
