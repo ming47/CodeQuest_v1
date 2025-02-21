@@ -85,19 +85,19 @@ body {
 }
 
 .menu li a {
-   padding: 10px 15px;
-   background: #717171;
-   color: white;
-   border-radius: 5px;
-   cursor: pointer;
-   text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
-      black;
-   text-decoration: none;
+	padding: 10px 15px;
+	background: #717171;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+		black;
+	text-decoration: none;
 }
 
-.menu li:hover a{
-   background: #3c3b39;
-   color: white;
+.menu li:hover a {
+	background: #3c3b39;
+	color: white;
 }
 
 .main-content {
@@ -400,34 +400,29 @@ body {
 
 
 <body>
+	<div class="starter" style="display: flex">
+		<%@ include file="intro.jsp"%>
+	</div>
 
-	<div class="container">
+	<div class="container" style="display: none">
 
 		<!-- ✅ 헤더 -->
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
-					<li>
-					<a href="/">Home</a>
-					</li>
-					<li>
-					<a href="/game/list.do">Service</a>
-					</li>
-					<li>
-					<a href="/board/list.do">Board</a>
-					</li>
-					<li>
-					<a href="/service/list.do">Service</a>
-					</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/board/list.do">Board</a></li>
+					<li><a href="/service/list.do">Service</a></li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
-			    <c:if test="${member.loginId != null}">
-			        <div class="logbox-container">
-			            <%@ include file="logbox.jsp" %>
-			        </div>
-			    </c:if>
+			<c:if test="${member.loginId != null}">
+				<div class="logbox-container">
+					<%@ include file="logbox.jsp"%>
+				</div>
+			</c:if>
 		</div>
 
 
@@ -493,14 +488,14 @@ body {
 						<h2>로그인</h2>
 						<form action="/member/login.do" method="post" id="frm">
 							<div class="input-group">
-								<input type="text" name="id" id="id" placeholder="아이디"> 
+								<input type="text" name="id" id="id" placeholder="아이디">
 								<input type="password" name="pw" id="pw" placeholder="비밀번호">
 								<button id="loginBtn">로그인</button>
 							</div>
 						</form>
 
 						<div class="login-links">
-							<a href="/member/addForm.do"><button>회원가입</button></a><br> 
+							<a href="/member/addForm.do"><button>회원가입</button></a><br>
 							<button type="button" id="pwFinder">비밀번호 재설정</button>
 						</div>
 					</div>
@@ -540,71 +535,81 @@ body {
 
 	</div>
 
-<script>
-	$("#pwFinder").on("click",function(){
-		window.open("/member/pwResetForm.do", "", "width=400, height=300");
-	});
+	<script>
+		$("#pwFinder").on("click", function() {
+			window.open("/member/pwResetForm.do", "", "width=400, height=300");
+		});
 
-	$(document).ready(function() {
-		
-	    function loadRanking(gameId) {
-	    	console.log(gameId);
-	    	
-	        $.ajax({
-	            url: "/score/list/game.do?id=" + gameId,
-	            type: "GET",
-	            dataType: "json"
-	        }).done(function(data) {
-	        	console.log(data);
-	            let rankingList = $('.ranking-list');
+		$(document).ready(
+				function() {
 
-	            rankingList.html('');
-	            if (!data || data.length === 0) {
-	                rankingList.append("<li>랭킹 데이터 없음</li>");
-	                return;
-	            }
-	            
-	            for (let i = 0; i < 10; i++) {
-					console.log(data[i]);
-	            	
-	            	const li = $('<li>').html(i + 1 + '위 ' + data[i].user + '(' + data[i].score + '점)');
-	            	$('.ranking-list').append(li);
-	            }
-/*
-	            $.each(data, function(index, player) {
-	            	console.log(index, player);
-	            	
-	            	const li = $('<li>').html(index + 1 + '위 ' + player.user + '(' + player.score + '점)');
-	            	$('.ranking-list').append(li);
-	               // rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
-	            });
-	            */
-	        }).fail(function(xhr, status, error) {
-	            console.log("랭킹 데이터 불러오기 실패:", error);
-	        });
-	    }
+					if (sessionStorage.getItem("enteredGame") === "true") {
+						$(".starter").hide();
+						$(".container").show();
+					}
 
-	    // ✅ 초기에 첫 번째 게임 랭킹 불러오기
-	    let defaultGameId = "800001";  // ✅ 초기값 설정
-	    loadRanking(defaultGameId);
+					function loadRanking(gameId) {
+						console.log(gameId);
 
-	    // ✅ 랭킹 탭 클릭 시 해당 게임 랭킹 로드
-	    $(".tab-btn").click(function() {
-	        $(".tab-btn").removeClass("active");
-	        $(this).addClass("active");
+						$.ajax({
+							url : "/score/list/game.do?id=" + gameId,
+							type : "GET",
+							dataType : "json"
+						}).done(
+								function(data) {
+									console.log(data);
+									let rankingList = $('.ranking-list');
 
-	        let gameId = $(this).data("game");
+									rankingList.html('');
+									if (!data || data.length === 0) {
+										rankingList
+												.append("<li>랭킹 데이터 없음</li>");
+										return;
+									}
 
-	        // ✅ "game1" → "1"로 변환
-	        if (gameId.startsWith("game")) {
-	            gameId = gameId.replace("game", "");
-	            gameId = Number(80000 + gameId);
-	        }
-	        loadRanking(gameId);
-	    });
-	});
+									for (let i = 0; i < 10; i++) {
+										console.log(data[i]);
 
-</script>
+										const li = $('<li>').html(
+												i + 1 + '위 ' + data[i].user
+														+ '(' + data[i].score
+														+ '점)');
+										$('.ranking-list').append(li);
+									}
+									/*
+									 $.each(data, function(index, player) {
+									 console.log(index, player);
+									
+									 const li = $('<li>').html(index + 1 + '위 ' + player.user + '(' + player.score + '점)');
+									 $('.ranking-list').append(li);
+									 // rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
+									 });
+									 */
+								}).fail(function(xhr, status, error) {
+							console.log("랭킹 데이터 불러오기 실패:", error);
+						});
+					}
+
+					// ✅ 초기에 첫 번째 게임 랭킹 불러오기
+					let defaultGameId = "800001"; // ✅ 초기값 설정
+					loadRanking(defaultGameId);
+
+					// ✅ 랭킹 탭 클릭 시 해당 게임 랭킹 로드
+					$(".tab-btn").click(function() {
+						$(".tab-btn").removeClass("active");
+						$(this).addClass("active");
+
+						let gameId = $(this).data("game");
+
+						// ✅ "game1" → "1"로 변환
+						if (gameId.startsWith("game")) {
+							gameId = gameId.replace("game", "");
+							gameId = Number(80000 + gameId);
+						}
+						loadRanking(gameId);
+					});
+				});
+	</script>
 
 </body>
 </html>
