@@ -231,8 +231,8 @@ window.onload = function(){
             console.error("Error parsing JSON: ", e);
             return;
         }
-       
-       console.log(data);
+			let UserName = "${member.name}";	//작성자
+			let Master = "${member.nickName}";	// 관리자
 
         for (let i = 0; i < data.length; i++) {
             let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
@@ -242,10 +242,13 @@ window.onload = function(){
             let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
             
             let btnBox = $("<div>").addClass("btnbox");
-            let updateBtn = $("<button>").addClass("updatebtn").text("수정");
-            let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
 
-            btnBox.append(updateBtn, deleteBtn);
+
+            if (data[i].writer === UserName || data[i].Master === "관리자") {
+                let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+                let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+                btnBox.append(updateBtn, deleteBtn);
+            }
             commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
             $("#commentList").append(commentItem);
         }

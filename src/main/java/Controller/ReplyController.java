@@ -76,6 +76,7 @@ public class ReplyController extends HttpServlet {
 					response.sendRedirect("/login.do");
 					return;
 				}
+
 				ReplyDTO dto = new ReplyDTO();
 				dto.setBoardId(boardId);
 				dto.setMemberId(member.getMemberId());
