@@ -231,13 +231,15 @@ window.onload = function(){
             console.error("Error parsing JSON: ", e);
             return;
         }
+       
+       console.log(data);
 
         for (let i = 0; i < data.length; i++) {
-            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].reply_id);
+            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
             
             let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
             let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].reg_date);
+            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
             
             let btnBox = $("<div>").addClass("btnbox");
             let updateBtn = $("<button>").addClass("updatebtn").text("수정");
@@ -272,21 +274,25 @@ window.onload = function(){
             updateOK.on("click", function() {
                 let updatedContent = contentDiv.html();
                 let replyId = commentItem.attr("data-id");
-
+                console.log(updatedContent+" : updatedContent");
+                console.log(replyId+" : replyId");
                 // 서버로 수정 요청
                 $.ajax({
-                    url: "/update.reply",
-                    type: "POST",
+                    url: "/reply/update.do",
+                    type: "get",
                     data: { id: replyId, contents: updatedContent },
                     success: function(response) {
                         // 성공하면 수정된 내용 유지
+                        if(response){
                         contentDiv.attr("contentEditable", "false");
                         contentDiv.attr("data-original", updatedContent);
-
                         // 버튼 복구
                         commentItem.find(".updatebtn, .deletebtn").show();
                         updateOK.remove();
                         updateCancel.remove();
+                        }else{
+                        	alert("수정을 못했습니다.");
+                        }
                     }
                 });
             });
@@ -311,12 +317,18 @@ window.onload = function(){
 
             if (confirm("정말 삭제하시겠습니까?")) {
                 $.ajax({
-                    url: "/delete.reply",
-                    type: "POST",
+                    url: "/reply/delete.do",
+                    type: "get",
                     data: { id: replyId },
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
-                        commentItem.remove();
+                        if(response) {                        	
+                        	commentItem.remove();
+                        } else {
+                        	alert("삭제하지 못했습니다.");
+                        }
+                        
+                    	
                     }
                 });
             }
