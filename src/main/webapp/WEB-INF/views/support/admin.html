@@ -359,7 +359,14 @@
             height: 10%;
         }
     </style>
+    <style>
+        canvas {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -386,7 +393,9 @@
                                 <div class="mau-display">
                                     <div class="mau-diplay-inner">
                                         <div class="mau-title">전체 mau</div>
-                                        <div class="mau"></div>
+                                        <div class="mau">
+                                            <canvas id="mau-chart"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="detail-dashborad-bottom">
@@ -663,9 +672,49 @@
                 })
             });
         });
+        
+        const dauLabel = [];
+        const dauData = [];
+
+        let currentDate = new Date();
+        for(let i = 6; i >=0; i--) {
+        	let day = new Date();
+        	day.setDate(currentDate.getDate() - i);
+      
+        	let item = day.getFullYear() + "-" + String(day.getMonth() + 1).padStart(2, '0') +  '-' + day.getDate();
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/sum/search.do?date=' + item,
+        		type: 'GET'
+        	}).done(function(data) {
+        		data = JSON.parse(data);
+        		
+        		dauData.push(data.length);
+        	});
+        	
+        	dauLebal.push(item);
+        }
+     
+        console.log(dataLabel);
     }
 </script>
+<script tag="chart">
+function Dataset(data, label) {
+	this.data = data;
+	this.label = label;
+	
+	this.update = function(chart, target, item) {
+		const index = this.label.indexOf(target);
+		console.log(index);
+		
+		this.data[index] = item;
+		chart.update();
+	}
+}
+
+</script>
 <script tag="game">
+
     $('.playtime-button').on('click', function () {
         let url = '/playtime/sum/';
         const id = $(this).attr('id');
@@ -681,6 +730,37 @@
         }
 
         console.log(url);
+    });
+    
+    let mau = $('#mau-chart');
+    
+   // let label = ['02-21', '02-22', '02-23', '02-24'];
+   // let data = [10, 10, 10 , 10];
+    
+    const dataset = new Dataset([], []);
+
+    let myChart = new Chart(mau, {
+      type: 'bar',
+      data: {
+        labels: dataset.label,
+        datasets: [
+          {
+            label: 'Dataset',
+            data: dataset.data,
+          }
+        ]
+      },
+      options: {
+    	  responsive: true
+      }
+    });
+    
+    $('li').on('click', function() {
+    	const currentData = dataset.data[3] + 1;
+    	dataset.update(myChart, '02-24', currentData);
+    	
+    	console.log(dataset);
+    	myChart.update();
     });
 </script>
 <script tage="user">

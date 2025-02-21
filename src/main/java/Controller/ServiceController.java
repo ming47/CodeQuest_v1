@@ -1,6 +1,10 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +31,13 @@ public class ServiceController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
+			} else if(cmd.equals("/service/admin/playtime/sum")) {
+				String sdate = request.getParameter("date");
+				
+				Timestamp date = null;
+				if (sdate != null) {
+					date = Timestamp.valueOf(sdate);
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

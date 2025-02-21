@@ -85,8 +85,13 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, qnaId);
 			try(ResultSet rs = pstat.executeQuery()) {
-				rs.next();
-				return QnAReplyDTO.of(rs);
+				boolean isSelected = rs.next();
+				
+				if(isSelected) {
+					return QnAReplyDTO.of(rs);
+				} else {
+					throw new IllegalArgumentException();
+				}
 			}
 		}
 	}
