@@ -20,7 +20,7 @@ import DTO.ReplyDTO;
 @WebServlet("/reply/*")
 public class ReplyController extends HttpServlet {
 	ReplyDAOImpl rdao = ReplyDAOImpl.INSTANCE;
-	
+
 	Gson g = new Gson();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -54,27 +54,30 @@ public class ReplyController extends HttpServlet {
 				response.getWriter().append(g.toJson(rdto));
 			}
 
-			else if (cmd.equals("/reply/update.do")) {
-				int replyId = Integer.parseInt(request.getParameter("replyId"));
+			else if (cmd.equals("/reply/update.do")) { // 수정
 
-				String contents = request.getParameter("writerdiv");
-				int boardId = Integer.parseInt(request.getParameter("BoardId"));
+				int replyId = Integer.parseInt(request.getParameter("id"));
+
+				String contents = request.getParameter("contents");
+//				int boardId = Integer.parseInt(request.getParameter("BoardId"));
 
 				ReplyDTO dto = new ReplyDTO(replyId, contents);
+				System.out.println("여기오냐?!");
+				int result = rdao.update(dto);
 
-				rdao.update(dto);
-
-				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
+//				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
+				response.getWriter().append(String.valueOf((result != 0)));
+				System.out.println("컨트롤러");
+			} else if (cmd.equals("/reply/delete.do")) { // 삭제		내일 다시와서 볼것
+				int dto = Integer.parseInt(request.getParameter("id"));
+				System.out.println(dto + ": dto");
+				
+				int result = rdao.deleteById(dto);
+				
+				response.getWriter().append(String.valueOf((result != 0)));
+			
 			}
 
-			else if (cmd.equals("/reply/delete.do")) {
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-				int dto = Integer.parseInt(request.getParameter("replyId"));
-
-				rdao.deleteById(dto);
-
-				response.sendRedirect("/WEB-INF/views/board/detail.board?id=" + boardId);
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,35 +91,39 @@ public class ReplyController extends HttpServlet {
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=UTF-8");
 		String cmd = request.getRequestURI();
+		try {
+			if (cmd.equals("/reply/add.do")) { // 댓글 출력
+				int boardId = Integer.parseInt(request.getParameter("parent_seq"));
+				System.out.println(boardId + ": boardId");
+				String contents = request.getParameter("contents");
+				System.out.println(contents + ": contents");
 
-		if (cmd.equals("/reply/add.do")) {
-			int boardId = Integer.parseInt(request.getParameter("parent_seq"));
-			System.out.println(boardId + ": boardId");
-			String contents = request.getParameter("contents");
-			System.out.println(contents + ": contents");
-			
-			HttpSession session = request.getSession();
-			MemberDTO member = (MemberDTO)session.getAttribute("member");
-			 if (member == null) {
-			        response.sendRedirect("/login.do");
-			        return;
-			    }
-			System.out.println(member.getMemberId()+ ": memberId");
-			
-			ReplyDTO dto = new ReplyDTO();
-			dto.setBoardId(boardId);
-			dto.setMemberId(member.getMemberId());
-			dto.setContents(contents);
+				HttpSession session = request.getSession();
+				MemberDTO member = (MemberDTO) session.getAttribute("member");
+				if (member == null) {
+					response.sendRedirect("/login.do");
+					return;
+				}
+				System.out.println(member.getMemberId() + ": memberId");
 
-			try {
-				ReplyDAOImpl dao = ReplyDAOImpl.INSTANCE;
-				dao.insert(dto);
-				response.sendRedirect("/board/detail.do?id=" + boardId);
-			} catch (Exception e) {
-				e.printStackTrace();
+				ReplyDTO dto = new ReplyDTO();
+				dto.setBoardId(boardId);
+				dto.setMemberId(member.getMemberId());
+				dto.setContents(contents);
+
+				try {
+					ReplyDAOImpl dao = ReplyDAOImpl.INSTANCE;
+					dao.insert(dto);
+					response.sendRedirect("/board/detail.do?id=" + boardId);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+		} catch (
+
+		Exception e) {
+			// TODO: handle exception
 		}
 
 	}
-
 }

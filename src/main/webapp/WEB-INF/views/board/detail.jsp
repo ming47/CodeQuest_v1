@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -10,207 +10,207 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 * {
-   box-sizing: border-box;
-   margin: 0;
-   padding: 0;
-   font-family: Arial, sans-serif;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
 }
 
 body {
-   background-color: #f4f7f6;
-   display: flex;
-   justify-content: center;
-   padding: 20px;
+	background-color: #f4f7f6;
+	display: flex;
+	justify-content: center;
+	padding: 20px;
 }
 
 .container {
-   background: #ffffff;
-   border-radius: 10px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   width: 700px;
-   padding: 30px;
-   overflow: hidden;
+	background: #ffffff;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	width: 700px;
+	padding: 30px;
+	overflow: hidden;
 }
 
 .header {
-   text-align: center;
-   margin-bottom: 20px;
+	text-align: center;
+	margin-bottom: 20px;
 }
 
 .header h1 {
-   font-size: 28px;
-   color: #333;
+	font-size: 28px;
+	color: #333;
 }
 
 table {
-   width: 100%;
-   border-collapse: collapse;
-   margin-bottom: 20px;
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
 }
 
 table th, table td {
-   padding: 12px;
-   text-align: left;
-   border: 1px solid #ddd;
+	padding: 12px;
+	text-align: left;
+	border: 1px solid #ddd;
 }
 
 table th {
-   background-color: #f2f2f2;
-   font-weight: bold;
+	background-color: #f2f2f2;
+	font-weight: bold;
 }
 
 table td {
-   vertical-align: middle;
+	vertical-align: middle;
 }
 
 /* 내용 부분만 높이 4배로 설정 */
 td#contents {
-   height: 200px; /* 4배 높이 */
-   word-wrap: break-word;
-   white-space: pre-wrap;
+	height: 200px; /* 4배 높이 */
+	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 
 .footer {
-   text-align: right;
-   margin-top: 20px;
+	text-align: right;
+	margin-top: 20px;
 }
 
 .footer button {
-   text-decoration: none;
-   background-color: #4CAF50;
-   color: white;
-   padding: 10px 20px;
-   border-radius: 5px;
-   font-size: 16px;
-   transition: background-color 0.3s;
+	text-decoration: none;
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	transition: background-color 0.3s;
 }
-#back{
-   margin-right : 300px;
+
+#back {
+	margin-right: 300px;
 }
 
 .footer a:hover {
-   background-color: #45a049;
+	background-color: #45a049;
 }
 
 #commentSection {
-   margin-top: 20px;
-   padding: 15px;
-   background: #f9f9
-   border-radius: 10px;
+	margin-top: 20px;
+	padding: 15px;
+	background: #f9f9 border-radius: 10px;
 }
 
 /* 댓글 입력창 스타일 */
 #commentInput {
-   display: flex;
-   flex-direction: column;
-   gap: 10px;
-   float: left;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	float: left;
 }
 
 #input {
-   width: 100%;
-   height: 60px;
-   padding: 10px;
-   border: 1px solid #ddd;
-   border-radius: 5px;
-   resize: none;
+	width: 100%;
+	height: 60px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	resize: none;
 }
 
 #inputbtn {
-   align-self: flex-end;
-   background-color: #4CAF50;
-   color: white;
-   padding: 10px 20px;
-   border-radius: 5px;
-   font-size: 16px;
-   transition: background-color 0.3s;
-   border: none;
-   cursor: pointer;
+	align-self: flex-end;
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	transition: background-color 0.3s;
+	border: none;
+	cursor: pointer;
 }
 
 #inputbtn:hover {
-   background-color: #45a049;
+	background-color: #45a049;
 }
 
 /* 프로필 아이콘 */
 .comment-item .profile-icon {
-   width: 40px;
-   height: 40px;
-   border-radius: 50%;
-   background: #4CAF50;
-   color: white;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-weight: bold;
-   font-size: 16px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #4CAF50;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	font-size: 16px;
 }
 
 /* 댓글 내용 */
 .comment-content {
-   flex-grow: 1;
+	flex-grow: 1;
 }
 
 .comment-header {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   font-size: 14px;
-   color: #666;
-   margin-bottom: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14px;
+	color: #666;
+	margin-bottom: 5px;
 }
 
 .comment-body {
-   font-size: 16px;
-   color: #333;
+	font-size: 16px;
+	color: #333;
 }
 
 /* 삭제 버튼 스타일 */
 .comment-delete {
-   background: none;
-   border: none;
-   color: #ff5555;
-   cursor: pointer;
-   font-size: 14px;
-   transition: color 0.2s;
+	background: none;
+	border: none;
+	color: #ff5555;
+	cursor: pointer;
+	font-size: 14px;
+	transition: color 0.2s;
 }
 
 .comment-delete:hover {
-   color: #ff0000;
+	color: #ff0000;
 }
 /* 댓글 입력창과 버튼을 가로로 배치 */
 #commentInputContainer {
-   display: flex;
-   align-items: center;
-   gap: 10px;
-   margin-top: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 10px;
 }
 
 /* 입력창 스타일 */
 #commentInput {
-   flex: 1;
-   height: 50px;
-   padding: 12px;
-   border: 1px solid #ddd;
-   border-radius: 8px;
-   font-size: 14px;
+	flex: 1;
+	height: 50px;
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 14px;
 }
 
 /* 등록 버튼 스타일 */
 #inputbtn {
-   background-color: pink;
-   color: white;
-   padding: 12px 20px;
-   border-radius: 8px;
-   font-size: 16px;
-   border: none;
-   cursor: pointer;
-   transition: background-color 0.3s;
+	background-color: pink;
+	color: white;
+	padding: 12px 20px;
+	border-radius: 8px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
 
 #inputbtn:hover {
-   background-color: white;
-   color: pink;
+	background-color: white;
+	color: pink;
 }
 </style>
 <script>
@@ -231,13 +231,15 @@ window.onload = function(){
             console.error("Error parsing JSON: ", e);
             return;
         }
+       
+       console.log(data);
 
         for (let i = 0; i < data.length; i++) {
-            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].reply_id);
+            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
             
             let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
             let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].reg_date);
+            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
             
             let btnBox = $("<div>").addClass("btnbox");
             let updateBtn = $("<button>").addClass("updatebtn").text("수정");
@@ -272,21 +274,25 @@ window.onload = function(){
             updateOK.on("click", function() {
                 let updatedContent = contentDiv.html();
                 let replyId = commentItem.attr("data-id");
-
+                console.log(updatedContent+" : updatedContent");
+                console.log(replyId+" : replyId");
                 // 서버로 수정 요청
                 $.ajax({
-                    url: "/update.reply",
-                    type: "POST",
+                    url: "/reply/update.do",
+                    type: "get",
                     data: { id: replyId, contents: updatedContent },
                     success: function(response) {
                         // 성공하면 수정된 내용 유지
+                        if(response){
                         contentDiv.attr("contentEditable", "false");
                         contentDiv.attr("data-original", updatedContent);
-
                         // 버튼 복구
                         commentItem.find(".updatebtn, .deletebtn").show();
                         updateOK.remove();
                         updateCancel.remove();
+                        }else{
+                        	alert("수정을 못했습니다.");
+                        }
                     }
                 });
             });
@@ -311,12 +317,18 @@ window.onload = function(){
 
             if (confirm("정말 삭제하시겠습니까?")) {
                 $.ajax({
-                    url: "/delete.reply",
-                    type: "POST",
+                    url: "/reply/delete.do",
+                    type: "get",
                     data: { id: replyId },
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
-                        commentItem.remove();
+                        if(response) {                        	
+                        	commentItem.remove();
+                        } else {
+                        	alert("삭제하지 못했습니다.");
+                        }
+                        
+                    	
                     }
                 });
             }
@@ -333,85 +345,86 @@ window.onload = function(){
 </head>
 <body>
 
-<div class="container">
-   <form action="/update.board" method="post" id="frm">
-      <input id="id" type="hidden" name="id" value="${dto.boardId}">
-      <input name="title" type="hidden" id="hdtitle">
-      <input name="contents" type="hidden" id="hdcontents">
+	<div class="container">
 
 
-      
-         <div class="header">
-            <h1>게시글 상세 보기</h1>
-         </div>
 
-         <table>
-            <tr>
-               <th>글 번호</th>
-               <td>${dto.boardId}</td>
-            </tr>
-            <tr>
-               <th>작성자</th>
-               <td>${dto.writer}</td>
-            </tr>
-            <tr>
-               <th>작성 날짜</th>   
-               <td>${dto.regDate}</td>
-            </tr>
-         
-            <tr>   
-               <th>첨부된 파일:</th>
-         <td>
-         <c:forEach var="i" items="${filelist}">   
-         <a href="/file/download.do?filename=${i.sysname}&oriname=${i.oriname}">${i.oriname}
-         </a><br>   
-         </c:forEach>
-         </td>
-            </tr>
-               
-            <tr>
-            
-            
-               <th>제목</th>
-               <td class="change" id="board_title">${dto.title}</td>
-            </tr>
-            <tr>
-               <th>내용</th>
-               <!-- 내용 부분에 높이를 4배로 설정 -->
-               <td class="change" id="board_contents">${dto.contents}</td>
-            </tr>
-            
-         </table>
-         
-         
-         
-         
-         
-         </form>
-         <div class="commentSection">
-   
-   <form action="/reply/add.do" method="post" id="frm">
-      <!-- 댓글 목록 -->
-      <div id="commentInputContainer">
-         <input name="parent_seq" type="hidden" value="${dto.boardId}"> 
-         <input type="hidden" id="memberId" name="memberId" value="${sessionScope.MemberId}">
-         <input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
-         <button id="inputbtn">등록</button>
-      </div>
-   </form>
-<div id="comments">
-    <ul id="commentList"></ul> <!-- AJAX로 댓글이 추가될 부분 -->
-</div>
+		<div class="header">
+			<h1>게시글 상세 보기</h1>
+		</div>
+
+		<table>
+			<tr>
+				<th>글 번호</th>
+				<td>${dto.boardId}</td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td>${dto.writer}</td>
+			</tr>
+			<tr>
+				<th>작성 날짜</th>
+				<td>${dto.regDate}</td>
+			</tr>
+
+			<tr>
+				<th>첨부된 파일:</th>
+				<td><c:forEach var="i" items="${filelist}">
+						<a
+							href="/file/download.do?filename=${i.sysname}&oriname=${i.oriname}">${i.oriname}
+						</a>
+						<br>
+					</c:forEach></td>
+			</tr>
+
+			<tr>
+
+				<th>제목</th>
+				<td class="change" id="board_title">${dto.title}</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<!-- 내용 부분에 높이를 4배로 설정 -->
+				<td class="change" id="board_contents">${dto.contents}</td>
+			</tr>
+
+		</table>
 
 
-   </div>
-   <form action="/update.board" method="post" id="frm">
-      <div class="footer">
- <button type="button" id="back">목록으로</button>
-            <button id="update" type="button">수정하기</button>
-            <button id="delete" type="button">삭제하기</button>
 
-           <script>
+
+
+		<div class="commentSection">
+
+			<form action="/reply/add.do" method="post" id="frm">
+				<!-- 댓글 목록 -->
+				<div id="commentInputContainer">
+					<input name="parent_seq" type="hidden" value="${dto.boardId}">
+					<input type="hidden" id="memberId" name="memberId"
+						value="${sessionScope.MemberId}"> <input id="commentInput"
+						name="contents" placeholder="댓글을 입력하세요">
+					<button id="inputbtn">등록</button>
+				</div>
+			</form>
+			<div id="comments">
+				<ul id="commentList"></ul>
+				<!-- AJAX로 댓글이 추가될 부분 -->
+			</div>
+
+
+		</div>
+		<form action="/board/update.do" method="post" id="update-form">
+			<input id="id" type="hidden" name="id" value="${dto.boardId}">
+			<input name="title" type="hidden" id="hdtitle"> <input
+				name="contents" type="hidden" id="hdcontents">
+			<div class="footer">
+				<button type="button" id="back">목록으로</button>
+
+				<!-- 여기 게시글 수정 삭제 버튼  -->
+				<button id="update" type="button">수정하기</button>
+				<button id="delete" type="button">삭제하기</button>
+
+				<script>
                $("#inputbtn").on(
                      "click",
                      function() {
@@ -461,42 +474,71 @@ window.onload = function(){
 
                      });
 
-
+                 // 게시물 삭제하기 눌렀을때
                $("#delete").on("click", function() {
-                  let result = confirm("정말 삭제하시겠습니까")
-                  if (result == true) {
-                     location.href = "/WEB-INF/views/board/delete.do"
-                  }
-                  
-                  else if (result == false){
-                	     location.href = "/board/detail.do?id=${dto.boardId}";
-                  }
-               });// 게시물 삭제하기 눌렀을때 
+                   let result = confirm("정말 삭제하시겠습니까")
+                   if (result == true) {
+                      location.href = "/board/delete.do?id=${dto.boardId}"
+                   }
+                 
+                }); 
+                
+                
+                
+                
+             // 게시물 수정하기 눌렀을때 
+                $("#update").on("click", function() {
+                 $(".change").attr("contentEditable", "true");
+                 $('#board_title').focus();
+                    
+                    $("#update,#delete").hide();
+                    //기존에 있던 버튼 숨기기 
+                    let updateOK = $("<button>");
+                    updateOK.html("수정완료").attr("id", "board-updateOK");
+
+                    let updateCancel = $("<button>");
+                    updateCancel.html("취소").attr("id","updateCancel")
+                          
+
+                    updateCancel.attr("type", "button");
+
+                    updateCancel.on("click", function() {
+                       location.reload();
+                    });
+                    
+                    $(".footer").append(updateOK, updateCancel);
                
+                 
                
-               $(".updatebtn").on("click",   function(){
-                   
-                   //댓글 수정하기 버튼 눌렀을때    
-                      
-                   $(".writerdiv").attr("contentEditable", "true").focus();
-                   
+                });
+                
+                
+                
+                
+                //댓글 수정하기 버튼 눌렀을때   
+                $(".updatebtn").on("click", function(){
+          
+                       
+                    $(".writerdiv").attr("contentEditable", "true").focus();
+                    
 
-                   $(".updatebtn,.deletebtn").hide();
-                   //기존에 있던 버튼 숨기기 
-                   let updateOK = $("<button>");
-                   updateOK.html("수정완료").attr("id", "updateOK");
+                    $(".updatebtn,.deletebtn").hide();
+                    //기존에 있던 버튼 숨기기 
+                    let updateOK = $("<button>");
+                    updateOK.html("수정완료").attr("id", "reply-updateOK");
 
-                   let updateCancel = $("<button>");
-                   updateCancel.html("취소").attr("id","updateCancel")
-                         
+                    let updateCancel = $("<button>");
+                    updateCancel.html("취소").attr("id","updateCancel")
+                          
 
-                   updateCancel.attr("type", "button");
+                    updateCancel.attr("type", "button");
+                    
+                    
+                    updateCancel.on("click", function() {
+                       location.reload();
+                    });
 
-                   updateCancel.on("click", function() {
-                      location.reload();
-                   });
-
-                   $(".btnbox").append(updateOK, updateCancel);
+                    $(".btnbox").append(updateOK, updateCancel);
 
                 // "수정완료" 버튼 클릭 시 처리                   
                    updateOK.on("click", function() {
@@ -539,31 +581,29 @@ window.onload = function(){
                        updateCancel.remove();
                    });
                
-                
-                
+                    
                 });
                
                    
-                   
-                   
-                  
+              
+               $('#update-form').on('submit', function() {
+            	   $('#hdtitle').val($('#board_title').html());
+            	   $("#hdcontents").val($("#board_contents").html());
+         
+               });// 게시물 수정 
                
                $("#frm").on("submit", function() {
 
-                  $("#hdtitle").val($("#title").html())
-                  $("#hdcontents").val($("#contents").html())
-                  $(".idreply").val("iid")
-               })
+                  $("#hdtitle").val($("#board_title").html())
+                  $("#hdcontents").val($("#board_contents").html())
+            
+               })//댓글 수정 
+               
+            </script>
 
-               $("#contentsfrm").on("submit", function() {
-
-                  $("#contentsreply").val($(".writerdiv").html())
-               })	
-           </script> 
-
- </div>
-      </form>
-         <script>
+			</div>
+		</form>
+		<script>
             $("#back").on("click", function() {
 
                let last_cpage = sessionStorage.getItem("last_cpage");
@@ -571,7 +611,7 @@ window.onload = function(){
 
           
          </script>
-     
-   </div>
-   </body>
+
+	</div>
+</body>
 </html>

@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.el.ELException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -15,7 +14,6 @@ import javax.sql.DataSource;
 import Common.Statics;
 import DAO.BoardDAO;
 import DTO.BoardDTO;
-import DTO.MemberDTO;
 
 
 public enum BoardDAOImpl implements BoardDAO {
@@ -87,7 +85,7 @@ public enum BoardDAOImpl implements BoardDAO {
 	}
 
 	public int getSize() throws Exception {
-		String sql = "select count(*) from board";
+		String sql = "select count(*) from board b inner join members m on b.member_id = m.member_id where role = 'user'";
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
@@ -129,7 +127,7 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int update(BoardDTO dto) throws Exception {
-		String sql = "update board set title =?, contents=? where seq = ?";
+		String sql = "update board set title =?, contents=? where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getTitle());
 			pstat.setString(2, dto.getContents());
@@ -159,7 +157,8 @@ public enum BoardDAOImpl implements BoardDAO {
 				+ "(select * "
 				+ "from board b "
 				+ "inner join members m "
-				+ "on b.member_id = m.member_id) a) "
+				+ "on b.member_id = m.member_id "
+				+ "WHERE ROLE = 'user') a) "
 				+ "WHERE rnum BETWEEN ? and ?";
 
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
