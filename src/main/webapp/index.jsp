@@ -546,6 +546,7 @@ body {
 	});
 
 	$(document).ready(function() {
+		
 	    function loadRanking(gameId) {
 	    	console.log(gameId);
 	    	
