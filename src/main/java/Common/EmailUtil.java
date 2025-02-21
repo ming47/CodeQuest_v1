@@ -25,13 +25,15 @@ public class EmailUtil {
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username, "Your Service Name"));
+            message.setFrom(new InternetAddress(username, "CodeQuest"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject("비밀번호 재설정 안내");
             String msgContent = "비밀번호 재설정을 위해 아래 링크를 클릭하세요:\n" + resetLink;
             message.setText(msgContent);
 
             Transport.send(message);
+            
+            System.out.println("메일 발송 성공!");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
