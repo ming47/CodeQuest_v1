@@ -444,17 +444,7 @@ h1 {
 		<%@ include file="intro.jsp"%>
 	</div>
 
-<<<<<<< HEAD
-	<div id="intro" style="text-align: center;">
-		<h1>Enter the World of Code Quest</h1>
-		<button id="start"></button>
-	</div>
-
-
-	<div class="container" id="container" style="display: none;">
-=======
 	<div class="container" style="display: none">
->>>>>>> 16e16af5b4f628856a4229f53537d45ad6e8d567
 
 		<!-- ✅ 헤더 -->
 		<div class="header">

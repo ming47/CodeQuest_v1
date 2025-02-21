@@ -9,34 +9,35 @@
 <title>입장 페이지</title>
 <style>
 /* 기존 스타일 유지 */
-.bg-start{
-	width: 1660px;
-	height: 1024px;
-	background-color: white;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
+
 .starter {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	height: 100%;
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	background: url('/메인.gif') no-repeat center center;
 	background-size: cover;
-	font-family: 'Arial', sans-serif;
+	text-align: center;
+	flex-direction: column;
 }
 
 h1 {
-	font-size: 3rem;
+	font-size: 2rem;
 	text-shadow: 2px 2px 8px rgba(0, 0, 0, 1), 0 0 12px rgba(0, 0, 0, 0.9),
 		0 0 16px rgba(0, 0, 0, 0.8);
-	font-family: "Sigmar", serif;
-	font-weight: 400;
-	font-style: normal;
+	font-family: "Press Start 2P", serif; 
+	font-weight : 400; 
+	font-style :normal;
 	color: #eceec4;
 }
-
 .btn {
 	width: 220px;
 	height: 120px;
@@ -57,12 +58,10 @@ h1 {
 </head>
 
 <body>
-	<div class="bg-start">
 		<div class="starter">
-			<h1>Enter the World of Code Quest</h1><br>
+			<h1>Enter the World of Code Quest</h1>
 			<button class="btn" onclick="enterGame()"></button>
 		</div>
-	</div>
 
 	<script>
 		function enterGame() {
