@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -196,6 +197,28 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 	@Override
 	public List<PlaytimeDTO> selectByDate(Timestamp date) throws Exception {
+		String sql = "SELECT * "
+				+ "FROM PLAY_TIME "
+				+ "WHERE REG_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 0.99999";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setTimestamp(1, date);
+			pstat.setTimestamp(2, date);
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				
+				List<PlaytimeDTO> dto = new ArrayList<>();
+				while(rs.next()) {
+					dto.add(PlaytimeDTO.of(rs));
+				}
+				
+				return dto;
+			}	
+		}
+	}
+	
+	public List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception {
 		String sql = "SELECT * "
 				+ "FROM PLAY_TIME "
 				+ "WHERE REG_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 0.99999";

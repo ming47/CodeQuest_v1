@@ -688,12 +688,15 @@
         		type: 'GET'
         	}).done(function(data) {
         		data = JSON.parse(data);
+                console.log(data);
         		
         		dauData.push(data.length);
         	});
         	
         	dauLabel.push(item);
         }
+
+        console.log(dauLabel, dauData);
     }
 </script>
 <script tag="chart">

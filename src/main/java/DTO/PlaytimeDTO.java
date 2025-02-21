@@ -67,7 +67,7 @@ public class PlaytimeDTO {
 	
 	public static PlaytimeDTO of(ResultSet rs) throws SQLException {
 		return new PlaytimeDTO(
-				rs.getInt("PLAY_TIME_ID"),
+				rs.getInt("PLAYTIME_ID"),
 				rs.getInt("MEMBER_ID"),
 				rs.getInt("GAME_ID"),
 				rs.getInt("PLAY_TIME"),

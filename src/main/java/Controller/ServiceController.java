@@ -2,6 +2,9 @@ package Controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import Common.ConvertURL;
 import Common.TimeUtil;
 import DAOImpl.PlaytimeDAOImpl;
+import DTO.PlaytimeDTO;
 
 
 @WebServlet("/service/*")
@@ -27,7 +31,6 @@ public class ServiceController extends HttpServlet {
 			
 			
 			if(cmd.equals("/service/qna/addForm.do")) {
-				System.out.println(cmd);
 				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
@@ -35,12 +38,15 @@ public class ServiceController extends HttpServlet {
 				String sdate = request.getParameter("date");
 				System.out.println(sdate);
 				
-				Timestamp date = null;
+				LocalDate date = null;
 				if (sdate != null) {
-					date = TimeUtil.toTimestamp(sdate);
+					date = LocalDate.parse(sdate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 					System.out.println(date);
 					
-					playtimeDAO.selectByDate(date);
+					List<PlaytimeDTO> dto = playtimeDAO.selectByDate(date);
+					for(PlaytimeDTO dto1 : dto) {
+						System.out.println(dto1.getPlaytime());
+					}
 				}
 			}
 		} catch(Exception e) {
