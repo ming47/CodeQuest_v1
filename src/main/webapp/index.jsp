@@ -22,14 +22,47 @@
 	box-sizing: border-box;
 }
 
-body {
+#intro {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	height: 100vh;
 	display: flex;
-	width: 100%;
-	height: 100%;
 	justify-content: center;
 	align-items: center;
-	background: url('/allback.jpg') no-repeat center;
+	background: url('/메인.gif') no-repeat center center;
 	background-size: cover;
+	text-align: center;
+	flex-direction: column;
+}
+
+h1 {
+	font-size: 2rem;
+	text-shadow: 2px 2px 8px rgba(0, 0, 0, 1), 0 0 12px rgba(0, 0, 0, 0.9),
+		0 0 16px rgba(0, 0, 0, 0.8);
+	font-family: "Press Start 2P", serif; 
+	font-weight : 400; 
+	font-style :normal;
+	color: #eceec4;
+}
+
+#start {
+	width: 220px;
+	height: 120px;
+	padding: 15px 30px;
+	color: white;
+	background: url('/스타트.png') no-repeat center center;
+	background-size: cover;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background 0.3s ease;
+	transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+#start:hover {
+	background: url('/스타트.png') no-repeat center center;
+	transform: scale(1.2);
 }
 
 .container {
@@ -37,6 +70,13 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	background: url('/allback.jpg') no-repeat center;
+	background-size: cover;
 }
 
 .header, .footer {
@@ -85,19 +125,19 @@ body {
 }
 
 .menu li a {
-   padding: 10px 15px;
-   background: #717171;
-   color: white;
-   border-radius: 5px;
-   cursor: pointer;
-   text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
-      black;
-   text-decoration: none;
+	padding: 10px 15px;
+	background: #717171;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+		black;
+	text-decoration: none;
 }
 
-.menu li:hover a{
-   background: #3c3b39;
-   color: white;
+.menu li:hover a {
+	background: #3c3b39;
+	color: white;
 }
 
 .main-content {
@@ -113,7 +153,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: flex-start; /* ✅ 상단 정렬 문제 해결 */
+	justify-content: flex-start; 
 	flex: 1;
 	min-width: 300px;
 }
@@ -401,33 +441,31 @@ body {
 
 <body>
 
-	<div class="container">
+	<div id="intro" style="text-align: center;">
+		<h1>Enter the World of Code Quest</h1>
+		<button id="start"></button>
+	</div>
+
+
+	<div class="container" id="container" style="display: none;">
 
 		<!-- ✅ 헤더 -->
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
-					<li>
-					<a href="/">Home</a>
-					</li>
-					<li>
-					<a href="/game/list.do">Service</a>
-					</li>
-					<li>
-					<a href="/board/list.do">Board</a>
-					</li>
-					<li>
-					<a href="/service/list.do">Service</a>
-					</li>
+					<li><a href="/">Home</a></li>
+					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/board/list.do">Board</a></li>
+					<li><a href="/service/list.do">Service</a></li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
-			    <c:if test="${member.loginId != null}">
-			        <div class="logbox-container">
-			            <%@ include file="logbox.jsp" %>
-			        </div>
-			    </c:if>
+			<c:if test="${member.loginId != null}">
+				<div class="logbox-container">
+					<%@ include file="logbox.jsp"%>
+				</div>
+			</c:if>
 		</div>
 
 
@@ -493,14 +531,14 @@ body {
 						<h2>로그인</h2>
 						<form action="/member/login.do" method="post" id="frm">
 							<div class="input-group">
-								<input type="text" name="id" id="id" placeholder="아이디"> 
+								<input type="text" name="id" id="id" placeholder="아이디">
 								<input type="password" name="pw" id="pw" placeholder="비밀번호">
 								<button id="loginBtn">로그인</button>
 							</div>
 						</form>
 
 						<div class="login-links">
-							<a href="/member/addForm.do"><button>회원가입</button></a><br> 
+							<a href="/member/addForm.do"><button>회원가입</button></a><br>
 							<button type="button" id="pwFinder">비밀번호 재설정</button>
 						</div>
 					</div>
@@ -540,71 +578,81 @@ body {
 
 	</div>
 
-<script>
-	$("#pwFinder").on("click",function(){
-		window.open("/member/pwResetForm.do", "", "width=400, height=300");
-	});
+	<script>
+		/* start버튼 눌려야 메인 UI 보이도록 */
+		document.getElementById('start').addEventListener('click', function() {
+			document.getElementById('intro').style.display = 'none'; // 시작 화면 숨기기
+			document.getElementById('container').style.display = 'block'; // 메인 화면 표시
+		});
+		$("#pwFinder").on("click", function() {
+			window.open("/member/pwResetForm.do", "", "width=400, height=300");
+		});
 
-	$(document).ready(function() {
-		
-	    function loadRanking(gameId) {
-	    	console.log(gameId);
-	    	
-	        $.ajax({
-	            url: "/score/list/game.do?id=" + gameId,
-	            type: "GET",
-	            dataType: "json"
-	        }).done(function(data) {
-	        	console.log(data);
-	            let rankingList = $('.ranking-list');
+		$(document).ready(
+				function() {
 
-	            rankingList.html('');
-	            if (!data || data.length === 0) {
-	                rankingList.append("<li>랭킹 데이터 없음</li>");
-	                return;
-	            }
-	            
-	            for (let i = 0; i < 10; i++) {
-					console.log(data[i]);
-	            	
-	            	const li = $('<li>').html(i + 1 + '위 ' + data[i].user + '(' + data[i].score + '점)');
-	            	$('.ranking-list').append(li);
-	            }
-/*
-	            $.each(data, function(index, player) {
-	            	console.log(index, player);
-	            	
-	            	const li = $('<li>').html(index + 1 + '위 ' + player.user + '(' + player.score + '점)');
-	            	$('.ranking-list').append(li);
-	               // rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
-	            });
-	            */
-	        }).fail(function(xhr, status, error) {
-	            console.log("랭킹 데이터 불러오기 실패:", error);
-	        });
-	    }
+					function loadRanking(gameId) {
+						console.log(gameId);
 
-	    // ✅ 초기에 첫 번째 게임 랭킹 불러오기
-	    let defaultGameId = "800001";  // ✅ 초기값 설정
-	    loadRanking(defaultGameId);
+						$.ajax({
+							url : "/score/list/game.do?id=" + gameId,
+							type : "GET",
+							dataType : "json"
+						}).done(
+								function(data) {
+									console.log(data);
+									let rankingList = $('.ranking-list');
 
-	    // ✅ 랭킹 탭 클릭 시 해당 게임 랭킹 로드
-	    $(".tab-btn").click(function() {
-	        $(".tab-btn").removeClass("active");
-	        $(this).addClass("active");
+									rankingList.html('');
+									if (!data || data.length === 0) {
+										rankingList
+												.append("<li>랭킹 데이터 없음</li>");
+										return;
+									}
 
-	        let gameId = $(this).data("game");
+									for (let i = 0; i < 10; i++) {
+										console.log(data[i]);
 
-	        // ✅ "game1" → "1"로 변환
-	        if (gameId.startsWith("game")) {
-	            gameId = gameId.replace("game", "");
-	            gameId = Number(80000 + gameId);
-	        }
-	        loadRanking(gameId);
-	    });
-	});
+										const li = $('<li>').html(
+												i + 1 + '위 ' + data[i].user
+														+ '(' + data[i].score
+														+ '점)');
+										$('.ranking-list').append(li);
+									}
+									/*
+									 $.each(data, function(index, player) {
+									 console.log(index, player);
+									
+									 const li = $('<li>').html(index + 1 + '위 ' + player.user + '(' + player.score + '점)');
+									 $('.ranking-list').append(li);
+									 // rankingList.append(`<li>${index + 1}위 - ${player.user} (${player.score}점)</li>`);
+									 });
+									 */
+								}).fail(function(xhr, status, error) {
+							console.log("랭킹 데이터 불러오기 실패:", error);
+						});
+					}
 
-</script>
+					// ✅ 초기에 첫 번째 게임 랭킹 불러오기
+					let defaultGameId = "800001"; // ✅ 초기값 설정
+					loadRanking(defaultGameId);
+
+					// ✅ 랭킹 탭 클릭 시 해당 게임 랭킹 로드
+					$(".tab-btn").click(function() {
+						$(".tab-btn").removeClass("active");
+						$(this).addClass("active");
+
+						let gameId = $(this).data("game");
+
+						// ✅ "game1" → "1"로 변환
+						if (gameId.startsWith("game")) {
+							gameId = gameId.replace("game", "");
+							gameId = Number(80000 + gameId);
+						}
+						loadRanking(gameId);
+					});
+				});
+	</script>
 
 </body>
 </html>
