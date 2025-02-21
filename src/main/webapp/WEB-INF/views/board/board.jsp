@@ -285,11 +285,17 @@ button:hover {
 				</tr>
 
 			</table>
+				
 			<div colspan="3" id="buttonbox">
-				<a href="/board/addform.do" method="get">
+			<c:if test="${dto == null}">
+	
+				<a href="/board/addform.do" method="post">
 					<button>작성하기</button>
 				</a>
+				</c:if>
+		
 			</div>
+			
 		</div>
 	</div>
 
@@ -310,7 +316,7 @@ button:hover {
 
 					            return span;
 					        }
-					        <%= request.getAttribute("start") %>
+					        request.getAttribute("start")
 
 					        if (${!page.isFirst}) {
 					            page.append(makeSpan('이전', ${page.startNavi - 1}));

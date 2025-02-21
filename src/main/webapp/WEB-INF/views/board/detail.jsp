@@ -418,13 +418,22 @@ window.onload = function(){
 			<input name="title" type="hidden" id="hdtitle"> <input
 				name="contents" type="hidden" id="hdcontents">
 			<div class="footer">
+			
 				<button type="button" id="back">목록으로</button>
 
 				<!-- 여기 게시글 수정 삭제 버튼  -->
-				<button id="update" type="button">수정하기</button>
-				<button id="delete" type="button">삭제하기</button>
 
-				<script>
+				<c:if test="${dto.getMemberId() == member.getMemberId() || member.role == 'admin'}">
+				
+					<td class="reply_button_area-${item.id}">
+						<button id="update" type="button">수정하기</button>
+						<button id="delete" type="button">삭제하기</button> 
+						</td>
+						</c:if>
+						
+						<script>
+						
+						
                $("#inputbtn").on(
                      "click",
                      function() {
@@ -438,6 +447,8 @@ window.onload = function(){
                         $("#comments").append(updatecontents);
                         $("#commentsInput").val("");
                      });
+               
+               
                
               $(".deletebtn").on("click", function(){
                   let target = $(this).attr("seq");
@@ -483,11 +494,13 @@ window.onload = function(){
                  
                 }); 
                 
-                
-                
+           
+               
+             
                 
              // 게시물 수정하기 눌렀을때 
                 $("#update").on("click", function() {
+                	
                  $(".change").attr("contentEditable", "true");
                  $('#board_title').focus();
                     
@@ -511,6 +524,7 @@ window.onload = function(){
                  
                
                 });
+               }
                 
                 
                 
@@ -600,7 +614,6 @@ window.onload = function(){
                })//댓글 수정 
                
             </script>
-
 			</div>
 		</form>
 		<script>

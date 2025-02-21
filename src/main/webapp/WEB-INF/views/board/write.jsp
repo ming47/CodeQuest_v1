@@ -272,6 +272,7 @@ a button:hover {
 
 				</div>
 				<div id="buttonbox">
+
 					<button class="button" id="writebtn" type="submit">작성완료</button>
 					
 	                   <a href="/list.board?cpage=1">
@@ -369,8 +370,12 @@ a button:hover {
 			$(editor).summernote('insertImage', data.path);
 		});
 	}
+
 	
-	
+    
+    
+    
+    
 	$('form').on('submit', function() {
 		$('#input-contents').val($('#contents').summernote('code'));
 	});
