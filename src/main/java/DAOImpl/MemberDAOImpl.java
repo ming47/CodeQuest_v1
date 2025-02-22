@@ -182,7 +182,7 @@ public enum MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int deleteById(int id) throws Exception { //회원탈퇴
-		String sql = "delete from members where id = ?";
+		String sql = "delete from members where member_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, id);
 			int result = pstat.executeUpdate();

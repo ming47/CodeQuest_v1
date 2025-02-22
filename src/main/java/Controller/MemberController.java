@@ -169,6 +169,11 @@ public class MemberController extends HttpServlet {
 				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
 
 				MemberDTO member = dao.login(id, pw);
+				if(member == null) {
+					response.sendRedirect("/?login=fail");
+					return;
+				}
+				
 				boolean banned = blackListDao.isBanned(member.getMemberId());
 				//boolean banned = blackListDao.isBanned(100034);
 				if(banned == true) {
@@ -177,7 +182,6 @@ public class MemberController extends HttpServlet {
 					return;
 				}
 				if (member != null) {
-					System.out.println("로그인성공!");
 					request.getSession().setAttribute("member", member);
 				}
 				response.sendRedirect("/");

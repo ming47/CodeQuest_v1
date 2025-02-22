@@ -593,6 +593,7 @@ input[disabled] {
    		$("#out_btn").on("click", function() {
    			if(confirm("정말 탈퇴하시겠습니까?") == true) {
         		location.href = "/member/out.do?id=${member.memberId}"; //삭제요청한 ID를 세션에서 꺼낸후 request요청
+        		alert("회원탈퇴가 완료되었습니다.");
    			} else {
    				location.href = "/";
    			}
