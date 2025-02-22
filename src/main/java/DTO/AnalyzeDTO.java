@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AnalyzeDTO {
-	private double data;
+	private Object data;
 	private String label;
 	
 	public AnalyzeDTO(double data, String label) {
@@ -12,7 +12,12 @@ public class AnalyzeDTO {
 		this.label = label;
 	}
 	
-	public double getData() {
+	public AnalyzeDTO(Object data, String label) {
+		this.data = data;
+		this.label = label;
+	}
+	
+	public Object getData() {
 		return data;
 	}
 	

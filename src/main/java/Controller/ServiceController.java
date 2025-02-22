@@ -43,17 +43,24 @@ public class ServiceController extends HttpServlet {
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
 			} else if(cmd.equals("/service/admin/playtime/search/days.do")) {
-				String type = request.getParameter("type");
-				String target = request.getParameter("priad");
-
-				//List<AnalyzeDTO> dto = playtimeDAO.selectAnaRecent7days(type);
-				List<AnalyzeDTO> dto = playtimeDAO.selectAnaRecent12Months(type);
-				System.out.println(dto.size());
-				for (AnalyzeDTO a : dto) {
-					System.out.println(a.getData() + " : " + a.getLabel());
+				String group = request.getParameter("group");
+				
+				String[] type = {"count", "sum", "avg"};
+				
+				Map<String, List<AnalyzeDTO>> json = new HashMap<>();
+				
+				for (int i = 0; i < type.length; i++) {					
+					List<AnalyzeDTO> dto = new ArrayList<>();
+					if(group.equals("day")) {					
+						dto = playtimeDAO.selectAnaRecent7days(type[i]);
+					} else {					
+						dto = playtimeDAO.selectAnaRecent12Months(type[i]);
+					}
+					
+					json.put(type[i], dto);
 				}
 				
-				response.getWriter().append(g.toJson(dto));
+				response.getWriter().append(g.toJson(json));
 			} else if(cmd.equals("/service/admin/playtime/search.do")) {
 				String target = request.getParameter("group");
 				String type = request.getParameter("type");

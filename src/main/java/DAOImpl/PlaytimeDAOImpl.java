@@ -329,7 +329,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			
 			List<AnalyzeDTO> dto = new ArrayList<>();
 			while(rs.next()) {
-				dto.add(AnalyzeDTO.of(rs));
+				dto.add(new AnalyzeDTO(rs.getDouble(1) / 1000, rs.getString(2)));
 			}
 			return dto;
 		}	
@@ -359,10 +359,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 		} else {
 			if (target.equals("gender")) {
 				insertTarget = "SUBSTR(SSN, 8, 1)";
-			} else if (target.equals("age")) {
-				insertTarget = "";
-			}
-			
+			} 
 			sql = "SELECT " + insertType + ", " + insertTarget + " "
 					+ "FROM PLAY_TIME p "
 					+ "INNER JOIN MEMBERS m "
