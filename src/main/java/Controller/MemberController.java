@@ -20,18 +20,25 @@ import com.google.gson.Gson;
 import Common.ConvertURL;
 import Common.EmailUtil;
 import Common.SecurityUtil;
+import DAO.BlackListDAO;
 import DAO.BoardDAO;
 import DAO.MemberDAO;
+import DAO.PlaytimeDAO;
+import DAOImpl.BlackListDAOImpl;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
+import DAOImpl.PlaytimeDAOImpl;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
+import DTO.PlaytimeDTO;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
 	Gson g = new Gson();
 	private MemberDAO dao = MemberDAOImpl.INSTANCE;
 	private BoardDAO boardDao = BoardDAOImpl.INSTANCE;
+	private BlackListDAO blackListDao = BlackListDAOImpl.INSTANCE;
+	private PlaytimeDAO playtimeDao = PlaytimeDAOImpl.INSTANCE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -70,8 +77,23 @@ public class MemberController extends HttpServlet {
 					return;
 				}
 				int memberId = member.getMemberId();
+				System.out.println("마이페이지에서 member_id: "+memberId);
+				//최근 작성한 게시글
 				List<BoardDTO> recentPost = boardDao.selectByMemberId(memberId);
 				request.setAttribute("recentPost", recentPost);
+				
+				//최근 플레이한 게임
+			    List<PlaytimeDTO> recentPlayTime = playtimeDao.selectRecentByMemberId(memberId);
+			    request.setAttribute("recentPlayTime", recentPlayTime);
+			    
+			    for (PlaytimeDTO pt : recentPlayTime) {
+			        int totalSeconds = pt.getPlaytime();
+			        int minutes = totalSeconds / 60;
+			        int seconds = totalSeconds % 60;
+			        String formattedTime = minutes + "분 " + seconds + "초";
+			        pt.setFormatTime(formattedTime);
+			    }
+				
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
@@ -79,7 +101,13 @@ public class MemberController extends HttpServlet {
 
 			} else if (cmd.equals("/member/pwResetForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
-			} else if (cmd.equals("/delete.do")) {
+			} else if (cmd.equals("/member/out.do")) { //회원 탈퇴
+				int id = Integer.parseInt(request.getParameter("id"));
+				int result = dao.deleteById(id);
+				if (result > 0) {
+					request.getSession().invalidate();
+				}
+				response.sendRedirect("/");
 
 			} else if (cmd.equals("/validate.do")) {
 
@@ -104,9 +132,8 @@ public class MemberController extends HttpServlet {
 			if (cmd.equals("/member/add.do")) { //회원가입
 
 				String id = request.getParameter("id");
-				String pw = request.getParameter("pw");
-
-				String encryptPw = SecurityUtil.hashPassword(pw);
+				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
+				System.out.println(pw);
 
 				String name = request.getParameter("name");
 				String nickName = request.getParameter("nickName");
@@ -115,9 +142,9 @@ public class MemberController extends HttpServlet {
 				String ssnFront = request.getParameter("ssnFront");
 				String ssnBack = request.getParameter("ssnBack");
 				String ssn = ssnFront + "-" + ssnBack + "******";
+				
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
-
 
 				String postcodeStr = request.getParameter("postcode");
 				int postcode = 0;
@@ -131,7 +158,7 @@ public class MemberController extends HttpServlet {
 				String address2 = request.getParameter("address2");
 
 
-				int result = dao.insert(new MemberDTO(id,encryptPw,name,nickName,ssn,email,phone,postcode,address1,address2,"user")); //role은 정해진게없어서 null
+				int result = dao.insert(new MemberDTO(id,pw,name,nickName,ssn,email,phone,postcode,address1,address2,"user")); //role은 정해진게없어서 null
 				if(result > 0) {
 					System.out.println("가입성공!");
 				}
@@ -139,17 +166,21 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/member/login.do")) { //로그인
 
 				String id = request.getParameter("id");
-				String pw = request.getParameter("pw");
-				String encryptPw = SecurityUtil.hashPassword(pw);
+				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
 
-				MemberDTO member = dao.login(id, encryptPw);
+				MemberDTO member = dao.login(id, pw);
+				boolean banned = blackListDao.isBanned(member.getMemberId());
+				//boolean banned = blackListDao.isBanned(100034);
+				if(banned == true) {
+					System.out.println("밴유저입니다");
+					request.setAttribute("banned", response);
+					return;
+				}
 				if (member != null) {
 					System.out.println("로그인성공!");
 					request.getSession().setAttribute("member", member);
 				}
 				response.sendRedirect("/");
-
-			} else if (cmd.equals("/printout.do")) { // 출력
 
 			} else if (cmd.equals("/member/update.do")) { // 수정
 				int memberId = Integer.parseInt(request.getParameter("memberId"));
@@ -207,13 +238,13 @@ public class MemberController extends HttpServlet {
 				String encryptPw = SecurityUtil.hashPassword(pw);
 				String email = request.getParameter("resetEmail");
 				System.out.println("넘어온 email: "+email);
-				
+
 				int result = dao.updatePw(email,encryptPw);
 				if(result > 0) {
 					System.out.println("패스워드 변경 성공!");
-			        response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
+					response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
 				}
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

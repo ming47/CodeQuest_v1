@@ -86,8 +86,6 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 
-	//dao.insert(new MemberDTO(id,pw,name,ssn,email,phone,postcode,address1,address2,null)); //role은 정해진게없어서 null
-
 	@Override
 	public int insert(MemberDTO dto) throws Exception {
 		String sql = "insert into members "
@@ -183,9 +181,13 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int deleteById(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteById(int id) throws Exception { //회원탈퇴
+		String sql = "delete from members where id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, id);
+			int result = pstat.executeUpdate();
+			return result;
+		}
 	}
 
 	@Override

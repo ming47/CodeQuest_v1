@@ -11,6 +11,7 @@ public class PlaytimeDTO {
 	private int gameId;
 	private int playtime;
 	private Timestamp regDate;
+	private String formatTime;
 	
 	public PlaytimeDTO(int playtimeId, int memberId, int gameId, int playtime, Timestamp regDate) {
 		super();
@@ -19,6 +20,24 @@ public class PlaytimeDTO {
 		this.gameId = gameId;
 		this.playtime = playtime;
 		this.regDate = regDate;
+	}
+	
+	public PlaytimeDTO(int playtimeId, int memberId, int gameId, int playtime, Timestamp regDate, String formatTime) {
+		super();
+		this.playtimeId = playtimeId;
+		this.memberId = memberId;
+		this.gameId = gameId;
+		this.playtime = playtime;
+		this.regDate = regDate;
+		this.formatTime = formatTime;
+	}
+
+	public String getFormatTime() {
+		return formatTime;
+	}
+
+	public void setFormatTime(String formatTime) {
+		this.formatTime = formatTime;
 	}
 
 	public PlaytimeDTO() {
