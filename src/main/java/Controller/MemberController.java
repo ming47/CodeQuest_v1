@@ -16,6 +16,8 @@ import Common.EmailUtil;
 import Common.SecurityUtil;
 import DAO.BoardDAO;
 import DAO.MemberDAO;
+import DAO.BlackListDAO;
+import DAOImpl.BlackListDAOImpl;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DTO.BoardDTO;
@@ -26,6 +28,7 @@ public class MemberController extends HttpServlet {
 	Gson g = new Gson();
 	private MemberDAO dao = MemberDAOImpl.INSTANCE;
 	private BoardDAO boardDao = BoardDAOImpl.INSTANCE;
+	private BlackListDAO blackListDao = BlackListDAOImpl.INSTANCE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -132,17 +135,19 @@ public class MemberController extends HttpServlet {
 				response.sendRedirect("/");
 			} else if (cmd.equals("/member/login.do")) { //로그인
 
-				String id = request.getParameter("id");
-				String pw = request.getParameter("pw");
-				String encryptPw = SecurityUtil.hashPassword(pw);
-
-				MemberDTO member = dao.login(id, encryptPw);
-				if (member != null) {
-					System.out.println("로그인성공!");
-					request.getSession().setAttribute("member", member);
-				}
-				response.sendRedirect("/");
-
+	            String id = request.getParameter("id");
+	            String pw = request.getParameter("pw");
+	            String encryptPw = SecurityUtil.hashPassword(pw);
+	            
+	            MemberDTO member = dao.login(id, encryptPw);
+	            
+	            if (member != null) {
+	            	boolean banned = blackListDao.isBanned(member.getMemberId());
+	            	if(!banned) {
+	            		request.getSession().setAttribute("member", member);
+	            	} 
+	            }
+	            response.sendRedirect("/");
 			} else if (cmd.equals("/printout.do")) { // 출력
 
 			} else if (cmd.equals("/member/update.do")) { // 수정

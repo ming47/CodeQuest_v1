@@ -42,51 +42,35 @@ public class ServiceController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
-			} else if(cmd.equals("/service/admin/playtime/all/search.do")) {
-				String sdate = request.getParameter("date");
+			} else if(cmd.equals("/service/admin/playtime/search/days.do")) {
 				String type = request.getParameter("type");
-				
-				System.out.println(sdate);
-				
-				Timestamp date = null;
-				List<AnalyzeDTO> dto = new ArrayList<>();
-				if (sdate != null) {
-					date = TimeUtil.toTimestamp(sdate);
-					
-					dto = playtimeDAO.selectAna7daysByDate(type, date);
-					
-					for(AnalyzeDTO a : dto) {
-						System.out.println(a.getData()+ " : " + a.getLabel());
-					}
-				}
+				String target = request.getParameter("priad");
 
+				//List<AnalyzeDTO> dto = playtimeDAO.selectAnaRecent7days(type);
+				List<AnalyzeDTO> dto = playtimeDAO.selectAnaRecent12Months(type);
+				System.out.println(dto.size());
+				for (AnalyzeDTO a : dto) {
+					System.out.println(a.getData() + " : " + a.getLabel());
+				}
+				
 				response.getWriter().append(g.toJson(dto));
 			} else if(cmd.equals("/service/admin/playtime/search.do")) {
-				String sdate = request.getParameter("date");
+				String target = request.getParameter("group");
 				String type = request.getParameter("type");
-				System.out.println(sdate);
 				
-				LocalDate date = null;
-				double result = 0;
-				if (sdate != null) {
-					date = LocalDate.parse(sdate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-					System.out.println(date);
-					
-					result = playtimeDAO.selectAnaByDate(type, date);
-					
+				System.out.println(target);
+				
+				List<AnalyzeDTO> dto = new ArrayList<>();
+				
+				if(target.equals("age")) {
+					dto = playtimeDAO.selectAnaGroupByAges(type);
+				} else {
+					dto = playtimeDAO.selectAnaGroupBy(type, target);
 				}
+				response.getWriter().append(g.toJson(dto));
+			} else if(cmd.equals("/service/admin/playtime/today/search.do")) {
 				
-				AnalyzeDTO dto = new AnalyzeDTO(result, sdate);
-				
-				System.out.println(dto.getData());
-				System.out.println(dto.getLabel());
-				/*
-				Map<String, Object> json = new HashMap<>();
-				json.put("data", json);
-				
-				response.getWriter().append(g.toJson(json));
-				*/
-			} 
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

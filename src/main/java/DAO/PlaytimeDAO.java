@@ -24,5 +24,8 @@ public interface PlaytimeDAO {
 	List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception; // 특정 날짜의 유저 플레이타임
 	
 	double selectAnaByDate(String type, LocalDate date) throws Exception;  // 특정 날짜의 플레이 통계
-	List<AnalyzeDTO> selectAna7daysByDate(String type, Timestamp date) throws Exception;
+	List<AnalyzeDTO> selectAnaRecent7days(String type) throws Exception;
+	List<AnalyzeDTO> selectAnaRecent12Months(String type) throws Exception; 
+	List<AnalyzeDTO> selectAnaGroupBy(String type, String target) throws Exception;
+	List<AnalyzeDTO> selectAnaGroupByAges(String type) throws Exception;
 }

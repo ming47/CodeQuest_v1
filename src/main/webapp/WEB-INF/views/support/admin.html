@@ -122,11 +122,11 @@
         }
 
         .game-selector {
-            width: 20%;
+            width: 30%;
         }
 
         .detail-dashboard {
-            width: 80%;
+            width: 70%;
         }
 
         .detail-dashboard-inner {
@@ -166,7 +166,7 @@
         }
 
         .playtime-display {
-            width: 30%;
+            width: 40%;
             position: relative;
         }
 
@@ -196,7 +196,7 @@
         }
 
         .detail-dashboard-bottom-right {
-            width: 70%;
+            width: 60%;
         }
 
         .board-management-inner>div {
@@ -392,7 +392,7 @@
                             <div class="detail-dashboard-inner">
                                 <div class="mau-display">
                                     <div class="mau-diplay-inner">
-                                        <div class="mau-title">전체 mau</div>
+                                        <div class="mau-title">접속자 추이</div>
                                         <div class="mau">
                                             <canvas id="mau-chart"></canvas>
                                         </div>
@@ -403,10 +403,12 @@
                                         <div class="playtime-inner">
                                             <div class="playtime-title">게임 이용 시간</div>
                                             <div class="playtime-button-form">
-                                                <button class="playtime-button" id="whole">전체</button>
                                                 <button class="playtime-button" id="group-game">게임별</button>
                                                 <button class="playtime-button" id="group-gender">성별별</button>
                                                 <button class="playtime-button" id="group-age">나이별</button>
+                                               	<input type="radio" value="sum" name="type" checked/>합계
+                                               	<input type="radio" value="avg" name="type"/>평균
+                                               	<input type="radio" value="count" name="type"/>총합
                                             </div>
                                             <div class="playtime">
                                             	<canvas id="playtime-chart"></canvas>
@@ -620,6 +622,16 @@ function Dataset() {
 		this.data[index] = item;
 		chart.update();
 	}
+	
+	this.push = function(dto) {
+		this.data.push(dto.data);
+		this.label.push(dto.label);
+	}
+	
+	this.init = function() {
+		this.data = [];
+		this.label = [];
+	}
 }
 
 </script>
@@ -691,25 +703,24 @@ function Dataset() {
         });
         
 
-        let currentDate = new Date().toISOString().replace("T", " ").substring(0, 19); 
+        let currentDate = new Date().toISOString().replace("T", " ").substring(0, 19);
+     	console.log(currentDate);
 
+        const dauDataset = new Dataset();
+        const sumGamePlayDataset = new Dataset();
+        let dauChart, sumGamePlayChart;
         $.ajax({
-        	url: '/service/admin/playtime/all/search.do?type=count&date=' + currentDate,
+        	url: '/service/admin/playtime/search/days.do?type=count&priade=' + currentDate,
         	type: 'GET'
         }).done(function(data) {
         	data = JSON.parse(data);
-            console.log(data);
         		
-        	for(let i = 0; i < data.length; i++) {
-        		console.log(data[i]);
-        		
-        		dauDataset.data.push(data[i].data);
-        		dauDataset.label.push(data[i].label);
+        	for(let i = 0; i < data.length; i++) {	
+        		dauDataset.push(data[i]);
         	}
         	
-            const dauDataset = new Dataset();
         	
-            let myChart = new Chart(mau, {
+            dauChart = new Chart(mau, {
                 type: 'bar',
                 data: {
                   labels: dauDataset.label,
@@ -720,32 +731,89 @@ function Dataset() {
                     }
                   ]
                 }
-              });
-        });        	
+           });
+        }); 
+        
+        $.ajax({
+        	url: '/service/admin/playtime/search.do?type=' + $('input[name=type]:checked').val() + '&group=game',
+        	type: 'GET'
+        }).done(function(data) {
+        	data = JSON.parse(data);
+        	
+        	console.log(data);
+        	
+        	for(let i = 0; i < data.length; i++) {
+        		sumGamePlayDataset.push(data[i]);
+        	}
+        	
+        	sumGamePlayChart = new Chart($('#playtime-chart'), {
+        		type: 'doughnut',
+        		data: {
+        			labels: sumGamePlayDataset.label,
+                    datasets: [
+                      {
+                        label: 'Dataset',
+                        data: sumGamePlayDataset.data,
+                    	}
+                	]
+            	}
+        	});
+        });
+        
+        $('.playtime-button').on('click', function () {
+            let url = '/service/admin/playtime/search.do?type=' + $('input[name=type]:checked').val() + '&group=';
+            const id = $(this).attr('id');
+
+            if (id == 'whole') {
+                url += 'whole.do';
+            } else if (id == 'group-game') {
+                url += 'game';
+            } else if (id == 'group-gender') {
+                url += 'gender';
+            } else if (id == 'group-age') {
+                url += 'age';
+            }
+            
+            console.log(url);
+            
+            $.ajax({
+            	url: url,
+            	type: 'GET'
+            }).done(function(data) {
+            	data = JSON.parse(data);
+            	
+            	console.log(data);
+            	
+            	sumGamePlayDataset.init();
+            	
+            	for(let i = 0; i < data.length; i++) {
+            		sumGamePlayDataset.push(data[i]);
+            	}
+            	
+            	console.log(sumGamePlayDataset);
+            	console.log(sumGamePlayChart);
+            	
+            	sumGamePlayChart.destroy();
+            	sumGamePlayChart = new Chart($('#playtime-chart'), {
+            		type: 'doughnut',
+            		data: {
+            			labels: sumGamePlayDataset.label,
+                        datasets: [
+                          {
+                            label: 'Dataset',
+                            data: sumGamePlayDataset.data,
+                        	}
+                    	]
+                	}
+            	});
+            })
+        });
     }
 </script>
 <script tag="game">
-
-    $('.playtime-button').on('click', function () {
-        let url = '/playtime/sum/';
-        const id = $(this).attr('id');
-
-        if (id == 'whole') {
-            url += 'whole.do';
-        } else if (id == 'group-game') {
-            url += 'group-game.do';
-        } else if (id == 'group-gender') {
-            url += 'group-gender.do';
-        } else if (id == 'group-age') {
-            url += 'group-age.do';
-        }
-
-        console.log(url);
-    });
     
     let mau = $('#mau-chart');
-    
-    console.log(dauDataset);
+    let playTime = $('#playtime-chart')
 </script>
 <script tage="user">
 

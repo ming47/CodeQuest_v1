@@ -250,7 +250,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 
 	@Override
-	public List<AnalyzeDTO> selectAna7daysByDate(String type, Timestamp date) throws Exception {
+	public List<AnalyzeDTO> selectAnaRecent7days(String type) throws Exception {
 		String insertString = "";
 		
 		type = type.toLowerCase();
@@ -265,23 +265,154 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 		String sql = "SELECT " + insertString + ", TRUNC(REG_DATE) AS 일자"
 				+ " FROM PLAY_TIME "
 				+ "WHERE TRUNC(REG_DATE) "
-				+ "BETWEEN TRUNC(? - INTERVAL '7' DAY) AND TRUNC(?) "
+				+ "BETWEEN TRUNC(systimestamp - INTERVAL '7' DAY) AND TRUNC(systimestamp) "
 				+ "GROUP BY TRUNC(REG_DATE) "
 				+ "ORDER BY 일자";
 		
 		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setTimestamp(1, date);
-			pstat.setTimestamp(2, date);
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery()) {
 			
 			List<AnalyzeDTO> dto = new ArrayList<>();
-			try(ResultSet rs = pstat.executeQuery()) {
-				while(rs.next()) {					
-					dto.add(AnalyzeDTO.of(rs));
+			LocalDate now = LocalDate.now();
+			
+			rs.next();
+			String date = rs.getString(2);
+			
+			for (int i = 7; i >= 0; i--) {
+				String label = now.minusDays(i).toString();
+				System.out.println(label);
+				
+				date = date.split(" ")[0];
+				System.out.println(date);
+				
+				double data = 0;
+				if (label.equals(date)) {
+					data = rs.getDouble(1);
+					
+					boolean hasNext = rs.next();
+					if(hasNext) {						
+						date = rs.getString(2);
+					}
 				}
+				
+				System.out.println(data + " : " + label);
+				
+				dto.add(new AnalyzeDTO(data, label));
+			}
+			return dto;
+		}			
+	}
+	
+	@Override
+	public List<AnalyzeDTO> selectAnaRecent12Months(String type) throws Exception {
+		String insertType = "";
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertType = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertType = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertType = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertType + ", TO_CHAR(REG_DATE, 'YYYY/MM') AS 월별 "
+				+ "FROM PLAY_TIME "
+				+ "WHERE TO_CHAR(REG_DATE, 'YYYY/MM') "
+				+ "BETWEEN TO_CHAR(SYSTIMESTAMP - INTERVAL '12' MONTH, 'YYYY/MM') AND TO_CHAR(SYSTIMESTAMP, 'YYYY/MM') "
+				+ "GROUP BY TO_CHAR(REG_DATE, 'YYYY/MM') "
+				+ "ORDER BY 월별";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			
+			List<AnalyzeDTO> dto = new ArrayList<>();
+			while(rs.next()) {
+				dto.add(AnalyzeDTO.of(rs));
+			}
+			return dto;
+		}	
+	}
+
+
+	@Override
+	public List<AnalyzeDTO> selectAnaGroupBy(String type, String target) throws Exception {
+		String sql ="";
+		
+		String insertType = "";
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertType = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertType = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertType = "COUNT(*)";
+		}
+		
+		String insertTarget = "";
+		target = target.toLowerCase();
+		if(target.equals("game")) {			
+			sql = "SELECT " + insertType + ", GAME_ID "
+					+ "FROM PLAY_TIME "
+					+ "GROUP BY GAME_ID";
+		} else {
+			if (target.equals("gender")) {
+				insertTarget = "SUBSTR(SSN, 8, 1)";
+			} else if (target.equals("age")) {
+				insertTarget = "";
 			}
 			
-			return dto;
+			sql = "SELECT " + insertType + ", " + insertTarget + " "
+					+ "FROM PLAY_TIME p "
+					+ "INNER JOIN MEMBERS m "
+					+ "ON p.MEMBER_ID = m.MEMBER_ID "
+					+ "GROUP BY " + insertTarget;
+			
 		}
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			
+			List<AnalyzeDTO> dto = new ArrayList<>();
+			while(rs.next()) {
+				dto.add(AnalyzeDTO.of(rs));
+			}
+			return dto;
+		}		
+	}
+
+
+	@Override
+	public List<AnalyzeDTO> selectAnaGroupByAges(String type) throws Exception {
+		String insertType = "";
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertType = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertType = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertType = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertType + ", SUBSTR(TRUNC(TRUNC(MONTHS_BETWEEN(SYSDATE, to_date(substr(ssn, 0, 6), 'RRMMDD'))) / 12), 0, 1) "
+				+ "FROM PLAY_TIME p "
+				+ "INNER JOIN MEMBERS m "
+				+ "ON p.MEMBER_ID = m.MEMBER_ID "
+				+ "GROUP BY SUBSTR(TRUNC(TRUNC(MONTHS_BETWEEN(SYSDATE, to_date(substr(ssn, 0, 6), 'RRMMDD'))) / 12), 0, 1) "
+				+ "ORDER BY 2";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			
+			List<AnalyzeDTO> dto = new ArrayList<>();
+			while(rs.next()) {
+				String label = rs.getString(2) + "0대";
+				dto.add(new AnalyzeDTO(rs.getDouble(1), label));
+			}
+			return dto;
+		}	
 	}
 }
