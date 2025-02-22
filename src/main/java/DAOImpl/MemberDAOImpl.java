@@ -272,6 +272,7 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 
+
 	@Override
 	public int updatePw(String email, String pw) throws Exception {
 		String sql = "update members set password = ? where email = ?";
@@ -282,4 +283,5 @@ public enum MemberDAOImpl implements MemberDAO {
 			return pstat.executeUpdate();
 		}
 	}
+
 }

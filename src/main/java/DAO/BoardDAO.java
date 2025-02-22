@@ -18,6 +18,8 @@ public interface BoardDAO {
 	void increaseReplyCount(int boardId) throws Exception;
 	void increaseViewCount(int boardId) throws Exception;
 	List<BoardDTO> selectAllNotice() throws Exception;
+	void decreaseReplyCount(int boardId) throws Exception;
 	
 	int getSize() throws Exception;
+
 }

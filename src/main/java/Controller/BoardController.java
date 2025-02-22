@@ -88,7 +88,7 @@ public class BoardController extends HttpServlet {
 				PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
 				request.setAttribute("page", pageNavi.generate());
 
-				request.getSession().getAttribute("dto");
+
 
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
@@ -115,6 +115,13 @@ public class BoardController extends HttpServlet {
 		
 			} else if (cmd.equals("/board/mypage.do")) {
 
+			}  else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
+				int boardId = Integer.parseInt(request.getParameter("id"));
+
+				int result = dao.deleteById(boardId);
+	
+
+				response.sendRedirect("/board/list.do?cpage=1");				
 			}
 
 		} catch (Exception e) {
@@ -184,18 +191,6 @@ public class BoardController extends HttpServlet {
 				}
 				response.sendRedirect("/board/list.do");
 				
-			} else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
-				int boardId = Integer.parseInt(request.getParameter("boardId"));
-
-				BoardDTO dto = dao.selectById(boardId);
-
-				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
-
-				int result = dao.deleteById(boardId);
-
-				response.sendRedirect("/WEB-INF/views/board/list.board?cpage=1");
-
-				
 			} else if (cmd.equals("/board/update.do")) {// 게시글 수정
 				
 			   
@@ -206,17 +201,14 @@ public class BoardController extends HttpServlet {
 				BoardDTO dto = new BoardDTO(title, contents, boardId);
 				MemberDTO member = (MemberDTO)request.getSession().getAttribute("dto");
 				
-				 if (member != null && (member.getMemberId() == dto.getMemberId() || member.getRole().equals("ADMIN"))) {
+				
 			        // 수정 처리
 				int result = dao.update(dto);
-				 System.out.println("수정 완료 회원입니다");
+			
 				response.sendRedirect("/board/detail.do?id=" + boardId);
 				 }
-				 else {
-					 System.out.println("수정 불가 비회원입니다");
-						response.sendRedirect("/board/detail.do?id=" + boardId);
-				 }
-			}
+			
+		
 		}
 
 		catch (Exception e) {
