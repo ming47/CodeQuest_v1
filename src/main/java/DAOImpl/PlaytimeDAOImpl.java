@@ -221,7 +221,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 
 	@Override
-	public double selectAnaByDate(String type, LocalDate date) throws Exception {
+	public double selectAnaByMinusDate(String type, int date) throws Exception {
 		String insertString = "";
 		
 		type = type.toLowerCase();
@@ -233,12 +233,12 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			insertString = "COUNT(*)";
 		}
 		
-		String sql = "SELECT " + insertString + " FROM PLAY_TIME WHERE REG_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 0.99999";
+		String sql = "SELECT " + insertString + " FROM PLAY_TIME WHERE TRUNC(REG_DATE) = TRUNC(SYSTIMESTAMP - NUMTODSINTERVAL(?, 'DAY'))";
+		System.out.println(sql);
 				
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setString(1, date.toString());
-			pstat.setString(2, date.toString());
+			pstat.setString(1, String.valueOf(date));
 			
 			try(ResultSet rs = pstat.executeQuery()) {
 				rs.next();
@@ -281,10 +281,8 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			
 			for (int i = 7; i >= 0; i--) {
 				String label = now.minusDays(i).toString();
-				System.out.println(label);
 				
 				date = date.split(" ")[0];
-				System.out.println(date);
 				
 				double data = 0;
 				if (label.equals(date)) {
@@ -294,10 +292,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 					if(hasNext) {						
 						date = rs.getString(2);
 					}
-				}
-				
-				System.out.println(data + " : " + label);
-				
+				}				
 				dto.add(new AnalyzeDTO(data, label));
 			}
 			return dto;
@@ -411,5 +406,195 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			}
 			return dto;
 		}	
+	}
+
+
+	@Override
+	public double selectTodayAna(String type) throws Exception {
+		String insertType = "";
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertType = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertType = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertType = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertType + " FROM PLAY_TIME WHERE TRUNC(REG_DATE) = TRUNC(SYSTIMESTAMP)";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			rs.next();
+			
+			return rs.getDouble(1);
+		}
+	}
+
+
+	@Override
+	public double selectTodayAnaByGameId(String type, int gameId) throws Exception {
+		String insertType = "";
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertType = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertType = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertType = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertType + " FROM PLAY_TIME WHERE GAME_ID = ? AND TRUNC(REG_DATE) = TRUNC(SYSTIMESTAMP)";
+		System.out.println(sql);
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, gameId);
+			try(ResultSet rs = pstat.executeQuery();) {
+				rs.next();
+			
+				return rs.getDouble(1);
+			}
+		}
+	}
+
+
+	@Override
+	public double selectAnaByMinusMonth(String type, int month) throws Exception {
+		String insertString = "";
+		
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertString = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertString = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertString = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertString + " FROM PLAY_TIME WHERE TO_CHAR(REG_DATE, 'YYYY/MM') = TO_CHAR(SYSTIMESTAMP - NUMTOYMINTERVAL(?, 'MONTH'), 'YYYY/MM')";
+				
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, String.valueOf(month));
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				rs.next();
+				
+				return rs.getDouble(1);
+			}
+		}
+	}
+
+
+	@Override
+	public List<AnalyzeDTO> selectAnaRecent7days(String type, int gemaId) throws Exception {
+		String insertString = "";
+		
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertString = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertString = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertString = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertString + ", TRUNC(REG_DATE) AS 일자"
+				+ " FROM PLAY_TIME "
+				+ "WHERE GAME_ID = ? AND "
+				+ "TRUNC(REG_DATE) BETWEEN TRUNC(systimestamp - INTERVAL '7' DAY) AND TRUNC(systimestamp) "
+				+ "GROUP BY TRUNC(REG_DATE) "
+				+ "ORDER BY 일자";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, gemaId);
+			
+			try(ResultSet rs = pstat.executeQuery();) {
+				List<AnalyzeDTO> dto = new ArrayList<>();
+				LocalDate now = LocalDate.now();
+			
+				rs.next();
+				String date = rs.getString(2);
+			
+				for (int i = 7; i >= 0; i--) {
+					String label = now.minusDays(i).toString();
+				
+					date = date.split(" ")[0];
+				
+					double data = 0;
+					if (label.equals(date)) {
+						data = rs.getDouble(1);
+					
+						boolean hasNext = rs.next();
+						if(hasNext) {						
+							date = rs.getString(2);
+						}
+					}				
+					dto.add(new AnalyzeDTO(data, label));
+				}
+				return dto;
+			}
+		}	
+	}
+
+
+	@Override
+	public double selectAnaByMinusDateAndGameId(String type, int date, int gameId) throws Exception {
+		String insertString = "";
+		
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertString = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertString = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertString = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertString + " FROM PLAY_TIME WHERE GAME_ID = ? AND TRUNC(REG_DATE) = TRUNC(SYSTIMESTAMP - NUMTODSINTERVAL(?, 'DAY'))";
+				
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, gameId);
+			pstat.setString(2, String.valueOf(date));
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				rs.next();
+				
+				return rs.getDouble(1);
+			}
+		}
+	}
+
+
+	@Override
+	public double selectAnaByMinusMonthAndGameId(String type, int month, int gameId) throws Exception {
+		String insertString = "";
+		
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertString = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertString = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertString = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertString + " FROM PLAY_TIME WHERE GAME_ID = ? AND TO_CHAR(REG_DATE, 'YYYY/MM') = TO_CHAR(SYSTIMESTAMP - NUMTOYMINTERVAL(?, 'MONTH'), 'YYYY/MM')";
+				
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, gameId);
+			pstat.setString(2, String.valueOf(month));
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				rs.next();
+				
+				return rs.getDouble(1);
+			}
+		}
 	}
 }

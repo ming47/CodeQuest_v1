@@ -44,7 +44,7 @@ public class QnAController<QnADAO> extends HttpServlet {
 				
 				Map<String, Object> json = new HashMap<>();
 				
-				List<QnADTO> dtos = dao.selectAll();
+				List<QnADTO> dtos = dao.selectAll(page);
 				json.put("qnaList", dtos);
 				
 				json.put("pageNavi", new PageNavi(page, dao.getSize(), 10, 10).generate());

@@ -1,6 +1,5 @@
 package DAO;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,9 +22,16 @@ public interface PlaytimeDAO {
 	List<PlaytimeDTO> selectByMemberAgeRange(int startAge, int endAge) throws Exception; // 나이대에 따른 유저 플레이타임
 	List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception; // 특정 날짜의 유저 플레이타임
 	
-	double selectAnaByDate(String type, LocalDate date) throws Exception;  // 특정 날짜의 플레이 통계
+	double selectAnaByMinusDate(String type, int date) throws Exception;  // 특정 날짜의 플레이 통계
 	List<AnalyzeDTO> selectAnaRecent7days(String type) throws Exception;
+	List<AnalyzeDTO> selectAnaRecent7days(String type, int gemaId) throws Exception;
 	List<AnalyzeDTO> selectAnaRecent12Months(String type) throws Exception; 
 	List<AnalyzeDTO> selectAnaGroupBy(String type, String target) throws Exception;
 	List<AnalyzeDTO> selectAnaGroupByAges(String type) throws Exception;
+	
+	double selectTodayAna(String type) throws Exception;
+	double selectTodayAnaByGameId(String type, int gameId) throws Exception;
+	double selectAnaByMinusMonth(String type, int month) throws Exception; 
+	double selectAnaByMinusDateAndGameId(String type, int date, int gameId) throws Exception;
+	double selectAnaByMinusMonthAndGameId(String type, int date, int gameId) throws Exception;
 }

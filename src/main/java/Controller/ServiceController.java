@@ -65,18 +65,77 @@ public class ServiceController extends HttpServlet {
 				String target = request.getParameter("group");
 				String type = request.getParameter("type");
 				
-				System.out.println(target);
-				
 				List<AnalyzeDTO> dto = new ArrayList<>();
 				
 				if(target.equals("age")) {
 					dto = playtimeDAO.selectAnaGroupByAges(type);
-				} else {
+				} else if(target.equals("game")) {
+					dto = playtimeDAO.selectAnaGroupBy(type, target);
+				}else {
 					dto = playtimeDAO.selectAnaGroupBy(type, target);
 				}
 				response.getWriter().append(g.toJson(dto));
-			} else if(cmd.equals("/service/admin/playtime/today/search.do")) {
+			} else if(cmd.equals("/service/admin/playtime/search/today.do")) {
+				String type = request.getParameter("type");
 				
+				double result = playtimeDAO.selectTodayAna(type);
+				
+				String dto = (type.equals("count")) ? String.valueOf((int) result) : TimeUtil.toString((int) result);
+				response.getWriter().append(dto);
+			} else if(cmd.equals("/service/admin/playtime/rate.do")) {
+				String type = request.getParameter("range");
+				
+				double startData = 0;
+				double endData = 0;
+				if(type.equals("day")) {
+					startData = playtimeDAO.selectAnaByMinusDate("count", 2);
+					endData = playtimeDAO.selectAnaByMinusDate("count", 1);
+				} else {
+					startData = playtimeDAO.selectAnaByMinusMonth("count", 2);
+					endData = playtimeDAO.selectAnaByMinusMonth("count", 1);
+				}
+				
+				double rate = 0;
+				if (startData != 0) {					
+					rate = Math.round(((endData - startData) / startData) * 100 * 100) / 100.0;
+				}
+
+				response.getWriter().append(String.valueOf(rate));
+			} else if(cmd.equals("/service/admin/playtime/days/game.do")) {
+				int gameId = Integer.parseInt(request.getParameter("id"));
+				
+				List<AnalyzeDTO> dto = playtimeDAO.selectAnaRecent7days("count", gameId);
+				response.getWriter().append(g.toJson(dto));
+			} else if(cmd.equals("/service/admin/playtime/serach/today/game.do")) {
+				int gameId = Integer.parseInt(request.getParameter("id"));
+				String type = request.getParameter("type");
+				
+				double result = playtimeDAO.selectTodayAnaByGameId(type, gameId);
+				System.out.println("days/game.do :" + result);
+				
+				String dto = (type.equals("count")) ? String.valueOf((int) result) : TimeUtil.toString((int) result);
+				response.getWriter().append(dto);
+			} else if(cmd.equals("/service/admin/playtime/rate/game.do")) {
+				int gameId = Integer.parseInt(request.getParameter("id"));
+				String type = request.getParameter("range");
+				
+				double startData = 0;
+				double endData = 0;
+
+				if(type.equals("day")) {
+					startData = playtimeDAO.selectAnaByMinusDateAndGameId("count", 2, gameId);
+					endData = playtimeDAO.selectAnaByMinusDateAndGameId("count", 1, gameId);
+				} else {
+					startData = playtimeDAO.selectAnaByMinusMonthAndGameId("count", 2, gameId);
+					endData = playtimeDAO.selectAnaByMinusMonthAndGameId("count", 1, gameId);
+				}
+				
+				double rate = 0;
+				if (startData != 0) {					
+					rate = Math.round(((endData - startData) / startData) * 100 * 100) / 100.0;
+				}
+
+				response.getWriter().append(String.valueOf(rate));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
