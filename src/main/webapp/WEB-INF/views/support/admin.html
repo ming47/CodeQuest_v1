@@ -792,7 +792,7 @@
 </body>
 
 </html>
-<script tag="chart">
+<script tag="functions">
 function Dataset() {
 	this.data = [];
 	this.label = [];
@@ -1177,10 +1177,8 @@ function gameDetailCahrtSet(dataset) {
         $('.playtime-button').on('click', function () {
             let url = '/service/admin/playtime/search.do?type=' + $('input[name=playtime-type]:checked').val() + '&group=';
             const id = $(this).attr('id');
-
-            if (id == 'whole') {
-                url += 'whole.do';
-            } else if (id == 'group-game') {
+            
+            if (id == 'group-game') {
                 url += 'game';
             } else if (id == 'group-gender') {
                 url += 'gender';

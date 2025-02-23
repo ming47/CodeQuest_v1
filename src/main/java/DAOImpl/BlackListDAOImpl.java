@@ -113,4 +113,24 @@ public enum BlackListDAOImpl implements BlackListDAO {
 		}
 	}
 
+	@Override
+	public BlackListDTO selectBanByMmeberId(int memberId) throws Exception {
+		String sql = "SELECT * FROM BLACK_LIST WHERE MEMBER_ID = ? ORDER BY REG_DATE";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, memberId);
+			
+			try(ResultSet rs = pstat.executeQuery();) {
+				boolean isBanned = rs.next();
+				
+				if(isBanned) {
+					return BlackListDTO.of(rs);
+				} else {
+					throw new IllegalArgumentException(memberId + "는 차단 대상이 아닙니다.");
+				}
+			}
+		}
+	}
+
 }

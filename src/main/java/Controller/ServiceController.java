@@ -1,9 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,14 +16,14 @@ import com.google.gson.Gson;
 
 import Common.ConvertURL;
 import Common.TimeUtil;
+import DAO.PlaytimeDAO;
 import DAOImpl.PlaytimeDAOImpl;
 import DTO.AnalyzeDTO;
-import DTO.PlaytimeDTO;
 
 
 @WebServlet("/service/*")
 public class ServiceController extends HttpServlet {
-	PlaytimeDAOImpl playtimeDAO = PlaytimeDAOImpl.INSTANCE;
+	private PlaytimeDAO playtimeDAO = PlaytimeDAOImpl.INSTANCE;
 	
 	Gson g = new Gson();
        
