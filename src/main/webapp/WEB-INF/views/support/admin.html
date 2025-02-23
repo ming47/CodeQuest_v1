@@ -282,6 +282,10 @@
         .game-detail-inner-contents {
         	height: 80%;
         }
+        
+        .game-detail-inner-chart-contents {
+        	height: 80%;
+        }
 
         .board-management-inner>div {
             float: left;
@@ -552,7 +556,7 @@
                                     						<div class="game-detail-daliy-access center-align">
                                     							<div class="inner-fat">
                                     								<div class="game-detail-inner-title">일주일간 유저 수 추이</div>
-                                    								<div class="game-detail-inner-contents">
+                                    								<div class="game-detail-inner-chart-contents">
                                     									<canvas id="game-detail-mau-chart"></canvas>
                                     								</div>
                                     							</div>
@@ -822,10 +826,9 @@ function displayRate(data, target) {
 	target.html(data + "%");
 }
 
-function gameDetailinit(chart) {
+function gameDetailinit() {
 	$('.game-detail-title>span').html('');
 	$('.game-detail-inner-contents').html('');
-	chart.destroy();
 }
 
 function gameDetailCahrtSet(dataset) {
@@ -1062,13 +1065,9 @@ function gameDetailCahrtSet(dataset) {
         }).done(function(data) {
         	data = JSON.parse(data);
         	
-        	console.log(data);
-        	
         	for(let i = 0; i < data.length; i++) {
         		gameDetailMauDataset.push(data[i]);
         	}
-        	
-        	console.log(gameDetailMauDataset);
         	
         	gameDetailMauChart = new Chart($('#game-detail-mau-chart'), {
         		type: 'line',
@@ -1238,6 +1237,66 @@ function gameDetailCahrtSet(dataset) {
         		}
         		$('#next').val(value);
         	}
+        	
+        	gameDetailinit();
+            
+            $.ajax({
+            	url: '/service/admin/playtime/days/game.do?id=' + value
+            }).done(function(data) {
+            	data = JSON.parse(data);
+            	gameDetailMauDataset.init();
+            	
+            	for(let i = 0; i < data.length; i++) {
+            		gameDetailMauDataset.push(data[i]);
+            	}
+            	
+            	gameDetailMauChart.destroy();
+            	gameDetailMauChart = new Chart($('#game-detail-mau-chart'), {
+            		type: 'line',
+            		data: {
+            			labels: gameDetailMauDataset.label,
+                        datasets: [
+                          {
+                            label: 'Dataset',
+                            data: gameDetailMauDataset.data,
+                        	}
+                    	]
+                	},
+                	options: {
+                   	 responsive: true,  
+                        maintainAspectRatio: false,
+                	}
+            	});
+            });
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/serach/today/game.do?type=count&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		$('#daliy-access-count-game-detail').html(data + "명");
+        	});
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/serach/today/game.do?type=sum&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		console.log(data);
+        		$('#daliy-playtime-sum-game-detail').html(data);
+        	});
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/rate/game.do?range=day&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		displayRate(data, $('#prev-day-game-access-rate-game-detail'));
+        	});
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/rate/game.do?range=month&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		displayRate(data, $('#prev-month-game-access-rate-game-detail'));
+        	});
         });
         
         $.ajax({
