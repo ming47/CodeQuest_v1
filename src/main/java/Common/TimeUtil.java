@@ -3,6 +3,7 @@ package Common;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +31,12 @@ public class TimeUtil {
     
     public static String getFileDate() {
     	return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+    
+    public static Timestamp toTimestamp(String date) {
+    	LocalDateTime localDateTime = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    	
+    	return Timestamp.valueOf(localDateTime);
     }
     
     public static String toString(long millisec) {

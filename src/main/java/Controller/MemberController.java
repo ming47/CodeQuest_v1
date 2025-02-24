@@ -1,13 +1,7 @@
 package Controller;
 
 import java.io.IOException;
-
-import java.net.URLEncoder;
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +17,7 @@ import Common.SecurityUtil;
 import DAO.BlackListDAO;
 import DAO.BoardDAO;
 import DAO.MemberDAO;
+
 import DAO.PlaytimeDAO;
 import DAOImpl.BlackListDAOImpl;
 import DAOImpl.BoardDAOImpl;
@@ -164,7 +159,6 @@ public class MemberController extends HttpServlet {
 				}
 				response.sendRedirect("/");
 			} else if (cmd.equals("/member/login.do")) { //로그인
-
 				String id = request.getParameter("id");
 				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
 
@@ -254,32 +248,5 @@ public class MemberController extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	}
-	public static void main(String[] args) {
-		for (int i = 0; i < 100; i++) {
-			String id = "USER" + i;
-
-			String sql = String.format("INSERT INTO MEMBERS (MEMBER_ID, LOGIN_ID, PASSWORD, NAME, NICKNAME, SSN, EMAIL, PHONE, ROLE) VALUES (MEMBER_ID_SEQ.NEXTVAL, '%s', '%s', '%s', '%s', '%s', '%s', '%s', 'user');", 
-					id, SecurityUtil.hashPassword(id), id, id, generateSSN(), id + "@" + id + ".com", generatePhoneNumber());
-
-			System.out.println(sql);
-		}
-	}
-
-	public static String generateSSN() {
-		String year = String.valueOf((int) (Math.random() * 29 + 70));      
-		int month = (int) (Math.random() * 11 + 1);
-		int day = (int) (Math.random() * 27 + 1);
-
-		int gender = (Math.random() < 0.5) ? 1 : 2;
-
-		String monthStr = (month < 10) ? '0' + String.valueOf(month) : String.valueOf(month);
-		String dayStr = (day < 10) ? '0' + String.valueOf(day) : String.valueOf(day);
-
-		return year + monthStr + dayStr + "-" + gender + "******";
-	}
-
-	public static String generatePhoneNumber() {
-		return "010-" + String.valueOf((int) (Math.random() * 8000 + 1000)) + "-" + String.valueOf((int) (Math.random() * 8000 + 1000));
 	}
 }

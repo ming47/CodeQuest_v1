@@ -51,7 +51,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
-
+	@Override
 	public List<BoardDTO> selectAll() throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id";
 		try (Connection con = this.getConnection();
@@ -78,7 +78,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
-
+@Override
 	public List<BoardDTO> selectBoardList(String searchField, String searchText) throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id where";
 
@@ -175,9 +175,7 @@ public enum BoardDAOImpl implements BoardDAO {
 
 				        try (ResultSet rs = pstat.executeQuery()) {
 			
-	
-			
-			rs.next();
+			       rs.next();
 			
 			 
 			return rs.getInt(1);}

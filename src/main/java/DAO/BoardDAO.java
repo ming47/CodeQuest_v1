@@ -19,4 +19,10 @@ public interface BoardDAO {
 	void increaseViewCount(int boardId) throws Exception;
 	List<BoardDTO> selectAllNotice() throws Exception;
 	void decreaseReplyCount(int boardId) throws Exception;
+	
+	int getSize() throws Exception;
+	List<BoardDTO> selectBoardList(String searchField, String searchText)throws Exception;
+	int searchListgetSize(String searchField, String searchText)throws Exception;
+	List<BoardDTO> selectTop5Boardlist()throws Exception;
+
 }
