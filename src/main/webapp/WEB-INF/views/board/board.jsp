@@ -82,7 +82,6 @@ body {
 .header ul li {
 	padding: 10px 15px;
 	background: #0e0326;
-	
 	color: white;
 	border-radius: 5px;
 	cursor: pointer;
@@ -181,9 +180,9 @@ button:hover {
 	border: none;
 }
 
-	.notice {
-		background-color: 'red';
-	}
+.notice {
+	background-color: 'red';
+}
 
 /* 반응형 디자인 설정 */
 @media screen and (max-width: 768px) {
@@ -211,7 +210,6 @@ button:hover {
 </head>
 
 <body>
-
 <script>
 	$(function() {
 		// 페이지네이션 클릭 이벤트
@@ -256,11 +254,9 @@ button:hover {
 				<c:forEach var="dto" items="${noticeList}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents notice">
-							<span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-							<span class="reply-count">[${dto.replyCount}]</span>
-						</td>
+						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
@@ -269,11 +265,9 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents">
-							<span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-							<span class="reply-count">[${dto.replyCount}]</span>
-						</td>
+						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
@@ -285,58 +279,56 @@ button:hover {
 				</tr>
 
 			</table>
-				
+
 			<div colspan="3" id="buttonbox">
-			<c:if test="${dto == null}">
-	
-				<a href="/board/addform.do" method="post">
-					<button>작성하기</button>
-				</a>
+				<c:if test="${dto == null}">
+
+					<a href="/board/addform.do" method="post">
+						<button>작성하기</button>
+					</a>
 				</c:if>
-		
+
 			</div>
-			
+
 		</div>
 	</div>
 
 </body>
 
 </html>
-						<script>
-						
-					    function makePageNavi(url) {
-					        const pageNavi = $('<div>');
+<script>
+	function makePageNavi(url) {
+		const pageNavi = $('<div>');
+		
+		function makeSpan(content, index) {
+			const span = $('<span>').html(content).addClass('page').attr('page', index);
 
-					        function makeSpan(content, index) {
-					            const span = $('<span>').html(content).addClass('page').attr('page', index);
+			span.on('click', function () {
+				location.href = url + index;
+			});
 
-					            span.on('click', function () {
-					                location.href = url + index;
-					            });
+			return span;
+		}
 
-					            return span;
-					        }
-					       
+		if (${!page.isFirst}) {
+			pageNavi.append(makeSpan('이전', ${page.startNavi - 1}));
+		}
 
-					        if (${!page.isFirst}) {
-					            page.append(makeSpan('이전', ${page.startNavi - 1}));
-					        }
+		for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
+			pageNavi.append(makeSpan(i, i));
+		}
 
-					        for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
-					            pageNavi.append(makeSpan(i, i));
-					        }
+		if (${!page.isEnd}) {
+			pageNavi.append(makeSpan('다음', ${page.endNavi + 1}));
+		}
 
-					        if (${!page.isEnd}) {
-					            page.append(makeSpan('다음', ${page.endNavi + 1}));
-					        }
+		const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
+		const hover = '.page:hover { cursor: pointer; }'
 
-					        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
-					        const hover = '.page:hover { cursor: pointer; }'
+		$('style').append(hover).append(indexCss);
 
-					        $('style').append(hover).append(indexCss);
+		return pageNavi;
+	}
 
-					        return pageNavi;
-					    }
-
-					    $('#number>td').append(makePageNavi('/board/list.do?cpage='));
-					</script>
+	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
+</script>

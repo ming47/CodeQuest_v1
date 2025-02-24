@@ -144,7 +144,7 @@ textarea {
 	resize: none;
 }
 
-button {
+.button {
 	background-color: #1d1f30; /* 남색 */
 	color: white;
 	border: none;
@@ -277,7 +277,7 @@ a button:hover {
 					
 	                   <a href="/list.board?cpage=1">
 
-						<button id="listbtn" type="button">목록으로</button>
+						<button class="button" id="listbtn" type="button">목록으로</button>
 					  </a>
 				
 
