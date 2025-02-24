@@ -414,18 +414,16 @@
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
 					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/game/list.do">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
 					<c:choose>					
 						<c:when test="${member.role == 'admin'}">
-							<a href="/service/admin/main.do">
+							<li><a href="/service/admin/main.do">Service</a></li>
 					 	</c:when>
 					 	<c:otherwise>					 	
-							<a href="/service/qna/addForm.do">
+							<li><a href="/service/qna/addForm.do">Service</a></li>
 					 	</c:otherwise>
 					</c:choose>
-						Service</a>
-					</li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->

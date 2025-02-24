@@ -16,6 +16,7 @@ public class MemberDTO {
 	private String detailAddress;
 	private String role;
 	private Timestamp regDate;
+	private boolean isbanned;
 	
 	
 	public boolean isIsbanned() {
@@ -26,7 +27,6 @@ public class MemberDTO {
 		this.isbanned = isbanned;
 	}
 
-	private boolean isbanned;
 		
 	public MemberDTO(String loginId, String pw, String name, String nickName, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role) { //회원 가입
@@ -99,6 +99,12 @@ public class MemberDTO {
 		this.zipCode = zipCode;
 		this.address = address;
 		this.detailAddress = detailAddress;
+	}
+	
+	public MemberDTO(String loginId, String email) {//비밀번호 재설정(간편로그인)
+		super();
+		this.loginId = loginId;
+		this.email = email;
 	}
 	
 

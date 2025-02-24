@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="EUC-KR">
-<title>íšŒì›ê²Œì‹œíŒ</title>
+<title>È¸¿ø°Ô½ÃÆÇ</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style>
 * {
@@ -16,7 +16,7 @@
 
 body {
    background-color: #0e0326;
-   /* ì–´ë‘ìš´ ë³´ë¼ìƒ‰ ë°°ê²½ */
+   /* ¾îµÎ¿î º¸¶ó»ö ¹è°æ */
    display: flex;
    justify-content: center;
    align-items: center;
@@ -28,7 +28,7 @@ body {
    width: 100%;
    max-width: 1000px;
    background-color: #2b2d42;
-   /* ì–´ë‘ìš´ íšŒìƒ‰ ë°°ê²½ */
+   /* ¾îµÎ¿î È¸»ö ¹è°æ */
    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
    padding: 30px;
    color: white;
@@ -40,7 +40,7 @@ body {
    justify-content: space-between;
    align-items: center;
    background-color: #2b2d42;
-   /* í—¤ë” ë°°ê²½ */
+   /* Çì´õ ¹è°æ */
    padding: 10px 20px;
    border: 1px solid white;
 }
@@ -48,10 +48,10 @@ body {
 .container>.navi {
    display: flex;
    height: 5%;
-   justify-content: flex-end; /* í•­ëª©ë“¤ì„ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì •ë ¬ */
+   justify-content: flex-end; /* Ç×¸ñµéÀ» ¿À¸¥ÂÊÀ¸·Î Á¤·Ä */
    align-items: center;
    background-color: #2b2d42;
-   /* ë„¤ë¹„ê²Œì´ì…˜ ë°°ê²½ */
+   /* ³×ºñ°ÔÀÌ¼Ç ¹è°æ */
    padding: 10px 20px;
    border: 1px solid white;
 }
@@ -64,7 +64,7 @@ body {
 
 .header {
    display: flex;
-   justify-content: space-between; /* ì¢Œìš° ì •ë ¬ */
+   justify-content: space-between; /* ÁÂ¿ì Á¤·Ä */
    align-items: center;
    background-color: #2b2d42;
    padding: 10px 20px;
@@ -75,8 +75,8 @@ body {
    list-style: none;
    display: flex;
    gap: 15px;
-   justify-content: flex-end; /* ì˜¤ë¥¸ìª½ ì •ë ¬ */
-   margin-left: auto; /* ì™¼ìª½ ì—¬ë°±ì„ ìë™ìœ¼ë¡œ ë§Œë“¤ì–´ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ë¶™ìŒ */
+   justify-content: flex-end; /* ¿À¸¥ÂÊ Á¤·Ä */
+   margin-left: auto; /* ¿ŞÂÊ ¿©¹éÀ» ÀÚµ¿À¸·Î ¸¸µé¾î¼­ ¿À¸¥ÂÊÀ¸·Î ºÙÀ½ */
 }
 
 .header ul li {
@@ -119,7 +119,7 @@ table th {
 
 table tr:nth-child(even) {
    background-color: #0e0326;
-   /* ì§ìˆ˜ í–‰ ë°°ê²½ìƒ‰ */
+   /* Â¦¼ö Çà ¹è°æ»ö */
 }
 
 table a {
@@ -155,11 +155,11 @@ button {
    padding: 10px 20px;
    background-color: #0e0326;
    color: white;
-   border: none; /* ê²½ê³„ì„  ì œê±° */
+   border: none; /* °æ°è¼± Á¦°Å */
    border-radius: 5px;
    cursor: pointer;
    transition: background-color 0.3s ease;
-   margin-top: 20px; /* ë²„íŠ¼ì„ ì•„ë˜ë¡œ ë„ìš°ê¸° */
+   margin-top: 20px; /* ¹öÆ°À» ¾Æ·¡·Î ¶ç¿ì±â */
 }
 
 button:hover {
@@ -174,7 +174,7 @@ button:hover {
 }
 #buttonbox {
    display: flex;
-   justify-content: flex-start; /* ë²„íŠ¼ì„ ì™¼ìª½ìœ¼ë¡œ ì •ë ¬ */
+   justify-content: flex-start; /* ¹öÆ°À» ¿ŞÂÊÀ¸·Î Á¤·Ä */
    align-items: center;
    padding: 20px;
    border: none;
@@ -185,7 +185,7 @@ button:hover {
 }
 
 
-/* ë°˜ì‘í˜• ë””ìì¸ ì„¤ì • */
+/* ¹İÀÀÇü µğÀÚÀÎ ¼³Á¤ */
 @media screen and (max-width: 768px) {
    .header ul {
       flex-direction: column;
@@ -213,7 +213,7 @@ button:hover {
 <body>
 <script>
    $(function() {
-      // í˜ì´ì§€ë„¤ì´ì…˜ í´ë¦­ ì´ë²¤íŠ¸
+      // ÆäÀÌÁö³×ÀÌ¼Ç Å¬¸¯ ÀÌº¥Æ®
       $(".page").on("click", function() {
          let pageNum = $(this).attr("page");
          sessionStorage.setItem("last_cpage", pageNum);
@@ -222,7 +222,7 @@ button:hover {
 </script>
 
 	<div class="container">
-		<!-- í—¤ë” -->
+		<!-- Çì´õ -->
 		<div class="header">
 			<div class="logo">Team CodeQuest</div>
 			<ul>
@@ -237,25 +237,25 @@ button:hover {
 			</div>
 		</div>
 
-		<div class="navi">ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</div>
+		<div class="navi">´Ô È¯¿µÇÕ´Ï´Ù</div>
 
 		<div class="body">
-			<!-- ê²Œì‹œíŒ í…Œì´ë¸” -->
+			<!-- °Ô½ÃÆÇ Å×ÀÌºí -->
 			<table>
 				<tr id="name">
-					<td colspan="8">ììœ ê²Œì‹œíŒ</td>
+					<td colspan="8">ÀÚÀ¯°Ô½ÃÆÇ</td>
 				</tr>
 				<tr id="title">
-					<th style="width: 12%;">ë²ˆí˜¸</th>
-					<th style="width: 42%;">ì œëª©</th>
-					<th style="width: 17%;">ì‘ì„±ì</th>
-					<th style="width: 17%;">ë‚ ì§œ</th>
-					<th style="width: 12%;">ì¡°íšŒ</th>
+					<th style="width: 12%;">¹øÈ£</th>
+					<th style="width: 42%;">Á¦¸ñ</th>
+					<th style="width: 17%;">ÀÛ¼ºÀÚ</th>
+					<th style="width: 17%;">³¯Â¥</th>
+					<th style="width: 12%;">Á¶È¸</th>
 				</tr>
 				<c:forEach var="dto" items="${noticeList}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
+						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -266,7 +266,7 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
+						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -285,7 +285,7 @@ button:hover {
 				<c:if test="${dto == null}">
 
 					<a href="/board/addform.do" method="post">
-						<button>ì‘ì„±í•˜ê¸°</button>
+						<button>ÀÛ¼ºÇÏ±â</button>
 					</a>
 				</c:if>
 
@@ -314,7 +314,7 @@ button:hover {
 		}
 
 		if (${!page.isFirst}) {
-			pageNavi.append(makeSpan('ì´ì „', ${page.startNavi - 1}));
+			pageNavi.append(makeSpan('ÀÌÀü', ${page.startNavi - 1}));
 		}
 
 		for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
@@ -322,7 +322,7 @@ button:hover {
 		}
 
 		if (${!page.isEnd}) {
-			pageNavi.append(makeSpan('ë‹¤ìŒ', ${page.endNavi + 1}));
+			pageNavi.append(makeSpan('´ÙÀ½', ${page.endNavi + 1}));
 		}
 
 		const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
@@ -335,4 +335,3 @@ button:hover {
 
 	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
 </script>
-
