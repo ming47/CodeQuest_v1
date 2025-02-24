@@ -63,6 +63,11 @@ public class BlackListDTO {
 		this.period = period;
 	}
 	
+	public BlackListDTO(int memberId, String reason) {
+		this.memberId = memberId;
+		this.reason = reason;
+	}
+	
 	public BlackListDTO() {
 		super();
 	}

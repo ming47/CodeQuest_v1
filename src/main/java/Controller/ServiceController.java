@@ -201,9 +201,14 @@ public class ServiceController extends HttpServlet {
 					String reason = request.getParameter("reason");
 					Integer period = Integer.parseInt(request.getParameter("endDate"));
 					
+					if(period == -1) {
+						blackListDAO.permanentBan(new BlackListDTO(memberId, reason));
+					} else {						
+						blackListDAO.insert(new BlackListDTO(memberId, reason, period));
+					}
+					
 					System.out.println(memberId + " " + reason + " " + period);
 					
-					blackListDAO.insert(new BlackListDTO(memberId, reason, period));
 				}
 			}
 		} catch(Exception e) {
