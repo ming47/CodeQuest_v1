@@ -390,7 +390,7 @@ input[disabled] {
 		});
 
 		$("#pw").on("keyup", function() {
-			let regex = /^[A-Za-z0-9_]{8,}$/;
+			let regex = /^(?=.*[a-z])(?=.*\d)[A-Za-z0-9_]{8,}$/;
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_pw").css({

@@ -110,7 +110,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: flex-start; 
+	justify-content: flex-start;
 	flex: 1;
 	min-width: 300px;
 }
@@ -534,10 +534,14 @@
 
 	<script>
 
-
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=550, height=300");
 		});
+		let urlParams = new URL(location.href).searchParams;
+		let loginStatus = urlParams.get('login');
+	    if (loginStatus === 'fail') {
+	        alert("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
+	    }
 
 		$(document).ready(
 				function() {
