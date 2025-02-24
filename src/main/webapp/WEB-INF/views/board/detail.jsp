@@ -212,6 +212,9 @@ td#contents {
 	background-color: white;
 	color: pink;
 }
+.messages{
+disply: hidden;
+}
 </style>
 <script>
 
@@ -388,8 +391,14 @@ window.onload = function(){
 <body>
 
 	<div class="container">
-
-
+		<div class = "messages">
+			<div class = "emoticons">
+				<div class = "emoticon">
+					<img src="/1-1.gif" id="img1">
+				</div>
+			</div>
+		</div>
+	
 
 		<div class="header">
 			<h1>게시글 상세 보기</h1>
@@ -445,6 +454,7 @@ window.onload = function(){
 					<input type="hidden" id="memberId" name="memberId"
 						value="${sessionScope.MemberId}"> <input id="commentInput"
 						name="contents" placeholder="댓글을 입력하세요">
+						<button id="emojiBtn" type = "button">😀</button>
 					<button id="inputbtn">등록</button>
 				</div>
 			</form>
@@ -658,7 +668,40 @@ window.onload = function(){
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/board/list.do?cpage=" +last_cpage;  });
 
-          
+         </script>
+         
+         <script>	//이모티콘
+         let isEmoticonPanelOpen = false;
+         $("#emojiBtn").on("click", function(){
+       	  isEmoticonPanelOpen = !isEmoticonPanelOpen;
+       	  
+       	  if(isEmoticonPanelOpen){	//닫기
+       		  $(this).text("🤢");
+       		  $(".emoticons").show();
+       		  $(".emoticon").css({
+       			  'background': 'linear-gradient(to bottom, #bacee0 0%, rgba(42, 81, 18950, 0.51) 100%)',
+                     'transition': 'background 1s ease'
+       		  });
+       	  } else{
+       		  $(this).text("😀");
+       		  $(".emoticons").hide();
+       		  $(".emoticon").css({
+       			  'background': '#bacee0',
+                     'transition': 'background 0.5s ease'
+       		  });
+       	  }
+         });
+         $(".emoticon img").on("click", function(){
+        	 let emotion = $(this).clone();
+        	 $("#commentInput").append(emotion);
+        	 $("#commentInput").focus();
+        	 
+        	 $(".emoticons").hide();
+        	 $("#emojiBtn").text("😀");
+        	 isEmoticonPanelOpen = false;
+        	 
+         })
+         
          </script>
 
 	</div>
