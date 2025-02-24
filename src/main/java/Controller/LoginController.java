@@ -108,6 +108,7 @@ public class LoginController extends HttpServlet {
 
             // 회원 존재 여부에 따라 추가 정보 입력 또는 바로 로그인 처리
             boolean result = memberDao.isDuplicate("email", accountEmail);
+            System.out.println("");
             if(result == false) {
                 request.setAttribute("email", accountEmail);
                 request.setAttribute("nickName", profileNickname);

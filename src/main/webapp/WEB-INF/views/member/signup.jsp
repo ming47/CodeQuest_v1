@@ -278,7 +278,7 @@ input[disabled] {
 			</fieldset>
 
 			<fieldset>
-				<legend> * 이름 / 닉네임 / 전화번호 / 이메일</legend>
+				<legend> * 이름 / 닉네임 / 주민번호 / 전화번호 / 이메일</legend>
 				<input type="text" name="name" id="name" placeholder="이름을 입력하세요">
 				<span id="result_name"></span> <input type="text" name="nickName"
 					id="nickName" placeholder="닉네임을 입력하세요"> <span

@@ -209,7 +209,6 @@ public class MemberController extends HttpServlet {
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
 				String zipCodeStr = request.getParameter("zipCode");
-				System.out.println(zipCodeStr);
 				int postcode = 0;
 				if(zipCodeStr.equals("입력된 정보가 없습니다.")) {
 					postcode = 0;
@@ -220,10 +219,10 @@ public class MemberController extends HttpServlet {
 				String address = request.getParameter("address");
 				String detailAddress = request.getParameter("detailAddress");
 
-				int result = dao.update(new MemberDTO(loginId,nickName,email,phone,postcode,address,detailAddress));
-				System.out.println(result);
+
+				int result = dao.update(new MemberDTO(memberId,loginId,nickName,email,phone,postcode,address,detailAddress));
+
 				if(result > 0) {
-					System.out.println("수정성공!");
 					MemberDTO member = dao.selectById(memberId);
 					request.getSession().setAttribute("member", member);
 				}
