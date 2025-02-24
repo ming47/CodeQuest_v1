@@ -16,6 +16,17 @@ public class MemberDTO {
 	private String detailAddress;
 	private String role;
 	private Timestamp regDate;
+	
+	
+	public boolean isIsbanned() {
+		return isbanned;
+	}
+
+	public void setIsbanned(boolean isbanned) {
+		this.isbanned = isbanned;
+	}
+
+	private boolean isbanned;
 		
 	public MemberDTO(String loginId, String pw, String name, String nickName, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role) { //회원 가입
@@ -38,6 +49,21 @@ public class MemberDTO {
 		super();
 		this.memberId = memberId;
 		this.loginId = loginId;
+		this.name = name;
+		this.nickName = nickName;
+		this.ssn = ssn;
+		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address = address;
+		this.detailAddress = detailAddress;
+		this.role = role;
+		this.regDate = regDate;
+	}
+	public MemberDTO(int memberId, String name, String nickName, String ssn, String email, String phone, int zipCode,
+			String address, String detailAddress, String role, Timestamp regDate ) { //로그인
+		super();
+		this.memberId = memberId;
 		this.name = name;
 		this.nickName = nickName;
 		this.ssn = ssn;
