@@ -112,5 +112,4 @@ public enum BlackListDAOImpl implements BlackListDAO {
 			}
 		}
 	}
-
 }
