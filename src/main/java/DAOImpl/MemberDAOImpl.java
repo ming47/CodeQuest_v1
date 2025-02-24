@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import Common.Statics;
 import DAO.MemberDAO;
 import DTO.MemberDTO;
 import enums.GENDER;
@@ -283,6 +284,57 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setString(1, pw);
 			pstat.setString(2, email);
 			return pstat.executeUpdate();
+		}
+	}
+	
+	public int getSize() throws Exception {
+		String sql = "SELECT COUNT(*) FORM MEMBERS";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			rs.next();
+			
+			return rs.getInt(1);
+		}
+	}
+
+	@Override
+	public List<MemberDTO> selectAll(int page) throws Exception {
+		String sql = "SELECT * FROM (SELECT M.*, ROW_NUMBER() OVER(ORDER BY MEMBER_ID) AS RNUM FROM MEMBERS M) A WHERE A.RNUM BETWEEN ? AND ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > getSize()) ? getSize() : endIndex;
+
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, startIndex);
+			pstat.setInt(2, endIndex);
+
+			try(ResultSet rs = pstat.executeQuery()) {
+				List<MemberDTO> dto = new ArrayList<>();
+				while (rs.next()) {
+					int memberId = rs.getInt("member_id");
+					String loginId = rs.getString("login_id");
+					String name = rs.getString("name");
+					String nickName = rs.getString("nickname");
+					String ssn = rs.getString("ssn");
+					String email = rs.getString("email");
+					String phone = rs.getString("phone");
+					int postcode = rs.getInt("zip_code");
+					String address = rs.getString("address");
+					String detail_address = rs.getString("detail_address");
+					String role = rs.getString("role");
+					Timestamp date = rs.getTimestamp("reg_date");
+
+					dto.add(new MemberDTO(memberId,loginId,name,nickName,ssn,
+							email,phone,postcode,address,detail_address, role,date));
+				}
+
+				return dto;
+			}
 		}
 	}
 

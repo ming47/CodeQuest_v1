@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="EUC-KR">
-<title>È¸¿ø°Ô½ÃÆÇ</title>
+<title>íšŒì›ê²Œì‹œíŒ</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style>
 * {
@@ -16,7 +16,7 @@
 
 body {
    background-color: #0e0326;
-   /* ¾îµÎ¿î º¸¶ó»ö ¹è°æ */
+   /* ì–´ë‘ìš´ ë³´ë¼ìƒ‰ ë°°ê²½ */
    display: flex;
    justify-content: center;
    align-items: center;
@@ -28,7 +28,7 @@ body {
    width: 100%;
    max-width: 1000px;
    background-color: #2b2d42;
-   /* ¾îµÎ¿î È¸»ö ¹è°æ */
+   /* ì–´ë‘ìš´ íšŒìƒ‰ ë°°ê²½ */
    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
    padding: 30px;
    color: white;
@@ -40,7 +40,7 @@ body {
    justify-content: space-between;
    align-items: center;
    background-color: #2b2d42;
-   /* Çì´õ ¹è°æ */
+   /* í—¤ë” ë°°ê²½ */
    padding: 10px 20px;
    border: 1px solid white;
 }
@@ -48,10 +48,10 @@ body {
 .container>.navi {
    display: flex;
    height: 5%;
-   justify-content: flex-end; /* Ç×¸ñµéÀ» ¿À¸¥ÂÊÀ¸·Î Á¤·Ä */
+   justify-content: flex-end; /* í•­ëª©ë“¤ì„ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì •ë ¬ */
    align-items: center;
    background-color: #2b2d42;
-   /* ³×ºñ°ÔÀÌ¼Ç ¹è°æ */
+   /* ë„¤ë¹„ê²Œì´ì…˜ ë°°ê²½ */
    padding: 10px 20px;
    border: 1px solid white;
 }
@@ -64,7 +64,7 @@ body {
 
 .header {
    display: flex;
-   justify-content: space-between; /* ÁÂ¿ì Á¤·Ä */
+   justify-content: space-between; /* ì¢Œìš° ì •ë ¬ */
    align-items: center;
    background-color: #2b2d42;
    padding: 10px 20px;
@@ -75,19 +75,18 @@ body {
    list-style: none;
    display: flex;
    gap: 15px;
-   justify-content: flex-end; /* ¿À¸¥ÂÊ Á¤·Ä */
-   margin-left: auto; /* ¿ŞÂÊ ¿©¹éÀ» ÀÚµ¿À¸·Î ¸¸µé¾î¼­ ¿À¸¥ÂÊÀ¸·Î ºÙÀ½ */
+   justify-content: flex-end; /* ì˜¤ë¥¸ìª½ ì •ë ¬ */
+   margin-left: auto; /* ì™¼ìª½ ì—¬ë°±ì„ ìë™ìœ¼ë¡œ ë§Œë“¤ì–´ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ë¶™ìŒ */
 }
 
 .header ul li {
-   padding: 10px 15px;
-   background: #0e0326;
-   
-   color: white;
-   border-radius: 5px;
-   cursor: pointer;
-   transition: background 0.3s ease;
-   font-size: 18px;
+	padding: 10px 15px;
+	background: #0e0326;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s ease;
+	font-size: 18px;
 }
 
 .header ul li:hover {
@@ -120,7 +119,7 @@ table th {
 
 table tr:nth-child(even) {
    background-color: #0e0326;
-   /* Â¦¼ö Çà ¹è°æ»ö */
+   /* ì§ìˆ˜ í–‰ ë°°ê²½ìƒ‰ */
 }
 
 table a {
@@ -156,11 +155,11 @@ button {
    padding: 10px 20px;
    background-color: #0e0326;
    color: white;
-   border: none; /* °æ°è¼± Á¦°Å */
+   border: none; /* ê²½ê³„ì„  ì œê±° */
    border-radius: 5px;
    cursor: pointer;
    transition: background-color 0.3s ease;
-   margin-top: 20px; /* ¹öÆ°À» ¾Æ·¡·Î ¶ç¿ì±â */
+   margin-top: 20px; /* ë²„íŠ¼ì„ ì•„ë˜ë¡œ ë„ìš°ê¸° */
 }
 
 button:hover {
@@ -175,17 +174,18 @@ button:hover {
 }
 #buttonbox {
    display: flex;
-   justify-content: flex-start; /* ¹öÆ°À» ¿ŞÂÊÀ¸·Î Á¤·Ä */
+   justify-content: flex-start; /* ë²„íŠ¼ì„ ì™¼ìª½ìœ¼ë¡œ ì •ë ¬ */
    align-items: center;
    padding: 20px;
    border: none;
 }
 
-   .notice {
-      background-color: 'red';
-   }
+.notice {
+	background-color: 'red';
+}
 
-/* ¹İÀÀÇü µğÀÚÀÎ ¼³Á¤ */
+
+/* ë°˜ì‘í˜• ë””ìì¸ ì„¤ì • */
 @media screen and (max-width: 768px) {
    .header ul {
       flex-direction: column;
@@ -211,10 +211,9 @@ button:hover {
 </head>
 
 <body>
-
 <script>
    $(function() {
-      // ÆäÀÌÁö³×ÀÌ¼Ç Å¬¸¯ ÀÌº¥Æ®
+      // í˜ì´ì§€ë„¤ì´ì…˜ í´ë¦­ ì´ë²¤íŠ¸
       $(".page").on("click", function() {
          let pageNum = $(this).attr("page");
          sessionStorage.setItem("last_cpage", pageNum);
@@ -222,121 +221,118 @@ button:hover {
    });
 </script>
 
-   <div class="container">
-      <!-- Çì´õ -->
-      <div class="header">
-         <div class="logo">Team CodeQuest</div>
-         <ul>
-            <li onclick="location.href='/'">Home</li>
-            <li>Game</li>
-            <li>Board</li>
-            <li>Service</li>
-         </ul>
+	<div class="container">
+		<!-- í—¤ë” -->
+		<div class="header">
+			<div class="logo">Team CodeQuest</div>
+			<ul>
+				<li onclick="location.href='/'">Home</li>
+				<li>Game</li>
+				<li>Board</li>
+				<li>Service</li>
+			</ul>
 
-         <div class="logbox">
-            <span id="username"></span>
-         </div>
-      </div>
+			<div class="logbox">
+				<span id="username"></span>
+			</div>
+		</div>
 
-      <div class="navi">´Ô È¯¿µÇÕ´Ï´Ù</div>
+		<div class="navi">ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</div>
 
-      <div class="body">
-         <!-- °Ô½ÃÆÇ Å×ÀÌºí -->
-         <table>
-            <tr id="name">
-               <td colspan="8">ÀÚÀ¯°Ô½ÃÆÇ</td>
-            </tr>
-            <tr id="title">
-               <th style="width: 12%;">¹øÈ£</th>
-               <th style="width: 42%;">Á¦¸ñ</th>
-               <th style="width: 17%;">ÀÛ¼ºÀÚ</th>
-               <th style="width: 17%;">³¯Â¥</th>
-               <th style="width: 12%;">Á¶È¸</th>
-            </tr>
-            <c:forEach var="dto" items="${noticeList}">
-               <tr>
-                  <td>${dto.boardId}</td>
-                  <td class="contents notice">
-                     <span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
-                     <a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-                     <span class="reply-count">[${dto.replyCount}]</span>
-                  </td>
-                  <td>${dto.writer}</td>
-                  <td>${dto.regDate}</td>
-                  <td>${dto.viewCount}</td>
-               </tr>
-            </c:forEach>
-            <c:forEach var="dto" items="${list}">
-               <tr>
-                  <td>${dto.boardId}</td>
-                  <td class="contents">
-                     <span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
-                     <a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-                     <span class="reply-count">[${dto.replyCount}]</span>
-                  </td>
-                  <td>${dto.writer}</td>
-                  <td>${dto.regDate}</td>
-                  <td>${dto.viewCount}</td>
-               </tr>
-            </c:forEach>
+		<div class="body">
+			<!-- ê²Œì‹œíŒ í…Œì´ë¸” -->
+			<table>
+				<tr id="name">
+					<td colspan="8">ììœ ê²Œì‹œíŒ</td>
+				</tr>
+				<tr id="title">
+					<th style="width: 12%;">ë²ˆí˜¸</th>
+					<th style="width: 42%;">ì œëª©</th>
+					<th style="width: 17%;">ì‘ì„±ì</th>
+					<th style="width: 17%;">ë‚ ì§œ</th>
+					<th style="width: 12%;">ì¡°íšŒ</th>
+				</tr>
+				<c:forEach var="dto" items="${noticeList}">
+					<tr>
+						<td>${dto.boardId}</td>
+						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+							class="reply-count">[${dto.replyCount}]</span></td>
+						<td>${dto.writer}</td>
+						<td>${dto.regDate}</td>
+						<td>${dto.viewCount}</td>
+					</tr>
+				</c:forEach>
+				<c:forEach var="dto" items="${list}">
+					<tr>
+						<td>${dto.boardId}</td>
+						<td class="contents"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+							class="reply-count">[${dto.replyCount}]</span></td>
+						<td>${dto.writer}</td>
+						<td>${dto.regDate}</td>
+						<td>${dto.viewCount}</td>
+					</tr>
+				</c:forEach>
 
-            <tr id="number">
-               <td colspan="8" align="center"></td>
-            </tr>
+				<tr id="number">
+					<td colspan="8" align="center"></td>
+				</tr>
 
-         </table>
-            
-         <div colspan="3" id="buttonbox">
-         <c:if test="${dto == null}">
-   
-            <a href="/board/addform.do" method="post">
-               <button>ÀÛ¼ºÇÏ±â</button>
-            </a>
-            </c:if>
-      
-         </div>
-         
-      </div>
-   </div>
+			</table>
+
+			<div colspan="3" id="buttonbox">
+				<c:if test="${dto == null}">
+
+					<a href="/board/addform.do" method="post">
+						<button>ì‘ì„±í•˜ê¸°</button>
+					</a>
+				</c:if>
+
+			</div>
+
+		</div>
+	</div>
 
 </body>
 
 </html>
-                  <script>
-                  
-                   function makePageNavi(url) {
-                       const pageNavi = $('<div>');
 
-                       function makeSpan(content, index) {
-                           const span = $('<span>').html(content).addClass('page').attr('page', index);
+<script>
+	function makePageNavi(url) {
+		const pageNavi = $('<div>');
+		
+		function makeSpan(content, index) {
+			const span = $('<span>').html(content).addClass('page').attr('page', index);
 
-                           span.on('click', function () {
-                               location.href = url + index;
-                           });
+			span.on('click', function () {
+				location.href = url + index;
+			});
 
-					            return span;
-					        }
-					       
 
-                       if (${!page.isFirst}) {
-                           pageNavi.append(makeSpan('ÀÌÀü', ${page.startNavi - 1}));
-                       }
+			return span;
+		}
 
-                       for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
-                           pageNavi.append(makeSpan(i, i));
-                       }
+		if (${!page.isFirst}) {
+			pageNavi.append(makeSpan('ì´ì „', ${page.startNavi - 1}));
+		}
 
-                       if (${!page.isEnd}) {
-                           pageNavi.append(makeSpan('´ÙÀ½', ${page.endNavi + 1}));
-                       }
+		for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
+			pageNavi.append(makeSpan(i, i));
+		}
 
-                       const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
-                       const hover = '.page:hover { cursor: pointer; }'
+		if (${!page.isEnd}) {
+			pageNavi.append(makeSpan('ë‹¤ìŒ', ${page.endNavi + 1}));
+		}
 
-                       $('style').append(hover).append(indexCss);
+		const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
+		const hover = '.page:hover { cursor: pointer; }'
 
-                       return pageNavi;
-                   }
+		$('style').append(hover).append(indexCss);
 
-                   $('#number>td').append(makePageNavi('/board/list.do?cpage='));
-               </script>
+		return pageNavi;
+	}
+
+	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
+</script>
+

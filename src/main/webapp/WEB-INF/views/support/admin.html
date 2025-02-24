@@ -122,11 +122,30 @@
         }
 
         .game-selector {
-            width: 20%;
+            width: 25%;
+        }
+        
+        .display-info {
+        	height: 20%;
+        }
+        
+        .display-info-title {
+        	height: 30%;
+        	display: flex;
+        	align-items: center;
+            padding-left: 15px;
+            font-size: 25px;
+            font-weight: bolder;
+        }
+        
+        .display-info-contents {
+        	height: 70%;
+        	font-size: 30px;
+        	font-weight: bold;
         }
 
         .detail-dashboard {
-            width: 80%;
+            width: 75%;
         }
 
         .detail-dashboard-inner {
@@ -134,16 +153,11 @@
             height: 95%;
         }
 
-        .mau-display {
+        .access-count-display {
             height: 30%;
         }
 
-        .mau-diplay-inner {
-            height: 95%;
-            width: 100%;
-        }
-
-        .mau-title {
+        .access-count-title {
             height: 20%;
             font-size: 35px;
             font-weight: bolder;
@@ -152,8 +166,21 @@
             padding-left: 15px;
         }
 
-        .mau {
+        .access-count-contents {
             height: 80%;
+        }
+        
+        .access-count-contents>div {
+        	float: left;
+        	height: 100%;
+        }
+        
+        .access-count {
+        	width: 95%;
+        }
+        
+        .dashboard-selector {
+        	width: 5%;
         }
 
         .detail-dashborad-bottom {
@@ -166,16 +193,7 @@
         }
 
         .playtime-display {
-            width: 30%;
-            position: relative;
-        }
-
-        .playtime-inner {
-            position: absolute;
-            left: 0px;
-            bottom: 0px;
-            width: 95%;
-            height: 98%;
+            width: 40%;
         }
 
         .playtime-title {
@@ -196,7 +214,77 @@
         }
 
         .detail-dashboard-bottom-right {
-            width: 70%;
+            width: 60%;
+        }
+        
+        .game-detail-display-title {
+        	height: 15%;
+        }
+        
+        .game-detail-display-contents {
+        	height: 85%;
+        }
+        
+        .game-detail-display-contents>div {
+        	float: left;
+        	height: 100%;
+        }
+        
+        .game-detail {
+        	width: 90%;
+        }
+        
+        .game-detail-title {
+        	height: 15%;
+        	display: flex;
+        	align-items: center;
+        }
+        
+        .game-detail-title>span {
+        	margin-left: 10px;
+        }
+        
+        #game-title {
+        	font-size: 25px;
+        	font-weight: bold;
+        }
+        
+        #game-id {
+        	color: gray;	
+        }
+        
+        .game-detail-contents {
+        	height: 85%;
+        }
+        
+        .game-detail-info {
+        	height: 30%;
+        }
+        
+        .game-detail-info>div {
+        	float: left;
+        	height: 100%;
+        	width: 50%;
+        }
+        
+        .game-detail-daliy-access {
+        	height: 40%;
+        }
+        
+        .game-detail-inner-title {
+        	height: 20%;
+        	display: flex;
+        	align-items: center;
+        	font-weight: bold;
+        	padding-left: 15px;	
+        }
+        
+        .game-detail-inner-contents {
+        	height: 80%;
+        }
+        
+        .game-detail-inner-chart-contents {
+        	height: 80%;
         }
 
         .board-management-inner>div {
@@ -359,7 +447,14 @@
             height: 10%;
         }
     </style>
+    <style>
+        canvas {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -379,30 +474,130 @@
                     <div class="title">게임 대시보드</div>
                     <div class="contents-inner game-dashboard-inner">
                         <div class="game-selector">
-                            <div class="game-selector-inner inner"></div>
+                            <div class="game-selector-inner inner">
+                            	<div class="display-info center-align">
+                            		<div class="inner">
+                            			<div class="display-info-title">금일 접속자 수</div>
+                            			<div class="display-info-contents center-align" id="today-access-count"></div>
+                            		</div>
+                            	</div>
+                            	<div class="display-info center-align">
+                            		<div class="inner">
+                            			<div class="display-info-title">금일 게임 시간 합계</div>
+                            			<div class="display-info-contents center-align" id="today-sum-playtime"></div>
+                            		</div>
+                            	</div>
+                            	<div class="display-info center-align">
+                            		<div class="inner">
+                            			<div class="display-info-title">금일 게임 시간 평균</div>
+                            			<div class="display-info-contents center-align" id="today-avg-playtime"></div>
+                            		</div>
+                            	</div>
+                            	<div class="display-info center-align">
+                            		<div class="inner">
+                            			<div class="display-info-title">전날 이용자 증감률</div>
+                            			<div class="display-info-contents center-align" id="prev-day-access-count-rate"></div>
+                            		</div>
+                            	</div>
+                            	<div class="display-info center-align">
+                            		<div class="inner">
+                            			<div class="display-info-title">전달 이용자 증감률</div>
+                            			<div class="display-info-contents center-align" id="prev-month-access-count-rate"></div>
+                            		</div>
+                            	</div>		
+                            </div>
                         </div>
                         <div class="detail-dashboard">
                             <div class="detail-dashboard-inner">
-                                <div class="mau-display">
-                                    <div class="mau-diplay-inner">
-                                        <div class="mau-title">전체 mau</div>
-                                        <div class="mau"></div>
+                                <div class="access-count-display center-align">
+                                    <div class="access-count-diplay-inner inner-fat">
+                                        <div class="access-count-title">접속자 추이</div>
+                                        <div class="access-count-contents">
+                                        	<div class="access-count">                                        	
+                                            	<canvas id="access-chart"></canvas>
+                                        	</div>
+                                        	<div class="dashboard-selector center-align">
+                                        		<button id="access-count-get-next" value="day">></button>
+                                        	</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="detail-dashborad-bottom">
-                                    <div class="playtime-display">
-                                        <div class="playtime-inner">
+                                    <div class="playtime-display center-align">
+                                        <div class="playtime-inner inner">
                                             <div class="playtime-title">게임 이용 시간</div>
                                             <div class="playtime-button-form">
-                                                <button class="playtime-button" id="whole">전체</button>
                                                 <button class="playtime-button" id="group-game">게임별</button>
                                                 <button class="playtime-button" id="group-gender">성별별</button>
                                                 <button class="playtime-button" id="group-age">나이별</button>
+                                               	<input type="radio" value="sum" name="playtime-type" checked/>합계
+                                               	<input type="radio" value="avg" name="playtime-type"/>평균
+                                               	<input type="radio" value="count" name="playtime-type"/>총합
                                             </div>
-                                            <div class="playtime"></div>
+                                            <div class="playtime center-align">
+                                            	<canvas id="playtime-chart"></canvas>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="detail-dashboard-bottom-right"></div>
+                                    <div class="detail-dashboard-bottom-right center-align">
+                                    	<div class="game-detail-display inner">
+                                    		<div class="game-detail-display-title title">게임 상세</div>
+                                    		<div class="game-detail-display-contents">
+                                    			<div class="dashboard-selector center-align">
+                                    				<button id="prev" class="game-detail-get" value="800006"><</button>
+                                    			</div>
+                                    			<div class="game-detail center-align">
+                                    				<div class="inner">
+                                    					<div class="game-detail-title">
+                                    						<span id="game-title">대충 게임 이름</span>
+                                    						<span id="game-id">(ID: 800001)</span>
+                                    					</div>
+                                    					<div class="game-detail-contents">
+                                    						<div class="game-detail-daliy-access center-align">
+                                    							<div class="inner-fat">
+                                    								<div class="game-detail-inner-title">일주일간 유저 수 추이</div>
+                                    								<div class="game-detail-inner-chart-contents">
+                                    									<canvas id="game-detail-mau-chart"></canvas>
+                                    								</div>
+                                    							</div>
+                                    						</div>
+                                    						<div class="game-detail-info">
+                                    							<div class="center-align">
+                                    								<div class="inner">
+                                    									<div class="game-detail-inner-title">금일 유저 수</div>
+                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="daliy-access-count-game-detail"></div>
+                                    								</div>
+                                    							</div>
+                                    							<div class="center-align">
+                                    								<div class="inner">	
+                                    									<div class="game-detail-inner-title">금일 게임 시간 합계</div>
+                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="daliy-playtime-sum-game-detail"></div>
+                                    								</div>
+                                    							</div>
+                                    						</div>
+                                    						<div class="game-detail-info">
+                                    							<div class="center-align">
+                                    								<div class="inner">
+                                    									<div class="game-detail-inner-title">전날 이용자 증감률</div>
+                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="prev-day-game-access-rate-game-detail"></div>
+                                    								</div>
+                                    							</div>
+                                    							<div class="center-align">
+                                    								<div class="inner">
+                                    									<div class="game-detail-inner-title">전달 이용자 증감률</div>
+                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="prev-month-game-access-rate-game-detail"></div>
+                                    								</div>
+                                    							</div>
+                                    						</div>
+                                    					</div>
+                                    				</div>
+                                    			</div>
+                                    			<div class="dashboard-selector center-align">
+                                    				<button id="next" class="game-detail-get" value="800002">></button>
+                                    			</div>
+                                    		</div>
+                                    	</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -597,12 +792,63 @@
 </body>
 
 </html>
+<script tag="functions">
+function Dataset() {
+	this.data = [];
+	this.label = [];
+	
+	this.update = function(chart, target, item) {
+		const index = this.label.indexOf(target);
+		console.log(index);
+		
+		this.data[index] = item;
+		chart.update();
+	}
+	
+	this.push = function(dto) {
+		this.data.push(dto.data);
+		this.label.push(dto.label);
+	}
+	
+	this.init = function() {
+		this.data = [];
+		this.label = [];
+	}
+}
+
+function displayRate(data, target) {
+	if(data < 0) {
+		target.css('color', 'blue');
+	} else {
+		target.css('color', 'red');
+	}
+	
+	target.html(data + "%");
+}
+
+function gameDetailinit() {
+	$('.game-detail-title>span').html('');
+	$('.game-detail-inner-contents').html('');
+}
+
+function gameDetailCahrtSet(dataset) {
+	return new Chart($('#game-detail-mau-chart'), {
+		type: 'line',
+		data: {
+			labels: dataset.lebal,
+			datasets: [{
+				label: '일일 이용자 수',
+				data: dataset.data
+			}]
+		}
+	});
+}
+
+</script>
 <script tag="common">
     $('.selector').on('click', function () {
         const select = $(this).attr('value');
         const offset = $('.' + select).offset();
-
-        console.log(select, offset);
 
         $('html, body').animate({ scrollTop: offset.top }, 500);
     });
@@ -643,6 +889,414 @@
     }
 
     window.onload = function () {
+    	$.ajax({
+    		url: '/service/admin/playtime/search/today.do?type=sum',
+    		type: 'GET'
+    	}).done(function (data) {
+    		$('#today-sum-playtime').html(data);
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/search/today.do?type=avg',
+    		type: 'GET'
+    	}).done(function (data) {
+    		$('#today-avg-playtime').html(data);
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/search/today.do?type=count',
+    		type: 'GET'
+    	}).done(function (data) {
+    		$('#today-access-count').html(data + '명');
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/rate.do?range=day',
+    		type: 'GET'
+    	}).done(function(data) {
+    		displayRate(data, $('#prev-day-access-count-rate'));
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/rate.do?range=month',
+    		type: 'GET'
+    	}).done(function(data) {
+    		displayRate(data, $('#prev-month-access-count-rate'));
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/serach/today/game.do?type=count&id=' + 800001,
+    		type: 'GET'
+    	}).done(function(data) {
+    		$('#daliy-access-count-game-detail').html(data + "명");
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/serach/today/game.do?type=sum&id=' + 800001,
+    		type: 'GET'
+    	}).done(function(data) {
+    		console.log(data);
+    		$('#daliy-playtime-sum-game-detail').html(data);
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/rate/game.do?range=day&id=' + 800001
+    	}).done(function(data) {
+    		displayRate(data, $('#prev-day-game-access-rate-game-detail'));
+    	});
+    	
+    	$.ajax({
+    		url: '/service/admin/playtime/rate/game.do?range=month&id=' + 800001
+    	}).done(function(data) {
+    		displayRate(data, $('#prev-month-game-access-rate-game-detail'));
+    	});
+
+        let accessCountDataset = [];
+        const sumGamePlayDataset = new Dataset();
+        const gameDetailMauDataset = new Dataset();
+        let accessCountChart, sumGamePlayChart, gameDetailMauChart;
+        $.ajax({
+        	url: '/service/admin/playtime/search/days.do?group=day',
+        	type: 'GET'
+        }).done(function(data) {
+        	data = JSON.parse(data);
+        	
+        	const keys = Object.keys(data);
+        	for(let i = 0; i < keys.length; i++) {
+        		const key = keys[i];
+        		
+        		const dataset = new Dataset();
+        		for (let j = 0; j < data[key].length; j++) {
+        			dataset.push(data[key][j]);
+        		}
+        		
+        		accessCountDataset.push(dataset);
+        	}
+        	
+        	console.log(accessCountDataset);
+        	
+        	accessCountChart = new Chart($('#access-chart'), {
+               	type: 'bar',
+                data: {
+                  	labels: accessCountDataset[0].label,
+                  	datasets: [{
+                        label: '이용 시간 평균',
+                        data: accessCountDataset[0].data,
+                        yAxisID: "y-avg"
+                      }, {
+                      	label: '사용자 수',
+                      	data: accessCountDataset[1].data,
+                      	yAxisID: "y-count"
+                      }, {
+                      	label: '이용 시간 총합',
+                      	data: accessCountDataset[2].data,
+                      	 yAxisID: "y-sum"
+                      }
+                  ]},
+                 options: {
+                	 responsive: true,  
+                     maintainAspectRatio: false,
+                     scales: {
+                    	 x: {
+                    	      grid: { // 축에 대한 격자선
+                    	        display: false, // grid 활성화 (기본값 true)
+                    	      }
+                    	  },
+                         "y-sum": {
+                             type: "logarithmic",  // ✅ 로그 스케일 적용
+                             position: "left",
+                             ticks: {
+                                 min: 1,
+                                 max: 100000
+                             }
+                         },
+                         "y-count": {
+                        	 type: "linear",
+                             position: "right",  
+                             grid: {
+                                 drawOnChartArea: false  
+                             },
+                             ticks: {
+                                 beginAtZero: true
+                             }
+                         },
+                         "y-avg": {
+                        	 type: "linear",
+                             position: "right",  
+                             grid: {
+                                 drawOnChartArea: false  
+                             },
+                             ticks: {
+                                 beginAtZero: true
+                             }
+                         }
+                     }   
+                 }
+           	});
+        		
+        }); 
+        
+        $.ajax({
+        	url: '/service/admin/playtime/search.do?type=' + $('input[name=playtime-type]:checked').val() + '&group=game',
+        	type: 'GET'
+        }).done(function(data) {
+        	data = JSON.parse(data);
+        	
+        	for(let i = 0; i < data.length; i++) {
+        		sumGamePlayDataset.push(data[i]);
+        	}
+        	
+        	sumGamePlayChart = new Chart($('#playtime-chart'), {
+        		type: 'doughnut',
+        		data: {
+        			labels: sumGamePlayDataset.label,
+                    datasets: [
+                      {
+                        label: 'Dataset',
+                        data: sumGamePlayDataset.data,
+                    	}
+                	]
+            	}
+        	});
+        });
+        
+        $.ajax({
+        	url: '/service/admin/playtime/days/game.do?id=' + 800001
+        }).done(function(data) {
+        	data = JSON.parse(data);
+        	
+        	for(let i = 0; i < data.length; i++) {
+        		gameDetailMauDataset.push(data[i]);
+        	}
+        	
+        	gameDetailMauChart = new Chart($('#game-detail-mau-chart'), {
+        		type: 'line',
+        		data: {
+        			labels: gameDetailMauDataset.label,
+                    datasets: [
+                      {
+                        label: 'Dataset',
+                        data: gameDetailMauDataset.data,
+                    	}
+                	]
+            	},
+            	options: {
+               	 responsive: true,  
+                    maintainAspectRatio: false,
+            	}
+        	});
+        });
+        
+        $('#access-count-get-next').on('click', function() {       
+        	const group = ($(this).val() == 'day') ? 'month' : 'day';
+        	$(this).val(group);	
+        	let url = '/service/admin/playtime/search/days.do?group=' + group;
+        	
+            $.ajax({
+            	url: url,
+            	type: 'GET'
+            }).done(function(data) {
+            	data = JSON.parse(data);
+            	accessCountDataset = [];
+            	accessCountChart.destroy();
+            	
+            	const keys = Object.keys(data);
+            	for(let i = 0; i < keys.length; i++) {
+            		const key = keys[i];
+
+            		const dataset = new Dataset();
+            		for (let j = 0; j < data[key].length; j++) {
+            			dataset.push(data[key][j]);
+            		}
+            		
+            		accessCountDataset.push(dataset);
+            	}
+            	
+            	accessCountChart = new Chart($('#access-chart'), {
+                   	type: 'bar',
+                    data: {
+                      	labels: accessCountDataset[0].label,
+                      	datasets: [{
+                          label: '이용 시간 평균',
+                          data: accessCountDataset[0].data,
+                          yAxisID: "y-avg"
+                        }, {
+                        	label: '사용자 수',
+                        	data: accessCountDataset[1].data,
+                        	yAxisID: "y-count"
+                        }, {
+                        	label: '이용 시간 총합',
+                        	data: accessCountDataset[2].data,
+                        	 yAxisID: "y-sum"
+                        }
+                      ]},
+                     options: {
+                    	 responsive: true,  
+                         maintainAspectRatio: false,
+                         scales: {
+                        	 x: {
+                        	      grid: { // 축에 대한 격자선
+                        	        display: false, // grid 활성화 (기본값 true)
+                        	      }
+                        	  },
+                             "y-sum": {
+                                 type: "logarithmic",  // ✅ 로그 스케일 적용
+                                 position: "left",
+                                 ticks: {
+                                     min: 1,
+                                     max: 100000
+                                 }
+                             },
+                             "y-count": {
+                            	 type: "linear",
+                                 position: "right",  
+                                 grid: {
+                                     drawOnChartArea: false  
+                                 },
+                                 ticks: {
+                                     beginAtZero: true
+                                 }
+                             },
+                             "y-avg": {
+                            	 type: "linear",
+                                 position: "right",  
+                                 grid: {
+                                     drawOnChartArea: false  
+                                 },
+                                 ticks: {
+                                     beginAtZero: true
+                                 }
+                             }
+                         }
+                     }
+               	});
+            		
+            }); 
+        });
+        
+        $('.playtime-button').on('click', function () {
+            let url = '/service/admin/playtime/search.do?type=' + $('input[name=playtime-type]:checked').val() + '&group=';
+            const id = $(this).attr('id');
+            
+            if (id == 'group-game') {
+                url += 'game';
+            } else if (id == 'group-gender') {
+                url += 'gender';
+            } else if (id == 'group-age') {
+                url += 'age';
+            }
+            
+            console.log(url);
+            
+            $.ajax({
+            	url: url,
+            	type: 'GET'
+            }).done(function(data) {
+            	data = JSON.parse(data);
+            	sumGamePlayDataset.init();
+            	
+            	for(let i = 0; i < data.length; i++) {
+            		sumGamePlayDataset.push(data[i]);
+            	}
+            	
+            	sumGamePlayChart.destroy();
+            	sumGamePlayChart = new Chart($('#playtime-chart'), {
+            		type: 'doughnut',
+            		data: {
+            			labels: sumGamePlayDataset.label,
+                        datasets: [
+                          {
+                            label: 'Dataset',
+                            data: sumGamePlayDataset.data,
+                        	}
+                    	]
+                	}
+            	});
+            })
+        });
+        
+        $('.game-detail-get').on('click', function() {
+        	const id = $(this).attr('id');
+        	const value = $(this).val();
+        	
+        	if(id == 'next') {
+        		if(value == "800005") {
+        			$(this).val('800001');
+        		} else {
+        			$(this).val(Number(value) + 1);
+        		}
+        		
+        		$('#prev').val(value);
+        	} else {
+        		if(value == '800001') {
+        			$(this).val('800005');
+        		} else {
+        			$(this).val(Number(value) - 1);
+        		}
+        		$('#next').val(value);
+        	}
+        	
+        	gameDetailinit();
+            
+            $.ajax({
+            	url: '/service/admin/playtime/days/game.do?id=' + value
+            }).done(function(data) {
+            	data = JSON.parse(data);
+            	gameDetailMauDataset.init();
+            	
+            	for(let i = 0; i < data.length; i++) {
+            		gameDetailMauDataset.push(data[i]);
+            	}
+            	
+            	gameDetailMauChart.destroy();
+            	gameDetailMauChart = new Chart($('#game-detail-mau-chart'), {
+            		type: 'line',
+            		data: {
+            			labels: gameDetailMauDataset.label,
+                        datasets: [
+                          {
+                            label: 'Dataset',
+                            data: gameDetailMauDataset.data,
+                        	}
+                    	]
+                	},
+                	options: {
+                   	 responsive: true,  
+                        maintainAspectRatio: false,
+                	}
+            	});
+            });
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/serach/today/game.do?type=count&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		$('#daliy-access-count-game-detail').html(data + "명");
+        	});
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/serach/today/game.do?type=sum&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		console.log(data);
+        		$('#daliy-playtime-sum-game-detail').html(data);
+        	});
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/rate/game.do?range=day&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		displayRate(data, $('#prev-day-game-access-rate-game-detail'));
+        	});
+        	
+        	$.ajax({
+        		url: '/service/admin/playtime/rate/game.do?range=month&id=' + value,
+        		type: 'GET'
+        	}).done(function(data) {
+        		displayRate(data, $('#prev-month-game-access-rate-game-detail'));
+        	});
+        });
+        
         $.ajax({
             url: '/qna/list.do?page=1',
             type: 'GET'
@@ -660,28 +1314,10 @@
                 }).done(function (data) {
                     data = JSON.parse(data);
                     makeQnAList(data.qnaList);
-                })
+                });
             });
         });
     }
-</script>
-<script tag="game">
-    $('.playtime-button').on('click', function () {
-        let url = '/playtime/sum/';
-        const id = $(this).attr('id');
-
-        if (id == 'whole') {
-            url += 'whole.do';
-        } else if (id == 'group-game') {
-            url += 'group-game.do';
-        } else if (id == 'group-gender') {
-            url += 'group-gender.do';
-        } else if (id == 'group-age') {
-            url += 'group-age.do';
-        }
-
-        console.log(url);
-    });
 </script>
 <script tage="user">
 

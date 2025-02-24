@@ -18,6 +18,9 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import Common.ConvertURL;
 import Common.PageNavi;
 import Common.Statics;
+import DAO.BoardDAO;
+import DAO.FilesDAO;
+import DAO.ReplyDAO;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.FilesDAOImpl;
 import DAOImpl.ReplyDAOImpl;
@@ -27,9 +30,9 @@ import DTO.MemberDTO;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
-	BoardDAOImpl dao = BoardDAOImpl.INSTANCE;
-	FilesDAOImpl fdao = FilesDAOImpl.INSTANCE;
-	ReplyDAOImpl rdao = ReplyDAOImpl.INSTANCE;
+	private BoardDAO dao = BoardDAOImpl.INSTANCE;
+	private FilesDAO fdao = FilesDAOImpl.INSTANCE;
+	private ReplyDAO rdao = ReplyDAOImpl.INSTANCE;
 
 	Gson g = new Gson();
 
