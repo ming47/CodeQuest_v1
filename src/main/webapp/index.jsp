@@ -38,7 +38,7 @@
 	height: 100%;
 	justify-content: center;
 	align-items: center;
-	background: url('/allback.jpg') no-repeat center;
+	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
 }
 
@@ -132,7 +132,6 @@
 /* ✅ 로그인 박스 */
 .loginbox {
 	width: 80%;
-	background: url('/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
