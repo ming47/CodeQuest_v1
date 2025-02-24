@@ -1,82 +1,82 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+   pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="EUC-KR">
-<title>È¸¿ø°Ô½ÃÆÇ</title>
+<title>íšŒì›ê²Œì‹œíŒ</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style>
 * {
-	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   box-sizing: border-box;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-	background-color: #0e0326;
-	/* ¾îµÎ¿î º¸¶ó»ö ¹è°æ */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	padding: 20px;
+   background-color: #0e0326;
+   /* ì–´ë‘ìš´ ë³´ë¼ìƒ‰ ë°°ê²½ */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   padding: 20px;
 }
 
 .container {
-	width: 100%;
-	max-width: 1000px;
-	background-color: #2b2d42;
-	/* ¾îµÎ¿î È¸»ö ¹è°æ */
-	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-	padding: 30px;
-	color: white;
+   width: 100%;
+   max-width: 1000px;
+   background-color: #2b2d42;
+   /* ì–´ë‘ìš´ íšŒìƒ‰ ë°°ê²½ */
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+   padding: 30px;
+   color: white;
 }
 
 .container>.header {
-	display: flex;
-	height: 12%;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #2b2d42;
-	/* Çì´õ ¹è°æ */
-	padding: 10px 20px;
-	border: 1px solid white;
+   display: flex;
+   height: 12%;
+   justify-content: space-between;
+   align-items: center;
+   background-color: #2b2d42;
+   /* í—¤ë” ë°°ê²½ */
+   padding: 10px 20px;
+   border: 1px solid white;
 }
 
 .container>.navi {
-	display: flex;
-	height: 5%;
-	justify-content: flex-end; /* Ç×¸ñµéÀ» ¿À¸¥ÂÊÀ¸·Î Á¤·Ä */
-	align-items: center;
-	background-color: #2b2d42;
-	/* ³×ºñ°ÔÀÌ¼Ç ¹è°æ */
-	padding: 10px 20px;
-	border: 1px solid white;
+   display: flex;
+   height: 5%;
+   justify-content: flex-end; /* í•­ëª©ë“¤ì„ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì •ë ¬ */
+   align-items: center;
+   background-color: #2b2d42;
+   /* ë„¤ë¹„ê²Œì´ì…˜ ë°°ê²½ */
+   padding: 10px 20px;
+   border: 1px solid white;
 }
 
 .header>.logo {
-	font-size: 24px;
-	font-weight: bold;
-	color: white;
+   font-size: 24px;
+   font-weight: bold;
+   color: white;
 }
 
 .header {
-	display: flex;
-	justify-content: space-between; /* ÁÂ¿ì Á¤·Ä */
-	align-items: center;
-	background-color: #2b2d42;
-	padding: 10px 20px;
-	border: 1px solid white;
+   display: flex;
+   justify-content: space-between; /* ì¢Œìš° ì •ë ¬ */
+   align-items: center;
+   background-color: #2b2d42;
+   padding: 10px 20px;
+   border: 1px solid white;
 }
 
 .header ul {
-	list-style: none;
-	display: flex;
-	gap: 15px;
-	justify-content: flex-end; /* ¿À¸¥ÂÊ Á¤·Ä */
-	margin-left: auto; /* ¿ŞÂÊ ¿©¹éÀ» ÀÚµ¿À¸·Î ¸¸µé¾î¼­ ¿À¸¥ÂÊÀ¸·Î ºÙÀ½ */
+   list-style: none;
+   display: flex;
+   gap: 15px;
+   justify-content: flex-end; /* ì˜¤ë¥¸ìª½ ì •ë ¬ */
+   margin-left: auto; /* ì™¼ìª½ ì—¬ë°±ì„ ìë™ìœ¼ë¡œ ë§Œë“¤ì–´ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ë¶™ìŒ */
 }
 
 .header ul li {
@@ -90,120 +90,121 @@ body {
 }
 
 .header ul li:hover {
-	background: #2b2d42;
+   background: #2b2d42;
 }
 
 .logbox {
-	color: #f4f4f4;
-	font-weight: bold;
-	font-size: 16px;
+   color: #f4f4f4;
+   font-weight: bold;
+   font-size: 16px;
 }
 
 table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
+   width: 100%;
+   border-collapse: collapse;
+   margin-top: 20px;
 }
 
 table th, table td {
-	padding: 10px;
-	text-align: center;
-	border: 1px solid #ddd;
-	color: white;
+   padding: 10px;
+   text-align: center;
+   border: 1px solid #ddd;
+   color: white;
 }
 
 table th {
-	background-color: #0e0326;
-	color: #fff;
+   background-color: #0e0326;
+   color: #fff;
 }
 
 table tr:nth-child(even) {
-	background-color: #0e0326;
-	/* Â¦¼ö Çà ¹è°æ»ö */
+   background-color: #0e0326;
+   /* ì§ìˆ˜ í–‰ ë°°ê²½ìƒ‰ */
 }
 
 table a {
-	color: #0e0326;
-	text-decoration: none;
-	font-weight: bold;
-	color: white;
+   color: #0e0326;
+   text-decoration: none;
+   font-weight: bold;
+   color: white;
 }
 
 table a:hover {
-	text-decoration: underline;
+   text-decoration: underline;
 }
 
 .paging {
-	cursor: pointer;
-	border: 1px solid #0e0326;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	text-align: center;
-	line-height: 30px;
-	margin: 0 5px;
-	background-color: #2b2d42;
-	transition: background-color 0.3s ease;
+   cursor: pointer;
+   border: 1px solid #0e0326;
+   width: 30px;
+   height: 30px;
+   display: inline-block;
+   text-align: center;
+   line-height: 30px;
+   margin: 0 5px;
+   background-color: #2b2d42;
+   transition: background-color 0.3s ease;
 }
 
 .paging:hover {
-	background-color: #2e0f73;
-	color: white;
+   background-color: #2e0f73;
+   color: white;
 }
 
 button {
-	padding: 10px 20px;
-	background-color: #0e0326;
-	color: white;
-	border: none; /* °æ°è¼± Á¦°Å */
-	border-radius: 5px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	margin-top: 20px; /* ¹öÆ°À» ¾Æ·¡·Î ¶ç¿ì±â */
+   padding: 10px 20px;
+   background-color: #0e0326;
+   color: white;
+   border: none; /* ê²½ê³„ì„  ì œê±° */
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   margin-top: 20px; /* ë²„íŠ¼ì„ ì•„ë˜ë¡œ ë„ìš°ê¸° */
 }
 
 button:hover {
-	background: #2b2d42;
+   background: #2b2d42;
 }
 
 #name, #title, #number, #buttonbox {
-	height: 50px;
-	color: white;
+   height: 50px;
+   color: white;
 }
 
 }
 #buttonbox {
-	display: flex;
-	justify-content: flex-start; /* ¹öÆ°À» ¿ŞÂÊÀ¸·Î Á¤·Ä */
-	align-items: center;
-	padding: 20px;
-	border: none;
+   display: flex;
+   justify-content: flex-start; /* ë²„íŠ¼ì„ ì™¼ìª½ìœ¼ë¡œ ì •ë ¬ */
+   align-items: center;
+   padding: 20px;
+   border: none;
 }
 
 .notice {
 	background-color: 'red';
 }
 
-/* ¹İÀÀÇü µğÀÚÀÎ ¼³Á¤ */
+
+/* ë°˜ì‘í˜• ë””ìì¸ ì„¤ì • */
 @media screen and (max-width: 768px) {
-	.header ul {
-		flex-direction: column;
-		align-items: center;
-	}
-	.container {
-		padding: 15px;
-	}
-	.logbox {
-		font-size: 14px;
-	}
-	.paging {
-		width: 25px;
-		height: 25px;
-		line-height: 25px;
-	}
-	button {
-		width: 100%;
-	}
+   .header ul {
+      flex-direction: column;
+      align-items: center;
+   }
+   .container {
+      padding: 15px;
+   }
+   .logbox {
+      font-size: 14px;
+   }
+   .paging {
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+   }
+   button {
+      width: 100%;
+   }
 }
 </style>
 
@@ -211,17 +212,17 @@ button:hover {
 
 <body>
 <script>
-	$(function() {
-		// ÆäÀÌÁö³×ÀÌ¼Ç Å¬¸¯ ÀÌº¥Æ®
-		$(".page").on("click", function() {
-			let pageNum = $(this).attr("page");
-			sessionStorage.setItem("last_cpage", pageNum);
-		});
-	});
+   $(function() {
+      // í˜ì´ì§€ë„¤ì´ì…˜ í´ë¦­ ì´ë²¤íŠ¸
+      $(".page").on("click", function() {
+         let pageNum = $(this).attr("page");
+         sessionStorage.setItem("last_cpage", pageNum);
+      });
+   });
 </script>
 
 	<div class="container">
-		<!-- Çì´õ -->
+		<!-- í—¤ë” -->
 		<div class="header">
 			<div class="logo">Team CodeQuest</div>
 			<ul>
@@ -236,25 +237,25 @@ button:hover {
 			</div>
 		</div>
 
-		<div class="navi">´Ô È¯¿µÇÕ´Ï´Ù</div>
+		<div class="navi">ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</div>
 
 		<div class="body">
-			<!-- °Ô½ÃÆÇ Å×ÀÌºí -->
+			<!-- ê²Œì‹œíŒ í…Œì´ë¸” -->
 			<table>
 				<tr id="name">
-					<td colspan="8">ÀÚÀ¯°Ô½ÃÆÇ</td>
+					<td colspan="8">ììœ ê²Œì‹œíŒ</td>
 				</tr>
 				<tr id="title">
-					<th style="width: 12%;">¹øÈ£</th>
-					<th style="width: 42%;">Á¦¸ñ</th>
-					<th style="width: 17%;">ÀÛ¼ºÀÚ</th>
-					<th style="width: 17%;">³¯Â¥</th>
-					<th style="width: 12%;">Á¶È¸</th>
+					<th style="width: 12%;">ë²ˆí˜¸</th>
+					<th style="width: 42%;">ì œëª©</th>
+					<th style="width: 17%;">ì‘ì„±ì</th>
+					<th style="width: 17%;">ë‚ ì§œ</th>
+					<th style="width: 12%;">ì¡°íšŒ</th>
 				</tr>
 				<c:forEach var="dto" items="${noticeList}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
+						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -265,7 +266,7 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
+						<td class="contents"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -284,7 +285,7 @@ button:hover {
 				<c:if test="${dto == null}">
 
 					<a href="/board/addform.do" method="post">
-						<button>ÀÛ¼ºÇÏ±â</button>
+						<button>ì‘ì„±í•˜ê¸°</button>
 					</a>
 				</c:if>
 
@@ -296,6 +297,7 @@ button:hover {
 </body>
 
 </html>
+
 <script>
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
@@ -307,11 +309,12 @@ button:hover {
 				location.href = url + index;
 			});
 
+
 			return span;
 		}
 
 		if (${!page.isFirst}) {
-			pageNavi.append(makeSpan('ÀÌÀü', ${page.startNavi - 1}));
+			pageNavi.append(makeSpan('ì´ì „', ${page.startNavi - 1}));
 		}
 
 		for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
@@ -319,7 +322,7 @@ button:hover {
 		}
 
 		if (${!page.isEnd}) {
-			pageNavi.append(makeSpan('´ÙÀ½', ${page.endNavi + 1}));
+			pageNavi.append(makeSpan('ë‹¤ìŒ', ${page.endNavi + 1}));
 		}
 
 		const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
@@ -332,3 +335,4 @@ button:hover {
 
 	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
 </script>
+
