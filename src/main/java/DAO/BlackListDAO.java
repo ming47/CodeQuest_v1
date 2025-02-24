@@ -17,4 +17,7 @@ public interface BlackListDAO {
 	boolean isBanned(int memberId) throws Exception;
 	
 	BlackListDTO selectBanByMmeberId(int memberId) throws Exception;
+	int countBanByMemberId(int memberId) throws Exception;
+	int deleteBanByMemberId(int memberId) throws Exception;
+	int permanentBan(BlackListDTO dto) throws Exception;
 }

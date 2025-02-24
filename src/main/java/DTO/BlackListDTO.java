@@ -11,6 +11,8 @@ public class BlackListDTO {
 	private String reason;
 	private Timestamp startDate;
 	private Timestamp endDate;
+	private int period;
+	
 	public int getBlackId() {
 		return blackId;
 	}
@@ -42,6 +44,10 @@ public class BlackListDTO {
 		this.endDate = endDate;
 	}
 	
+	public int getPeriod() {
+		return period;
+	}
+	
 	public BlackListDTO(int blackId, int memberId, String reason, Timestamp startDate, Timestamp endDate) {
 		super();
 		this.blackId = blackId;
@@ -49,6 +55,12 @@ public class BlackListDTO {
 		this.reason = reason;
 		this.startDate = startDate;
 		this.endDate = endDate;
+	}
+	
+	public BlackListDTO(int memberId, String reason, int period) {
+		this.memberId = memberId;
+		this.reason = reason;
+		this.period = period;
 	}
 	
 	public BlackListDTO() {

@@ -23,4 +23,5 @@ public interface MemberDAO {
 
 	List<MemberDTO> selectByIsBanned(boolean isBanned) throws Exception;
 	List<MemberDTO> selectAll(int page) throws Exception;
+	int getSize() throws Exception;
 }

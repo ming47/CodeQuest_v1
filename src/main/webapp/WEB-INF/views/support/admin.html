@@ -9,26 +9,28 @@
         * {
             box-sizing: border-box;
         }
+        
+
 
         .inner {
             height: 95%;
             width: 95%;
             border-radius: 10px;
-            box-shadow:2px 3px 5px 0px;
+            border: 1px solid lightgray;
         }
 
         .inner-fat {
             height: 95%;
             width: 98%;
             border-radius: 10px;
-            box-shadow:2px 3px 5px 0px;
+            border: 1px solid lightgray;
         }
 
         .inner-thin {
             height: 90%;
             width: 90%;
             border-radius: 10px;
-            box-shadow:2px 3px 5px 0px;
+            border: 1px solid lightgray;
         }
         
         .title-form {
@@ -47,7 +49,7 @@
             height: 100%;
         }
 
-        .navi {
+        .left-navi {
             width: 20%;
             position: fixed;
             left: 0px;
@@ -55,7 +57,7 @@
             background-color: lightgray;
         }
 
-        .navi-selector {
+        .left-navi-selector {
             width: 100%;
             position: relative;
         }
@@ -294,6 +296,10 @@
         .game-detail-inner-chart-contents {
         	height: 80%;
         }
+        
+        #daliy-playtime-sum-game-detail {
+        	font-weight: bolder;
+        }
 
         .board-management-inner>div {
             float: left;
@@ -324,6 +330,12 @@
         .ban-controller>div>div {
             float: left;
             height: 100%;
+        }
+        
+        .isBaaned-display {
+        	color: gray;
+        	font-size: 15px;
+        	margin-left: 20px;
         }
 
         .resent-title {
@@ -467,12 +479,12 @@
 
 <body>
     <div class="container">
-        <div class="navi">
-            <div class="navi-selector">
+        <div class="left-navi">
+            <div class="letf-navi-selector">
                 <ul>
-                    <li class="selector" value="game-dashboard">게임 대시 보드</li>
-                    <li class="selector" value="board-management">게시판 관리</li>
-                    <li class="selector" value="qna">질문글</li>
+                    <li class="left-selector" value="game-dashboard">게임 대시 보드</li>
+                    <li class="left-selector" value="board-management">게시판 관리</li>
+                    <li class="left-selector" value="qna">질문글</li>
                 </ul>
             </div>
         </div>
@@ -579,7 +591,7 @@
                                     							<div class="center-align">
                                     								<div class="inner-thin">
                                     									<div class="game-detail-inner-title title-form">금일 게임 시간 합계</div>
-                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="daliy-playtime-sum-game-detail"></div>
+                                    									<div class="game-detail-inner-contents center-align" id="daliy-playtime-sum-game-detail"></div>
                                     								</div>
                                     							</div>
                                     						</div>
@@ -614,7 +626,7 @@
             </div>
             <div class="board-management">
                 <div class="contents-form inner">
-                    <div class="title">게시판 관리</div>
+                    <div class="title title-form">게시판 관리</div>
                     <div class="contents-inner board-management-inner">
                         <div class="ban-list center-align">
                             <div class="inner">
@@ -622,20 +634,16 @@
                                     <div class="qna-list-contents-inner">
                                         <table border="1" id="member-table">
                                             <tr>
-                                                <th width="10%" height="50px">번호</th>
-                                                <th width="30%">이름</th>
-                                                <th width="30%">ID</th>
-                                                <th width="20%">가입 날짜</th>
-                                                <th width="10%">차단 여부</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5" height="95%"></td>
+                                                <th width="12%" height="50px">번호</th>
+                                                <th width="32%">닉네임</th>
+                                                <th width="33%">이메일</th>
+                                                <th width="23%">가입 날짜</th>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="page-navi-form">
-                                    <div class="page-navi-inner"></div>
+                                    <div class="page-navi-inner" id="user-page-navi"></div>
                                 </div>
                                 <div class="qna-list-controller">
                                     <div class="inner">
@@ -661,7 +669,7 @@
                             <div class="inner">
                                 <div class="user-info center-align">
                                     <div class="inner-fat">
-                                        <div class="user-info-title title">123</div>
+                                        <div class="user-info-title title title-form" id="user-nickname">123</div>
                                         <table border="1" id="user-info-table">
                                             <tr>
                                                 <th width="10%" height="50%">ID</th>
@@ -671,7 +679,7 @@
                                             </tr>
                                             <tr>
                                                 <th width="15%">가입 일자</td>
-                                                <td width="20%"></td>
+                                                <td width="20%" id="user-reg-date"></td>
                                                 <th width="15%">차단 횟수</th>
                                                 <td width="10%" id="user-ban-count"></td>
                                             </tr>
@@ -680,7 +688,7 @@
                                 </div>
                                 <div class="resent-board center-align">
                                     <div class="inner-fat">
-                                        <div class="resent-title">최근 게시글</div>
+                                        <div class="resent-title title-form">최근 게시글</div>
                                         <table border="1" id="resent-board-table"></table>
                                         <div class="page-navi-form">
                                             <div class="page-navi-inner"></div>
@@ -689,8 +697,14 @@
                                 </div>
                                 <div class="ban-list center-align">
                                     <div class="inner-fat">
-                                        <div class="ban-list-title">차단 목록</div>
-                                        <table border="1" id="ban-list-table" height="75%"></table>
+                                        <div class="ban-list-title title-form">차단 목록</div>
+                                        <table border="1" id="ban-list-table">
+                                        	<tr>
+                                                <th width="10%" height="50%">번호</th>
+                                                <th width="20%">사유</th>
+                                                <th width="70%">기간</th>
+                                            </tr>
+                                        </table>
                                         <div class="page-navi-form">
                                             <div class="page-navi-inner"></div>
                                         </div>
@@ -700,12 +714,26 @@
                                     <div class="inner-fat">
                                         <div class="ban-detail-setting">
                                             <div class="ban-reason-controller">
-                                                <select class="ban-select" id="reason-select"></select>
-                                                <input type="text" placeholder="차단 사유" disabled>
+                                                <select class="ban-select" id="reason-select">
+                                                	<option>광고</option>
+                                                	<option>분탕</option>
+                                                	<option>도배</option>
+                                                	<option>기분 나쁨</option>
+                                                	<option>영정</option>
+                                                	<option>기타</option>
+                                                </select>
+                                                <input type="text" placeholder="차단 사유" id="reason" disabled>
                                             </div>
                                             <div class="ban-end-date-controller">
-                                                <select class="ban-select" id="end-date-select"></select>
-                                                <input type="text" placeholder="차단 기간을 설정하십시오" disabled>
+                                                <select class="ban-select" id="end-date-select" disabled>
+                                                	<option value="720">30일</option>
+                                                	<option value="72">3일</option>
+                                                	<option value="168">7일</option>
+                                                	<option value="24">1시간</option>
+                                                	<option value="-1">없음</option>
+                                                	<option value="0">기타</option>
+                                                </select>
+                                                <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)" id="end-date" disabled>
                                             </div>
                                         </div>
                                         <div class="ban-button"></div>
@@ -718,7 +746,7 @@
             </div>
             <div class="qna">
                 <div class="contents-form inner">
-                    <div class="title">질문글</div>
+                    <div class="title title-form">질문글</div>
                     <div class="contents-inner qna-inner">
                         <div class="qna-list">
                             <div class="inner">
@@ -854,7 +882,7 @@ function gameDetailCahrtSet(dataset) {
 
 </script>
 <script tag="common">
-    $('.selector').on('click', function () {
+    $('.left-selector').on('click', function () {
         const select = $(this).attr('value');
         const offset = $('.' + select).offset();
 
@@ -862,7 +890,10 @@ function gameDetailCahrtSet(dataset) {
     });
 
     function makePageNavi(dto, className) {
-        $('.pageNavi').remove();
+        $('.' + className).remove();
+        $('.' + className).off('click');
+        
+        console.log(dto);
 
         const pageNavi = $('<div>').addClass('pageNavi');
         pageNavi.css({
@@ -877,7 +908,7 @@ function gameDetailCahrtSet(dataset) {
         }
 
         if (!dto.isFirst) {
-            pageNavi.append(makeSpan('이전', dto.startNavi - 1).addClass(className));
+            pageNavi.append(makeSpan('이전', dto.startNavi - 1).addClass(className).attr('tag', 'prev'));
         }
 
         for (let i = dto.startNavi; i <= dto.endNavi; i++) {
@@ -885,7 +916,7 @@ function gameDetailCahrtSet(dataset) {
         }
 
         if (!dto.isEnd) {
-            pageNavi.append(makeSpan('다음', dto.endNavi + 1).addClass(className));
+            pageNavi.append(makeSpan('다음', dto.endNavi + 1).addClass(className).attr('tag', 'next'));
         }
 
         const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
@@ -980,8 +1011,6 @@ function gameDetailCahrtSet(dataset) {
         		
         		accessCountDataset.push(dataset);
         	}
-        	
-        	console.log(accessCountDataset);
         	
         	accessCountChart = new Chart($('#access-chart'), {
                	type: 'bar',
@@ -1306,11 +1335,38 @@ function gameDetailCahrtSet(dataset) {
         });
         
         $.ajax({
+        	url: '/service/member/list.do?page=1',
+        	type: 'GET'
+        }).done(function(data) {
+        	data = JSON.parse(data);
+        	
+        	makeUserList(data.members);
+        	$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
+        	$('.user-page-navi').on('click', function() {
+        		const clicked = $(this);
+        		
+        		$.ajax({
+        			url: '/service/member/list.do?page=' + clicked.attr('value'),
+        			type: 'GET'
+        		}).done(function(data) {
+        			data = JSON.parse(data);
+        			makeUserList(data.members);
+        			console.log(clicked.attr('value'));
+        			console.log(clicked.attr('tag'));
+        		
+        			if(typeof clicked.attr('tag') != 'undefined') {
+        				console.log(1);
+        				$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
+        			}
+        		});
+        	})
+        });
+        
+        $.ajax({
             url: '/qna/list.do?page=1',
             type: 'GET'
         }).done(function (data) {
             data = JSON.parse(data);
-            console.log(data);
 
             makeQnAList(data.qnaList);
             $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
@@ -1328,7 +1384,169 @@ function gameDetailCahrtSet(dataset) {
     }
 </script>
 <script tage="user">
-
+	function makeUserList(dto) {
+		$('.user-item').remove();
+		
+		for (let i = 0; i < dto.length; i++) {
+			const data = dto[i];
+			const tr = $('<tr>').addClass('user-item');
+			
+			const nickName = $('<td>').html(data.nickName);
+			
+			tr.append($('<td>').html(data.memberId));
+			tr.append(nickName);
+			tr.append($('<td>').html(data.email));
+			tr.append($('<td>').html(data.regDate));
+			
+			$('#member-table').append(tr);
+			
+			nickName.on('click', function() {
+				setUserData(data);
+			});
+		}
+	}
+	
+	function makePageNaviAction(url, makeListFunc) {
+		const clicked = $(this);
+		
+		$.ajax({
+			url: 'url' + clicked.attr('value'),
+			type: 'GET'
+		}).done(function(data) {
+			data = JSON.parse(data);
+			makeUserList(data.members);
+			console.log(clicked.attr('value'));
+			console.log(clicked.attr('tag'));
+		
+			if(typeof clicked.attr('tag') != 'undefined') {
+				console.log(1);
+				$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
+			}
+		});
+	}
+	
+	function setUserData(item) {
+		$('.ban-button').html('');
+		
+		let button = $('<button>');
+		$('#user-nickname').html(item.nickName);
+		$('#user-id').html(item.memberId);
+		$('#user-email').html(item.email);
+		$('#user-reg-date').html(item.regDate);
+		
+		$.ajax({
+			url: '/service/member/banned/search.do?id=' + item.memberId,
+		}).done(function(data) {
+			data = JSON.parse(data);
+			
+			if(data) {
+				let detail = '(현재 차단 중 ';
+				
+				$.ajax({
+					url:'/service/member/ban/detail.do?id=' + item.memberId
+				}).done(function(data) {
+					data = JSON.parse(data);
+					console.log(data);
+					detail += '사유: ' + data.reason + "<br> 기간: ~" + data.endDate + ")";
+					
+					console.log(detail);
+					$('#user-nickname').append($('<span>').html(detail).addClass('isBaaned-display'));
+				});
+				
+				button.html('차단 해제').attr('id', 'ban-out');
+			} else {
+				button.html('차단').attr('id', 'ban');
+			}
+			
+			$('.ban-button').append(button);
+			
+			button.on('click', function() {
+				const id = $(this).attr('id');
+				
+				let message;
+				if (id == 'ban') {
+					const reason = $('#reason').val();
+					let endDate = ($('#end-date-select option:selected').val() == 0) ?
+							$('#end-date').val() : $('#end-date-select option:selected').val();
+					
+					if(reason == null || endDate == null) {
+						alert('차단 설정을 해주십시오.');
+						return;
+					}
+					
+					console.log(reason, endDate);
+					
+					$.ajax({
+						url: '/service/member/ban/add.do',
+						type: 'POST',
+						data: {
+							memberId: item.memberId,
+							reason: reason,
+							endDate: endDate
+						}
+					}).done(function(data) {
+						message = "차단되었습니다.";
+					})
+				} else {
+					$.ajax({
+						url: '/service/member/ban/delete.do?id=' + item.memberId,
+						type: 'GET'
+					}).done(function(data) {
+						message = "차단이 해제되었습니다.";
+					})
+				}
+				
+				alert(message);
+			})
+		});
+		
+		$.ajax({
+			url: '/service/member/ban/count.do?id=' + item.memberId,
+			type: 'GET'
+		}).done(function(data) {
+			$('#user-ban-count').html(data);
+		});
+		
+		$.ajax({
+			url: '/service/member/ban/list.do?id=' + item.memberId,
+			type: 'GET'	
+		}).done(function(data) {
+			data = JSON.parse(data);
+			console.log(data);
+			
+			$('.ban-list-item').remove();
+			for(let i = 0; i < data.length; i++) {				
+				const tr = $('<tr>').addClass('ban-list-item');
+				
+				tr.append($('<td>').html(data[i].blackId));
+				tr.append($('<td>').html(data[i].reason));
+				tr.append($('<td>').html(data[i].startDate + " - " + data[i].endDate));
+				
+				$('#ban-list-table').append(tr);
+			}
+			
+		});
+	}
+	
+	$('#reason-select').on('change', function() {
+		const index = $('#reason-select option').index($('#reason-select option:selected'));
+		$('#end-date-select option:eq(' + index + ')').prop("selected", true);
+		
+		const endDate = $('#end-date-select option:selected').val();
+		
+		$('#reason').val($('#reason-select option:selected').html());
+		$('#end-date').val($('#end-date-select option:selected').html());
+		
+		if($('#end-date').val() == "기타") {
+			$('#end-date').val('');
+			$('#end-date').focus();
+		}
+		
+		if(endDate == 0) {
+			$('#reason').attr('disabled', false);
+			$('#end-date').attr('disabled', false);
+		}
+	})
 </script>
 <script tag="qna">
     $('.check-response-yn').on('click', function () {

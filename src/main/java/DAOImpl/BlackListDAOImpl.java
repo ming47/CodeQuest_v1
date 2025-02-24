@@ -36,12 +36,12 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public int insert(BlackListDTO dto) throws Exception {
-		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID, END_DATE) VALUES(BLACK_ID_SEQ.NEXTVAL, ?, ?)";
+		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID, END_DATE) VALUES(BLACK_ID_SEQ.NEXTVAL, ?, SYSTIMESTAMP + NUMTODSINTERVAL(?, 'HOUR'))";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, dto.getMemberId());
-			pstat.setTimestamp(2, dto.getEndDate());
+			pstat.setInt(2, dto.getPeriod());
 			
 			return pstat.executeUpdate();
 		}
@@ -115,7 +115,7 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public BlackListDTO selectBanByMmeberId(int memberId) throws Exception {
-		String sql = "SELECT * FROM BLACK_LIST WHERE MEMBER_ID = ? ORDER BY REG_DATE";
+		String sql = "SELECT * FROM BLACK_LIST WHERE MEMBER_ID = ? ORDER BY END_DATE DESC";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -130,6 +130,46 @@ public enum BlackListDAOImpl implements BlackListDAO {
 					throw new IllegalArgumentException(memberId + "는 차단 대상이 아닙니다.");
 				}
 			}
+		}
+	}
+
+	@Override
+	public int countBanByMemberId(int memberId) throws Exception {
+		String sql = "SELECT COUNT(*) FROM BLACK_LIST WHERE MEMBER_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, memberId);
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				rs.next();
+				
+				return rs.getInt(1);
+			}
+		}
+	}
+
+	@Override
+	public int deleteBanByMemberId(int memberId) throws Exception {
+		String sql = "DELETE FROM BLACK_LIST WHERE MEMBER_ID = ? AND END_DATE >= SYSTIMESTAMP";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, memberId);
+			
+			return pstat.executeUpdate();
+		}
+	}
+
+	@Override
+	public int permanentBan(BlackListDTO dto) throws Exception {
+		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID) VALUES (BLACK_ID_SEQ.NEXTVAL, ?)";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, dto.getMemberId());
+			
+			return pstat.executeUpdate();
 		}
 	}
 
