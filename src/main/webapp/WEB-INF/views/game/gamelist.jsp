@@ -215,7 +215,7 @@
             <!-- ✅ 로그인 정보 -->
             <c:if test="${member.loginId != null}">
                 <div class="logbox-container">
-                    <%@ include file="webapp\logbox.jsp" %>
+                    <jsp:include page="/logbox.jsp" />
                 </div>
             </c:if>
         </div>
