@@ -111,10 +111,10 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 
-	public boolean idVali(String id) throws Exception {// ID검증
-		String sql = "select login_id from members where login_id = ?";
+	public boolean getMemberByEmail(String inputEmail) throws Exception { // EMAIL검증
+		String sql = "select * from members where email = ? and password is null";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-			pstat.setString(1, id);
+			pstat.setString(1, inputEmail);
 			try (ResultSet rs = pstat.executeQuery()) {
 				return rs.next();
 			}
