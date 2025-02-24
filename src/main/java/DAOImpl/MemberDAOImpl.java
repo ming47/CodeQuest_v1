@@ -27,7 +27,7 @@ public enum MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public List<MemberDTO> selectAll() throws Exception {
-		String sql = "select * from members";
+		String sql = "select * from members where role='user'";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			try (ResultSet rs = pstat.executeQuery()) {
@@ -318,7 +318,7 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 	
 	public int getSize() throws Exception {
-		String sql = "SELECT COUNT(*) FORM MEMBERS";
+		String sql = "SELECT COUNT(*) FROM MEMBERS WHERE ROLE='user'";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -331,7 +331,7 @@ public enum MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public List<MemberDTO> selectAll(int page) throws Exception {
-		String sql = "SELECT * FROM (SELECT M.*, ROW_NUMBER() OVER(ORDER BY MEMBER_ID) AS RNUM FROM MEMBERS M) A WHERE A.RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT M.*, ROW_NUMBER() OVER(ORDER BY MEMBER_ID) AS RNUM FROM MEMBERS M WHERE ROLE='user') A WHERE A.RNUM BETWEEN ? AND ?";
 		
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
 		int endIndex = startIndex + Statics.recordCountPerPage - 1;

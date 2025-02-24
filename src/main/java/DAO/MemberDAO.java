@@ -25,4 +25,5 @@ public interface MemberDAO {
 	MemberDTO easyLogin(String inputEmail) throws Exception; //간편로그인 처리
 
 	List<MemberDTO> selectAll(int page) throws Exception;
+	int getSize() throws Exception;
 }
