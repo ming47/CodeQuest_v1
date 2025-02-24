@@ -134,7 +134,7 @@ public class BoardController extends HttpServlet {
 					cpage = pageTotalCount;
 				}
 
-				List<BoardDTO>searchResultList = dao.selectBoardList(searchField, searchText);
+				List<BoardDTO>searchResultList = dao.selectBoardList(searchField, searchText,cpage);
 
 				request.setAttribute("list",searchResultList);
 				

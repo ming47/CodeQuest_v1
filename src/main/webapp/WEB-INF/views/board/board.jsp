@@ -11,42 +11,48 @@
 
 <title>게시판리스트</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
+	rel="stylesheet">
 <style>
 * {
 	box-sizing: border-box;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
-	background-color: #0e0326;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	padding: 20px;
-}
-
 .container {
-	max-height: 1024px;
-	max-width: 2000px;
-	background-color: #2b2d42;
+	display: flex;
+	flex-direction: column; /* 헤더를 위에 두기 위해 column 방향으로 설정 */
+	align-items: center;
+	max-height: 2000px;
+	max-width: 1500px;
+	background: url('/allback.jpg') no-repeat center; background-size :
+	cover;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	padding: 30px;
 	color: white;
+	background-size: cover;
 }
 
-.container>.header {
-	display: flex;
-	height: 12%;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #2b2d42;
-	padding: 10px 20px;
-	border: 1px solid white;
-	height: 10%;
+.header {
+
+    top: 0;  /* 맨 위에 붙이기 */
+    left: 0;
+
+	background: #1e201d;
+	color: #b4c28a;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	width: 100%;
+		position: relative;
 }
 
 .container>.navi {
+	position: relative;
 	display: flex;
 	height: 5%;
 	align-items: center;
@@ -62,6 +68,8 @@ body {
 }
 
 .header {
+
+
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -99,25 +107,25 @@ body {
 }
 
 table {
-	width: 100%;
+	max-width: 1500px;
 	border-collapse: collapse;
 	margin-top: 20px;
+	min-width: 60%;
+	background-color: #868686;
+	border: 1px solid #fff;
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
-	border: 1px solid #ddd;
 	color: white;
+	border: 1px solid #fff;
 }
 
 table th {
 	background-color: #0e0326;
 	color: #fff;
-}
-
-table tr:nth-child(even) {
-	background-color: #0e0326;
+	empty-cells: hide;
 }
 
 table a {
@@ -125,6 +133,7 @@ table a {
 	text-decoration: none;
 	font-weight: bold;
 	color: white;
+	font-color: white;
 }
 
 table a:hover {
@@ -142,6 +151,38 @@ table a:hover {
 	margin: 0 5px;
 	background-color: #2b2d42;
 	transition: background-color 0.3s ease;
+}
+/* ✅ 로그인 박스 */
+.loginbox {
+	width: 80%;
+	background: url('/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	margin-top: 80px;
+	background: url('/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	margin-top: 80px;
+	margin-right: 75px;
+}
+
+/* ✅ 로그인 버튼 및 입력 필드 배치 */
+.loginbox h2 {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 10px;
+	color: #2f2b2b;
 }
 
 .paging:hover {
@@ -221,34 +262,42 @@ button:hover {
 	<div class="container">
 
 
-
-		<div class="header" meta name="viewport">
+		<!-- index 헤더 가져옴 -->
+		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
 					<li><a href="/">Home</a></li>
 					<li><a href="/game/list.do">Service</a></li>
 					<li><a href="/board/list.do">Board</a></li>
-					<li><a href="/service/list.do">Service</a></li>
+					<c:choose>
+						<c:when test="${member.role == 'admin'}">
+							<a href="/service/admin/main.do">
+						</c:when>
+						<c:otherwise>
+							<a href="/service/qna/addForm.do">
+						</c:otherwise>
+					</c:choose>
+					Service
+					</a>
+					</li>
 				</ul>
-
-
 			</div>
-
-			<c:if test="${member.loginId != null}">
-				<div class="logbox-container">
-
-					<%@ include file="/logbox.jsp"%>
-
-				</div>
-			</c:if>
 		</div>
+		
+
 
 
 
 		<div class="body">
 
+<c:if test="${member.loginId != null}">
+			<div class="logbox-container">
 
+				<%@ include file="/logbox.jsp"%>
+
+			</div>
+		</c:if>
 			<table>
 				<tr id="name">
 					<td colspan="8">자유게시판</td>
@@ -290,19 +339,20 @@ button:hover {
 
 
 				<form method="get" name="search" action="/board/search.do">
-	
-						<tr>
-							<td><select class="form-control" name="searchField">
-									<option value="0">선택</option>
-									<option value="schTitle">제목</option>
-									<option value="schWriter">작성자</option>
-							</select></td>
-							<td><input type="text" class="form-control"
-								placeholder="검색어 입력" name="searchText" maxlength="100">
-							</td>
-							<td><button type="submit" class="btn btn-success">검색</button></td>
-						</tr>
-			
+				<tr>
+
+					<td><select class="form-control" name="searchField">
+							<option class="choice" value="0">선택</option>
+							<option value="schTitle">제목</option>
+							<option value="schWriter">작성자</option>
+					</select></td>
+					<td class="searchtd"><input type="text" class="form-control"
+						placeholder="검색어 입력" name="searchText" maxlength="100"></td>
+					<td><button type="submit" class="btn btn-success">검색</button></td>
+					<td></td>
+					<td></td>
+				</tr>
+
 				</form>
 
 			</table>
@@ -367,13 +417,30 @@ button:hover {
 
 	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
 	
-	
-    $(".writebtn").on("click", function() {
+	 $(document).ready(function() {
+	        $('form[name="search"]').submit(function(event) {
+	            let searchField = $('select[name="searchField"]').val(); 
 
-    	if (!member.memberId || Master !== "admin") {
-               alert("회원만 작성이 가능합니다")
-                    
-    	            }
-    	})
+	            if (searchField === "0") {
+	                alert("옵션을 선택해주세요!"); 
+	                event.preventDefault(); // 폼 제출 방지
+	             
+	            }
+	        });
+	    });
+	 $(document).ready(function() {
+		    $(".writebtn").on("click", function(event) {
+		        let isLoggedIn = "${member.loginId}" !== ""; 
+
+		        if (!isLoggedIn) {
+		            alert("회원만 글쓰기가 가능합니다.");
+		            event.preventDefault(); // 페이지 이동 방지
+		            return false;
+		        }
+		    });
+		});
+	 
+	 
+
 </script>
 

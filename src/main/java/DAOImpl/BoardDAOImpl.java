@@ -23,6 +23,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/orcl");
 		return ds.getConnection();
 	}
+
 	@Override
 	public List<BoardDTO> selectTop5Boardlist() throws Exception {// index 최근게시물 뽑는 메서드
 		String sql = "select * from board b inner join members m "
@@ -51,6 +52,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
+
 	@Override
 	public List<BoardDTO> selectAll() throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id";
@@ -78,21 +80,33 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
-@Override
-	public List<BoardDTO> selectBoardList(String searchField, String searchText) throws Exception {
-		String sql = "select * from board b inner join members m on b.member_id = m.member_id where";
 
+	@Override
+	public List<BoardDTO> selectBoardList(String searchField, String searchText, int page) throws Exception {
+		String insertString = "";
 		if (searchField.equals("schTitle")) {
-			sql += " b.title like ? ";
-
+			insertString = " title like ? ";
+			
 		}
 		if (searchField.equals("schWriter")) {
-			sql += " m.nickname like ?";
-
+			insertString = " nickname like ?";			
 		}
+		
+		String sql = "select * from(select a.*, ROW_NUMBER() OVER (ORDER BY board_id DESC) AS rnum "
+				+ "from (select * from board b inner join members m on b.member_id = m.member_id where role='user' AND" + insertString + ") a) WHERE rnum BETWEEN ? and ?";
 
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > searchListgetSize(searchField,searchText)) ? searchListgetSize(searchField,searchText) : endIndex;
+		//삼항연사자 -> 조건 ? 참일경우 실행할 내용 : 거짓일경우 실행할 내용;
+		try (Connection con = getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+		
 			pstat.setString(1, "%" + searchText + "%"); //
+			pstat.setInt(2, startIndex);
+			pstat.setInt(3, endIndex);
+	
 
 			try (ResultSet rs = pstat.executeQuery()) {
 				List<BoardDTO> dto = new ArrayList<BoardDTO>();
@@ -116,7 +130,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
-@Override
+
 	public BoardDTO selectById(int seq) throws Exception {
 		String sql = "	select * from board b inner join members m " + "on b.member_id = m.member_id where board_id= ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -146,6 +160,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
+
 	@Override
 	public int getSize() throws Exception {
 		String sql = "select count(*) from board b inner join members m on b.member_id = m.member_id where role = 'user'";
@@ -156,32 +171,33 @@ public enum BoardDAOImpl implements BoardDAO {
 			return rs.getInt(1);
 		}
 	}
+
 	@Override
 	public int searchListgetSize(String searchField, String searchText) throws Exception {
 		String sql = "select count(*) from board b inner join members m on b.member_id = m.member_id where";
-		if(searchField.equals("schTitle")) {
-            sql += " b.title like ? ";
-                
-         }
-         if(searchField.equals("schWriter")) {
-            sql += " m.nickname like ?";
-          
-         }
-         
-		try (Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql)){
-				
-					 pstat.setString(1, "%" + searchText + "%");
+		if (searchField.equals("schTitle")) {
+			sql += " b.title like ? ";
 
-				        try (ResultSet rs = pstat.executeQuery()) {
-			
-			       rs.next();
-			
-			 
-			return rs.getInt(1);}
-				
+		}
+		if (searchField.equals("schWriter")) {
+			sql += " m.nickname like ?";
+
+		}
+
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+
+			pstat.setString(1, "%" + searchText + "%");
+
+			try (ResultSet rs = pstat.executeQuery()) {
+
+				rs.next();
+
+				return rs.getInt(1);
+			}
+
 		}
 	}
+
 	@Override
 	public int deleteById(int boardId) throws Exception {
 		String sql = "delete from board where board_id = ?";
