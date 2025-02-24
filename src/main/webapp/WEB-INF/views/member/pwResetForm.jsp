@@ -87,7 +87,8 @@
         <form action="/member/sendResetEmail.do" method="post" id="frm">
             <input type="text" name="email" id="email" placeholder="재설정할 이메일을 작성해주세요."> <br>
             <span id="result_email"></span>
-            <button id="mailsend">인증 메일 전송</button>
+            <button id="mailsend" type="button">인증 메일 전송</button>
+            <input type="hidden" name="emailDupli" id="emailDupli">
         </form>
     </div>
     </c:when>
@@ -112,6 +113,7 @@
 	<script>
 	let email_val = false;
 	let auth_val = false;
+	let dupl_email = false;
 
 	$("#email").on("keyup", function() {
 	    $.ajax({
@@ -123,10 +125,10 @@
 	        method : "GET",
 	        dataType : "text"
 	    }).done(function(resp) {
+	    	console.log(resp);
 	        if (resp == "exist") {
 	        	$("#result_email").html("");
 	            email_val = true;
-	            
 	        } else {
 	            $("#result_email").css({
 	                "color" : "red",
@@ -140,11 +142,29 @@
 	    });
 	});
 
-	$("#frm").on("submit", function () {
-	    if (email_val === false) {
+	$("#mailsend").on("click", function () {
+	    if (email_val == false) {
 	        alert("일치하는 이메일이 없어 인증메일을 전송할 수 없습니다.");
 	        return false;
 	    }
+	    $.ajax({
+	        url : "/member/emailDuplCheck.do",
+	        data : {
+	            email : $("#email").val()
+	        },
+	        method : "GET",
+	        dataType : "text"
+	    }).done(function(resp) {
+	        if (resp == "true") {
+	        	alert("간편로그인한 계정은 비밀번호 재설정을 할수없습니다.");
+	        }
+	        else {
+			    $('#frm').submit();
+	        }
+	    
+	    }).fail(function(xhr, status, error) {
+	        console.error("AJAX 요청 실패:", error);
+	    });
 	});
 	
 	$("#auth").on("focusout", function() {
@@ -203,9 +223,7 @@
 	    	alert("인증코드가 일치하지 않습니다.");
 	    	return false;
 	    }
-	    
 	});
-	
 	
 	</script>
 </body>

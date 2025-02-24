@@ -38,7 +38,7 @@
 	height: 100%;
 	justify-content: center;
 	align-items: center;
-	background: url('/allback.jpg') no-repeat center;
+	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
 }
 
@@ -132,7 +132,6 @@
 /* ✅ 로그인 박스 */
 .loginbox {
 	width: 80%;
-	background: url('/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
@@ -414,18 +413,16 @@
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
 					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/game/list.do">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
 					<c:choose>					
 						<c:when test="${member.role == 'admin'}">
-							<a href="/service/admin/main.do">
+							<li><a href="/service/admin/main.do">Service</a></li>
 					 	</c:when>
 					 	<c:otherwise>					 	
-							<a href="/service/qna/addForm.do">
+							<li><a href="/service/qna/addForm.do">Service</a></li>
 					 	</c:otherwise>
 					</c:choose>
-						Service</a>
-					</li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
