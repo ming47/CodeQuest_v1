@@ -247,7 +247,6 @@ window.onload = function(){
            }
        });
 
-       // 폼 제출 이벤트
        $("#frm").on("submit", function(e) {
            e.preventDefault();
            
@@ -256,8 +255,7 @@ window.onload = function(){
                alert("댓글을 입력하세요");
                return false;
            }
-           
-           // 유효한 입력값이 있을 때만 폼 제출
+
            this.submit();
        });
 	   
