@@ -10,18 +10,30 @@
             box-sizing: border-box;
         }
 
-        div {
-            border: 1px solid black;
-        }
-
         .inner {
             height: 95%;
             width: 95%;
+            border-radius: 10px;
+            box-shadow:2px 3px 5px 0px;
         }
 
         .inner-fat {
             height: 95%;
             width: 98%;
+            border-radius: 10px;
+            box-shadow:2px 3px 5px 0px;
+        }
+
+        .inner-thin {
+            height: 90%;
+            width: 90%;
+            border-radius: 10px;
+            box-shadow:2px 3px 5px 0px;
+        }
+        
+        .title-form {
+        	background-color: lightgray;
+        	border-radius: 10px 10px 0 0;
         }
 
         .container {
@@ -40,6 +52,7 @@
             position: fixed;
             left: 0px;
             top: 0px;
+            background-color: lightgray;
         }
 
         .navi-selector {
@@ -82,11 +95,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .contents>div>div {
-            height: 95%;
-            width: 95%;
         }
 
         .center-align {
@@ -470,38 +478,38 @@
         </div>
         <div class="contents">
             <div class="game-dashboard">
-                <div class="contents-form">
-                    <div class="title">게임 대시보드</div>
+                <div class="contents-form inner">
+                    <div class="title title-form">게임 대시보드</div>
                     <div class="contents-inner game-dashboard-inner">
                         <div class="game-selector">
                             <div class="game-selector-inner inner">
                             	<div class="display-info center-align">
-                            		<div class="inner">
-                            			<div class="display-info-title">금일 접속자 수</div>
+                            		<div class="inner-thin">
+                            			<div class="display-info-title title-form">금일 접속자 수</div>
                             			<div class="display-info-contents center-align" id="today-access-count"></div>
                             		</div>
                             	</div>
                             	<div class="display-info center-align">
-                            		<div class="inner">
-                            			<div class="display-info-title">금일 게임 시간 합계</div>
+                            		<div class="inner-thin">
+                            			<div class="display-info-title title-form">금일 게임 시간 합계</div>
                             			<div class="display-info-contents center-align" id="today-sum-playtime"></div>
                             		</div>
                             	</div>
                             	<div class="display-info center-align">
-                            		<div class="inner">
-                            			<div class="display-info-title">금일 게임 시간 평균</div>
+                            		<div class="inner-thin">
+                            			<div class="display-info-title title-form">금일 게임 시간 평균</div>
                             			<div class="display-info-contents center-align" id="today-avg-playtime"></div>
                             		</div>
                             	</div>
                             	<div class="display-info center-align">
-                            		<div class="inner">
-                            			<div class="display-info-title">전날 이용자 증감률</div>
+                            		<div class="inner-thin">
+                            			<div class="display-info-title title-form">전날 이용자 증감률</div>
                             			<div class="display-info-contents center-align" id="prev-day-access-count-rate"></div>
                             		</div>
                             	</div>
                             	<div class="display-info center-align">
-                            		<div class="inner">
-                            			<div class="display-info-title">전달 이용자 증감률</div>
+                            		<div class="inner-thin">
+                            			<div class="display-info-title title-form">전달 이용자 증감률</div>
                             			<div class="display-info-contents center-align" id="prev-month-access-count-rate"></div>
                             		</div>
                             	</div>		
@@ -511,7 +519,7 @@
                             <div class="detail-dashboard-inner">
                                 <div class="access-count-display center-align">
                                     <div class="access-count-diplay-inner inner-fat">
-                                        <div class="access-count-title">접속자 추이</div>
+                                        <div class="access-count-title title-form">접속자 추이</div>
                                         <div class="access-count-contents">
                                         	<div class="access-count">                                        	
                                             	<canvas id="access-chart"></canvas>
@@ -525,7 +533,7 @@
                                 <div class="detail-dashborad-bottom">
                                     <div class="playtime-display center-align">
                                         <div class="playtime-inner inner">
-                                            <div class="playtime-title">게임 이용 시간</div>
+                                            <div class="playtime-title title-form">게임 이용 시간</div>
                                             <div class="playtime-button-form">
                                                 <button class="playtime-button" id="group-game">게임별</button>
                                                 <button class="playtime-button" id="group-gender">성별별</button>
@@ -541,21 +549,21 @@
                                     </div>
                                     <div class="detail-dashboard-bottom-right center-align">
                                     	<div class="game-detail-display inner">
-                                    		<div class="game-detail-display-title title">게임 상세</div>
+                                    		<div class="game-detail-display-title title title-form">게임 상세</div>
                                     		<div class="game-detail-display-contents">
                                     			<div class="dashboard-selector center-align">
                                     				<button id="prev" class="game-detail-get" value="800006"><</button>
                                     			</div>
                                     			<div class="game-detail center-align">
                                     				<div class="inner">
-                                    					<div class="game-detail-title">
+                                    					<div class="game-detail-title title-form">
                                     						<span id="game-title">대충 게임 이름</span>
                                     						<span id="game-id">(ID: 800001)</span>
                                     					</div>
                                     					<div class="game-detail-contents">
                                     						<div class="game-detail-daliy-access center-align">
-                                    							<div class="inner-fat">
-                                    								<div class="game-detail-inner-title">일주일간 유저 수 추이</div>
+                                    							<div class="inner">
+                                    								<div class="game-detail-inner-title title-form">일주일간 유저 수 추이</div>
                                     								<div class="game-detail-inner-chart-contents">
                                     									<canvas id="game-detail-mau-chart"></canvas>
                                     								</div>
@@ -563,28 +571,28 @@
                                     						</div>
                                     						<div class="game-detail-info">
                                     							<div class="center-align">
-                                    								<div class="inner">
-                                    									<div class="game-detail-inner-title">금일 유저 수</div>
+                                    								<div class="inner-thin">
+                                    									<div class="game-detail-inner-title title-form">금일 유저 수</div>
                                     									<div class="game-detail-inner-contents display-info-contents center-align" id="daliy-access-count-game-detail"></div>
                                     								</div>
                                     							</div>
                                     							<div class="center-align">
-                                    								<div class="inner">	
-                                    									<div class="game-detail-inner-title">금일 게임 시간 합계</div>
+                                    								<div class="inner-thin">
+                                    									<div class="game-detail-inner-title title-form">금일 게임 시간 합계</div>
                                     									<div class="game-detail-inner-contents display-info-contents center-align" id="daliy-playtime-sum-game-detail"></div>
                                     								</div>
                                     							</div>
                                     						</div>
                                     						<div class="game-detail-info">
                                     							<div class="center-align">
-                                    								<div class="inner">
-                                    									<div class="game-detail-inner-title">전날 이용자 증감률</div>
+                                    								<div class="inner-thin">
+                                    									<div class="game-detail-inner-title title-form">전날 이용자 증감률</div>
                                     									<div class="game-detail-inner-contents display-info-contents center-align" id="prev-day-game-access-rate-game-detail"></div>
                                     								</div>
                                     							</div>
                                     							<div class="center-align">
-                                    								<div class="inner">
-                                    									<div class="game-detail-inner-title">전달 이용자 증감률</div>
+                                    								<div class="inner-thin">
+                                    									<div class="game-detail-inner-title title-form">전달 이용자 증감률</div>
                                     									<div class="game-detail-inner-contents display-info-contents center-align" id="prev-month-game-access-rate-game-detail"></div>
                                     								</div>
                                     							</div>
@@ -605,7 +613,7 @@
                 </div>
             </div>
             <div class="board-management">
-                <div class="contents-form">
+                <div class="contents-form inner">
                     <div class="title">게시판 관리</div>
                     <div class="contents-inner board-management-inner">
                         <div class="ban-list center-align">
@@ -709,7 +717,7 @@
                 </div>
             </div>
             <div class="qna">
-                <div class="contents-form">
+                <div class="contents-form inner">
                     <div class="title">질문글</div>
                     <div class="contents-inner qna-inner">
                         <div class="qna-list">
