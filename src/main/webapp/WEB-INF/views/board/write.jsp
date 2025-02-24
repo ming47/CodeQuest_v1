@@ -145,18 +145,18 @@ textarea {
 }
 
 .button {
-	background-color: #1d1f30; /* 남색 */
-	color: white;
-	border: none;
-	padding: 14px 22px;
-	border-radius: 8px;
-	font-size: 16px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	width: 48%;
-	margin-top: 10px;
-	text-align: center;
-	display: inline-block; /* inline-block으로 버튼들이 가로로 정렬될 수 있도록 */
+   background-color: #1d1f30; /* 남색 */
+   color: white;
+   border: none;
+   padding: 14px 22px;
+   border-radius: 8px;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   width: 48%;
+   margin-top: 10px;
+   text-align: center;
+   display: inline-block; /* inline-block으로 버튼들이 가로로 정렬될 수 있도록 */
 }
 
 button:hover {
@@ -224,6 +224,7 @@ a button:hover {
    background-color: #1f2335 !important; 
    color: white !important;
 }
+
 </style>
 </head>
 <body>

@@ -93,6 +93,63 @@ public class BoardController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
 			}
+			else if (cmd.equals("/board/mainlist.do")) {// 게시글 목록 출력
+
+
+				List<BoardDTO> list = dao.selectTop5Boardlist();
+				request.setAttribute("list", list);//index에서 foreach로 list 풀기
+				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+
+			}
+			
+			
+			else if (cmd.equals("/board/search.do")) { // 검색 게시물 
+
+				String scpage = (String) request.getParameter("cpage");
+				 String searchField = "";
+					String searchText = "";
+					
+					
+				searchField = (String)request.getParameter("searchField");
+				searchText = (String)request.getParameter("searchText");
+				
+				
+				if (scpage == null || scpage.equals("null")) {
+					scpage = "1";
+				}
+				int cpage = Integer.parseInt(scpage);
+
+				int recordTotalCount = dao.getSize();
+
+				int pageTotalCount = 0;
+				if (recordTotalCount % Statics.recordCountPerPage > 0) {
+					pageTotalCount = recordTotalCount / Statics.recordCountPerPage + 1;
+				} else {
+					pageTotalCount = recordTotalCount / Statics.recordCountPerPage;
+				}
+
+				if (cpage < 1) {
+					cpage = 1;
+				} else if (cpage > pageTotalCount) {
+					cpage = pageTotalCount;
+				}
+
+				List<BoardDTO>searchResultList = dao.selectBoardList(searchField, searchText,cpage);
+
+				request.setAttribute("list",searchResultList);
+				
+
+				request.setAttribute("cpage", cpage);
+				PageNavi pageNavi = new PageNavi(cpage, dao.searchListgetSize(searchField,searchText));
+				request.setAttribute("page", pageNavi.generate());
+
+
+				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+
+	
+			
+			}
+			
 
 			else if (cmd.equals("/board/detail.do")) { // 상세게시물
 

@@ -1,82 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-<meta charset="EUC-KR">
-<title>È¸¿ø°Ô½ÃÆÇ</title>
+
+<meta charset="UTF-8">
+
+<title>ê²Œì‹œíŒë¦¬ìŠ¤íŠ¸</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
+	rel="stylesheet">
 <style>
 * {
-   box-sizing: border-box;
-   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-   background-color: #0e0326;
-   /* ¾îµÎ¿î º¸¶ó»ö ¹è°æ */
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100vh;
-   padding: 20px;
+	box-sizing: border-box;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {
-   width: 100%;
-   max-width: 1000px;
-   background-color: #2b2d42;
-   /* ¾îµÎ¿î È¸»ö ¹è°æ */
-   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-   padding: 30px;
-   color: white;
-}
-
-.container>.header {
-   display: flex;
-   height: 12%;
-   justify-content: space-between;
-   align-items: center;
-   background-color: #2b2d42;
-   /* Çì´õ ¹è°æ */
-   padding: 10px 20px;
-   border: 1px solid white;
-}
-
-.container>.navi {
-   display: flex;
-   height: 5%;
-   justify-content: flex-end; /* Ç×¸ñµéÀ» ¿À¸¥ÂÊÀ¸·Î Á¤·Ä */
-   align-items: center;
-   background-color: #2b2d42;
-   /* ³×ºñ°ÔÀÌ¼Ç ¹è°æ */
-   padding: 10px 20px;
-   border: 1px solid white;
-}
-
-.header>.logo {
-   font-size: 24px;
-   font-weight: bold;
-   color: white;
+	display: flex;
+	flex-direction: column; /* í—¤ë”ë¥¼ ìœ„ì— ë‘ê¸° ìœ„í•´ column ë°©í–¥ìœ¼ë¡œ ì„¤ì • */
+	align-items: center;
+	max-height: 2000px;
+	max-width: 1500px;
+	background: url('/allback.jpg') no-repeat center; background-size :
+	cover;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	color: white;
+	background-size: cover;
 }
 
 .header {
-   display: flex;
-   justify-content: space-between; /* ÁÂ¿ì Á¤·Ä */
-   align-items: center;
-   background-color: #2b2d42;
-   padding: 10px 20px;
-   border: 1px solid white;
+
+    top: 0;  /* ë§¨ ìœ„ì— ë¶™ì´ê¸° */
+    left: 0;
+
+	background: #1e201d;
+	color: #b4c28a;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	width: 100%;
+		position: relative;
+}
+
+.container>.navi {
+	position: relative;
+	display: flex;
+	height: 5%;
+	align-items: center;
+	background-color: #2b2d42;
+	padding: 10px 20px;
+	border: 1px solid white;
+}
+
+.header>.logo {
+	font-size: 24px;
+	font-weight: bold;
+	color: white;
+}
+
+.header {
+
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #2b2d42;
+	padding: 10px 20px;
+	border: 1px solid white;
 }
 
 .header ul {
-   list-style: none;
-   display: flex;
-   gap: 15px;
-   justify-content: flex-end; /* ¿À¸¥ÂÊ Á¤·Ä */
-   margin-left: auto; /* ¿ŞÂÊ ¿©¹éÀ» ÀÚµ¿À¸·Î ¸¸µé¾î¼­ ¿À¸¥ÂÊÀ¸·Î ºÙÀ½ */
+	list-style: none;
+	display: flex;
+	gap: 15px;
+	justify-content: flex-end;
+	margin-left: auto;
 }
 
 .header ul li {
@@ -90,172 +97,222 @@ body {
 }
 
 .header ul li:hover {
-   background: #2b2d42;
+	background: #2b2d42;
 }
 
 .logbox {
-   color: #f4f4f4;
-   font-weight: bold;
-   font-size: 16px;
+	color: #f4f4f4;
+	font-weight: bold;
+	font-size: 16px;
 }
 
 table {
-   width: 100%;
-   border-collapse: collapse;
-   margin-top: 20px;
+	max-width: 1500px;
+	border-collapse: collapse;
+	margin-top: 20px;
+	min-width: 60%;
+	background-color: #868686;
+	border: 1px solid #fff;
 }
 
 table th, table td {
-   padding: 10px;
-   text-align: center;
-   border: 1px solid #ddd;
-   color: white;
+	padding: 10px;
+	text-align: center;
+	color: white;
+	border: 1px solid #fff;
 }
 
 table th {
-   background-color: #0e0326;
-   color: #fff;
-}
-
-table tr:nth-child(even) {
-   background-color: #0e0326;
-   /* Â¦¼ö Çà ¹è°æ»ö */
+	background-color: #0e0326;
+	color: #fff;
+	empty-cells: hide;
 }
 
 table a {
-   color: #0e0326;
-   text-decoration: none;
-   font-weight: bold;
-   color: white;
+	color: #0e0326;
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+	font-color: white;
 }
 
 table a:hover {
-   text-decoration: underline;
+	text-decoration: underline;
 }
 
 .paging {
-   cursor: pointer;
-   border: 1px solid #0e0326;
-   width: 30px;
-   height: 30px;
-   display: inline-block;
-   text-align: center;
-   line-height: 30px;
-   margin: 0 5px;
-   background-color: #2b2d42;
-   transition: background-color 0.3s ease;
+	cursor: pointer;
+	border: 1px solid #0e0326;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	text-align: center;
+	line-height: 30px;
+	margin: 0 5px;
+	background-color: #2b2d42;
+	transition: background-color 0.3s ease;
+}
+/* âœ… ë¡œê·¸ì¸ ë°•ìŠ¤ */
+.loginbox {
+	width: 80%;
+	background: url('/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	margin-top: 80px;
+	background: url('/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	margin-top: 80px;
+	margin-right: 75px;
+}
+
+/* âœ… ë¡œê·¸ì¸ ë²„íŠ¼ ë° ì…ë ¥ í•„ë“œ ë°°ì¹˜ */
+.loginbox h2 {
+	font-family: "Jua", serif;
+	font-weight: 400;
+	font-style: normal;
+	margin: 10px;
+	color: #2f2b2b;
 }
 
 .paging:hover {
-   background-color: #2e0f73;
-   color: white;
+	background-color: #2e0f73;
+	color: white;
 }
 
 button {
-   padding: 10px 20px;
-   background-color: #0e0326;
-   color: white;
-   border: none; /* °æ°è¼± Á¦°Å */
-   border-radius: 5px;
-   cursor: pointer;
-   transition: background-color 0.3s ease;
-   margin-top: 20px; /* ¹öÆ°À» ¾Æ·¡·Î ¶ç¿ì±â */
+	padding: 10px 20px;
+	background-color: #0e0326;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-top: 20px;
 }
 
 button:hover {
-   background: #2b2d42;
+	background: #2b2d42;
 }
 
 #name, #title, #number, #buttonbox {
-   height: 50px;
-   color: white;
+	height: 50px;
+	color: white;
 }
 
 }
 #buttonbox {
-   display: flex;
-   justify-content: flex-start; /* ¹öÆ°À» ¿ŞÂÊÀ¸·Î Á¤·Ä */
-   align-items: center;
-   padding: 20px;
-   border: none;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 20px;
+	border: none;
 }
 
 .notice {
 	background-color: 'red';
 }
 
-
-/* ¹İÀÀÇü µğÀÚÀÎ ¼³Á¤ */
 @media screen and (max-width: 768px) {
-   .header ul {
-      flex-direction: column;
-      align-items: center;
-   }
-   .container {
-      padding: 15px;
-   }
-   .logbox {
-      font-size: 14px;
-   }
-   .paging {
-      width: 25px;
-      height: 25px;
-      line-height: 25px;
-   }
-   button {
-      width: 100%;
-   }
+	.header ul {
+		flex-direction: column;
+		align-items: center;
+	}
+	.container {
+		padding: 15px;
+	}
+	.logbox {
+		font-size: 14px;
+	}
+	.paging {
+		width: 25px;
+		height: 25px;
+		line-height: 25px;
+	}
+	button {
+		width: 100%;
+	}
 }
 </style>
 
 </head>
 
 <body>
-<script>
-   $(function() {
-      // ÆäÀÌÁö³×ÀÌ¼Ç Å¬¸¯ ÀÌº¥Æ®
-      $(".page").on("click", function() {
-         let pageNum = $(this).attr("page");
-         sessionStorage.setItem("last_cpage", pageNum);
-      });
-   });
+	<script>
+
+	$(function() {
+
+		$(".page").on("click", function() {
+			let pageNum = $(this).attr("page");
+			sessionStorage.setItem("last_cpage", pageNum);
+		});
+	});
 </script>
 
 	<div class="container">
-		<!-- Çì´õ -->
-		<div class="header">
-			<div class="logo">Team CodeQuest</div>
-			<ul>
-				<li onclick="location.href='/'">Home</li>
-				<li>Game</li>
-				<li>Board</li>
-				<li>Service</li>
-			</ul>
 
-			<div class="logbox">
-				<span id="username"></span>
+
+		<!-- index í—¤ë” ê°€ì ¸ì˜´ -->
+		<div class="header">
+			<div class="navi">
+				<div class="logo">Team CodeQuest</div>
+				<ul class="menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/board/list.do">Board</a></li>
+					<c:choose>
+						<c:when test="${member.role == 'admin'}">
+							<a href="/service/admin/main.do">
+						</c:when>
+						<c:otherwise>
+							<a href="/service/qna/addForm.do">
+						</c:otherwise>
+					</c:choose>
+					Service
+					</a>
+					</li>
+				</ul>
 			</div>
 		</div>
+		
 
-		<div class="navi">´Ô È¯¿µÇÕ´Ï´Ù</div>
+
+
 
 		<div class="body">
-			<!-- °Ô½ÃÆÇ Å×ÀÌºí -->
+
+<c:if test="${member.loginId != null}">
+			<div class="logbox-container">
+
+				<%@ include file="/logbox.jsp"%>
+
+			</div>
+		</c:if>
 			<table>
 				<tr id="name">
-					<td colspan="8">ÀÚÀ¯°Ô½ÃÆÇ</td>
+					<td colspan="8">ììœ ê²Œì‹œíŒ</td>
 				</tr>
 				<tr id="title">
-					<th style="width: 12%;">¹øÈ£</th>
-					<th style="width: 42%;">Á¦¸ñ</th>
-					<th style="width: 17%;">ÀÛ¼ºÀÚ</th>
-					<th style="width: 17%;">³¯Â¥</th>
-					<th style="width: 12%;">Á¶È¸</th>
+					<th style="width: 12%;">ë²ˆí˜¸</th>
+					<th style="width: 42%;">ì œëª©</th>
+					<th style="width: 17%;">ì‘ì„±ì</th>
+					<th style="width: 17%;">ë‚ ì§œ</th>
+					<th style="width: 12%;">ì¡°íšŒ</th>
 				</tr>
 				<c:forEach var="dto" items="${noticeList}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
+						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -266,7 +323,7 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
+						<td class="contents"><span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -275,29 +332,49 @@ button:hover {
 					</tr>
 				</c:forEach>
 
+
 				<tr id="number">
 					<td colspan="8" align="center"></td>
 				</tr>
 
+
+				<form method="get" name="search" action="/board/search.do">
+				<tr>
+
+					<td><select class="form-control" name="searchField">
+							<option class="choice" value="0">ì„ íƒ</option>
+							<option value="schTitle">ì œëª©</option>
+							<option value="schWriter">ì‘ì„±ì</option>
+					</select></td>
+					<td class="searchtd"><input type="text" class="form-control"
+						placeholder="ê²€ìƒ‰ì–´ ì…ë ¥" name="searchText" maxlength="100"></td>
+					<td><button type="submit" class="btn btn-success">ê²€ìƒ‰</button></td>
+					<td></td>
+					<td></td>
+				</tr>
+
+				</form>
+
 			</table>
 
 			<div colspan="3" id="buttonbox">
+
 				<c:if test="${dto == null}">
 
+
 					<a href="/board/addform.do" method="post">
-						<button>ÀÛ¼ºÇÏ±â</button>
+						<button class="writebtn">ì‘ì„±í•˜ê¸°</button>
 					</a>
+
+
 				</c:if>
 
 			</div>
 
 		</div>
 	</div>
-
-</body>
-
 </html>
-
+</body>
 <script>
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
@@ -313,20 +390,25 @@ button:hover {
 			return span;
 		}
 
+
 		if (${!page.isFirst}) {
-			pageNavi.append(makeSpan('ÀÌÀü', ${page.startNavi - 1}));
+			pageNavi.append(makeSpan('ì´ì „', ${page.startNavi - 1}));
 		}
+
 
 		for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
 			pageNavi.append(makeSpan(i, i));
 		}
 
+
 		if (${!page.isEnd}) {
-			pageNavi.append(makeSpan('´ÙÀ½', ${page.endNavi + 1}));
+			pageNavi.append(makeSpan('ë‹¤ìŒ', ${page.endNavi + 1}));
 		}
+
 
 		const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
 		const hover = '.page:hover { cursor: pointer; }'
+
 
 		$('style').append(hover).append(indexCss);
 
@@ -334,4 +416,29 @@ button:hover {
 	}
 
 	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
+	
+	 $(document).ready(function() {
+	        $('form[name="search"]').submit(function(event) {
+	            let searchField = $('select[name="searchField"]').val(); 
+
+	            if (searchField === "0") {
+	                alert("ì˜µì…˜ì„ ì„ íƒí•´ì£¼ì„¸ìš”!"); 
+	                event.preventDefault(); // í¼ ì œì¶œ ë°©ì§€
+	             
+	            }
+	        });
+	    });
+	 $(document).ready(function() {
+		    $(".writebtn").on("click", function(event) {
+		        let isLoggedIn = "${member.loginId}" !== ""; 
+
+		        if (!isLoggedIn) {
+		            alert("íšŒì›ë§Œ ê¸€ì“°ê¸°ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+		            event.preventDefault(); // í˜ì´ì§€ ì´ë™ ë°©ì§€
+		            return false;
+		        }
+		    });
+		});
+	 
+
 </script>
