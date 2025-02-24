@@ -89,6 +89,7 @@ public class ReplyController extends HttpServlet {
 				int dto = Integer.parseInt(request.getParameter("id"));
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
 
+
 				HttpSession session = request.getSession();						
 				MemberDTO member = (MemberDTO) session.getAttribute("member");
 				if(member.getMemberId() == rdao.selectById(dto).getMemberId() ||
@@ -96,8 +97,9 @@ public class ReplyController extends HttpServlet {
 					// 관리자 및 작성자 삭제
 				}else {
 					return;
+
+		
 				}
-				
 				
 				int result = rdao.deleteById(dto);
 				bdao.decreaseReplyCount(boardId);	//댓글 카운트 삭제

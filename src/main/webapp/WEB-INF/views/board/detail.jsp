@@ -219,6 +219,48 @@ td#contents {
 window.onload = function(){
    //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기 
    $(document).ready(function() {
+	   
+	   const $commentInput = $("#commentInput");
+       const $inputBtn = $("#inputbtn");
+       
+       // 초기상태 버튼 비활성화
+       $inputBtn.prop("disabled", true);
+       $inputBtn.css({
+           "background-color": "#ffd1dc",
+           "cursor": "not-allowed"
+       });
+
+       // 입력창 이벤트 리스너
+       $commentInput.on("input", function() {
+           if ($(this).val().trim() === "") {
+               $inputBtn.prop("disabled", true);
+               $inputBtn.css({
+                   "background-color": "#ffd1dc",
+                   "cursor": "not-allowed"
+               });
+           } else {
+               $inputBtn.prop("disabled", false);
+               $inputBtn.css({
+                   "background-color": "pink",
+                   "cursor": "pointer"
+               });
+           }
+       });
+
+       // 폼 제출 이벤트
+       $("#frm").on("submit", function(e) {
+           e.preventDefault();
+           
+           let commentText = $commentInput.val().trim();
+           if (commentText === "") {
+               alert("댓글을 입력하세요");
+               return false;
+           }
+           
+           // 유효한 입력값이 있을 때만 폼 제출
+           this.submit();
+       });
+	   
     // 댓글 목록 불러오기
     $.ajax({
         url: "/reply/ContentsAll.do",
@@ -488,16 +530,12 @@ window.onload = function(){
                      });
 
                  // 게시물 삭제하기 눌렀을때
-               $("#delete").on("click", function() {
-                   let result = confirm("정말 삭제하시겠습니까")
-                   if (result == true) {
-                      location.href = "/board/delete.do?id=${dto.boardId}"
-                   }
-                 
+               $("#delete").on("click", function() {                 
+                   if (confirm("정말 삭제하시겠습니까")) {
+                      location.href = "/board/delete.do?id=${dto.boardId}";
+                   }                 
                 }); 
-                
-           
-               
+          
              
                 
              // 게시물 수정하기 눌렀을때 
@@ -526,9 +564,7 @@ window.onload = function(){
                  
                
                 });
-               }
-                
-                
+            
                 
                 
                 //댓글 수정하기 버튼 눌렀을때   
