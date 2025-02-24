@@ -212,6 +212,29 @@ td#contents {
 	background-color: white;
 	color: pink;
 }
+/* 이모티콘 */
+.emoji-btn {
+    cursor: pointer;
+    font-size: 1.5em;
+    padding: 5px;
+    display: inline-block;
+}
+
+.emoji-btn:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+}
+
+.emoticon {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
 </style>
 <script>
 
@@ -388,9 +411,6 @@ window.onload = function(){
 <body>
 
 	<div class="container">
-
-
-
 		<div class="header">
 			<h1>게시글 상세 보기</h1>
 		</div>
@@ -445,15 +465,29 @@ window.onload = function(){
 					<input type="hidden" id="memberId" name="memberId"
 						value="${sessionScope.MemberId}"> <input id="commentInput"
 						name="contents" placeholder="댓글을 입력하세요">
-					<button id="inputbtn">등록</button>
+						<div id="a" contenteditable="true" style="display: none; width: 50px; height: 100px;"></div>
+					<div class="emoticons" style="display: none;">
+						<div class="emoticon">
+							<span class="emoji-btn">😀</span>
+        					<span class="emoji-btn">😊</span>
+       						<span class="emoji-btn">😎</span>
+        					<span class="emoji-btn">😍</span>
+        					<span class="emoji-btn">🎉</span>
+        					<span class="emoji-btn">👍</span>
+						</div>
+					</div>
+			
+					
 				</div>
+						<div class = "buttonContainer">
+						<button id="emojiBtn" type = "button">😀</button>
+						<button id="inputbtn">등록</button>
+					</div>
 			</form>
 			<div id="comments">
 				<ul id="commentList"></ul>
 				<!-- AJAX로 댓글이 추가될 부분 -->
 			</div>
-
-
 		</div>
 		<form action="/board/update.do" method="post" id="update-form">
 			<input id="id" type="hidden" name="id" value="${dto.boardId}">
@@ -658,7 +692,52 @@ window.onload = function(){
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/board/list.do?cpage=" +last_cpage;  });
 
-          
+         </script>
+         
+         <script>	//이모티콘
+         let isEmoticonPanelOpen = false;
+         $("#emojiBtn").on("click", function(){
+       	  isEmoticonPanelOpen = !isEmoticonPanelOpen;
+       	  
+       	  if(isEmoticonPanelOpen){	
+       		  // 이모티콘 패널을 열면
+       		  $(this).text("🤢");
+       		  $(".emoticons").show();
+       		  $(".emoticon").css({
+       			  'background': 'linear-gradient(to bottom, #bacee0 0%, rgba(42, 81, 18950, 0.51) 100%)',
+                     'transition': 'background 1s ease'
+       		  });
+       	  } else{
+       		  //이모티콘 패널을 닫으면
+       		  $(this).text("😀");
+       		  $(".emoticons").hide();
+       		  $(".emoticon").css({
+       			  'background': '#bacee0',
+                     'transition': 'background 0.5s ease'
+       		  });
+       	  }
+         });
+         $(".emoji-btn").on("click", function(){
+        	    let emotion = $(this).text();
+        	    let currentText = $('#commentInput').val();
+        	    
+        	    //$('#a').html(currentText + emotion);
+        	    //$('#a').append(emotion);
+        	    
+        	    $('#commentInput').val(currentText + emotion);	//입력창에 이모티콘 넣기
+        	    //$('#commentInput').val($('#a').html()).trigger('input');
+        	    
+        	    $("#commentInput").focus();
+        	    //$(".emoticons").hide();	//여기있으면 하나 넣을때마다 패널 닫아버림ㅇㅇㅇ
+        	    $("#emojiBtn").text("😀");
+        	    isEmoticonPanelOpen = false;
+        	    
+        	});
+         
+         $('form').on("submint", function() {
+        	 $('#commentInput').val($('#a').html());
+         });
+         
          </script>
 
 	</div>
