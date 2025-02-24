@@ -100,22 +100,51 @@ public class BoardController extends HttpServlet {
 			}
 			
 			
-			else if (cmd.equals("/board/search.do")) { // 상세게시물
+			else if (cmd.equals("/board/search.do")) { // 검색 게시물 
 
-				
+				String scpage = (String) request.getParameter("cpage");
 				 String searchField = "";
-				String searchText = "";
+					String searchText = "";
+					
+					
+				searchField = (String)request.getParameter("searchField");
+				searchText = (String)request.getParameter("searchText");
 				
 				
-			searchField = (String)request.getParameter("searchField");
-			searchText = (String)request.getParameter("searchText");
-			
-			
+				if (scpage == null || scpage.equals("null")) {
+					scpage = "1";
+				}
+				int cpage = Integer.parseInt(scpage);
+
+				int recordTotalCount = dao.getSize();
+
+				int pageTotalCount = 0;
+				if (recordTotalCount % Statics.recordCountPerPage > 0) {
+					pageTotalCount = recordTotalCount / Statics.recordCountPerPage + 1;
+				} else {
+					pageTotalCount = recordTotalCount / Statics.recordCountPerPage;
+				}
+
+				if (cpage < 1) {
+					cpage = 1;
+				} else if (cpage > pageTotalCount) {
+					cpage = pageTotalCount;
+				}
 
 				List<BoardDTO>searchResultList = dao.selectBoardList(searchField, searchText);
 
 				request.setAttribute("list",searchResultList);
+				
+
+				request.setAttribute("cpage", cpage);
+				PageNavi pageNavi = new PageNavi(cpage, dao.searchListgetSize(searchField,searchText));
+				request.setAttribute("page", pageNavi.generate());
+
+
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+
+	
+			
 			}
 			
 

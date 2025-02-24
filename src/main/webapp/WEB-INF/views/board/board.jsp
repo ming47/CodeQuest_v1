@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-<meta charset="EUC-KR">
-<title>È¸¿ø°Ô½ÃÆÇ</title>
+<meta charset="UTF-8">
+<title>íšŒì›ê²Œì‹œíŒ</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style>
 * {
@@ -16,7 +16,7 @@
 
 body {
 	background-color: #0e0326;
-	/* ¾îµÎ¿î º¸¶ó»ö ¹è°æ */
+	/* ì–´ë‘ìš´ ë³´ë¼ìƒ‰ ë°°ê²½ */
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -25,10 +25,11 @@ body {
 }
 
 .container {
-	width: 100%;
-	max-width: 1000px;
+    max-height :1024px;
+	max-width: 1660px;
+
 	background-color: #2b2d42;
-	/* ¾îµÎ¿î È¸»ö ¹è°æ */
+	/* ì–´ë‘ìš´ íšŒìƒ‰ ë°°ê²½ */
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	padding: 30px;
 	color: white;
@@ -40,7 +41,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	background-color: #2b2d42;
-	/* Çì´õ ¹è°æ */
+	/* í—¤ë” ë°°ê²½ */
 	padding: 10px 20px;
 	border: 1px solid white;
 }
@@ -48,10 +49,10 @@ body {
 .container>.navi {
 	display: flex;
 	height: 5%;
-	justify-content: flex-end; /* Ç×¸ñµéÀ» ¿À¸¥ÂÊÀ¸·Î Á¤·Ä */
+	justify-content: flex-end; /* í•­ëª©ë“¤ì„ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì •ë ¬ */
 	align-items: center;
 	background-color: #2b2d42;
-	/* ³×ºñ°ÔÀÌ¼Ç ¹è°æ */
+	/* ë„¤ë¹„ê²Œì´ì…˜ ë°°ê²½ */
 	padding: 10px 20px;
 	border: 1px solid white;
 }
@@ -64,7 +65,7 @@ body {
 
 .header {
 	display: flex;
-	justify-content: space-between; /* ÁÂ¿ì Á¤·Ä */
+	justify-content: space-between; /* ì¢Œìš° ì •ë ¬ */
 	align-items: center;
 	background-color: #2b2d42;
 	padding: 10px 20px;
@@ -75,8 +76,8 @@ body {
 	list-style: none;
 	display: flex;
 	gap: 15px;
-	justify-content: flex-end; /* ¿À¸¥ÂÊ Á¤·Ä */
-	margin-left: auto; /* ¿ŞÂÊ ¿©¹éÀ» ÀÚµ¿À¸·Î ¸¸µé¾î¼­ ¿À¸¥ÂÊÀ¸·Î ºÙÀ½ */
+	justify-content: flex-end; /* ì˜¤ë¥¸ìª½ ì •ë ¬ */
+	margin-left: auto; /* ì™¼ìª½ ì—¬ë°±ì„ ìë™ìœ¼ë¡œ ë§Œë“¤ì–´ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ë¶™ìŒ */
 }
 
 .header ul li {
@@ -120,7 +121,7 @@ table th {
 
 table tr:nth-child(even) {
 	background-color: #0e0326;
-	/* Â¦¼ö Çà ¹è°æ»ö */
+	/* ì§ìˆ˜ í–‰ ë°°ê²½ìƒ‰ */
 }
 
 table a {
@@ -156,11 +157,11 @@ button {
 	padding: 10px 20px;
 	background-color: #0e0326;
 	color: white;
-	border: none; /* °æ°è¼± Á¦°Å */
+	border: none; /* ê²½ê³„ì„  ì œê±° */
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-	margin-top: 20px; /* ¹öÆ°À» ¾Æ·¡·Î ¶ç¿ì±â */
+	margin-top: 20px; /* ë²„íŠ¼ì„ ì•„ë˜ë¡œ ë„ìš°ê¸° */
 }
 
 button:hover {
@@ -175,7 +176,7 @@ button:hover {
 }
 #buttonbox {
 	display: flex;
-	justify-content: flex-start; /* ¹öÆ°À» ¿ŞÂÊÀ¸·Î Á¤·Ä */
+	justify-content: flex-start; /* ë²„íŠ¼ì„ ì™¼ìª½ìœ¼ë¡œ ì •ë ¬ */
 	align-items: center;
 	padding: 20px;
 	border: none;
@@ -185,7 +186,7 @@ button:hover {
 		background-color: 'red';
 	}
 
-/* ¹İÀÀÇü µğÀÚÀÎ ¼³Á¤ */
+/* ë°˜ì‘í˜• ë””ìì¸ ì„¤ì • */
 @media screen and (max-width: 768px) {
 	.header ul {
 		flex-direction: column;
@@ -214,7 +215,7 @@ button:hover {
 
 <script>
 	$(function() {
-		// ÆäÀÌÁö³×ÀÌ¼Ç Å¬¸¯ ÀÌº¥Æ®
+		// í˜ì´ì§€ë„¤ì´ì…˜ í´ë¦­ ì´ë²¤íŠ¸
 		$(".page").on("click", function() {
 			let pageNum = $(this).attr("page");
 			sessionStorage.setItem("last_cpage", pageNum);
@@ -225,7 +226,7 @@ button:hover {
 	<div class="container">
 	
 		
-			<!-- Çì´õ -->
+			<!-- í—¤ë” -->
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
@@ -236,7 +237,7 @@ button:hover {
 					<li><a href="/service/list.do">Service</a></li>
 				</ul>
 			</div>
-			<!-- ·Î±×ÀÎ Á¤º¸ -->
+			<!-- ë¡œê·¸ì¸ ì •ë³´ -->
 			<c:if test="${member.loginId != null}">
 				<div class="logbox-container">
 
@@ -248,62 +249,48 @@ button:hover {
 		
 		
 		<div class="body">
-		<!--°Ë»ö Ã¢ form ¸¸µé±â -->
+		<!--ê²€ìƒ‰ ì°½ form ë§Œë“¤ê¸° -->
 				<div class="container">
 					<div class="row">
-						<form method="post" name="search" action="/member/search.do">
+						<form method="get" name="search" action="/board/search.do">
 							<table class="pull-right">
 								<tr>
 									<td>
 										<select class="form-control" name="searchField">
-											<option value="0">¼±ÅÃ</option>
-											<option value="schTitle">Á¦¸ñ</option>
-											<option value="schWriter">ÀÛ¼ºÀÚ</option>
+											<option value="0">ì„ íƒ</option>
+											<option value="schTitle">ì œëª©</option>
+											<option value="schWriter">ì‘ì„±ì</option>
 										</select>	
 									</td>
 									<td>
-										<input type="text" class="form-control"	placeholder="°Ë»ö¾î ÀÔ·Â" name="searchText" maxlength="100">
+										<input type="text" class="form-control"	placeholder="ê²€ìƒ‰ì–´ ì…ë ¥" name="searchText" maxlength="100">
 									</td>
-									<td><button type="submit" class="btn btn-success">°Ë»ö</button></td>
+									<td><button type="submit" class="btn btn-success">ê²€ìƒ‰</button></td>
 								</tr>
 							</table>
 						</form>
 					</div>
 				</div>
 		
-			<!-- °Ô½ÃÆÇ Å×ÀÌºí -->
+			<!-- ê²Œì‹œíŒ í…Œì´ë¸” -->
 			
-			<form method="post" name="search" action="searchbbs.jsp">
-				<table class="pull-right">
-					<tr>
-						<td><select class="form-control" name="searchField">
-								<option value="0">¼±ÅÃ</option>
-								<option value="bbsTitle">Á¦¸ñ</option>
-								<option value="userID">ÀÛ¼ºÀÚ</option>
-						</select></td>
-						<td><input type="text" class="form-control"
-							placeholder="°Ë»ö¾î ÀÔ·Â" name="searchText" maxlength="100"></td>
-						<td><button type="submit" class="btn btn-success">°Ë»ö</button></td>
-					</tr>
-
-				</table>
-			</form>
+		
 			<table>
 				<tr id="name">
-					<td colspan="8">ÀÚÀ¯°Ô½ÃÆÇ</td>
+					<td colspan="8">ììœ ê²Œì‹œíŒ</td>
 				</tr>
 				<tr id="title">
-					<th style="width: 12%;">¹øÈ£</th>
-					<th style="width: 42%;">Á¦¸ñ</th>
-					<th style="width: 17%;">ÀÛ¼ºÀÚ</th>
-					<th style="width: 17%;">³¯Â¥</th>
-					<th style="width: 12%;">Á¶È¸</th>
+					<th style="width: 12%;">ë²ˆí˜¸</th>
+					<th style="width: 42%;">ì œëª©</th>
+					<th style="width: 17%;">ì‘ì„±ì</th>
+					<th style="width: 17%;">ë‚ ì§œ</th>
+					<th style="width: 12%;">ì¡°íšŒ</th>
 				</tr>
 				<c:forEach var="dto" items="${noticeList}">
 					<tr>
 						<td>${dto.boardId}</td>
 						<td class="contents notice">
-							<span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
+							<span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
 							<span class="reply-count">[${dto.replyCount}]</span>
 						</td>
@@ -316,7 +303,7 @@ button:hover {
 					<tr>
 						<td>${dto.boardId}</td>
 						<td class="contents">
-							<span class="content-type">${(dto.role == 'user') ? '°Ô½Ã±Û' : '°øÁö'}</span>
+							<span class="content-type">${(dto.role == 'user') ? 'ê²Œì‹œê¸€' : 'ê³µì§€'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
 							<span class="reply-count">[${dto.replyCount}]</span>
 						</td>
@@ -336,7 +323,7 @@ button:hover {
 			<c:if test="${dto == null}">
 	
 				<a href="/board/addform.do" method="post">
-					<button>ÀÛ¼ºÇÏ±â</button>
+					<button>ì‘ì„±í•˜ê¸°</button>
 				</a>
 				</c:if>
 		
@@ -365,7 +352,7 @@ button:hover {
 					       
 
 					        if (${!page.isFirst}) {
-					            page.append(makeSpan('ÀÌÀü', ${page.startNavi - 1}));
+					            page.append(makeSpan('ì´ì „', ${page.startNavi - 1}));
 					        }
 
 					        for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
@@ -373,7 +360,7 @@ button:hover {
 					        }
 
 					        if (${!page.isEnd}) {
-					            page.append(makeSpan('´ÙÀ½', ${page.endNavi + 1}));
+					            page.append(makeSpan('ë‹¤ìŒ', ${page.endNavi + 1}));
 					        }
 
 					        const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'

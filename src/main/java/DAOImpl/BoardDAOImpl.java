@@ -15,7 +15,6 @@ import Common.Statics;
 import DAO.BoardDAO;
 import DTO.BoardDTO;
 
-
 public enum BoardDAOImpl implements BoardDAO {
 	INSTANCE;
 
@@ -24,10 +23,11 @@ public enum BoardDAOImpl implements BoardDAO {
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/orcl");
 		return ds.getConnection();
 	}
-	public List<BoardDTO> selectTop5Boardlist() throws Exception {//index 최근게시물 뽑는 메서드
+
+	public List<BoardDTO> selectTop5Boardlist() throws Exception {// index 최근게시물 뽑는 메서드
 		String sql = "select * from board b inner join members m "
 				+ "on b.member_id = m.member_id order by created_at desc limit 5;";
-		try (Connection con = this.getConnection(); 
+		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
 
@@ -45,17 +45,16 @@ public enum BoardDAOImpl implements BoardDAO {
 				int replyCount = rs.getInt("reply_count");
 				String role = rs.getString("role");
 
-				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
+				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount, replyCount, writer, role));
 			}
 			return dto;
-		} 
+		}
 
 	}
-	
 
 	public List<BoardDTO> selectAll() throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id";
-		try (Connection con = this.getConnection(); 
+		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
 
@@ -73,55 +72,53 @@ public enum BoardDAOImpl implements BoardDAO {
 				int replyCount = rs.getInt("reply_count");
 				String role = rs.getString("role");
 
-				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
+				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount, replyCount, writer, role));
 			}
 			return dto;
-		} 
+		}
 
 	}
-	
-	public List<BoardDTO> selectBoardList(String searchField, String searchText)throws Exception {
+
+	public List<BoardDTO> selectBoardList(String searchField, String searchText) throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id where";
-				
-		try (Connection con = this.getConnection(); 
-				PreparedStatement pstat = con.prepareStatement(sql);
-			) {
-			if(searchField.equals("schTitle")) {
-                sql += " b.title like ? ";
-                      pstat.setString(1, "%" + searchText + "%");  //
-             }
-             if(searchField.equals("schWriter")) {
-                sql += " m.nickname like ";
-                pstat.setString(1, "%" + searchText + "%");
-             }
-            
-			 
-			   try (ResultSet rs = pstat.executeQuery()) {
-			List<BoardDTO> dto = new ArrayList<BoardDTO>();
-		
-			while (rs.next()) {
 
-				int id = rs.getInt("board_id");
-				int memberId = rs.getInt("member_id");
-				String writer = rs.getString("nickname");
-				String title = rs.getString("title");
-				String contents = rs.getString("contents");
-				Timestamp regDate = rs.getTimestamp("reg_date");
-				int viewCount = rs.getInt("view_count");
-				int replyCount = rs.getInt("reply_count");
-				String role = rs.getString("role");
+		if (searchField.equals("schTitle")) {
+			sql += " b.title like ? ";
 
-				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
+		}
+		if (searchField.equals("schWriter")) {
+			sql += " m.nickname like ?";
+
+		}
+
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, "%" + searchText + "%"); //
+
+			try (ResultSet rs = pstat.executeQuery()) {
+				List<BoardDTO> dto = new ArrayList<BoardDTO>();
+
+				while (rs.next()) {
+
+					int id = rs.getInt("board_id");
+					int memberId = rs.getInt("member_id");
+					String writer = rs.getString("nickname");
+					String title = rs.getString("title");
+					String contents = rs.getString("contents");
+					Timestamp regDate = rs.getTimestamp("reg_date");
+					int viewCount = rs.getInt("view_count");
+					int replyCount = rs.getInt("reply_count");
+					String role = rs.getString("role");
+
+					dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount, replyCount, writer, role));
+				}
+				return dto;
 			}
-			return dto;
-		} 
 		}
 
 	}
 
 	public BoardDTO selectById(int seq) throws Exception {
-		String sql = "	select * from board b inner join members m "
-				+ "on b.member_id = m.member_id where board_id= ?";
+		String sql = "	select * from board b inner join members m " + "on b.member_id = m.member_id where board_id= ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
 			pstat.setInt(1, seq);
@@ -140,11 +137,11 @@ public enum BoardDAOImpl implements BoardDAO {
 					int replyCount = rs.getInt("reply_count");
 					String role = rs.getString("role");
 
-					dto = new BoardDTO(boardId, memberId, title, regDate, contents, viewCount,replyCount, writer, role);
+					dto = new BoardDTO(boardId, memberId, title, regDate, contents, viewCount, replyCount, writer,
+							role);
 				}
 				return dto;
 			}
-
 
 		}
 
@@ -160,14 +157,41 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 	}
 
+	public int searchListgetSize(String searchField, String searchText) throws Exception {
+		String sql = "select count(*) from board b inner join members m on b.member_id = m.member_id where";
+		if(searchField.equals("schTitle")) {
+            sql += " b.title like ? ";
+                
+         }
+         if(searchField.equals("schWriter")) {
+            sql += " m.nickname like ?";
+          
+         }
+         
+		try (Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+				
+					 pstat.setString(1, "%" + searchText + "%");
+
+				        try (ResultSet rs = pstat.executeQuery()) {
+			
+	
+			
+			rs.next();
+			
+			 
+			return rs.getInt(1);}
+				
+		}
+	}
+
 	public int deleteById(int boardId) throws Exception {
 		String sql = "delete from board where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, boardId);
-			return pstat.executeUpdate();//리턴값이 0이면 데이터 변경x  
+			return pstat.executeUpdate();// 리턴값이 0이면 데이터 변경x
 		}
 	}
-
 
 	public void increaseViewCount(int boardId) throws Exception {
 		String sql = "update board set view_count = view_count + 1 where board_Id = ?";
@@ -193,15 +217,14 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public int update(BoardDTO dto) throws Exception {
-		
-		
+
 		String sql = "update board set title =?, contents=? where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getTitle());
 			pstat.setString(2, dto.getContents());
 			pstat.setInt(3, dto.getBoardId());
 
-			return pstat.executeUpdate();//리턴값이 0이면 데이터 변경x  
+			return pstat.executeUpdate();// 리턴값이 0이면 데이터 변경x
 		}
 	}
 
@@ -218,29 +241,21 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List<BoardDTO> selectAll(int page) throws Exception {
-		String sql = "select * "
-				+ "from "
-				+ "(select a.*, ROW_NUMBER() OVER (ORDER BY board_id DESC) AS rnum "
-				+ "from "
-				+ "(select * "
-				+ "from board b "
-				+ "inner join members m "
-				+ "on b.member_id = m.member_id "
-				+ "WHERE ROLE = 'user') a) "
-				+ "WHERE rnum BETWEEN ? and ?";
+		String sql = "select * " + "from " + "(select a.*, ROW_NUMBER() OVER (ORDER BY board_id DESC) AS rnum "
+				+ "from " + "(select * " + "from board b " + "inner join members m " + "on b.member_id = m.member_id "
+				+ "WHERE ROLE = 'user') a) " + "WHERE rnum BETWEEN ? and ?";
 
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
 		int endIndex = startIndex + Statics.recordCountPerPage - 1;
 
 		endIndex = (endIndex > getSize()) ? getSize() : endIndex;
 
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);) {
+		try (Connection con = getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, startIndex);
 			pstat.setInt(2, endIndex);
 
 			System.out.println(startIndex + " " + endIndex);
-			try(ResultSet rs = pstat.executeQuery()) {
+			try (ResultSet rs = pstat.executeQuery()) {
 				List<BoardDTO> dto = new ArrayList<BoardDTO>();
 
 				while (rs.next()) {
@@ -254,7 +269,7 @@ public enum BoardDAOImpl implements BoardDAO {
 					int replyCount = rs.getInt("reply_count");
 					String role = rs.getString("role");
 
-					dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
+					dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount, replyCount, writer, role));
 				}
 				return dto;
 			}
@@ -262,15 +277,11 @@ public enum BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { //마이페이지 최근 작성한 게시글 5개 가져오기
-		String sql = "SELECT * FROM ( " +
-				"  SELECT BOARD_ID, MEMBER_ID, TITLE, REG_DATE, CONTENTS, VIEW_COUNT, REPLY_COUNT " +
-				"    FROM board " +
-				"   WHERE MEMBER_ID = ? " +
-				"   ORDER BY BOARD_ID DESC " +
-				") WHERE ROWNUM <= 6";
-		try (Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql)) {
+	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { // 마이페이지 최근 작성한 게시글 5개 가져오기
+		String sql = "SELECT * FROM ( "
+				+ "  SELECT BOARD_ID, MEMBER_ID, TITLE, REG_DATE, CONTENTS, VIEW_COUNT, REPLY_COUNT "
+				+ "    FROM board " + "   WHERE MEMBER_ID = ? " + "   ORDER BY BOARD_ID DESC " + ") WHERE ROWNUM <= 6";
+		try (Connection con = getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, memberId);
 			try (ResultSet rs = pstat.executeQuery()) {
 				List<BoardDTO> list = new ArrayList<>();
@@ -279,7 +290,7 @@ public enum BoardDAOImpl implements BoardDAO {
 					String title = rs.getString("title");
 					Timestamp regDate = rs.getTimestamp("reg_date");
 					int viewCount = rs.getInt("view_count");
-					BoardDTO member = new BoardDTO(boardId,title,regDate,viewCount);
+					BoardDTO member = new BoardDTO(boardId, title, regDate, viewCount);
 					list.add(member);
 				}
 				return list;
@@ -296,33 +307,24 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 	}
 
-
 	@Override
 	public List<BoardDTO> selectAllNotice() throws Exception {
 		String sql = "SELECT * FROM BOARD B INNER JOIN MEMBERS M ON B.MEMBER_ID = M.MEMBER_ID WHERE ROLE = 'admin'";
-		
-		try(Connection con = getConnection();
+
+		try (Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
 			List<BoardDTO> dto = new ArrayList<>();
-			
-			while(rs.next()) {
-				dto.add(new BoardDTO(
-						rs.getInt("BOARD_ID"),
-						rs.getInt("MEMBER_ID"),
-						rs.getString("TITLE"),
-						rs.getTimestamp("REG_DATE"),
-						rs.getString("CONTENTS"),
-						rs.getInt("VIEW_COUNT"),
-						rs.getInt("REPLY_COUNT"),
-						rs.getString("NICKNAME"),
-						rs.getString("ROLE")));
+
+			while (rs.next()) {
+				dto.add(new BoardDTO(rs.getInt("BOARD_ID"), rs.getInt("MEMBER_ID"), rs.getString("TITLE"),
+						rs.getTimestamp("REG_DATE"), rs.getString("CONTENTS"), rs.getInt("VIEW_COUNT"),
+						rs.getInt("REPLY_COUNT"), rs.getString("NICKNAME"), rs.getString("ROLE")));
 			}
-			
+
 			return dto;
 		}
 	}
-
 
 	@Override
 	public void decreaseReplyCount(int boardId) throws Exception {
@@ -331,6 +333,6 @@ public enum BoardDAOImpl implements BoardDAO {
 			pstat.setInt(1, boardId);
 			pstat.executeUpdate();
 		}
-		
+
 	}
 }
