@@ -26,7 +26,7 @@ body {
 
 .container {
     max-height :1024px;
-	max-width: 1660px;
+	max-width: 2000px;
 
 	background-color: #2b2d42;
 	/* 어두운 회색 배경 */
@@ -44,6 +44,7 @@ body {
 	/* 헤더 배경 */
 	padding: 10px 20px;
 	border: 1px solid white;
+	height: 10%; /* 높이를 10%로 줄여보세요 */
 }
 
 .container>.navi {
@@ -70,6 +71,7 @@ body {
 	background-color: #2b2d42;
 	padding: 10px 20px;
 	border: 1px solid white;
+	
 }
 
 .header ul {
@@ -225,7 +227,7 @@ button:hover {
 	
 		
 			<!-- 헤더 -->
-		<div class="header">
+		<div class="header" meta name="viewport">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
@@ -354,31 +356,23 @@ button:hover {
 		}
 
 		if (${!page.isFirst}) {
-			pageNavi.append(makeSpan('����', ${page.startNavi - 1}));
+			pageNavi.append(makeSpan('이전', ${page.startNavi - 1}));
 		}
 
-<<<<<<< HEAD
-					        if (${!page.isFirst}) {
-					            page.append(makeSpan('이전', ${page.startNavi - 1}));
-					        }
-=======
+
 		for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
 			pageNavi.append(makeSpan(i, i));
 		}
->>>>>>> 5539ebdcd7a5e589d6153a0016a5f08754609cb9
+
 
 		if (${!page.isEnd}) {
-			pageNavi.append(makeSpan('����', ${page.endNavi + 1}));
+			pageNavi.append(makeSpan('다음', ${page.endNavi + 1}));
 		}
 
-<<<<<<< HEAD
-					        if (${!page.isEnd}) {
-					            page.append(makeSpan('다음', ${page.endNavi + 1}));
-					        }
-=======
+
 		const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
 		const hover = '.page:hover { cursor: pointer; }'
->>>>>>> 5539ebdcd7a5e589d6153a0016a5f08754609cb9
+
 
 		$('style').append(hover).append(indexCss);
 

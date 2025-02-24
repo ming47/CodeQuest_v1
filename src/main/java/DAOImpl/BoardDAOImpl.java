@@ -23,7 +23,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/orcl");
 		return ds.getConnection();
 	}
-
+	@Override
 	public List<BoardDTO> selectTop5Boardlist() throws Exception {// index 최근게시물 뽑는 메서드
 		String sql = "select * from board b inner join members m "
 				+ "on b.member_id = m.member_id order by created_at desc limit 5;";
@@ -116,7 +116,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
-
+@Override
 	public BoardDTO selectById(int seq) throws Exception {
 		String sql = "	select * from board b inner join members m " + "on b.member_id = m.member_id where board_id= ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -146,7 +146,7 @@ public enum BoardDAOImpl implements BoardDAO {
 		}
 
 	}
-
+	@Override
 	public int getSize() throws Exception {
 		String sql = "select count(*) from board b inner join members m on b.member_id = m.member_id where role = 'user'";
 		try (Connection con = this.getConnection();
@@ -156,7 +156,7 @@ public enum BoardDAOImpl implements BoardDAO {
 			return rs.getInt(1);
 		}
 	}
-
+	@Override
 	public int searchListgetSize(String searchField, String searchText) throws Exception {
 		String sql = "select count(*) from board b inner join members m on b.member_id = m.member_id where";
 		if(searchField.equals("schTitle")) {
@@ -182,7 +182,7 @@ public enum BoardDAOImpl implements BoardDAO {
 				
 		}
 	}
-
+	@Override
 	public int deleteById(int boardId) throws Exception {
 		String sql = "delete from board where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
