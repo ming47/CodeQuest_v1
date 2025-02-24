@@ -439,7 +439,7 @@ input[disabled] {
 				<fieldset>
 					<legend>기본정보</legend>
 					<form action="/member/update.do" method="post" id="frm">
-						<input type="hidden" name="memberId" value=${member.memberId}>
+						<input type="hidden" name="memberId" value=${member.memberId }>
 						<div class="input-group">
 							<label for="login_id">아이디</label> <input type="text"
 								value="<c:choose><c:when test='${member.loginId == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.loginId}</c:otherwise></c:choose>"

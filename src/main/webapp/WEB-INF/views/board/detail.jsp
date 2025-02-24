@@ -212,9 +212,7 @@ td#contents {
 	background-color: white;
 	color: pink;
 }
-.messages{
-disply: hidden;
-}
+
 </style>
 <script>
 
@@ -391,15 +389,6 @@ window.onload = function(){
 <body>
 
 	<div class="container">
-		<div class = "messages">
-			<div class = "emoticons">
-				<div class = "emoticon">
-					<img src="/1-1.gif" id="img1">
-				</div>
-			</div>
-		</div>
-	
-
 		<div class="header">
 			<h1>게시글 상세 보기</h1>
 		</div>
@@ -455,6 +444,11 @@ window.onload = function(){
 						value="${sessionScope.MemberId}"> <input id="commentInput"
 						name="contents" placeholder="댓글을 입력하세요">
 						<button id="emojiBtn" type = "button">😀</button>
+					<div class="emoticons" style="display: none;">
+						<div class="emoticon">
+							<img src="/1-1.gif" id="img1">
+						</div>
+					</div>
 					<button id="inputbtn">등록</button>
 				</div>
 			</form>

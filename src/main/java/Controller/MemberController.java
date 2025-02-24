@@ -221,6 +221,7 @@ public class MemberController extends HttpServlet {
 				String detailAddress = request.getParameter("detailAddress");
 
 				int result = dao.update(new MemberDTO(loginId,nickName,email,phone,postcode,address,detailAddress));
+				System.out.println(result);
 				if(result > 0) {
 					System.out.println("수정성공!");
 					MemberDTO member = dao.selectById(memberId);

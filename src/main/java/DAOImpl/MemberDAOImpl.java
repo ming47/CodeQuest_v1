@@ -75,7 +75,6 @@ public enum MemberDAOImpl implements MemberDAO {
 					String detail_address = rs.getString("detail_address");
 					String role = rs.getString("role");
 					Timestamp date = rs.getTimestamp("reg_date");
-
 					MemberDTO member = new MemberDTO(memberId,loginId,name,nickName,ssn,
 							email,phone,postcode,address,detail_address,
 							role,date);
@@ -205,7 +204,6 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setString(5, dto.getAddress());
 			pstat.setString(6, dto.getDetailAddress());
 			pstat.setString(7, dto.getLoginId());
-
 			return pstat.executeUpdate();
 		}
 		// TODO Auto-generated method stub
