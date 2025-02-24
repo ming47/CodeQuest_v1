@@ -27,7 +27,7 @@ public enum MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public List<MemberDTO> selectAll() throws Exception {
-		String sql = "select * from members";
+		String sql = "select * from members where role='user'";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			try (ResultSet rs = pstat.executeQuery()) {
@@ -110,10 +110,10 @@ public enum MemberDAOImpl implements MemberDAO {
 		}
 	}
 
-	public boolean idVali(String id) throws Exception {// ID검증
-		String sql = "select login_id from members where login_id = ?";
+	public boolean getMemberByEmail(String inputEmail) throws Exception { // EMAIL검증
+		String sql = "select * from members where email = ? and password is null";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-			pstat.setString(1, id);
+			pstat.setString(1, inputEmail);
 			try (ResultSet rs = pstat.executeQuery()) {
 				return rs.next();
 			}
@@ -317,7 +317,7 @@ public enum MemberDAOImpl implements MemberDAO {
 	}
 	
 	public int getSize() throws Exception {
-		String sql = "SELECT COUNT(*) FORM MEMBERS";
+		String sql = "SELECT COUNT(*) FROM MEMBERS WHERE ROLE='user'";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -330,7 +330,7 @@ public enum MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public List<MemberDTO> selectAll(int page) throws Exception {
-		String sql = "SELECT * FROM (SELECT M.*, ROW_NUMBER() OVER(ORDER BY MEMBER_ID) AS RNUM FROM MEMBERS M) A WHERE A.RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT M.*, ROW_NUMBER() OVER(ORDER BY MEMBER_ID) AS RNUM FROM MEMBERS M WHERE ROLE='user') A WHERE A.RNUM BETWEEN ? AND ?";
 		
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
 		int endIndex = startIndex + Statics.recordCountPerPage - 1;

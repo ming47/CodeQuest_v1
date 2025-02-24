@@ -10,7 +10,7 @@ public interface MemberDAO {
 	MemberDTO selectById(int id) throws Exception;
 	int insert(MemberDTO dto) throws Exception;
 	MemberDTO login(String id, String pw) throws Exception;
-	boolean idVali(String id) throws Exception;
+	boolean getMemberByEmail(String inputEmail) throws Exception;
 	boolean isDuplicate(String column, String value) throws Exception; 
 	int update(MemberDTO dto) throws Exception;
 	int deleteById(int id) throws Exception;
@@ -25,4 +25,5 @@ public interface MemberDAO {
 	MemberDTO easyLogin(String inputEmail) throws Exception; //간편로그인 처리
 
 	List<MemberDTO> selectAll(int page) throws Exception;
+	int getSize() throws Exception;
 }

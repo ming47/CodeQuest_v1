@@ -57,7 +57,8 @@ public class MemberController extends HttpServlet {
 					column = "email";
 				} else if ("phone".equals(field)) {
 					column = "phone";
-				}				
+				}
+				
 				if (column != null) {
 					boolean result = dao.isDuplicate(column, value);
 					if(result == true) {
@@ -102,7 +103,12 @@ public class MemberController extends HttpServlet {
 				}
 				response.sendRedirect("/");
 
-			} else if (cmd.equals("/validate.do")) {
+			} else if (cmd.equals("/member/emailDuplCheck.do")) {
+				String email = request.getParameter("email");
+				boolean result = dao.getMemberByEmail(email);
+				if(result == true) {
+					response.getWriter().append("true");
+				}
 
 			} else if (cmd.equals("/shortvalid.do")) {
 
@@ -232,7 +238,11 @@ public class MemberController extends HttpServlet {
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
-
+				
+				String emailDupli = request.getParameter("emailDupli");
+				System.out.println(emailDupli);
+			
+				
 				// 1. 인증코드 생성
 				int authCode = (int)(Math.random() * 900000) + 100000; 
 				String codeStr = String.valueOf(authCode);
@@ -252,12 +262,9 @@ public class MemberController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/pwReset.do")) {
-				System.out.println("호출!");
 				String pw = request.getParameter("pw");
-				System.out.println("넘어온 pw: "+pw);
 				String encryptPw = SecurityUtil.hashPassword(pw);
 				String email = request.getParameter("resetEmail");
-				System.out.println("넘어온 email: "+email);
 
 				int result = dao.updatePw(email,encryptPw);
 				if(result > 0) {

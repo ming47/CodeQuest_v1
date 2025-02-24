@@ -474,7 +474,6 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 		}
 		
 		String sql = "SELECT " + insertType + " FROM PLAY_TIME WHERE GAME_ID = ? AND TRUNC(REG_DATE) = TRUNC(SYSTIMESTAMP)";
-		System.out.println(sql);
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
