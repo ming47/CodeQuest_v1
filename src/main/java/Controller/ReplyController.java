@@ -78,6 +78,11 @@ public class ReplyController extends HttpServlet {
 					return;
 				}
 
+				
+				
+				System.out.println(member.getMemberId() + ": memberId");
+
+
 				ReplyDTO dto = new ReplyDTO();
 				dto.setBoardId(boardId);
 				dto.setMemberId(member.getMemberId());
