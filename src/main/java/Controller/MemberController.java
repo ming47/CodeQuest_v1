@@ -269,23 +269,4 @@ public class MemberController extends HttpServlet {
 		}
 
 	}
-	
-	   public static void main(String[] args) {
-		      for (int i = 100080; i < 100090; i++) {
-		         for (int k = 800001; k <= 800005; k++) {            
-		            int playCount = (int) (Math.random() * 10);
-		            
-		            for (int j = 0; j < playCount; j++) {
-		               int playTime = (int) (Math.random() * 10 * 60);
-		               playTime *= 1000;
-		               
-		               String sql = String.format(
-		                     "INSERT INTO PLAY_TIME(PLAYTIME_ID, MEMBER_ID, GAME_ID, PLAY_TIME) VALUES (PLAYTIME_ID_SEQ.NEXTVAL, %d, %d, %d);",
-		                     i, k, playTime);
-		               
-		               System.out.println(sql);
-		            }
-		         }
-		      }
-	   }
 }
