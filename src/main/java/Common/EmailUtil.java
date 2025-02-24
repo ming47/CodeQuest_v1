@@ -34,7 +34,6 @@ public class EmailUtil {
             message.setText("비밀번호 재설정을 위해 아래 인증 코드를 입력하세요:\n" + authCode);
 
             Transport.send(message);
-            System.out.println("메일 발송 성공!");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
