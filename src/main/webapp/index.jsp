@@ -416,7 +416,16 @@
 					<li><a href="/">Home</a></li>
 					<li><a href="/game/list.do">Service</a></li>
 					<li><a href="/board/list.do">Board</a></li>
-					<li><a href="/service/list.do">Service</a></li>
+					<c:choose>					
+						<c:when test="${member.role == 'admin'}">
+							<a href="/service/admin/main.do">
+					 	</c:when>
+					 	<c:otherwise>					 	
+							<a href="/service/qna/addForm.do">
+					 	</c:otherwise>
+					</c:choose>
+						Service</a>
+					</li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->

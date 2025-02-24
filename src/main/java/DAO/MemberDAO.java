@@ -24,4 +24,5 @@ public interface MemberDAO {
 	List<MemberDTO> selectByIsBanned(boolean isBanned) throws Exception;
 	MemberDTO easyLogin(String inputEmail) throws Exception; //간편로그인 처리
 
+	List<MemberDTO> selectAll(int page) throws Exception;
 }

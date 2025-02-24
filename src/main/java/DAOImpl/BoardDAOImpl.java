@@ -173,7 +173,6 @@ public enum BoardDAOImpl implements BoardDAO {
 			pstat.setInt(1, startIndex);
 			pstat.setInt(2, endIndex);
 
-			System.out.println(startIndex + " " + endIndex);
 			try(ResultSet rs = pstat.executeQuery()) {
 				List<BoardDTO> dto = new ArrayList<BoardDTO>();
 
