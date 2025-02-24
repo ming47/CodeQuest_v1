@@ -728,7 +728,7 @@ window.onload = function(){
         	    //$('#commentInput').val($('#a').html()).trigger('input');
         	    
         	    $("#commentInput").focus();
-        	    //$(".emoticons").hide();	//여기있으면 하나 넣을때마다 패널 닫아버림ㅇㅇ
+        	    //$(".emoticons").hide();	//여기있으면 하나 넣을때마다 패널 닫아버림ㅇㅇㅇ
         	    $("#emojiBtn").text("😀");
         	    isEmoticonPanelOpen = false;
         	    
