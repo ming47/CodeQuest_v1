@@ -23,7 +23,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: url('/메인.gif') no-repeat center center;
+	background: url('/images/메인.gif') no-repeat center center;
 	background-size: cover;
 	text-align: center;
 	flex-direction: column;
@@ -43,7 +43,7 @@ h1 {
 	height: 120px;
 	padding: 15px 30px;
 	color: white;
-	background: url('/스타트.png') no-repeat center center;
+	background: url('/images/스타트.png') no-repeat center center;
 	background-size: cover;
 	border: none;
 	border-radius: 10px;
