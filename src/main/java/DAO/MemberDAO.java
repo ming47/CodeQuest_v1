@@ -22,5 +22,6 @@ public interface MemberDAO {
 	int updatePw(String email,String pw) throws Exception; //비밀번호 재설정
 
 	List<MemberDTO> selectByIsBanned(boolean isBanned) throws Exception;
+	MemberDTO easyLogin(String inputEmail) throws Exception; //간편로그인 처리
 
 }

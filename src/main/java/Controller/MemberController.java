@@ -1,13 +1,7 @@
 package Controller;
 
 import java.io.IOException;
-
-import java.net.URLEncoder;
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +42,6 @@ public class MemberController extends HttpServlet {
 		try {
 			String cmd = ConvertURL.of(request);
 			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
-
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 
 			} else if(cmd.equals("/member/valueCheck.do")) { //ajax 중복체크
@@ -77,7 +70,6 @@ public class MemberController extends HttpServlet {
 					return;
 				}
 				int memberId = member.getMemberId();
-				System.out.println("마이페이지에서 member_id: "+memberId);
 				//최근 작성한 게시글
 				List<BoardDTO> recentPost = boardDao.selectByMemberId(memberId);
 				request.setAttribute("recentPost", recentPost);
@@ -163,6 +155,36 @@ public class MemberController extends HttpServlet {
 					System.out.println("가입성공!");
 				}
 				response.sendRedirect("/");
+			} else if (cmd.equals("/member/easySignup.do")) {
+				
+				String name = request.getParameter("name");
+				String nickName = request.getParameter("nickName");
+
+				String ssnFront = request.getParameter("ssnFront");
+				String ssnBack = request.getParameter("ssnBack");
+				String ssn = ssnFront + "-" + ssnBack + "******";
+				
+				String phone = request.getParameter("phone");
+				String email = request.getParameter("email");
+				
+				String postcodeStr = request.getParameter("postcode");
+				int postcode = 0;
+				if(postcodeStr != "") {
+					postcode = 0;
+				} else if(postcodeStr == "") {
+					postcode = 0;
+				} else if(postcodeStr == null) {
+					postcode = 0;
+				} else {
+					postcode = Integer.parseInt(postcodeStr);
+				}
+				String address1 = request.getParameter("address1");
+				String address2 = request.getParameter("address2");
+				int memberAdd = dao.insert(new MemberDTO(null,null,name,nickName,ssn,email,phone,postcode,address1,address2,"user"));
+				if(memberAdd > 0) {
+					System.out.println("가입성공!");
+				}
+				response.sendRedirect("/");
 			} else if (cmd.equals("/member/login.do")) { //로그인
 
 				String id = request.getParameter("id");
@@ -173,17 +195,11 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/?login=fail");
 					return;
 				}
-				
+				// 밴 유저 검사
 				boolean banned = blackListDao.isBanned(member.getMemberId());
-				//boolean banned = blackListDao.isBanned(100034);
-				if(banned == true) {
-					System.out.println("밴유저입니다");
-					request.setAttribute("banned", response);
-					return;
-				}
-				if (member != null) {
-					request.getSession().setAttribute("member", member);
-				}
+				member.setIsbanned(banned);
+				request.getSession().setAttribute("member", member);
+				
 				response.sendRedirect("/");
 
 			} else if (cmd.equals("/member/update.do")) { // 수정

@@ -442,7 +442,8 @@ input[disabled] {
 						<input type="hidden" name="memberId" value=${member.memberId}>
 						<div class="input-group">
 							<label for="login_id">아이디</label> <input type="text"
-								name="loginId" id="loginId" value=${member.loginId } readonly>
+								value="<c:choose><c:when test='${member.loginId == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.loginId}</c:otherwise></c:choose>"
+								readonly>
 						</div>
 						<div class="input-group">
 							<label for="name">이름</label> <input type="text" name="name"
@@ -475,14 +476,14 @@ input[disabled] {
 						<div class="input-group">
 							<label for="address">주소</label> <input type="text" name="address"
 								id="address"
-								value="<c:choose><c:when test='${member.address == null}'>입력된 정보가 없습니다</c:when><c:otherwise>${member.address}</c:otherwise></c:choose>"
+								value="<c:choose><c:when test='${member.address == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.address}</c:otherwise></c:choose>"
 								readonly>
 
 						</div>
 						<div class="input-group">
 							<label for="detail_address">상세주소</label> <input type="text"
 								name="detailAddress" id="detailAddress"
-								value="<c:choose><c:when test='${member.detailAddress == null}'>입력된 정보가 없습니다</c:when><c:otherwise>${member.detailAddress}</c:otherwise></c:choose>"
+								value="<c:choose><c:when test='${member.detailAddress == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.detailAddress}</c:otherwise></c:choose>"
 								readonly>
 
 						</div>
