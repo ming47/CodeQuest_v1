@@ -363,6 +363,48 @@ input[disabled] {
 	display: flex;
 	justify-content: space-between;
 }
+
+.recent-game-row {
+	display: flex; /* 가로로 나열 */
+	align-items: center; /* 세로 중앙 정렬 */
+	border: 2px solid #b4c28a;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+	background: #fafafa;
+}
+
+.recent-game-row img {
+	width: 60px;
+	height: 60px;
+	margin-right: 20px;
+	object-fit: cover; /* 이미지 비율 맞춤 */
+}
+
+.recent-game-row .game-title {
+	flex: 1; /* 남는 공간을 차지하도록 (제목 영역 크게) */
+	font-size: 20px;
+	font-weight: bold;
+}
+
+/* 링크 밑줄·파란색 제거 */
+.recent-game-row .game-title a {
+	text-decoration: none;
+	color: #333;
+}
+
+.recent-game-row .game-title a:hover {
+	text-decoration: underline;
+}
+
+/* 날짜/시간 칸 오른쪽 정렬 */
+.recent-game-row .play-date, .recent-game-row .play-time {
+	width: 150px;
+	text-align: right;
+	font-size: 14px;
+	color: #666;
+	margin-right: 10px;
+}
 </style>
 </head>
 
@@ -454,19 +496,39 @@ input[disabled] {
 						</div>
 					</form>
 				</fieldset>
-
 			</div>
+
 			<div class="content" id="game_records">
 				<h2 style="font-size: 50px;">게임기록</h2>
+				<h3 style="font-size: 28px;">최근 플레이한 게임</h3>
+
+				<c:forEach var="pt" items="${recentPlayTime}">
+					<div class="recent-game-row">
+						<!-- 1) 게임 이미지 -->
+						<img src="/game.png" alt="게임 이미지" />
+
+						<!-- 2) 게임 제목 (링크) -->
+						<div class="game-title">
+							<a href="/game/list.do?gameId=${pt.gameId}"> 게임제목 들어올 공간 </a>
+						</div>
+
+						<!-- 3) 플레이 날짜, 오른쪽 정렬 -->
+						<div class="play-date">플레이 날짜: ${pt.regDate}</div>
+
+						<!-- 4) 플레이 타임, 오른쪽 정렬 -->
+						<div class="play-time">플레이 타임: ${pt.formatTime}</div>
+					</div>
+				</c:forEach>
 			</div>
+
+
+
 
 			<div class="content" id="my_posts">
 				<h2 style="font-size: 50px; margin-bottom: 20px;">게시글</h2>
-				
 				<div style="margin: 10px;">
-			        <h3 style="font-size: 28px;">최근 작성한 게시글</h3>
-			    </div>
-				
+					<h3 style="font-size: 28px;">최근 작성한 게시글</h3>
+				</div>
 				<div class="posts-container">
 					<c:forEach var="post" items="${recentPost}">
 						<div class="post-card">
@@ -481,10 +543,10 @@ input[disabled] {
 						</div>
 					</c:forEach>
 				</div>
-				
+
 				<div style="margin: 10px;">
-			        <h3 style="font-size: 28px;">내가 최근에 본 게시글</h3>
-			    </div>
+					<h3 style="font-size: 28px;">내가 최근에 본 게시글</h3>
+				</div>
 			</div>
 			<div class="content" id="my_qna">
 				<h2 style="font-size: 50px;">문의내역</h2>
@@ -527,6 +589,15 @@ input[disabled] {
 				}
 			}).open();
 		});
+		
+   		$("#out_btn").on("click", function() {
+   			if(confirm("정말 탈퇴하시겠습니까?") == true) {
+        		location.href = "/member/out.do?id=${member.memberId}"; //삭제요청한 ID를 세션에서 꺼낸후 request요청
+        		alert("회원탈퇴가 완료되었습니다.");
+   			} else {
+   				location.href = "/";
+   			}
+    	});
         
     </script>
 </body>

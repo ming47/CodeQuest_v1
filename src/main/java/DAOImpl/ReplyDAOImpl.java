@@ -47,9 +47,11 @@ public enum ReplyDAOImpl implements ReplyDAO {
 
 	@Override
 	public ReplyDTO selectById(int id) throws Exception {
-		String sql = "select * from Reply r inser join on members m on r.member_id = m.member_id " + "where reply_id=?";
+
+		String sql = "select * from Reply r inner join members m on r.member_id = m.member_id "
+				+ "where reply_id=?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setInt(1, id);
+			pstat.setInt(1, id); // 부모 게시글 ID(메서드 id라고 적혀있었는데 헷갈릴것같아서 물어보고 boardid로 변경)
 
 			try (ResultSet rs = pstat.executeQuery();) {
 				ReplyDTO rdto = null;
@@ -59,8 +61,9 @@ public enum ReplyDAOImpl implements ReplyDAO {
 					String contents = rs.getString("contents");
 					Timestamp regDate = rs.getTimestamp("reg_Date");
 					int boardId = rs.getInt("board_Id");
-					String writer = rs.getString(rs.getString("nickName"));
-					rdto = new ReplyDTO(replyId, memberId, boardId, contents, regDate, writer);
+
+					String writer = rs.getString("nickName");
+					rdto = new ReplyDTO(replyId,memberId,boardId,contents ,regDate, writer);
 
 				}
 		        return rdto;
@@ -111,6 +114,7 @@ public enum ReplyDAOImpl implements ReplyDAO {
 //	    }
 //	}
 
+
 	@Override
 	public int deleteById(int dto) throws Exception {
 		String sql = "delete reply where reply_id=?";
@@ -119,38 +123,35 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			pstat.setInt(1, dto);
 			return pstat.executeUpdate();
 		}
-	}// ap만들어진 메서드가 dto로 지정되어있는데 나중에 수정하자고 하셔서 변수이름 dto로 사용
-		// 댓글 아이디를 의미함
-	
-	
-	@Override
-	public List<ReplyDTO> selectByBoardId(int boardId) throws Exception {   //댓글 출력
-	      String sql = "select * from Reply r inner join members m on r.member_id = m.member_id "
-	            + "where board_id = ? order by r.reg_date desc";
-	      try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
-	         pstat.setInt(1, boardId);
-	         try(ResultSet rs = pstat.executeQuery();){
-	            List<ReplyDTO> list = new ArrayList<>();
-	            while(rs.next()) {
-	               ReplyDTO dto = new ReplyDTO();
-	               dto.setReplyId(rs.getInt("reply_Id"));
-	               dto.setMemberId(rs.getInt("member_Id"));;
-	               dto.setBoardId(rs.getInt("board_Id"));
-	               dto.setContents(rs.getString("contents"));
-	               dto.setRegDate(rs.getTimestamp("reg_Date"));
-	               dto.setWriter(rs.getString("nickName"));
-	               list.add(dto);
-	            }
-	            return list;
-	         }
+	}
 
+	@Override
+	public List<ReplyDTO> selectByBoardId(int boardId) throws Exception {	//댓글 출력
+		String sql = "select * from Reply r inner join members m on r.member_id = m.member_id "
+				+ "where board_id = ? order by r.reg_date desc";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, boardId);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<ReplyDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					ReplyDTO dto = new ReplyDTO();
+					dto.setReplyId(rs.getInt("reply_Id"));
+					dto.setMemberId(rs.getInt("member_Id"));;
+					dto.setBoardId(rs.getInt("board_Id"));
+					dto.setContents(rs.getString("contents"));
+					dto.setRegDate(rs.getTimestamp("reg_Date"));
+					dto.setWriter(rs.getString("nickName"));
+					list.add(dto);
+				}
+				return list;
+			}
 		}
 	}
 
-		@Override
-		public List<ReplyDTO> selectByBoardId(int boardId, int page) throws Exception {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
+	@Override
+	public List<ReplyDTO> selectByBoardId(int boardId, int page) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

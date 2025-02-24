@@ -231,8 +231,8 @@ window.onload = function(){
             console.error("Error parsing JSON: ", e);
             return;
         }
-       
-       console.log(data);
+			let UserName = "${member.nickName}";	//작성자
+			let Master = "${member.role}";	// 관리자
 
         for (let i = 0; i < data.length; i++) {
             let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
@@ -242,10 +242,13 @@ window.onload = function(){
             let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
             
             let btnBox = $("<div>").addClass("btnbox");
-            let updateBtn = $("<button>").addClass("updatebtn").text("수정");
-            let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
 
-            btnBox.append(updateBtn, deleteBtn);
+
+            if (data[i].writer === UserName || Master === "admin") {	//관리자이거나 작성자일 경우 보이게하기
+                let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+                let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+                btnBox.append(updateBtn, deleteBtn);
+            }
             commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
             $("#commentList").append(commentItem);
         }
@@ -274,12 +277,11 @@ window.onload = function(){
             updateOK.on("click", function() {
                 let updatedContent = contentDiv.html();
                 let replyId = commentItem.attr("data-id");
-                console.log(updatedContent+" : updatedContent");
-                console.log(replyId+" : replyId");
+
                 // 서버로 수정 요청
                 $.ajax({
                     url: "/reply/update.do",
-                    type: "get",
+                    type: "post",
                     data: { id: replyId, contents: updatedContent },
                     success: function(response) {
                         // 성공하면 수정된 내용 유지
@@ -318,8 +320,8 @@ window.onload = function(){
             if (confirm("정말 삭제하시겠습니까?")) {
                 $.ajax({
                     url: "/reply/delete.do",
-                    type: "get",
-                    data: { id: replyId },
+                    type: "post",
+                    data: { id: replyId, boardId : ${dto.boardId}},
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
                         if(response) {                        	
