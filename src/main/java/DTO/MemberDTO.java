@@ -61,7 +61,7 @@ public class MemberDTO {
 		this.regDate = regDate;
 	}
 	public MemberDTO(int memberId, String name, String nickName, String ssn, String email, String phone, int zipCode,
-			String address, String detailAddress, String role, Timestamp regDate ) { //로그인
+			String address, String detailAddress, String role, Timestamp regDate ) { // 간편 로그인
 		super();
 		this.memberId = memberId;
 		this.name = name;
@@ -89,7 +89,9 @@ public class MemberDTO {
 		this.role = role;
 		this.regDate = regDate;
 	}
-	public MemberDTO(String loginId, String nickname,String email, String phone, int zipCode, String address, String detailAddress) {//회원 수정
+	public MemberDTO(int memberId,String loginId, String nickname,String email, String phone, int zipCode, String address, String detailAddress) {//회원 수정
+		super();
+		this.memberId = memberId;
 		this.loginId = loginId;
 		this.nickName = nickname;
 		this.email = email;
