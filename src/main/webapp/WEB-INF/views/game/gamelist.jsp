@@ -216,6 +216,7 @@
             <c:if test="${member.loginId != null}">
                 <div class="logbox-container">
                     <jsp:include page="/logbox.jsp" />
+
                 </div>
             </c:if>
         </div>
