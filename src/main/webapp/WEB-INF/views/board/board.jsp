@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-   pageEncoding="EUC-KR"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="EUC-KR">
-<title>회원게시판</title>
+<title>����寃�����</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style>
 * {
@@ -16,7 +16,6 @@
 
 body {
    background-color: #0e0326;
-   /* 어두운 보라색 배경 */
    display: flex;
    justify-content: center;
    align-items: center;
@@ -28,7 +27,7 @@ body {
    width: 100%;
    max-width: 1000px;
    background-color: #2b2d42;
-   /* 어두운 회색 배경 */
+   /* �대���� ���� 諛곌꼍 */
    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
    padding: 30px;
    color: white;
@@ -40,7 +39,7 @@ body {
    justify-content: space-between;
    align-items: center;
    background-color: #2b2d42;
-   /* 헤더 배경 */
+   /* �ㅻ�� 諛곌꼍 */
    padding: 10px 20px;
    border: 1px solid white;
 }
@@ -48,10 +47,10 @@ body {
 .container>.navi {
    display: flex;
    height: 5%;
-   justify-content: flex-end; /* 항목들을 오른쪽으로 정렬 */
+   justify-content: flex-end; /* ��紐⑸�ㅼ�� �ㅻⅨ履쎌�쇰� ���� */
    align-items: center;
    background-color: #2b2d42;
-   /* 네비게이션 배경 */
+   /* �ㅻ�寃��댁�� 諛곌꼍 */
    padding: 10px 20px;
    border: 1px solid white;
 }
@@ -64,7 +63,7 @@ body {
 
 .header {
    display: flex;
-   justify-content: space-between; /* 좌우 정렬 */
+   justify-content: space-between; /* 醫��� ���� */
    align-items: center;
    background-color: #2b2d42;
    padding: 10px 20px;
@@ -75,8 +74,8 @@ body {
    list-style: none;
    display: flex;
    gap: 15px;
-   justify-content: flex-end; /* 오른쪽 정렬 */
-   margin-left: auto; /* 왼쪽 여백을 자동으로 만들어서 오른쪽으로 붙음 */
+   justify-content: flex-end; /* �ㅻⅨ履� ���� */
+   margin-left: auto; /* �쇱そ �щ갚�� �����쇰� 留��ㅼ�댁�� �ㅻⅨ履쎌�쇰� 遺��� */
 }
 
 .header ul li {
@@ -119,7 +118,7 @@ table th {
 
 table tr:nth-child(even) {
    background-color: #0e0326;
-   /* 짝수 행 배경색 */
+   /* 吏��� �� 諛곌꼍�� */
 }
 
 table a {
@@ -155,11 +154,11 @@ button {
    padding: 10px 20px;
    background-color: #0e0326;
    color: white;
-   border: none; /* 경계선 제거 */
+   border: none; /* 寃쎄��� ��嫄� */
    border-radius: 5px;
    cursor: pointer;
    transition: background-color 0.3s ease;
-   margin-top: 20px; /* 버튼을 아래로 띄우기 */
+   margin-top: 20px; /* 踰��쇱�� ����濡� ���곌린 */
 }
 
 button:hover {
@@ -174,7 +173,7 @@ button:hover {
 }
 #buttonbox {
    display: flex;
-   justify-content: flex-start; /* 버튼을 왼쪽으로 정렬 */
+   justify-content: flex-start; /* 踰��쇱�� �쇱そ�쇰� ���� */
    align-items: center;
    padding: 20px;
    border: none;
@@ -185,7 +184,7 @@ button:hover {
 }
 
 
-/* 반응형 디자인 설정 */
+/* 諛����� ������ �ㅼ�� */
 @media screen and (max-width: 768px) {
    .header ul {
       flex-direction: column;
@@ -213,7 +212,7 @@ button:hover {
 <body>
 <script>
    $(function() {
-      // 페이지네이션 클릭 이벤트
+      // ���댁��ㅼ�댁�� �대┃ �대깽��
       $(".page").on("click", function() {
          let pageNum = $(this).attr("page");
          sessionStorage.setItem("last_cpage", pageNum);
@@ -222,7 +221,7 @@ button:hover {
 </script>
 
 	<div class="container">
-		<!-- 헤더 -->
+		<!-- �ㅻ�� -->
 		<div class="header">
 			<div class="logo">Team CodeQuest</div>
 			<ul>
@@ -237,25 +236,25 @@ button:hover {
 			</div>
 		</div>
 
-		<div class="navi">님 환영합니다</div>
+		<div class="navi">�� �����⑸����</div>
 
 		<div class="body">
-			<!-- 게시판 테이블 -->
+			<!-- 寃����� ���대� -->
 			<table>
 				<tr id="name">
-					<td colspan="8">자유게시판</td>
+					<td colspan="8">����寃�����</td>
 				</tr>
 				<tr id="title">
-					<th style="width: 12%;">번호</th>
-					<th style="width: 42%;">제목</th>
-					<th style="width: 17%;">작성자</th>
-					<th style="width: 17%;">날짜</th>
-					<th style="width: 12%;">조회</th>
+					<th style="width: 12%;">踰���</th>
+					<th style="width: 42%;">��紐�</th>
+					<th style="width: 17%;">���깆��</th>
+					<th style="width: 17%;">��吏�</th>
+					<th style="width: 12%;">議고��</th>
 				</tr>
 				<c:forEach var="dto" items="${noticeList}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '寃���湲�' : '怨듭�'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -266,7 +265,7 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '寃���湲�' : '怨듭�'}</span>
 							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
@@ -285,7 +284,7 @@ button:hover {
 				<c:if test="${dto == null}">
 
 					<a href="/board/addform.do" method="post">
-						<button>작성하기</button>
+						<button>���깊��湲�</button>
 					</a>
 				</c:if>
 
@@ -314,7 +313,7 @@ button:hover {
 		}
 
 		if (${!page.isFirst}) {
-			pageNavi.append(makeSpan('이전', ${page.startNavi - 1}));
+			pageNavi.append(makeSpan('�댁��', ${page.startNavi - 1}));
 		}
 
 		for (let i = ${page.startNavi}; i <= ${page.endNavi}; i++) {
@@ -322,7 +321,7 @@ button:hover {
 		}
 
 		if (${!page.isEnd}) {
-			pageNavi.append(makeSpan('다음', ${page.endNavi + 1}));
+			pageNavi.append(makeSpan('�ㅼ��', ${page.endNavi + 1}));
 		}
 
 		const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
