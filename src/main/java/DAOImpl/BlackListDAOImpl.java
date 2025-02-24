@@ -36,12 +36,13 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public int insert(BlackListDTO dto) throws Exception {
-		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID, END_DATE) VALUES(BLACK_ID_SEQ.NEXTVAL, ?, SYSTIMESTAMP + NUMTODSINTERVAL(?, 'HOUR'))";
+		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID, REASON, END_DATE) VALUES(BLACK_ID_SEQ.NEXTVAL, ?, ?, SYSTIMESTAMP + NUMTODSINTERVAL(?, 'HOUR'))";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, dto.getMemberId());
-			pstat.setInt(2, dto.getPeriod());
+			pstat.setString(2, dto.getReason());
+			pstat.setInt(3, dto.getPeriod());
 			
 			return pstat.executeUpdate();
 		}

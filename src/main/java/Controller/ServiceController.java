@@ -201,6 +201,8 @@ public class ServiceController extends HttpServlet {
 					String reason = request.getParameter("reason");
 					Integer period = Integer.parseInt(request.getParameter("endDate"));
 					
+					System.out.println(memberId + " " + reason + " " + period);
+					
 					blackListDAO.insert(new BlackListDTO(memberId, reason, period));
 				}
 			}
