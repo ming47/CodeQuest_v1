@@ -223,25 +223,71 @@ button:hover {
 </script>
 
 	<div class="container">
-		<!-- 헤더 -->
+	
+		
+			<!-- 헤더 -->
 		<div class="header">
-			<div class="logo">Team CodeQuest</div>
-			<ul>
-				<li onclick="location.href='/'">Home</li>
-				<li>Game</li>
-				<li>Board</li>
-				<li>Service</li>
-			</ul>
-
-			<div class="logbox">
-				<span id="username"></span>
+			<div class="navi">
+				<div class="logo">Team CodeQuest</div>
+				<ul class="menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/board/list.do">Board</a></li>
+					<li><a href="/service/list.do">Service</a></li>
+				</ul>
 			</div>
+			<!-- 로그인 정보 -->
+			<c:if test="${member.loginId != null}">
+				<div class="logbox-container">
+
+		<%@ include file="/logbox.jsp" %>
+		
+				</div>
+			</c:if>
 		</div>
-
-		<div class="navi">님 환영합니다</div>
-
+		
+		
 		<div class="body">
+		<!--검색 창 form 만들기 -->
+				<div class="container">
+					<div class="row">
+						<form method="post" name="search" action="/member/search.do">
+							<table class="pull-right">
+								<tr>
+									<td>
+										<select class="form-control" name="searchField">
+											<option value="0">선택</option>
+											<option value="schTitle">제목</option>
+											<option value="schWriter">작성자</option>
+										</select>	
+									</td>
+									<td>
+										<input type="text" class="form-control"	placeholder="검색어 입력" name="searchText" maxlength="100">
+									</td>
+									<td><button type="submit" class="btn btn-success">검색</button></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+		
 			<!-- 게시판 테이블 -->
+			
+			<form method="post" name="search" action="searchbbs.jsp">
+				<table class="pull-right">
+					<tr>
+						<td><select class="form-control" name="searchField">
+								<option value="0">선택</option>
+								<option value="bbsTitle">제목</option>
+								<option value="userID">작성자</option>
+						</select></td>
+						<td><input type="text" class="form-control"
+							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
+						<td><button type="submit" class="btn btn-success">검색</button></td>
+					</tr>
+
+				</table>
+			</form>
 			<table>
 				<tr id="name">
 					<td colspan="8">자유게시판</td>

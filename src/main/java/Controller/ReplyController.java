@@ -104,6 +104,8 @@ public class ReplyController extends HttpServlet {
 					response.sendRedirect("/login.do");
 					return;
 				}
+				
+				
 				System.out.println(member.getMemberId() + ": memberId");
 
 				ReplyDTO dto = new ReplyDTO();

@@ -24,7 +24,34 @@ public enum BoardDAOImpl implements BoardDAO {
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/orcl");
 		return ds.getConnection();
 	}
+	public List<BoardDTO> selectTop5Boardlist() throws Exception {//index 최근게시물 뽑는 메서드
+		String sql = "select * from board b inner join members m "
+				+ "on b.member_id = m.member_id order by created_at desc limit 5;";
+		try (Connection con = this.getConnection(); 
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
 
+			List<BoardDTO> dto = new ArrayList<BoardDTO>();
+
+			while (rs.next()) {
+
+				int id = rs.getInt("board_id");
+				int memberId = rs.getInt("member_id");
+				String writer = rs.getString("nickname");
+				String title = rs.getString("title");
+				String contents = rs.getString("contents");
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				int viewCount = rs.getInt("view_count");
+				int replyCount = rs.getInt("reply_count");
+				String role = rs.getString("role");
+
+				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
+			}
+			return dto;
+		} 
+
+	}
+	
 
 	public List<BoardDTO> selectAll() throws Exception {
 		String sql = "select * from board b inner join members m on b.member_id = m.member_id";
@@ -50,6 +77,45 @@ public enum BoardDAOImpl implements BoardDAO {
 			}
 			return dto;
 		} 
+
+	}
+	
+	public List<BoardDTO> selectBoardList(String searchField, String searchText)throws Exception {
+		String sql = "select * from board b inner join members m on b.member_id = m.member_id where";
+				
+		try (Connection con = this.getConnection(); 
+				PreparedStatement pstat = con.prepareStatement(sql);
+			) {
+			if(searchField.equals("schTitle")) {
+                sql += " b.title like ? ";
+                      pstat.setString(1, "%" + searchText + "%");  //
+             }
+             if(searchField.equals("schWriter")) {
+                sql += " m.nickname like ";
+                pstat.setString(1, "%" + searchText + "%");
+             }
+            
+			 
+			   try (ResultSet rs = pstat.executeQuery()) {
+			List<BoardDTO> dto = new ArrayList<BoardDTO>();
+		
+			while (rs.next()) {
+
+				int id = rs.getInt("board_id");
+				int memberId = rs.getInt("member_id");
+				String writer = rs.getString("nickname");
+				String title = rs.getString("title");
+				String contents = rs.getString("contents");
+				Timestamp regDate = rs.getTimestamp("reg_date");
+				int viewCount = rs.getInt("view_count");
+				int replyCount = rs.getInt("reply_count");
+				String role = rs.getString("role");
+
+				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount,replyCount, writer, role));
+			}
+			return dto;
+		} 
+		}
 
 	}
 

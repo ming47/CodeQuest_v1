@@ -90,6 +90,34 @@ public class BoardController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
 			}
+			else if (cmd.equals("/board/mainlist.do")) {// 게시글 목록 출력
+
+
+				List<BoardDTO> list = dao.selectTop5Boardlist();
+				request.setAttribute("list", list);//index에서 foreach로 list 풀기
+				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+
+			}
+			
+			
+			else if (cmd.equals("/board/search.do")) { // 상세게시물
+
+				
+				 String searchField = "";
+				String searchText = "";
+				
+				
+			searchField = (String)request.getParameter("searchField");
+			searchText = (String)request.getParameter("searchText");
+			
+			
+
+				List<BoardDTO>searchResultList = dao.selectBoardList(searchField, searchText);
+
+				request.setAttribute("list",searchResultList);
+				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+			}
+			
 
 			else if (cmd.equals("/board/detail.do")) { // 상세게시물
 
