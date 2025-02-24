@@ -17,7 +17,7 @@
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-<title>회원가입</title>
+<title>추가 정보입력</title>
 <style>
 * {
 	box-sizing: border-box;
@@ -56,6 +56,7 @@ body {
 	font-style: normal;
 	width: 100%;
 }
+
 .header {
 	height: 80px;
 	padding: 20px;
@@ -70,6 +71,7 @@ body {
 	font-size: 14px;
 	margin-top: 40px;
 }
+
 .navi {
 	display: flex;
 	align-items: center;
@@ -103,7 +105,6 @@ body {
 	color: white;
 }
 
-
 .headline h2 {
 	font-size: 30px;
 	font-weight: bold;
@@ -133,7 +134,7 @@ legend {
 	font-size: 17px;
 	font-weight: bold;
 	color: #dfedb6;
-	padding:5px;
+	padding: 5px;
 }
 
 .input-group {
@@ -217,7 +218,7 @@ input[disabled] {
 
 .postcode-btn:hover {
 	background: #6a6f5a;
-	color:white;
+	color: white;
 }
 
 .error {
@@ -242,7 +243,6 @@ input[disabled] {
 	justify-content: space-between;
 	width: 100%;
 }
-
 </style>
 </head>
 
@@ -261,28 +261,14 @@ input[disabled] {
 		</div>
 
 		<div class="headline">
-			<h2>회원가입</h2>
+			<h2>추가 정보입력</h2>
 		</div>
-		<form action="/member/add.do" id="signupForm" method="post">
-			<fieldset>
-				<legend> * 아이디 / 패스워드</legend>
-				<div class="input-group">
-					<input type="text" name="id" id="id"
-						placeholder="8~20자 이내 영어소문자,숫자를 포함한 ID를 입력해주세요">
-				</div>
-				<span id="result_id"></span> <span id="result_id_dupl"></span> <input
-					type="password" name="pw" id="pw"
-					placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요"> <span
-					id="result_pw"></span> <input type="password" name="pwr" id="pwr"
-					placeholder="패스워드를 다시 입력하세요"> <span id="result_pwr"></span>
-			</fieldset>
-
+		<form action="/member/easySignup.do" id="signupForm" method="post">
 			<fieldset>
 				<legend> * 이름 / 닉네임 / 주민번호 / 전화번호 / 이메일</legend>
 				<input type="text" name="name" id="name" placeholder="이름을 입력하세요">
 				<span id="result_name"></span> <input type="text" name="nickName"
-					id="nickName" placeholder="닉네임을 입력하세요"> <span
-					id="result_nickName"></span>
+					id="nickName" value=${nickName} placeholder="닉네임을 입력하세요."> </span>
 				<div class="input-group">
 					<input type="text" name="ssnFront" id="ssnFront"
 						placeholder="주민등록번호 앞자리" maxlength="6"> <span>-</span> <input
@@ -291,8 +277,7 @@ input[disabled] {
 				</div>
 				<input type="text" name="phone" id="phone" placeholder="전화번호를 입력하세요">
 				<span id="result_phone"></span> <input type="text" name="email"
-					id="email" placeholder="이메일을 입력하세요"> <span
-					id="result_email"></span>
+					id="email" value=${email} readonly></span>
 			</fieldset>
 
 			<fieldset>
@@ -308,7 +293,7 @@ input[disabled] {
 					name="address2" id="address2" placeholder="상세주소를 입력하세요">
 			</fieldset>
 			<input type="text" placeholder="       * 는 필수입력사항 입니다." readonly
-				style="background:#cdcdcd; width: 50%; border:5px solid white;">
+				style="background: #cdcdcd; width: 50%; border: 5px solid white;">
 
 			<div class="buttons">
 				<button type="submit">가입하기</button>
@@ -316,7 +301,7 @@ input[disabled] {
 			</div>
 		</form>
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
-		</div>
+	</div>
 
 
 	<script>
@@ -562,19 +547,7 @@ input[disabled] {
 				.on(
 						"submit",
 						function(event) {
-							if (!$("#id").val()) {
-								alert("ID는 필수 입력사항입니다.");
-								$("#id").focus();
-								return false;
-							} else if (!$("#pw").val()) {
-								alert("PW는 필수 입력사항입니다.");
-								$("#pw").focus();
-								return false;
-							} else if (!$("#pwr").val()) {
-								alert("PW는 필수 입력사항입니다.");
-								$("#pwr").focus();
-								return false;
-							} else if (!$("#name").val()) {
+							if (!$("#name").val()) {
 								alert("이름은 필수 입력사항입니다.");
 								$("#name").focus();
 								return false;

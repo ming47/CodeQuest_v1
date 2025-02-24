@@ -163,10 +163,40 @@ public enum MemberDAOImpl implements MemberDAO {
 			return null;
 		}
 	}
+	
+	@Override
+	public MemberDTO easyLogin(String inputEmail) throws Exception {
+		String sql = "select * from members where email = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+			pstat.setString(1, inputEmail);
+			try (ResultSet rs = pstat.executeQuery()) {
+				if (rs.next()) {
+					int memberId = rs.getInt("member_id");
+					String name = rs.getString("name");
+					String nickName = rs.getString("nickname");
+					String ssn = rs.getString("ssn");
+					String email = rs.getString("email");
+					String phone = rs.getString("phone");
+					int postcode = rs.getInt("zip_code");
+					String address = rs.getString("address");
+					String detail_address = rs.getString("detail_address");
+					String role = rs.getString("role");
+					Timestamp date = rs.getTimestamp("reg_date");
+
+					MemberDTO member = new MemberDTO(memberId,name,nickName,ssn,
+							email,phone,postcode,address,detail_address,
+							role,date);
+					return member;
+
+				}
+			}
+			return null;
+		}
+	}
 
 	@Override
 	public int update(MemberDTO dto) throws Exception {	//mypage수정
-		String sql = "update Members set nickname = ?, email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where login_id = ?";
+		String sql = "update members set nickname = ?, email = ?, phone = ?, zip_code = ?, address = ?, detail_address =? where member_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, dto.getNickName());
 			pstat.setString(2, dto.getEmail());
@@ -174,11 +204,11 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setInt(4, dto.getZipCode());
 			pstat.setString(5, dto.getAddress());
 			pstat.setString(6, dto.getDetailAddress());
-			pstat.setString(7, dto.getLoginId());
+			pstat.setInt(7, dto.getMemberId());
+			System.out.println("DAO에서의 MEMBERID값"+dto.getMemberId());
 
 			return pstat.executeUpdate();
 		}
-		// TODO Auto-generated method stub
 	}
 
 	@Override
