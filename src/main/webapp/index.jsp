@@ -8,6 +8,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
+  integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+<script>
+  Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
+</script>
+
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,9 +139,7 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
 	font-family: "Jua", serif;
-	margin-bottom: 50px;
-	margin-top: 80px;
-	background: url('/login.jpg') no-repeat center;
+	background: url('/images/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
@@ -197,19 +201,19 @@
 }
 
 .login-links button {
-	margin: 10px;
+	margin: 3px;
 	border-radius: 10px;
 	padding: 8px;
-	transition: background 0.3s;
+	transition: background 0.5s;
 	font-weight: bold;
 	background: #717171;
 	color: white;
 	font-family: "Jua", serif;
-	font-size: 17px;
+	font-size: 15px;
 }
 
 .login-links button:hover {
-	background: #003f7f;
+	background: #000000;
 	transform: scale(1.1);
 }
 
@@ -218,6 +222,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	gap:10px;
 }
 
 /* ✅ 로그인 전 랭킹보드 기본 크기 */
@@ -360,7 +365,7 @@
 	font-family: "Press Start 2P", serif;
 	font-weight: 400;
 	font-style: normal;
-	background: url('/gamebtn.png') no-repeat center;
+	background: url('/images/gamebtn.png') no-repeat center;
 	background-size: cover;
 }
 
@@ -370,7 +375,7 @@
 
 .boardlist {
 	width: 90%;
-	background: url('/board.jpg') no-repeat center;
+	background: url('/images/board.jpg') no-repeat center;
 	background-size: cover;
 	padding: 20px;
 	border-radius: 10px;
@@ -424,13 +429,12 @@
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
-			<c:if test="${member.loginId != null}">
+			<c:if test="${member.memberId != null}">
 				<div class="logbox-container">
 					<%@ include file="logbox.jsp"%>
 				</div>
 			</c:if>
 		</div>
-
 
 		<!-- ✅ 좌우 배치 레이아웃 -->
 		<div class="main-content">
@@ -489,7 +493,7 @@
 			<!-- ✅ 오른쪽 로그인 + 랭킹보드 -->
 
 			<div class="right-content">
-				<c:if test="${member.loginId==null}">
+				<c:if test="${member.memberId==null}">
 					<div class="loginbox">
 						<h2>로그인</h2>
 						<form action="/member/login.do" method="post" id="frm">
@@ -499,9 +503,9 @@
 								<button id="loginBtn">로그인</button>
 							</div>
 						</form>
-
 						<div class="login-links">
-							<a href="/member/addForm.do"><button>회원가입</button></a><br>
+						<a id="kakao-login-btn" href="javascript:loginWithKakao()"><button>간편 로그인</button> </a>
+							<a href="/member/addForm.do"><button>회원가입</button></a>
 							<button type="button" id="pwFinder">비밀번호 재설정</button>
 						</div>
 					</div>
@@ -542,6 +546,12 @@
 	</div>
 
 	<script>
+		function loginWithKakao() {
+			    Kakao.Auth.authorize({
+			      redirectUri: 'http://10.5.5.14/KakaoLogin',
+			      scope: 'profile_nickname,profile_image,account_email',
+			    });
+		}
 
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=550, height=300");
