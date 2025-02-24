@@ -224,19 +224,19 @@
                 <div class="sidebar">
                     <h2>Game List</h2>
                     <ul>
-                        <li>Game 1</li>
-                        <li>Game 2</li>
-                        <li>Game 3</li>
-                        <li>Game 4</li>
-                        <li>Game 5</li>
-                        <li>Game 6</li>
+                       <li value="800001">Game 1</li>
+                        <li value="800002">Game 2</li>
+                        <li value="800003">Game 3</li>
+                        <li value="800004">Game 4</li>
+                        <li value="800005">Game 5</li>
+                        <li value="800006">Game 6</li>
                     </ul>
                 </div>
             </div>
             <div class="gamedetail">
                 <div class="gameheader"><img src="arcade2.png">
                     <div class="gamepractice">
-                        <div class="practicehead">head</div>
+                        <div class="practicehead">최현수</div>
                         <div class="practicebody">body</div>
                         <div class="practicebutton"><button> Game Start</button></div>
                     </div>
@@ -246,6 +246,24 @@
         <!-- ✅ 푸터 -->
         <div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
     </div>
+    
+    <script>
+	$('li').on('click', function() {
+		$.ajax({
+			url: '/game/detail.do?id=' + $(this).val()
+		}).done(function(data) {
+			data = JSON.parse(data);
+			
+			// gameid, name, thumbnailimgpath, description, introduce
+			
+			$('.practicehead').html(data.introcue);
+			//''
+			$('#thumbnail').attr('src', data.thumbnailingpath);
+		})
+		
+	})
+</script>
+
 </body>
 
 </html>
