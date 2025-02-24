@@ -88,6 +88,34 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			}
 		}
 	}
+	@Override
+	public List<PlaytimeDTO> selectRecentByMemberId(int inputMemberId) throws Exception { //마이페이지에서 최근 플레이한 게임
+	    String sql = "SELECT * FROM ( " +
+	                 "    SELECT PLAYTIME_ID, MEMBER_ID, GAME_ID, PLAY_TIME, REG_DATE " +
+	                 "      FROM PLAY_TIME " +
+	                 "     WHERE MEMBER_ID = ? " +
+	                 "     ORDER BY REG_DATE DESC " +
+	                 ") WHERE ROWNUM <= 5";
+	    try (Connection con = getConnection();
+	         PreparedStatement pstat = con.prepareStatement(sql)) {
+	        pstat.setInt(1, inputMemberId);
+	        try (ResultSet rs = pstat.executeQuery()) {
+	            List<PlaytimeDTO> list = new ArrayList<>();
+	            while (rs.next()) {
+	            	int playtimeId = rs.getInt("playtime_id");
+	            	int memberId = rs.getInt("member_id");
+	            	int gameId = rs.getInt("game_id");
+	            	int playtime = rs.getInt("play_time");
+	            	Timestamp regDate = rs.getTimestamp("reg_date");
+	            	PlaytimeDTO dto = new PlaytimeDTO(playtimeId,memberId,gameId,playtime,regDate);
+	            	list.add(dto);
+	            }
+	            return list;
+	        }
+	    }
+	}
+
+	
 
 	@Override
 	public List<PlaytimeDTO> selectByGameId(int gameId) throws Exception {

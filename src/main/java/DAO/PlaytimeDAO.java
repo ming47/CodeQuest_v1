@@ -21,6 +21,7 @@ public interface PlaytimeDAO {
 	List<PlaytimeDTO> selectByMemberGender(GENDER gender) throws Exception;	// 성별에 따른 유저 플레이타임
 	List<PlaytimeDTO> selectByMemberAgeRange(int startAge, int endAge) throws Exception; // 나이대에 따른 유저 플레이타임
 	List<PlaytimeDTO> selectByDate(LocalDate date) throws Exception; // 특정 날짜의 유저 플레이타임
+
 	
 	double selectAnaByMinusDate(String type, int date) throws Exception;  // 특정 날짜의 플레이 통계
 	List<AnalyzeDTO> selectAnaRecent7days(String type) throws Exception;
@@ -34,4 +35,7 @@ public interface PlaytimeDAO {
 	double selectAnaByMinusMonth(String type, int month) throws Exception; 
 	double selectAnaByMinusDateAndGameId(String type, int date, int gameId) throws Exception;
 	double selectAnaByMinusMonthAndGameId(String type, int date, int gameId) throws Exception;
+
+	List<PlaytimeDTO> selectRecentByMemberId(int memberId) throws Exception; // 마이페이지 최근 플레이한 게임
+
 }
