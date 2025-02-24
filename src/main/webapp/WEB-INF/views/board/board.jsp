@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 <head>
+
 <meta charset="UTF-8">
-<title>회원게시판</title>
+
+<title>게시판리스트</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style>
 * {
@@ -16,7 +19,6 @@
 
 body {
 	background-color: #0e0326;
-	/* 어두운 보라색 배경 */
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -25,11 +27,9 @@ body {
 }
 
 .container {
-    max-height :1024px;
+	max-height: 1024px;
 	max-width: 2000px;
-
 	background-color: #2b2d42;
-	/* 어두운 회색 배경 */
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	padding: 30px;
 	color: white;
@@ -41,19 +41,16 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	background-color: #2b2d42;
-	/* 헤더 배경 */
 	padding: 10px 20px;
 	border: 1px solid white;
-	height: 10%; /* 높이를 10%로 줄여보세요 */
+	height: 10%;
 }
 
 .container>.navi {
 	display: flex;
 	height: 5%;
-	justify-content: flex-end; /* 항목들을 오른쪽으로 정렬 */
 	align-items: center;
 	background-color: #2b2d42;
-	/* 네비게이션 배경 */
 	padding: 10px 20px;
 	border: 1px solid white;
 }
@@ -66,20 +63,19 @@ body {
 
 .header {
 	display: flex;
-	justify-content: space-between; /* 좌우 정렬 */
+	justify-content: space-between;
 	align-items: center;
 	background-color: #2b2d42;
 	padding: 10px 20px;
 	border: 1px solid white;
-	
 }
 
 .header ul {
 	list-style: none;
 	display: flex;
 	gap: 15px;
-	justify-content: flex-end; /* 오른쪽 정렬 */
-	margin-left: auto; /* 왼쪽 여백을 자동으로 만들어서 오른쪽으로 붙음 */
+	justify-content: flex-end;
+	margin-left: auto;
 }
 
 .header ul li {
@@ -122,7 +118,6 @@ table th {
 
 table tr:nth-child(even) {
 	background-color: #0e0326;
-	/* 짝수 행 배경색 */
 }
 
 table a {
@@ -158,11 +153,11 @@ button {
 	padding: 10px 20px;
 	background-color: #0e0326;
 	color: white;
-	border: none; /* 경계선 제거 */
+	border: none;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-	margin-top: 20px; /* 버튼을 아래로 띄우기 */
+	margin-top: 20px;
 }
 
 button:hover {
@@ -177,7 +172,7 @@ button:hover {
 }
 #buttonbox {
 	display: flex;
-	justify-content: flex-start; /* 버튼을 왼쪽으로 정렬 */
+	justify-content: flex-start;
 	align-items: center;
 	padding: 20px;
 	border: none;
@@ -187,7 +182,6 @@ button:hover {
 	background-color: 'red';
 }
 
-/* 반응형 디자인 설정 */
 @media screen and (max-width: 768px) {
 	.header ul {
 		flex-direction: column;
@@ -213,9 +207,10 @@ button:hover {
 </head>
 
 <body>
-<script>
+	<script>
+
 	$(function() {
-		// 페이지네이션 클릭 이벤트
+
 		$(".page").on("click", function() {
 			let pageNum = $(this).attr("page");
 			sessionStorage.setItem("last_cpage", pageNum);
@@ -224,9 +219,9 @@ button:hover {
 </script>
 
 	<div class="container">
-	
-		
-			<!-- 헤더 -->
+
+
+
 		<div class="header" meta name="viewport">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
@@ -236,45 +231,24 @@ button:hover {
 					<li><a href="/board/list.do">Board</a></li>
 					<li><a href="/service/list.do">Service</a></li>
 				</ul>
+
+
 			</div>
-			<!-- 로그인 정보 -->
+
 			<c:if test="${member.loginId != null}">
 				<div class="logbox-container">
 
-		<%@ include file="/logbox.jsp" %>
-		
+					<%@ include file="/logbox.jsp"%>
+
 				</div>
 			</c:if>
 		</div>
-		
-		
+
+
+
 		<div class="body">
-		<!--검색 창 form 만들기 -->
-				<div class="container">
-					<div class="row">
-						<form method="get" name="search" action="/board/search.do">
-							<table class="pull-right">
-								<tr>
-									<td>
-										<select class="form-control" name="searchField">
-											<option value="0">선택</option>
-											<option value="schTitle">제목</option>
-											<option value="schWriter">작성자</option>
-										</select>	
-									</td>
-									<td>
-										<input type="text" class="form-control"	placeholder="검색어 입력" name="searchText" maxlength="100">
-									</td>
-									<td><button type="submit" class="btn btn-success">검색</button></td>
-								</tr>
-							</table>
-						</form>
-					</div>
-				</div>
-		
-			<!-- 게시판 테이블 -->
-			
-		
+
+
 			<table>
 				<tr id="name">
 					<td colspan="8">자유게시판</td>
@@ -289,13 +263,9 @@ button:hover {
 				<c:forEach var="dto" items="${noticeList}">
 					<tr>
 						<td>${dto.boardId}</td>
-
-						<td class="contents notice">
-							<span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-							<span class="reply-count">[${dto.replyCount}]</span>
-						</td>
-
+						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
@@ -304,32 +274,48 @@ button:hover {
 				<c:forEach var="dto" items="${list}">
 					<tr>
 						<td>${dto.boardId}</td>
-
-						<td class="contents">
-							<span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-							<span class="reply-count">[${dto.replyCount}]</span>
-						</td>
-
+						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+							class="reply-count">[${dto.replyCount}]</span></td>
 						<td>${dto.writer}</td>
 						<td>${dto.regDate}</td>
 						<td>${dto.viewCount}</td>
 					</tr>
 				</c:forEach>
 
+
 				<tr id="number">
 					<td colspan="8" align="center"></td>
 				</tr>
+
+
+				<form method="get" name="search" action="/board/search.do">
+	
+						<tr>
+							<td><select class="form-control" name="searchField">
+									<option value="0">선택</option>
+									<option value="schTitle">제목</option>
+									<option value="schWriter">작성자</option>
+							</select></td>
+							<td><input type="text" class="form-control"
+								placeholder="검색어 입력" name="searchText" maxlength="100">
+							</td>
+							<td><button type="submit" class="btn btn-success">검색</button></td>
+						</tr>
+			
+				</form>
 
 			</table>
 
 			<div colspan="3" id="buttonbox">
 
-			<c:if test="${dto == null}">
-	
-				<a href="/board/addform.do" method="post">
-					<button>작성하기</button>
-				</a>
+				<c:if test="${dto == null}">
+
+
+					<a href="/board/addform.do" method="post">
+						<button class="writebtn">작성하기</button>
+					</a>
+
 
 				</c:if>
 
@@ -337,10 +323,8 @@ button:hover {
 
 		</div>
 	</div>
-
-</body>
-
 </html>
+</body>
 <script>
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
@@ -352,8 +336,10 @@ button:hover {
 				location.href = url + index;
 			});
 
+
 			return span;
 		}
+
 
 		if (${!page.isFirst}) {
 			pageNavi.append(makeSpan('이전', ${page.startNavi - 1}));
@@ -380,4 +366,14 @@ button:hover {
 	}
 
 	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
+	
+	
+    $(".writebtn").on("click", function() {
+
+    	if (!member.memberId || Master !== "admin") {
+               alert("회원만 작성이 가능합니다")
+                    
+    	            }
+    	})
 </script>
+
