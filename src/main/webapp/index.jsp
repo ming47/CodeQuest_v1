@@ -10,9 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
   integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
-<script>
-  Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
-</script>
 
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -543,6 +540,7 @@
 	</div>
 
 	<script>
+	  Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
 		function loginWithKakao() {
 			    Kakao.Auth.authorize({
 			      redirectUri: 'http://10.5.5.14/KakaoLogin',
