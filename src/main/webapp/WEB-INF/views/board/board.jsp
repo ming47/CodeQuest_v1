@@ -308,67 +308,8 @@ button:focus {
 	outline: none;
 }
 
-background
-
- 
-
-:
 
 
-#3c3b39
-
-
-;
-top
-
-
-:
-
-
-100
-
-
-%;
-left
-
-
-:
-
-
-0
-
-
-;
-transition
-
- 
-
-:
-
- 
-
-all
-
- 
-
-0
-
-
-.4s
-
-
-;
-z-index
-
-
-:
-
-
--1
-
-
-;
-}
 #name, #title, #number, #buttonbox {
 	height: 50px;
 	color: white;
