@@ -109,6 +109,12 @@ html, body {
 	font-weight: bold;
 	font-size: 16px;
 }
+.logbox-container {
+	position: absolute;
+	right: 10px;
+	bottom: -35px;
+	top:80px
+}
 
 table {
 	max-width: 1500px;
