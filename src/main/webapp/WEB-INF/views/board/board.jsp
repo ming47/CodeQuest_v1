@@ -299,6 +299,7 @@ button:focus {
 	outline: none;
 }
 
+
 #name, #title, #number, #buttonbox {
 	height: 50px;
 	color: white;
@@ -497,6 +498,8 @@ $(function() {
 		            alert("회원만 글쓰기가 가능합니다.");
 		            event.preventDefault(); // 페이지 이동 방지
 		            return false;
+		            
+		            
 		        } else if(isBanned) {
 		        	$.ajax({
 		        		url: '/service/member/ban/detail.do?id=' + ${member.memberId},
