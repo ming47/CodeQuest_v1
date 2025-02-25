@@ -23,9 +23,11 @@ import DAOImpl.BlackListDAOImpl;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DAOImpl.PlaytimeDAOImpl;
+import DAOImpl.QnADAOImpl;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
 import DTO.PlaytimeDTO;
+import DTO.QnADTO;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
@@ -34,6 +36,7 @@ public class MemberController extends HttpServlet {
 	private BoardDAO boardDao = BoardDAOImpl.INSTANCE;
 	private BlackListDAO blackListDao = BlackListDAOImpl.INSTANCE;
 	private PlaytimeDAO playtimeDao = PlaytimeDAOImpl.INSTANCE;
+	private QnADAOImpl qnaDao = QnADAOImpl.INSTACNE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -79,6 +82,10 @@ public class MemberController extends HttpServlet {
 				//최근 플레이한 게임
 			    List<PlaytimeDTO> recentPlayTime = playtimeDao.selectRecentByMemberId(memberId);
 			    request.setAttribute("recentPlayTime", recentPlayTime);
+			    
+			    //문의내역
+			    List<QnADTO> recentQna = qnaDao.selectRecentByMemberId(memberId);
+			    request.setAttribute("recentQna", recentQna);
 			    
 			    for (PlaytimeDTO pt : recentPlayTime) {
 			        int totalSeconds = pt.getPlaytime();

@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.List;
 
+import DTO.PlaytimeDTO;
 import DTO.QnADTO;
 
 public interface QnADAO {
@@ -23,4 +24,5 @@ public interface QnADAO {
 	List<QnADTO> selectByResponseYN(String responseYN, int page) throws Exception;
 	List<QnADTO> selectByWriterLike(String writer, int page) throws Exception;
 	List<QnADTO> selectByContentLike(String content, int page) throws Exception;
+	List<QnADTO> selectRecentByMemberId(int memberId) throws Exception;
 }
