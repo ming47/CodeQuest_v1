@@ -143,12 +143,10 @@ public class MemberController extends HttpServlet {
 
 		try {
 			String cmd = ConvertURL.of(request);
-			System.out.println(cmd);
 			if (cmd.equals("/member/add.do")) { //회원가입
 
 				String id = request.getParameter("id");
 				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
-				System.out.println(pw);
 
 				String name = request.getParameter("name");
 				String nickName = request.getParameter("nickName");
@@ -254,11 +252,7 @@ public class MemberController extends HttpServlet {
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
-				
-				String emailDupli = request.getParameter("emailDupli");
-				System.out.println(emailDupli);
-			
-				
+								
 				// 인증코드 생성
 				int authCode = (int)(Math.random() * 900000) + 100000; 
 				String codeStr = String.valueOf(authCode);
@@ -278,16 +272,14 @@ public class MemberController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/pwReset.do")) {
-				String pw = request.getParameter("pw");
-				String encryptPw = SecurityUtil.hashPassword(pw);
+				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
 				String email = request.getParameter("resetEmail");
 
-				int result = dao.updatePw(email,encryptPw);
+				int result = dao.updatePw(email,pw);
 				if(result > 0) {
 					System.out.println("패스워드 변경 성공!");
 					response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
 				}
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
