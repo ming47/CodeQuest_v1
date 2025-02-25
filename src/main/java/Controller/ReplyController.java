@@ -69,7 +69,8 @@ public class ReplyController extends HttpServlet {
 		String cmd = request.getRequestURI();
 		try {
 			if (cmd.equals("/reply/add.do")) { // 댓글 출력
-				int boardId = Integer.parseInt(request.getParameter("parent_seq"));
+				System.out.println("1");
+				int boardId = Integer.parseInt(request.getParameter("boardId"));
 				String contents = request.getParameter("contents");
 				HttpSession session = request.getSession();
 				MemberDTO member = (MemberDTO) session.getAttribute("member");
@@ -95,6 +96,7 @@ public class ReplyController extends HttpServlet {
 				bdao.increaseReplyCount(boardId);	//댓글 카운트 추가
 				response.sendRedirect("/board/detail.do?id=" + boardId);
 			} else if (cmd.equals("/reply/delete.do")) { // 삭제 내일 다시와서 볼것
+				System.out.println("1");
 				int dto = Integer.parseInt(request.getParameter("id"));
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
 
