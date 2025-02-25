@@ -204,8 +204,6 @@ public enum MemberDAOImpl implements MemberDAO {
 			pstat.setString(5, dto.getAddress());
 			pstat.setString(6, dto.getDetailAddress());
 			pstat.setInt(7, dto.getMemberId());
-			System.out.println("DAO에서의 MEMBERID값"+dto.getMemberId());
-
 			return pstat.executeUpdate();
 		}
 	}

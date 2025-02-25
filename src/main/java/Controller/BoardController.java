@@ -47,11 +47,6 @@ public class BoardController extends HttpServlet {
 
 		try {
 			String cmd = ConvertURL.of(request);
-			System.out.println(cmd);
-
-			String ip = request.getRemoteAddr();
-			System.out.println(ip);
-
 			if (cmd.equals("/board/addform.do")) {
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 				if (member == null) { // 회원만 글쓰기 가능
@@ -107,9 +102,6 @@ public class BoardController extends HttpServlet {
 			else if (cmd.equals("/board/mainlist.do")) {// 게시글 목록 출력
 
 				List<BoardDTO> list = dao.selectTop5Boardlist();
-				for(int i=0;i<list.size();i++) {
-					System.out.println(list.get(i).getBoardId());
-				}
 				response.getWriter().append(g.toJson(list));
 
 			}
@@ -172,9 +164,7 @@ public class BoardController extends HttpServlet {
 				ViewCountDTO viewCountDTO = null;
 				
 				if(dto != null) {
-					System.out.println(dto.getMemberId());
 					viewCountDTO = new ViewCountDTO(boardId, dto.getMemberId());
-					System.out.println(viewCountDTO.getMemberId());
 				} else {					
 					viewCountDTO = new ViewCountDTO(boardId);
 				}
@@ -218,8 +208,6 @@ public class BoardController extends HttpServlet {
 		String cmd = request.getRequestURI();
 
 		Gson g = new Gson();
-		String ip = request.getRemoteAddr();
-		System.out.println(ip);
 
 		try {
 
