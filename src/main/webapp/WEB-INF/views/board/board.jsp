@@ -18,20 +18,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
 	rel="stylesheet">
+
 <style>
-<
-style>* {
-	box-sizing: border-box;
-	font-family: 'DungGeunMo';
-}
-
-html, body {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-}
-
 @font-face {
 	font-family: 'DungGeunMo';
 	src:
@@ -41,17 +29,27 @@ html, body {
 	font-style: normal;
 }
 
-.container {
-	display: flex;
-	flex-direction: column; /* 헤더를 위에 두기 위해 column 방향으로 설정 */
-	align-items: center;
-	max-height: 2000px;
-	width: 100%;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	width: 100vw;
+	height: 100vh;
+	background-attachment: fixed;
 	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
+}
+
+.container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	color: white;
-	t background-size: cover;
 	font-family: 'DungGeunMo';
 }
 
@@ -69,12 +67,13 @@ html, body {
 }
 
 .header {
+	width: 100vw;
 	height: 80px;
-	padding: 20px;
-	position: relative;
-	font-family: "Press Start 2P", serif;
-	font-weight: 400;
-	font-style: normal;
+	background: #1e201d;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: fixed;
 }
 
 .footer {
@@ -83,17 +82,13 @@ html, body {
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-	margin-top: 40px;
-	font-family: "Press Start 2P", serif;
-	font-weight: 400;
-	font-style: normal;
 }
 
 .navi {
-	display: flex;
-	align-items: center;
 	width: 100%;
+	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .logo {
@@ -129,7 +124,7 @@ html, body {
 }
 
 .logbox-container {
-	position: absolute;
+	position: fixed;
 	right: 10px;
 	bottom: -35px;
 	top: 80px
@@ -140,16 +135,14 @@ html, body {
 	background-color: rgb(255, 255, 255, 0.5);
 	border-radius: 16px;
 	box-shadow: inset 0 0 8px #424242;
-	max-width: 1800px;
 	width: 1200px;
 	padding: 20px;
-	margin: 50px;
+	margin: 140px;
 }
 
 table {
-	max-width: 1700px; //
-	border-collapse: collapse; <%-- 테이블 띄워지는거 없애고싶으면 주석 지우기 margin-top :
-	20px; --%>
+	max-width: 1700px;
+	border-collapse: collapse;
 	min-width: 70%;
 	border: 1px solid #fff;
 	width: 1200px;
@@ -207,15 +200,6 @@ table a:hover {
 /* ✅ 로그인 박스 */
 .loginbox {
 	width: 80%;
-	background: url('/login.jpg') no-repeat center;
-	background-size: cover;
-	padding: 10px;
-	border-radius: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	font-family: "Jua", serif;
-	margin-bottom: 50px;
-	margin-top: 80px;
 	background: url('/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
@@ -308,73 +292,11 @@ button:focus {
 	outline: none;
 }
 
-background
-
- 
-
-:
-
-
-#3c3b39
-
-
-;
-top
-
-
-:
-
-
-100
-
-
-%;
-left
-
-
-:
-
-
-0
-
-
-;
-transition
-
- 
-
-:
-
- 
-
-all
-
- 
-
-0
-
-
-.4s
-
-
-;
-z-index
-
-
-:
-
-
--1
-
-
-;
-}
 #name, #title, #number, #buttonbox {
 	height: 50px;
 	color: white;
 }
 
-}
 #buttonbox {
 	display: flex;
 	justify-content: flex-start;
@@ -386,79 +308,32 @@ z-index
 .notice {
 	background-color: 'red';
 }
-
-@media screen and (max-width: 768px) {
-	.header ul {
-		flex-direction: column;
-		align-items: center;
-	}
-	.container {
-		padding: 15px;
-	}
-	.logbox {
-		font-size: 14px;
-	}
-	.paging {
-		width: 25px;
-		height: 25px;
-		line-height: 25px;
-	}
-	button {
-		width: 100%;
-	}
-	#searchbar td {
-		border: none !important; /* 테두리 없애기 */
-		text-align: center; /* 가운데 정렬 */
-		padding: 15px 0;
-	}
-	#searchbar form {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		justify-content: flex-start;
-	}
-}
 </style>
 
 </head>
 
 <body>
 
-	<script>
-	$(function() {
-
-		$(".page").on("click", function() {
-			let pageNum = $(this).attr("page");
-			sessionStorage.setItem("last_cpage", pageNum);
-		});
-	});
-</script>
+	<div class="header">
+		<div class="navi">
+			<div class="logo">Team CodeQuest</div>
+			<ul class="menu">
+				<li><a href="/">Home</a></li>
+				<li><a href="/game/list.do">Game</a></li>
+				<li><a href="/board/list.do">Board</a></li>
+				<c:choose>
+					<c:when test="${member.role == 'admin'}">
+						<li><a href="/service/admin/main.do">Service</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="/service/qna/addForm.do">Service</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</div>
 
 	<div class="container">
-
-
-		<div class="header">
-			<div class="navi">
-				<div class="logo">Team CodeQuest</div>
-				<ul class="menu">
-					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Game</a></li>
-					<li><a href="/board/list.do">Board</a></li>
-					<c:choose>
-						<c:when test="${member.role == 'admin'}">
-							<li><a href="/service/admin/main.do">Service</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a href="/service/qna/addForm.do">Service</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-		</div>
-
-
-
-
 
 		<div class="body">
 
@@ -508,58 +383,52 @@ z-index
 						</tr>
 					</c:forEach>
 
-
 					<tr id="number">
 						<td colspan="8" align="center"></td>
 					</tr>
-					</div>
 
-					<form method="get" name="search" action="/board/search.do">
-						<tr id="searchbar">
-							<td colspan="5">
-								<form method="get" name="search" action="/board/search.do"
-									style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-									<select class="form-control" name="searchField"
-										style="width: 120px;">
-										<option value="0">선택</option>
-										<option value="schTitle">제목</option>
-										<option value="schWriter">작성자</option>
-									</select> <input type="text" class="form-control" placeholder="검색어 입력"
-										name="searchText" maxlength="100" style="width: 300px;">
-									<button type="submit" class="btn btn-success">검색</button>
-								</form>
-							</td>
-						</tr>
-
-					</form>
+					<tr id="searchbar">
+						<td colspan="5">
+							<form method="get" name="search" action="/board/search.do"
+								style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+								<select class="form-control" name="searchField"
+									style="width: 120px;">
+									<option value="0">선택</option>
+									<option value="schTitle">제목</option>
+									<option value="schWriter">작성자</option>
+								</select> <input type="text" class="form-control" placeholder="검색어 입력"
+									name="searchText" maxlength="100" style="width: 300px;">
+								<button type="submit" class="btn btn-success">검색</button>
+							</form>
+						</td>
+					</tr>
 
 				</table>
 
 				<div colspan="3" id="buttonbox">
-
 					<c:if test="${dto == null}">
-
-
 						<a href="/board/addform.do" method="post">
 							<button class="writebtn">작성하기</button>
 						</a>
-
-
 					</c:if>
-
 				</div>
-
 			</div>
-
 		</div>
-
-
-		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
-</html>
-
+	</div>
+	<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </body>
 </html>
+
 <script>
+
+$(function() {
+
+	$(".page").on("click", function() {
+		let pageNum = $(this).attr("page");
+		sessionStorage.setItem("last_cpage", pageNum);
+	});
+});
+
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
 		
