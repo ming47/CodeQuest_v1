@@ -711,7 +711,7 @@
                                 <div class="ban-controller center-align">
                                     <div class="inner-fat">
                                         <div class="ban-detail-setting">
-                                            <div class="ban-reason-controller">
+                                            <div class="ban-reason-controller center-align">
                                                 <select class="ban-select" id="reason-select">
                                                 	<option>광고</option>
                                                 	<option>분탕</option>
@@ -722,7 +722,7 @@
                                                 </select>
                                                 <input type="text" placeholder="차단 사유" id="reason" disabled>
                                             </div>
-                                            <div class="ban-end-date-controller">
+                                            <div class="ban-end-date-controller center-align">
                                                 <select class="ban-select" id="end-date-select" disabled>
                                                 	<option value="720">30일</option>
                                                 	<option value="72">3일</option>
@@ -734,7 +734,7 @@
                                                 <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)" id="end-date" disabled>
                                             </div>
                                         </div>
-                                        <div class="ban-button"></div>
+                                        <div class="ban-button center-align"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1729,7 +1729,9 @@ function gameDetailCahrtSet(dataset) {
         div.append($('<div>').html(item.writer + "의 답변입니다.").addClass('qna-reply-writer'));
         div.append($('<div>').html("답변 시간: " + item.regDate).addClass('qna-reply-regDate'));
         div.append($('<div>').html(item.context).addClass('qna-reply-context'));
-        div.css('margin-top', '30px');
+        div.css({'margin-top': '60px',
+        		'border-top': '1px solid black',
+        		'padding-top': '10px'});
 
         $('#qna-contents-contents').append(div);
     }

@@ -370,7 +370,7 @@ public enum BoardDAOImpl implements BoardDAO {
 				+ "INNER JOIN MEMBERS M "
 				+ "ON B.MEMBER_ID = M.MEMBER_ID "
 				+ "WHERE ROLE='user') A) "
-				+ "WHERE RNUM BETWEEN 1 AND 5";
+				+ "WHERE RNUM <= 5";
 		
 		try (Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
