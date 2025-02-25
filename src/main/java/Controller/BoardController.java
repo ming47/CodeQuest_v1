@@ -190,6 +190,8 @@ public class BoardController extends HttpServlet {
 
 
 				response.sendRedirect("/board/list.do?cpage=1");				
+			} else if (cmd.equals("/board/hotweek/list.do")) {
+				response.getWriter().append(g.toJson(dao.selectTop5WeekendBoardList()));
 			}
 
 		} catch (Exception e) {

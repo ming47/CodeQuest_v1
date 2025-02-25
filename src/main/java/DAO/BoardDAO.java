@@ -24,5 +24,6 @@ public interface BoardDAO {
 	List<BoardDTO> selectBoardList(String searchField, String searchText,int page)throws Exception;
 	int searchListgetSize(String searchField, String searchText)throws Exception;
 	List<BoardDTO> selectTop5Boardlist()throws Exception;
-
+	
+	List<BoardDTO> selectTop5WeekendBoardList() throws Exception;
 }
