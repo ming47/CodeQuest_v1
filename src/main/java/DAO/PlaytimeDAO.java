@@ -27,7 +27,7 @@ public interface PlaytimeDAO {
 	List<AnalyzeDTO> selectAnaRecent7days(String type) throws Exception;
 	List<AnalyzeDTO> selectAnaRecent7days(String type, int gemaId) throws Exception;
 	List<AnalyzeDTO> selectAnaRecent12Months(String type) throws Exception; 
-	List<AnalyzeDTO> selectAnaGroupBy(String type, String target) throws Exception;
+	List<AnalyzeDTO> selectAnaGroupByGender(String type) throws Exception;
 	List<AnalyzeDTO> selectAnaGroupByAges(String type) throws Exception;
 	
 	double selectTodayAna(String type) throws Exception;
@@ -37,5 +37,6 @@ public interface PlaytimeDAO {
 	double selectAnaByMinusMonthAndGameId(String type, int date, int gameId) throws Exception;
 
 	List<PlaytimeDTO> selectRecentByMemberId(int memberId) throws Exception; // 마이페이지 최근 플레이한 게임
+	List<AnalyzeDTO> selectAnaGroupByGameId(String type) throws Exception;
 
 }
