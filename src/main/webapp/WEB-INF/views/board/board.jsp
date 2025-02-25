@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판리스트</title>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,29 +18,36 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
 	rel="stylesheet">
+
 <style>
+@font-face {
+	font-family: 'DungGeunMo';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 * {
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
-   }
-   
+}
+
 html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100vh;
 }
 
 .container {
-	display: flex;
-	flex-direction: column; /* 헤더를 위에 두기 위해 column 방향으로 설정 */
-	align-items: center;
-	max-height: 2000px;
 	width: 100%;
-	background: url('/images/allback.jpg') no-repeat center;
-	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	color: white;
-	background-size: cover;
+	font-family: 'DungGeunMo';
 }
 
 .header, .footer {
@@ -51,13 +62,23 @@ html, body {
 	font-style: normal;
 	width: 100%;
 }
+
 .header {
+	width: 100%;
 	height: 80px;
-	padding: 20px;
-	position: relative;
-	font-family: "Press Start 2P", serif;
-	font-weight: 400;
-	font-style: normal;
+	background: #1e201d;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: fixed;
+}
+
+.body{
+	margin: 0;
+	width: 100%;
+	background-attachment: fixed;
+	background: url('/images/allback.jpg') no-repeat center;
+	background-size: cover;
 }
 
 .footer {
@@ -66,16 +87,13 @@ html, body {
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-	margin-top: 40px;
-	font-family: "Press Start 2P", serif;
-	font-weight: 400;
-	font-style: normal;
 }
+
 .navi {
-	display: flex;
-	align-items: center;
 	width: 100%;
+	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .logo {
@@ -109,40 +127,60 @@ html, body {
 	font-weight: bold;
 	font-size: 16px;
 }
+
 .logbox-container {
-	position: absolute;
+	position: fixed;
 	right: 10px;
 	bottom: -35px;
-	top:80px
+	top: 80px
+}
+
+.tablebox {
+	border: none;
+	background-color: rgb(255, 255, 255, 0.5);
+	border-radius: 16px;
+	box-shadow: inset 0 0 8px #424242;
+	width: 75vw;
+	padding: 20px;
+	margin: 140px;
 }
 
 table {
-	max-width: 1500px;
 	border-collapse: collapse;
-	margin-top: 20px;
-	min-width: 60%;
-	background-color: #868686;
 	border: 1px solid #fff;
+	width: 70vw;
+	font-size: 17px;
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
-	color: white;
+	border-radius: 1px;
 	border: 1px solid #fff;
+	font-family: 'DungGeunMo';
+	color: black;
+	background-color: #fafbf4;
 }
 
-table th {
-	background-color: #0e0326;
-	color: #fff;
-	empty-cells: hide;
+table tr {
+	border-radius: 1px;
+	font-family: 'DungGeunMo';
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: #bec2a9 color: black;
+}
+
+td {
+	color: black;
+	border-radius: 1px;
+	font-family: 'DungGeunMo';
 }
 
 table a {
 	color: #0e0326;
 	text-decoration: none;
 	font-weight: bold;
-	color: white;
+	color: black;
 	font-color: white;
 }
 
@@ -174,15 +212,6 @@ table a:hover {
 	font-family: "Jua", serif;
 	margin-bottom: 50px;
 	margin-top: 80px;
-	background: url('/login.jpg') no-repeat center;
-	background-size: cover;
-	padding: 10px;
-	border-radius: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	font-family: "Jua", serif;
-	margin-bottom: 50px;
-	margin-top: 80px;
 	margin-right: 75px;
 }
 
@@ -200,23 +229,70 @@ table a:hover {
 	color: white;
 }
 
+select {
+	width: 100%;
+	padding: 8px 20px 5px 7px;
+	border: 2px solid #ccc;
+	outline: none;
+	font-size: 16px;
+	transition: 0.3s;
+	border-radius: 5px;
+	font-family: 'DungGeunMo';
+}
+
+input {
+	width: 100%;
+	padding: 10px 40px 10px 15px;
+	border: 2px solid #ccc;
+	outline: none;
+	font-size: 16px;
+	transition: 0.3s;
+	border-radius: 5px;
+	text-align: center;
+	font-family: 'DungGeunMo';
+}
+
+input:focus {
+	border-color: gray;
+	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.writebtn {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
 button {
 	padding: 10px 20px;
-	background-color: #0e0326;
+	background-color: #3c3b39;
 	color: white;
 	border: none;
+	letter-spacing: 5px;
+	font-weight: bold;
+	position: relative;
+	transition: all 0.4s;
+	overflow: hidden;
 	border-radius: 5px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	margin-top: 20px;
-}
-.writebtn {
-	margin:0;
+	font-family: 'DungGeunMo';
 }
 
+.writebtn {
+	margin-top: 15px;
+}
+
+.contents {
+	text-align: left;
+	padding-left: 30px;
+}
 
 button:hover {
-	background: #2b2d42;
+	background: #66635f;
+	transform: scale(1.1);
+	color: white;
+}
+
+button:focus {
+	outline: none;
 }
 
 #name, #title, #number, #buttonbox {
@@ -224,7 +300,6 @@ button:hover {
 	color: white;
 }
 
-}
 #buttonbox {
 	display: flex;
 	justify-content: flex-start;
@@ -236,154 +311,127 @@ button:hover {
 .notice {
 	background-color: 'red';
 }
-
-@media screen and (max-width: 768px) {
-	.header ul {
-		flex-direction: column;
-		align-items: center;
-	}
-	.container {
-		padding: 15px;
-	}
-	.logbox {
-		font-size: 14px;
-	}
-	.paging {
-		width: 25px;
-		height: 25px;
-		line-height: 25px;
-	}
-	button {
-		width: 100%;
-	}
-}
 </style>
 
 </head>
 
 <body>
 
-	<script>
-	$(function() {
-
-		$(".page").on("click", function() {
-			let pageNum = $(this).attr("page");
-			sessionStorage.setItem("last_cpage", pageNum);
-		});
-	});
-</script>
+	<div class="header">
+		<div class="navi">
+			<div class="logo">Team CodeQuest</div>
+			<ul class="menu">
+				<li><a href="/">Home</a></li>
+				<li><a href="/game/list.do">Game</a></li>
+				<li><a href="/board/list.do">Board</a></li>
+				<c:choose>
+					<c:when test="${member.role == 'admin'}">
+						<li><a href="/service/admin/main.do">Service</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="/service/qna/addForm.do">Service</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</div>
 
 	<div class="container">
 
-
-		<div class="header">
-			<div class="navi">
-				<div class="logo">Team CodeQuest</div>
-				<ul class="menu">
-					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Game</a></li>
-					<li><a href="/board/list.do">Board</a></li>
-					<c:choose>					
-						<c:when test="${member.role == 'admin'}">
-							<li><a href="/service/admin/main.do">Service</a></li>
-					 	</c:when>
-					 	<c:otherwise>					 	
-							<li><a href="/service/qna/addForm.do">Service</a></li>
-					 	</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-		</div>
-
-
-
-
-
 		<div class="body">
 
-			<c:if test="${member.memberId != null}">
+			<c:if test="${member.loginId != null}">
 				<div class="logbox-container">
 
 					<%@ include file="/logbox.jsp"%>
 
 				</div>
 			</c:if>
-			<table>
-				<tr id="name">
-					<td colspan="8">자유게시판</td>
-				</tr>
-				<tr id="title">
-					<th style="width: 12%;">번호</th>
-					<th style="width: 42%;">제목</th>
-					<th style="width: 17%;">작성자</th>
-					<th style="width: 17%;">날짜</th>
-					<th style="width: 12%;">조회</th>
-				</tr>
-				<c:forEach var="dto" items="${noticeList}">
-					<tr>
-						<td>${dto.boardId}</td>
-						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
-							class="reply-count">[${dto.replyCount}]</span></td>
-						<td>${dto.writer}</td>
-						<td>${dto.regDate}</td>
-						<td>${dto.viewCount}</td>
+			<div class="tablebox">
+				<table>
+					<tr id="name">
+						<td colspan="8"
+							style="width: 100%; font-size: 35px; padding: 45px;">자 유 게 시
+							판</td>
 					</tr>
-				</c:forEach>
-				<c:forEach var="dto" items="${list}">
-					<tr>
-						<td>${dto.boardId}</td>
-						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
-							class="reply-count">[${dto.replyCount}]</span></td>
-						<td>${dto.writer}</td>
-						<td>${dto.regDate}</td>
-						<td>${dto.viewCount}</td>
+					<tr id="title">
+						<th style="width: 12%;">번호</th>
+						<th style="width: 42%;">제목</th>
+						<th style="width: 17%;">작성자</th>
+						<th style="width: 17%;">날짜</th>
+						<th style="width: 12%;">조회</th>
 					</tr>
-				</c:forEach>
+					<c:forEach var="dto" items="${noticeList}">
+						<tr>
+							<td>${dto.boardId}</td>
+							<td class="contents notice">공지 📢> <a
+								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+								class="reply-count">[${dto.replyCount}]</span>
+							</td>
 
+							<td>${dto.writer}</td>
+							<td>${dto.regDate}</td>
+							<td>${dto.viewCount}</td>
+						</tr>
+					</c:forEach>
+					<c:forEach var="dto" items="${list}">
+						<tr>
+							<td>${dto.boardId}</td>
+							<td class="contents"><a
+								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+								class="reply-count">[${dto.replyCount}]</span></td>
+							<td>${dto.writer}</td>
+							<td>${dto.regDate}</td>
+							<td>${dto.viewCount}</td>
+						</tr>
+					</c:forEach>
 
-				<tr id="number">
-					<td colspan="8" align="center"></td>
-				</tr>
-
-
-				<form method="get" name="search" action="/board/search.do">
-
-					<tr>
-						<td><select class="form-control" name="searchField">
-								<option class="choice" value="0">선택</option>
-								<option value="schTitle">제목</option>
-								<option value="schWriter">작성자</option>
-						</select></td>
-						<td class="searchtd"><input type="text" class="form-control"
-							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
-						<td><button type="submit" class="btn btn-success">검색</button></td>
-						<td></td>
-						<td></td>
+					<tr id="number">
+						<td colspan="8" align="center"></td>
 					</tr>
-				</form>
 
-			</table>
+					<tr id="searchbar">
+						<td colspan="5">
+							<form method="get" name="search" action="/board/search.do"
+								style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+								<select class="form-control" name="searchField"
+									style="width: 120px;">
+									<option value="0">선택</option>
+									<option value="schTitle">제목</option>
+									<option value="schWriter">작성자</option>
+								</select> <input type="text" class="form-control" placeholder="검색어 입력"
+									name="searchText" maxlength="100" style="width: 300px;">
+								<button type="submit" class="btn btn-success">검색</button>
+							</form>
+						</td>
+					</tr>
 
-			<div colspan="3" id="buttonbox">
+				</table>
 
-				<c:if test="${dto == null}">
-
-
-					<a href="/board/addform.do" method="post">
-						<button class="writebtn">작성하기</button>
-					</a>
-
-				</c:if>
-
+				<div colspan="3" id="buttonbox">
+					<c:if test="${dto == null}">
+						<a href="/board/addform.do" method="post">
+							<button class="writebtn">작성하기</button>
+						</a>
+					</c:if>
+				</div>
 			</div>
-
 		</div>
 	</div>
+	<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </body>
 </html>
+
 <script>
+
+$(function() {
+
+	$(".page").on("click", function() {
+		let pageNum = $(this).attr("page");
+		sessionStorage.setItem("last_cpage", pageNum);
+	});
+});
+
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
 		
