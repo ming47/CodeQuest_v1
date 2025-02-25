@@ -386,7 +386,7 @@ button:focus {
 								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 								class="reply-count">[${dto.replyCount}]</span></td>
 							<td>${dto.writer}</td>
-							<td>${dto.regDate}</td>
+							<td class="relative-date" data-timestamp="${dto.regDate.time}">${dto.regDate}</td>
 							<td>${dto.viewCount}</td>
 						</tr>
 					</c:forEach>
@@ -428,14 +428,29 @@ button:focus {
 </html>
 
 <script>
+	var now = new Date();
+	$('.relative-date').each(function () {
+		var timestamp = parseInt($(this).data('timestamp'), 10);
+		var postDate = new Date(timestamp);
+		var diffMinutes = Math.floor((now - postDate) / (1000 * 60));
+	
+		if (diffMinutes < 1) {
+			$(this).text("방금 전");
+		} else if (diffMinutes < 60) {
+			$(this).text(diffMinutes + "분 전");
+		} else if (diffMinutes < 720) {
+			var diffHours = Math.floor(diffMinutes / 60);
+			$(this).text(diffHours + "시간 전");
+		}
+	});	
 
-$(function() {
-
-	$(".page").on("click", function() {
-		let pageNum = $(this).attr("page");
-		sessionStorage.setItem("last_cpage", pageNum);
+	$(function() {
+	
+		$(".page").on("click", function() {
+			let pageNum = $(this).attr("page");
+			sessionStorage.setItem("last_cpage", pageNum);
+		});
 	});
-});
 
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
