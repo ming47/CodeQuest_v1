@@ -2,7 +2,6 @@ package DAO;
 
 import java.util.List;
 
-import DTO.PlaytimeDTO;
 import DTO.QnADTO;
 
 public interface QnADAO {
