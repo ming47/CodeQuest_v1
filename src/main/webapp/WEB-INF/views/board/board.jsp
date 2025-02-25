@@ -79,6 +79,9 @@ html, body {
 	background-attachment: fixed;
 	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .footer {
@@ -140,7 +143,7 @@ html, body {
 	background-color: rgb(255, 255, 255, 0.5);
 	border-radius: 16px;
 	box-shadow: inset 0 0 8px #424242;
-	width: 75vw;
+	width: 73vw;
 	padding: 20px;
 	margin: 140px;
 }
