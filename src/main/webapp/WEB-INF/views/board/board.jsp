@@ -36,11 +36,8 @@
 }
 
 html, body {
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
-	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
-	background-size: cover;
 }
 
 .container {
@@ -67,13 +64,24 @@ html, body {
 }
 
 .header {
-	width: 100vw;
+	width: 100%;
 	height: 80px;
 	background: #1e201d;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	position: fixed;
+}
+
+.body{
+	margin: 0;
+	width: 100%;
+	background-attachment: fixed;
+	background: url('/images/allback.jpg') no-repeat center;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .footer {
@@ -135,25 +143,26 @@ html, body {
 	background-color: rgb(255, 255, 255, 0.5);
 	border-radius: 16px;
 	box-shadow: inset 0 0 8px #424242;
-	width: 1200px;
+	width: 73vw;
 	padding: 20px;
-	margin: 140px;
+	margin-top : 150px;
+	margin-bottom: 50px;
 }
 
 table {
-	max-width: 1700px;
 	border-collapse: collapse;
-	min-width: 70%;
-	border: 1px solid #fff;
-	width: 1200px;
-	font-size: 17px;
+	width: 70vw;
+	font-size: 19px;
+	border-spacing: 3px;
+	border-collapse: separate;
+	background-color: transparent; 
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
 	border-radius: 1px;
-	border: 1px solid #fff;
+	border:none;
 	font-family: 'DungGeunMo';
 	color: black;
 	background-color: #fafbf4;
@@ -162,9 +171,6 @@ table th, table td {
 table tr {
 	border-radius: 1px;
 	font-family: 'DungGeunMo';
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	background-color: #bec2a9 color: black;
 }
 
 td {
@@ -256,7 +262,8 @@ input:focus {
 
 .writebtn {
 	margin-top: 10px;
-	margin-left: 10px;
+	padding:20px;
+	margin-left:-17px;
 }
 
 button {
@@ -309,8 +316,8 @@ button:focus {
 	background-color: 'red';
 }
 </style>
-
 </head>
+
 
 <body>
 
@@ -497,10 +504,10 @@ $(function() {
 		        	}).done(function(data) {
 		        		data = JSON.parse(data);
 		        		
-		        		console.log(data);
+		        		parseDate(data.endDate);
 		        		
-		        		let message = "현재 차단된 계정입니다. 차단 이유: " + data.reason + "\n" 
-		        		+ "차단 기간: " + data.startDate + " ~ " + data.endDate;
+		        		let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+		        		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
 		        		alert(message);
 		        	});
 		   
@@ -509,5 +516,11 @@ $(function() {
 		        }
 		    });
 		});
+	 
+	 function parseDate(timestamp) {
+		 const date = new Date(timestamp);
+		 return date.getFullYear() + '년 ' + Number(date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' +  date.getHours() + 
+				 '시 ' + date.getMinutes() + '분';		 
+	 }
 
 </script>

@@ -17,17 +17,7 @@ public class MemberDTO {
 	private String role;
 	private Timestamp regDate;
 	private boolean isbanned;
-	
-	
-	public boolean isIsbanned() {
-		return isbanned;
-	}
 
-	public void setIsbanned(boolean isbanned) {
-		this.isbanned = isbanned;
-	}
-
-		
 	public MemberDTO(String loginId, String pw, String name, String nickName, String ssn, String email, String phone, int zipCode,
 			String address, String detailAddress, String role) { //회원 가입
 		super();
@@ -212,5 +202,14 @@ public class MemberDTO {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	
+	public boolean getIsbanned() {
+		return isbanned;
+	}
+
+	public void setIsbanned(boolean isbanned) {
+		this.isbanned = isbanned;
 	}
 }
