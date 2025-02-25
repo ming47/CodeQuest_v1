@@ -19,17 +19,26 @@
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
 	rel="stylesheet">
 <style>
-* {
+<
+style>* {
 	box-sizing: border-box;
+	font-family: 'DungGeunMo';
+}
 
-   }
-   
 html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
 
+@font-face {
+	font-family: 'DungGeunMo';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 .container {
@@ -37,10 +46,8 @@ html, body {
 	flex-direction: column; /* 헤더를 위에 두기 위해 column 방향으로 설정 */
 	align-items: center;
 	max-height: 2000px;
-
 	width: 100%;
 	background: url('/images/allback.jpg') no-repeat center;
-
 	background-size: cover;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	color: white;
@@ -48,9 +55,7 @@ html, body {
 	font-family: 'DungGeunMo';
 }
 
-
 .header, .footer {
-
 	background: #1e201d;
 	display: flex;
 	align-items: center;
@@ -61,17 +66,15 @@ html, body {
 	font-weight: 400;
 	font-style: normal;
 	width: 100%;
-
 }
-.header {
 
+.header {
 	height: 80px;
 	padding: 20px;
 	position: relative;
 	font-family: "Press Start 2P", serif;
 	font-weight: 400;
 	font-style: normal;
-
 }
 
 .footer {
@@ -85,6 +88,7 @@ html, body {
 	font-weight: 400;
 	font-style: normal;
 }
+
 .navi {
 	display: flex;
 	align-items: center;
@@ -123,11 +127,12 @@ html, body {
 	font-weight: bold;
 	font-size: 16px;
 }
+
 .logbox-container {
 	position: absolute;
 	right: 10px;
 	bottom: -35px;
-	top:80px
+	top: 80px
 }
 
 .tablebox {
@@ -136,18 +141,19 @@ html, body {
 	border-radius: 16px;
 	box-shadow: inset 0 0 8px #424242;
 	max-width: 1800px;
-	width: 1100px;
+	width: 1200px;
 	padding: 20px;
+	margin: 50px;
 }
 
 table {
 	max-width: 1700px; //
-	border-collapse: collapse; 
-	<%-- 테이블 띄워지는거 없애고싶으면 주석 지우기 margin-top : 20px;--%>
+	border-collapse: collapse; <%-- 테이블 띄워지는거 없애고싶으면 주석 지우기 margin-top :
+	20px; --%>
 	min-width: 70%;
 	border: 1px solid #fff;
-		
-
+	width: 1200px;
+	font-size: 17px;
 }
 
 table th, table td {
@@ -156,9 +162,8 @@ table th, table td {
 	border-radius: 1px;
 	border: 1px solid #fff;
 	font-family: 'DungGeunMo';
-		color: black;
-		background-color:#fafbf4;
-
+	color: black;
+	background-color: #fafbf4;
 }
 
 table tr {
@@ -166,8 +171,7 @@ table tr {
 	font-family: 'DungGeunMo';
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
-	background-color:#bec2a9
-		color: black;
+	background-color: #bec2a9 color: black;
 }
 
 td {
@@ -246,6 +250,7 @@ select {
 	font-size: 16px;
 	transition: 0.3s;
 	border-radius: 5px;
+	font-family: 'DungGeunMo';
 }
 
 input {
@@ -256,7 +261,8 @@ input {
 	font-size: 16px;
 	transition: 0.3s;
 	border-radius: 5px;
-	    text-align: center;
+	text-align: center;
+	font-family: 'DungGeunMo';
 }
 
 input:focus {
@@ -271,42 +277,98 @@ input:focus {
 
 button {
 	padding: 10px 20px;
-	background-color: #717171;
+	background-color: #3c3b39;
 	color: white;
-	border: 3px solid text-transform: uppercase;
+	border: none;
 	letter-spacing: 5px;
 	font-weight: bold;
 	position: relative;
 	transition: all 0.4s;
 	overflow: hidden;
 	border-radius: 5px;
-}
-.writebtn {
-	margin:0;
+	font-family: 'DungGeunMo';
 }
 
+.writebtn {
+	margin-top: 15px;
+}
+
+.contents {
+	text-align: left;
+	padding-left: 30px;
+}
 
 button:hover {
-background: #3c3b39;
+	background: #66635f;
 	transform: scale(1.1);
+	color: white;
 }
 
 button:focus {
 	outline: none;
 }
 
+background
 
-background: #3c3b39;
-	top: 100%;
-	left: 0;
-	transition: all 0.4s;
-	z-index: -1;
+ 
+
+:
+
+
+#3c3b39
+
+
+;
+top
+
+
+:
+
+
+100
+
+
+%;
+left
+
+
+:
+
+
+0
+
+
+;
+transition
+
+ 
+
+:
+
+ 
+
+all
+
+ 
+
+0
+
+
+.4s
+
+
+;
+z-index
+
+
+:
+
+
+-1
+
+
+;
 }
-
-button:hover::before {
-	transform: translateY(-100%);
-}
-
 #name, #title, #number, #buttonbox {
 	height: 50px;
 	color: white;
@@ -344,19 +406,17 @@ button:hover::before {
 	button {
 		width: 100%;
 	}
-#searchbar td {
-    border: none !important; /* 테두리 없애기 */
-    text-align: center; /* 가운데 정렬 */
-    padding: 15px 0;
-}
-
-
-#searchbar form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: flex-start;
-}
+	#searchbar td {
+		border: none !important; /* 테두리 없애기 */
+		text-align: center; /* 가운데 정렬 */
+		padding: 15px 0;
+	}
+	#searchbar form {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		justify-content: flex-start;
+	}
 }
 </style>
 
@@ -384,13 +444,13 @@ button:hover::before {
 					<li><a href="/">Home</a></li>
 					<li><a href="/game/list.do">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
-					<c:choose>					
+					<c:choose>
 						<c:when test="${member.role == 'admin'}">
 							<li><a href="/service/admin/main.do">Service</a></li>
-					 	</c:when>
-					 	<c:otherwise>					 	
+						</c:when>
+						<c:otherwise>
 							<li><a href="/service/qna/addForm.do">Service</a></li>
-					 	</c:otherwise>
+						</c:otherwise>
 					</c:choose>
 				</ul>
 			</div>
@@ -412,7 +472,9 @@ button:hover::before {
 			<div class="tablebox">
 				<table>
 					<tr id="name">
-						<td colspan="8">자유게시판</td>
+						<td colspan="8"
+							style="width: 100%; font-size: 35px; padding: 45px;">자 유 게 시
+							판</td>
 					</tr>
 					<tr id="title">
 						<th style="width: 12%;">번호</th>
@@ -424,11 +486,10 @@ button:hover::before {
 					<c:forEach var="dto" items="${noticeList}">
 						<tr>
 							<td>${dto.boardId}</td>
-							<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-
-
-								<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-								<span class="reply-count">[${dto.replyCount}]</span></td>
+							<td class="contents notice">공지 📢> <a
+								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+								class="reply-count">[${dto.replyCount}]</span>
+							</td>
 
 							<td>${dto.writer}</td>
 							<td>${dto.regDate}</td>
@@ -438,9 +499,9 @@ button:hover::before {
 					<c:forEach var="dto" items="${list}">
 						<tr>
 							<td>${dto.boardId}</td>
-							<td class="contents"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-								<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
-								<span class="reply-count">[${dto.replyCount}]</span></td>
+							<td class="contents"><a
+								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
+								class="reply-count">[${dto.replyCount}]</span></td>
 							<td>${dto.writer}</td>
 							<td>${dto.regDate}</td>
 							<td>${dto.viewCount}</td>
@@ -489,7 +550,11 @@ button:hover::before {
 				</div>
 
 			</div>
+
 		</div>
+
+
+		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </html>
 
 </body>
