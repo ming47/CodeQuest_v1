@@ -18,8 +18,20 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
 	rel="stylesheet">
-
 <style>
+<
+style>* {
+	box-sizing: border-box;
+	font-family: 'DungGeunMo';
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
 @font-face {
 	font-family: 'DungGeunMo';
 	src:
@@ -29,24 +41,17 @@
 	font-style: normal;
 }
 
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-html, body {
-	width: 100%;
-	height: 100vh;
-}
-
 .container {
-	width: 100%;
 	display: flex;
-	flex-direction: column;
+	flex-direction: column; /* 헤더를 위에 두기 위해 column 방향으로 설정 */
 	align-items: center;
+	max-height: 2000px;
+	width: 100%;
+	background: url('/images/allback.jpg') no-repeat center;
+	background-size: cover;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	color: white;
+	t background-size: cover;
 	font-family: 'DungGeunMo';
 }
 
@@ -64,24 +69,12 @@ html, body {
 }
 
 .header {
-	width: 100%;
 	height: 80px;
-	background: #1e201d;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	position: fixed;
-}
-
-.body{
-	margin: 0;
-	width: 100%;
-	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
-	background-size: cover;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	padding: 20px;
+	position: relative;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .footer {
@@ -90,13 +83,17 @@ html, body {
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
+	margin-top: 40px;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .navi {
-	width: 100%;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	width: 100%;
+	justify-content: space-between;
 }
 
 .logo {
@@ -132,7 +129,7 @@ html, body {
 }
 
 .logbox-container {
-	position: fixed;
+	position: absolute;
 	right: 10px;
 	bottom: -35px;
 	top: 80px
@@ -143,26 +140,27 @@ html, body {
 	background-color: rgb(255, 255, 255, 0.5);
 	border-radius: 16px;
 	box-shadow: inset 0 0 8px #424242;
-	width: 73vw;
+	max-width: 1800px;
+	width: 1200px;
 	padding: 20px;
-	margin-top : 150px;
-	margin-bottom: 50px;
+	margin: 50px;
 }
 
 table {
-	border-collapse: collapse;
-	width: 70vw;
-	font-size: 19px;
-	border-spacing: 3px;
-	border-collapse: separate;
-	background-color: transparent; 
+	max-width: 1700px; //
+	border-collapse: collapse; <%-- 테이블 띄워지는거 없애고싶으면 주석 지우기 margin-top :
+	20px; --%>
+	min-width: 70%;
+	border: 1px solid #fff;
+	width: 1200px;
+	font-size: 17px;
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
 	border-radius: 1px;
-	border:none;
+	border: 1px solid #fff;
 	font-family: 'DungGeunMo';
 	color: black;
 	background-color: #fafbf4;
@@ -171,6 +169,9 @@ table th, table td {
 table tr {
 	border-radius: 1px;
 	font-family: 'DungGeunMo';
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: #bec2a9 color: black;
 }
 
 td {
@@ -206,6 +207,15 @@ table a:hover {
 /* ✅ 로그인 박스 */
 .loginbox {
 	width: 80%;
+	background: url('/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	margin-top: 80px;
 	background: url('/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
@@ -262,8 +272,7 @@ input:focus {
 
 .writebtn {
 	margin-top: 10px;
-	padding:20px;
-	margin-left:-17px;
+	margin-left: 10px;
 }
 
 button {
@@ -299,11 +308,73 @@ button:focus {
 	outline: none;
 }
 
+background
+
+ 
+
+:
+
+
+#3c3b39
+
+
+;
+top
+
+
+:
+
+
+100
+
+
+%;
+left
+
+
+:
+
+
+0
+
+
+;
+transition
+
+ 
+
+:
+
+ 
+
+all
+
+ 
+
+0
+
+
+.4s
+
+
+;
+z-index
+
+
+:
+
+
+-1
+
+
+;
+}
 #name, #title, #number, #buttonbox {
 	height: 50px;
 	color: white;
 }
 
+}
 #buttonbox {
 	display: flex;
 	justify-content: flex-start;
@@ -315,40 +386,84 @@ button:focus {
 .notice {
 	background-color: 'red';
 }
-</style>
-</head>
 
+@media screen and (max-width: 768px) {
+	.header ul {
+		flex-direction: column;
+		align-items: center;
+	}
+	.container {
+		padding: 15px;
+	}
+	.logbox {
+		font-size: 14px;
+	}
+	.paging {
+		width: 25px;
+		height: 25px;
+		line-height: 25px;
+	}
+	button {
+		width: 100%;
+	}
+	#searchbar td {
+		border: none !important; /* 테두리 없애기 */
+		text-align: center; /* 가운데 정렬 */
+		padding: 15px 0;
+	}
+	#searchbar form {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		justify-content: flex-start;
+	}
+}
+</style>
+
+</head>
 
 <body>
 
-	<div class="header">
-		<div class="navi">
-			<div class="logo">Team CodeQuest</div>
-			<ul class="menu">
-				<li><a href="/">Home</a></li>
-				<li><a href="/game/list.do">Game</a></li>
-				<li><a href="/board/list.do">Board</a></li>
-				<c:choose>
-					<c:when test="${member.role == 'admin'}">
-						<li><a href="/service/admin/main.do">Service</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="/service/qna/addForm.do">Service</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
-	</div>
+	<script>
+	$(function() {
+
+		$(".page").on("click", function() {
+			let pageNum = $(this).attr("page");
+			sessionStorage.setItem("last_cpage", pageNum);
+		});
+	});
+</script>
 
 	<div class="container">
 
-		<div class="body">
 
+		<div class="header">
+			<div class="navi">
+				<div class="logo">Team CodeQuest</div>
+				<ul class="menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/game/list.do">Game</a></li>
+					<li><a href="/board/list.do">Board</a></li>
+					<c:choose>
+						<c:when test="${member.role == 'admin'}">
+							<li><a href="/service/admin/main.do">Service</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/service/qna/addForm.do">Service</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
+		</div>
+
+
+
+
+
+		<div class="body">
 			<c:if test="${member.loginId != null}">
 				<div class="logbox-container">
-
 					<%@ include file="/logbox.jsp"%>
-
 				</div>
 			</c:if>
 			<div class="tablebox">
@@ -372,7 +487,6 @@ button:focus {
 								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 								class="reply-count">[${dto.replyCount}]</span>
 							</td>
-
 							<td>${dto.writer}</td>
 							<td>${dto.regDate}</td>
 							<td>${dto.viewCount}</td>
@@ -385,56 +499,78 @@ button:focus {
 								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
 								class="reply-count">[${dto.replyCount}]</span></td>
 							<td>${dto.writer}</td>
-							<td>${dto.regDate}</td>
+							<td class="relative-date" data-timestamp="${dto.regDate.time}">${dto.regDate}</td>
 							<td>${dto.viewCount}</td>
 						</tr>
 					</c:forEach>
 
+
 					<tr id="number">
 						<td colspan="8" align="center"></td>
 					</tr>
+					</div>
 
-					<tr id="searchbar">
-						<td colspan="5">
-							<form method="get" name="search" action="/board/search.do"
-								style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-								<select class="form-control" name="searchField"
-									style="width: 120px;">
-									<option value="0">선택</option>
-									<option value="schTitle">제목</option>
-									<option value="schWriter">작성자</option>
-								</select> <input type="text" class="form-control" placeholder="검색어 입력"
-									name="searchText" maxlength="100" style="width: 300px;">
-								<button type="submit" class="btn btn-success">검색</button>
-							</form>
-						</td>
-					</tr>
+					<form method="get" name="search" action="/board/search.do">
+						<tr id="searchbar">
+							<td colspan="5">
+								<form method="get" name="search" action="/board/search.do"
+									style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+									<select class="form-control" name="searchField"
+										style="width: 120px;">
+										<option value="0">선택</option>
+										<option value="schTitle">제목</option>
+										<option value="schWriter">작성자</option>
+									</select> <input type="text" class="form-control" placeholder="검색어 입력"
+										name="searchText" maxlength="100" style="width: 300px;">
+									<button type="submit" class="btn btn-success">검색</button>
+								</form>
+							</td>
+						</tr>
+
+					</form>
 
 				</table>
 
 				<div colspan="3" id="buttonbox">
+
 					<c:if test="${dto == null}">
+
+
 						<a href="/board/addform.do" method="post">
 							<button class="writebtn">작성하기</button>
 						</a>
+
+
 					</c:if>
+
 				</div>
+
 			</div>
+
 		</div>
-	</div>
-	<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
-</body>
+
+
+		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </html>
 
+</body>
+</html>
 <script>
-
-$(function() {
-
-	$(".page").on("click", function() {
-		let pageNum = $(this).attr("page");
-		sessionStorage.setItem("last_cpage", pageNum);
-	});
-});
+	var now = new Date();
+	$('.relative-date').each(function () {
+		var timestamp = parseInt($(this).data('timestamp'), 10);
+		var postDate = new Date(timestamp);
+		var diffMinutes = Math.floor((now - postDate) / (1000 * 60));
+	
+		if (diffMinutes < 1) {
+			$(this).text("방금 전");
+		} else if (diffMinutes < 60) {
+			$(this).text(diffMinutes + "분 전");
+		} else if (diffMinutes < 720) {
+			var diffHours = Math.floor(diffMinutes / 60);
+			$(this).text(diffHours + "시간 전");
+		}
+	});	
 
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
@@ -504,10 +640,10 @@ $(function() {
 		        	}).done(function(data) {
 		        		data = JSON.parse(data);
 		        		
-		        		parseDate(data.endDate);
+		        		console.log(data);
 		        		
-		        		let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
-		        		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+		        		let message = "현재 차단된 계정입니다. 차단 이유: " + data.reason + "\n" 
+		        		+ "차단 기간: " + data.startDate + " ~ " + data.endDate;
 		        		alert(message);
 		        	});
 		   
@@ -516,11 +652,5 @@ $(function() {
 		        }
 		    });
 		});
-	 
-	 function parseDate(timestamp) {
-		 const date = new Date(timestamp);
-		 return date.getFullYear() + '년 ' + Number(date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' +  date.getHours() + 
-				 '시 ' + date.getMinutes() + '분';		 
-	 }
 
 </script>
