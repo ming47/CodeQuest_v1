@@ -332,81 +332,6 @@ input[disabled] {
 			}).open();
 		});
 		//회원가입 정규식 유효성 검사
-		$("#id").on("keyup", function() {
-			let regex = /^[a-z0-9_]{8,20}$/;
-			let vali = regex.exec($(this).val());
-			if (vali == null) {
-				$("#result_id").css({
-					"color" : "red",
-					"font-size" : "12px"
-				}).html("ID는 영어소문자,숫자 8자리이상 20자리이하로 작성해주세요.");
-				id_val = false;
-			} else {
-				$("#result_id").css({
-					"color" : "green",
-					"font-size" : "12px"
-				}).html("유효한 ID입니다.");
-				$.ajax({
-					url : "/member/valueCheck.do",
-					data : {
-						field : "login_id",
-						value : $("#id").val()
-					},
-					method : "GET",
-					dataType : "text"
-				}).done(function(resp) {
-					if (resp.trim() === "exist") {
-						$("#result_id_dupl").css({
-							"color" : "red",
-							"font-size" : "12px"
-						}).html("이미 사용중인 ID입니다");
-						id_val = false;
-					} else {
-						$("#result_id_dupl").css({
-							"color" : "green",
-							"font-size" : "12px"
-						}).html("사용가능한 ID입니다.");
-						id_val = true;
-					}
-				}).fail(function(xhr, status, error) {
-					console.error("AJAX 요청 실패:", error);
-				});
-			}
-		});
-
-		$("#pw").on("keyup", function() {
-			let regex = /^(?=.*[a-z])(?=.*\d)[A-Za-z0-9_]{8,}$/;
-			let vali = regex.exec($(this).val());
-			if (vali == null) {
-				$("#result_pw").css({
-					"color" : "red",
-					"font-size" : "12px"
-				}).html("유효하지 않는 PW입니다.");
-				pw_val = false;
-			} else {
-				$("#result_pw").css({
-					"color" : "green",
-					"font-size" : "12px"
-				}).html("유효한 PW 입니다.");
-				pw_val = true;
-			}
-		});
-
-		$("#pwr").on("keyup", function(e) {
-			if ($("#pw").val() === $(this).val()) {
-				$("#result_pwr").css({
-					"color" : "green",
-					"font-size" : "12px"
-				}).html("패스워드 일치!");
-				pw_val = true;
-			} else {
-				$("#result_pwr").css({
-					"color" : "red",
-					"font-size" : "12px"
-				}).html("패스워드 일치하지 않음!");
-				pw_val = false;
-			}
-		});
 
 		$("#name").on("keyup", function() {
 			let regex = /^[가-힣]{2,5}$/;
@@ -543,9 +468,7 @@ input[disabled] {
 		});
 
 		//회원가입 submit 전 유효성 검사
-		$("#signupForm")
-				.on(
-						"submit",
+		$("#signupForm").on("submit",
 						function(event) {
 							if (!$("#name").val()) {
 								alert("이름은 필수 입력사항입니다.");
@@ -568,10 +491,8 @@ input[disabled] {
 								$("#email").focus();
 								return false;
 							}
-							console.log(id_val, id_val_dupl, pw_val, name_val)
 
-							if (!(id_val && pw_val && name_val && tel_val
-									&& email_val && nickName_val)) {
+							if (!(name_val && tel_val && email_val && nickName_val)) {
 								alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
 								return false;
 							}

@@ -15,7 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+
+import DAO.BlackListDAO;
 import DAO.MemberDAO;
+import DAOImpl.BlackListDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DTO.MemberDTO;
 import DTO.OAuthTokenDTO;
@@ -23,6 +26,7 @@ import DTO.OAuthTokenDTO;
 @WebServlet("/KakaoLogin")
 public class LoginController extends HttpServlet {
     private MemberDAO memberDao = MemberDAOImpl.INSTANCE;
+    private BlackListDAO blackListDao = BlackListDAOImpl.INSTANCE;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -30,7 +34,6 @@ public class LoginController extends HttpServlet {
         try {
             String code = request.getParameter("code");
 
-            // JNDI lookup으로 환경 변수 가져오기
             Context envContext = (Context) new InitialContext().lookup("java:comp/env");
             String kakaoClientId = (String) envContext.lookup("kakao/client_id");
             String kakaoRedirectUri = (String) envContext.lookup("kakao/redirect_uri");
@@ -108,13 +111,16 @@ public class LoginController extends HttpServlet {
 
             // 회원 존재 여부에 따라 추가 정보 입력 또는 바로 로그인 처리
             boolean result = memberDao.isDuplicate("email", accountEmail);
-            System.out.println("");
             if(result == false) {
                 request.setAttribute("email", accountEmail);
                 request.setAttribute("nickName", profileNickname);
                 request.getRequestDispatcher("/WEB-INF/views/member/easySignupForm.jsp").forward(request, response);
             } else {
                 MemberDTO member = memberDao.easyLogin(accountEmail);
+                
+				boolean banned = blackListDao.isBanned(member.getMemberId());
+				member.setIsbanned(banned);
+				
                 request.getSession().setAttribute("member", member);
                 response.sendRedirect("/");
             }

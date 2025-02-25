@@ -10,9 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
   integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
-<script>
-  Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
-</script>
 
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +35,7 @@
 	height: 100%;
 	justify-content: center;
 	align-items: center;
-	background: url('/allback.jpg') no-repeat center;
+	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
 }
 
@@ -132,7 +129,6 @@
 /* ✅ 로그인 박스 */
 .loginbox {
 	width: 80%;
-	background: url('/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
@@ -414,18 +410,16 @@
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
 					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/game/list.do">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
 					<c:choose>					
 						<c:when test="${member.role == 'admin'}">
-							<a href="/service/admin/main.do">
+							<li><a href="/service/admin/main.do">Service</a></li>
 					 	</c:when>
 					 	<c:otherwise>					 	
-							<a href="/service/qna/addForm.do">
+							<li><a href="/service/qna/addForm.do">Service</a></li>
 					 	</c:otherwise>
 					</c:choose>
-						Service</a>
-					</li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
@@ -546,6 +540,7 @@
 	</div>
 
 	<script>
+	  Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
 		function loginWithKakao() {
 			    Kakao.Auth.authorize({
 			      redirectUri: 'http://10.5.5.14/KakaoLogin',

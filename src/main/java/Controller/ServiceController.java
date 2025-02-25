@@ -15,15 +15,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import Common.ConvertURL;
+import Common.PageNavi;
 import Common.TimeUtil;
+import DAO.BlackListDAO;
+import DAO.MemberDAO;
 import DAO.PlaytimeDAO;
+import DAOImpl.BlackListDAOImpl;
+import DAOImpl.MemberDAOImpl;
 import DAOImpl.PlaytimeDAOImpl;
 import DTO.AnalyzeDTO;
+import DTO.BlackListDTO;
+import DTO.MemberDTO;
 
 
 @WebServlet("/service/*")
 public class ServiceController extends HttpServlet {
-	private PlaytimeDAO playtimeDAO = PlaytimeDAOImpl.INSTANCE;
+	PlaytimeDAO playtimeDAO = PlaytimeDAOImpl.INSTANCE;
+	MemberDAO memberDAO = MemberDAOImpl.INSTANCE;
+	BlackListDAO blackListDAO = BlackListDAOImpl.INSTANCE;
 	
 	Gson g = new Gson();
        
@@ -133,6 +142,44 @@ public class ServiceController extends HttpServlet {
 				}
 
 				response.getWriter().append(String.valueOf(rate));
+			} else if(cmd.equals("/service/member/list.do")) {
+				int page = Integer.parseInt(request.getParameter("page"));
+				
+				Map<String, Object> json = new HashMap<>();
+				
+				List<MemberDTO> dto = memberDAO.selectAll(page);
+				json.put("members", dto);
+				json.put("pageNavi", new PageNavi(page, memberDAO.getSize()).generate());
+				
+				response.getWriter().append(g.toJson(json));
+			} else if(cmd.equals("/service/member/banned/search.do")) {
+				int memberId = Integer.parseInt(request.getParameter("id"));
+				
+				boolean isBanned = blackListDAO.isBanned(memberId);
+				response.getWriter().append(String.valueOf(isBanned));
+			} else if(cmd.equals("/service/member/ban/count.do")) {
+				int memberId = Integer.parseInt(request.getParameter("id"));
+				
+				int result = blackListDAO.countBanByMemberId(memberId);
+				response.getWriter().append(String.valueOf(result));
+			} else if(cmd.equals("/service/member/ban/list.do")) {
+				int memberId = Integer.parseInt(request.getParameter("id"));
+				
+				List<BlackListDTO> dto = blackListDAO.selectByMemberId(memberId);
+				response.getWriter().append(g.toJson(dto));
+			} else if(cmd.equals("/service/member/ban/detail.do")) {
+				int memberId = Integer.parseInt(request.getParameter("id"));
+				
+				BlackListDTO dto = blackListDAO.selectBanByMmeberId(memberId);
+				response.getWriter().append(g.toJson(dto));
+			} else if(cmd.equals("/service/member/ban/delete.do")) {
+				int memberId = Integer.parseInt(request.getParameter("id"));
+				
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				
+				if(member.getRole().equals("admin")) {
+					blackListDAO.deleteBanByMemberId(memberId);
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -145,6 +192,25 @@ public class ServiceController extends HttpServlet {
 		
 		try {		
 			String cmd = ConvertURL.of(request);
+			
+			if(cmd.equals("/service/member/ban/add.do")) {
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				
+				if(member.getRole().equals("admin")) {
+					Integer memberId = Integer.parseInt(request.getParameter("memberId"));
+					String reason = request.getParameter("reason");
+					Integer period = Integer.parseInt(request.getParameter("endDate"));
+					
+					if(period == -1) {
+						blackListDAO.permanentBan(new BlackListDTO(memberId, reason));
+					} else {						
+						blackListDAO.insert(new BlackListDTO(memberId, reason, period));
+					}
+					
+					System.out.println(memberId + " " + reason + " " + period);
+					
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
