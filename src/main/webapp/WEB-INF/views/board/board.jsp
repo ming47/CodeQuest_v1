@@ -504,10 +504,10 @@ $(function() {
 		        	}).done(function(data) {
 		        		data = JSON.parse(data);
 		        		
-		        		console.log(data);
+		        		parseDate(data.endDate);
 		        		
-		        		let message = "현재 차단된 계정입니다. 차단 이유: " + data.reason + "\n" 
-		        		+ "차단 기간: " + data.startDate + " ~ " + data.endDate;
+		        		let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+		        		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
 		        		alert(message);
 		        	});
 		   
@@ -516,5 +516,11 @@ $(function() {
 		        }
 		    });
 		});
+	 
+	 function parseDate(timestamp) {
+		 const date = new Date(timestamp);
+		 return date.getFullYear() + '년 ' + Number(date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' +  date.getHours() + 
+				 '시 ' + date.getMinutes() + '분';		 
+	 }
 
 </script>

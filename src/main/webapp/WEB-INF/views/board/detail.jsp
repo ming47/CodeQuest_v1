@@ -8,6 +8,17 @@
 <meta charset="UTF-8">
 <title>게시글 상세 보기</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link
+   href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+   rel="stylesheet">
+<script
+   src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link
+   href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
+   rel="stylesheet">
+<script
+   src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 <style>
 * {
 	box-sizing: border-box;
@@ -447,7 +458,7 @@ window.onload = function(){
 			<tr>
 				<th>내용</th>
 				<!-- 내용 부분에 높이를 4배로 설정 -->
-				<td class="change" id="board_contents">${dto.contents}</td>
+				<td class="change" id="board_contents" height="500px">${dto.contents}</td>
 			</tr>
 
 		</table>
@@ -481,7 +492,7 @@ window.onload = function(){
 				</div>
 						<div class = "buttonContainer">
 						<button id="emojiBtn" type = "button">😀</button>
-						<button id="inputbtn">등록</button>
+						<button id="inputbtn" type="button">등록</button>
 					</div>
 			</form>
 			<div id="comments">
@@ -574,6 +585,8 @@ window.onload = function(){
                 $("#update").on("click", function() {
                 	
                  $(".change").attr("contentEditable", "true");
+                 $('#board_contents').summernote(setSummerNote());
+            
                  $('#board_title').focus();
                     
                     $("#update,#delete").hide();
@@ -691,7 +704,8 @@ window.onload = function(){
 
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/board/list.do?cpage=" +last_cpage;  });
-
+            
+         
          </script>
          
          <script>	//이모티콘
@@ -733,11 +747,165 @@ window.onload = function(){
         	    isEmoticonPanelOpen = false;
         	    
         	});
+
          
-         $('form').on("submint", function() {
-        	 $('#commentInput').val($('#a').html());
-         });
+         $('#inputbtn').on('click', function() {
+         	console.log('sdfsd');
+         	
+         	let isLoggedIn = "${member.memberId}" !== ""; 
+		        let isBanned   = "${member.isbanned}" == "true";
+
+		        if (!isLoggedIn) {
+		            alert("회원만 글쓰기가 가능합니다.");
+		            event.preventDefault(); // 페이지 이동 방지
+		            return false;
+		        } else if(isBanned) {
+		        	$.ajax({
+		        		url: '/service/member/ban/detail.do?id=' + ${member.memberId},
+		        		type: 'GET'
+		        	}).done(function(data) {
+		        		data = JSON.parse(data);
+		        		
+		        		console.log(data);
+		        		
+		        		let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+		        		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+		        		alert(message);
+		        	});
+		   
+		            event.preventDefault();
+		            return false;
+		        }
+         	
+         	$.ajax({
+        			url: '/reply/add.do',
+        	 		type: 'POST',
+        	 		data: {
+        	 			boardId: ${dto.boardId},
+        	 			contents: $('#commentInput').val(),
+        	 		} 
+        	 	}).done(function(data) {
+        		 	alert('댓글이 등록되었습니다.');
+        		 	makeCommentItem();
+        	 	});	 
+        	});
          
+         function makeCommentItem() {
+         	$.ajax({
+     	        url: "/reply/ContentsAll.do",
+     	        data: { 'boardId': ${dto.boardId} },
+     	        type: "get"
+     	    }).done(function(data) {
+     	       try{
+     	        data = JSON.parse(data);}
+     	       catch (e) {
+     	            console.error("Error parsing JSON: ", e);
+     	            return;
+     	        }
+     				let UserName = "${member.nickName}";	//작성자
+     				let Master = "${member.role}";	// 관리자
+					
+     			$("#commentList").html('');
+     	        for (let i = 0; i < data.length; i++) {
+     	            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
+     	            
+     	            let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
+     	            let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+     	            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
+     	            
+     	            let btnBox = $("<div>").addClass("btnbox");
+
+
+     	            if (data[i].writer === UserName || Master === "admin") {	//관리자이거나 작성자일 경우 보이게하기
+     	                let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+     	                let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+     	                btnBox.append(updateBtn, deleteBtn);
+     	            }
+     	            commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
+     	            $("#commentList").append(commentItem);
+     	        }
+     	    });
+         }
+        
+         function setSummerNote(target) {
+             console.log('서머노트 세팅');
+
+             return {
+                placeholder : '내용을 입력하십시오',
+                height : 500,
+                minHeight : null, // set minimum height of editor
+                maxHeight : null, // set maximum height of editor
+                lang : 'ko-KR',
+                toolbar : [
+                      [ 'fontname', [ 'fontname' ] ],
+                      [ 'fontsize', [ 'fontsize' ] ],
+                      [
+                            'style',
+                            [ 'bold', 'italic', 'underline', 'strikethrough',
+                                  'clear' ] ],
+                      [ 'color', [ 'forecolor', 'color' ] ],
+                      [ 'table', [ 'table' ] ],
+                      [ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+                      [ 'height', [ 'height' ] ],
+                      [ 'insert', [ 'picture', 'link', 'video' ] ] ],
+                fontNames : [ 'Arial', 'Arial Black', 'Comic Sans MS',
+                      'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],
+                fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18', '20',
+                      '22', '24', '28', '30', '36', '50', '72' ],
+                callbacks : { //여기 부분이 이미지를 첨부하는 부분
+                   onImageUpload : function(files) {
+                      console.log(files[0], this);
+                      uploadImage(files[0], this);
+                   },
+
+                   onPaste : function(e) {
+                      console.log(e);
+
+                      var clipboardData = e.originalEvent.clipboardData;
+                      if (clipboardData && clipboardData.items
+                            && clipboardData.items.length) {
+                         var item = clipboardData.items[0];
+                         if (item.kind === 'file'
+                               && item.type.indexOf('image/') !== -1) {
+                            e.preventDefault();
+
+                         }
+                      }
+                   }
+                }
+             };
+          }
+
+
+          function uploadImage(file, editor) {
+             let formData = new FormData();
+             formData.append('file', file);
+             formData.append('request', 'board');
+
+             $.ajax({
+
+                url : '/file/image/upload.do',
+                data : formData,
+                type : 'POST',
+                //dataType:"multipart/form-data", 
+                contentType : false,
+                processData : false,
+                error : function(request, status, error) {
+                   console.log("code: " + request.status)
+                   console.log("message: " + request.responseText)
+                   console.log("error: " + error);
+                }
+             }).done(function(data) {
+
+                $(editor).summernote('insertImage', data.path);
+             });
+          }  
+          
+          function parseDate(timestamp) {
+     		 const date = new Date(timestamp);
+     		 return date.getFullYear() + '년 ' + Number(date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' +  date.getHours() + 
+     				 '시 ' + date.getMinutes() + '분';		 
+     	 }
          </script>
 
 	</div>
