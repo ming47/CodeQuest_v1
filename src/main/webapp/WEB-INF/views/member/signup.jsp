@@ -40,7 +40,7 @@ body {
 	border-radius: 10px;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 	text-align: center;
-	background: url('/allback.jpg') no-repeat center;
+	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
 }
 
@@ -248,14 +248,23 @@ input[disabled] {
 
 <body>
 	<div class="container">
+	
+	
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
-				<ul>
-					<li align="center"><a href="/">Home</a></li>
-					<li align="center"><a href="/">Game</a></li>
-					<li align="center"><a href="/board/list.do">Board</a></li>
-					<li align="center"><a href="/service/list.do">Service</a></li>
+				<ul class="menu">
+					<li><a href="/">Home</a></li>
+					<li><a href="/game/list.do">Game</a></li>
+					<li><a href="/board/list.do">Board</a></li>
+					<c:choose>					
+						<c:when test="${member.role == 'admin'}">
+							<li><a href="/service/admin/main.do">Service</a></li>
+					 	</c:when>
+					 	<c:otherwise>					 	
+							<li><a href="/service/qna/addForm.do">Service</a></li>
+					 	</c:otherwise>
+					</c:choose>
 				</ul>
 			</div>
 		</div>

@@ -203,6 +203,7 @@ public class MemberController extends HttpServlet {
 				}
 				// 밴 유저 검사
 				boolean banned = blackListDao.isBanned(member.getMemberId());
+				System.out.println("밴검사"+banned);
 				member.setIsbanned(banned);
 				request.getSession().setAttribute("member", member);
 				
@@ -225,7 +226,9 @@ public class MemberController extends HttpServlet {
 				String address = request.getParameter("address");
 				String detailAddress = request.getParameter("detailAddress");
 
+
 				int result = dao.update(new MemberDTO(memberId,loginId,nickName,email,phone,postcode,address,detailAddress));
+
 				if(result > 0) {
 					MemberDTO member = dao.selectById(memberId);
 					request.getSession().setAttribute("member", member);
