@@ -25,4 +25,6 @@ public interface QnADAO {
 	List<QnADTO> selectByWriterLike(String writer, int page) throws Exception;
 	List<QnADTO> selectByContentLike(String content, int page) throws Exception;
 	List<QnADTO> selectRecentByMemberId(int memberId) throws Exception;
+	
+	int getSize(List<QnADTO> dto);
 }

@@ -267,20 +267,110 @@ public enum QnADAOImpl implements QnADAO {
 
 	@Override
 	public List<QnADTO> selectByResponseYN(String responseYN, int page) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * "
+				+ "FROM ( "
+				+ "SELECT A.*, ROW_NUMBER() OVER(ORDER BY QNA_ID DESC) AS RNUM "
+				+ "FROM ( "
+				+ "SELECT * "
+				+ "FROM QNA Q "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON Q.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE RESPONSE_YN = ? ) A )"
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > getSize(selectByResponseYN(responseYN))) ? 
+				getSize(selectByResponseYN(responseYN)) : endIndex;
+
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, responseYN);
+			pstat.setInt(2, startIndex);
+			pstat.setInt(3, endIndex);
+			
+			try(ResultSet rs = pstat.executeQuery()) {				
+				List<QnADTO> dtos = new ArrayList<>();
+				while(rs.next()) {
+					dtos.add(QnADTO.of(rs));
+				}
+				
+				return dtos;
+			}
+		}
 	}
 
 	@Override
 	public List<QnADTO> selectByWriterLike(String writer, int page) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * "
+				+ "FROM ( "
+				+ "SELECT A.*, ROW_NUMBER() OVER(ORDER BY QNA_ID DESC) AS RNUM "
+				+ "FROM ( "
+				+ "SELECT * "
+				+ "FROM QNA Q "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON Q.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE NICKNAME LIKE ? ) A )"
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > getSize(selectByWriterLike(writer))) ? 
+				getSize(selectByWriterLike(writer)) : endIndex;
+
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, "%" + writer + "%");
+			pstat.setInt(2, startIndex);
+			pstat.setInt(3, endIndex);
+			
+			try(ResultSet rs = pstat.executeQuery()) {				
+				List<QnADTO> dtos = new ArrayList<>();
+				while(rs.next()) {
+					dtos.add(QnADTO.of(rs));
+				}
+				
+				return dtos;
+			}
+		}
 	}
 
 	@Override
 	public List<QnADTO> selectByContentLike(String content, int page) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * "
+				+ "FROM ( "
+				+ "SELECT A.*, ROW_NUMBER() OVER(ORDER BY QNA_ID DESC) AS RNUM "
+				+ "FROM ( "
+				+ "SELECT * "
+				+ "FROM QNA Q "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON Q.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE CONTENT LIKE ? ) A )"
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > getSize(selectByContentLike(content))) ? 
+				getSize(selectByContentLike(content)) : endIndex;
+
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, "%" + content + "%");
+			pstat.setInt(2, startIndex);
+			pstat.setInt(3, endIndex);
+			
+			try(ResultSet rs = pstat.executeQuery()) {				
+				List<QnADTO> dtos = new ArrayList<>();
+				while(rs.next()) {
+					dtos.add(QnADTO.of(rs));
+				}
+				
+				return dtos;
+			}
+		}
 	}
 
 	@Override
@@ -309,5 +399,10 @@ public enum QnADAOImpl implements QnADAO {
 	            return list;
 	        }
 	    }
+	}
+
+	@Override
+	public int getSize(List<QnADTO> dto) {
+		return dto.size();
 	}
 }

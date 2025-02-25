@@ -1552,7 +1552,7 @@ function gameDetailCahrtSet(dataset) {
 </script>
 <script tag="qna">
     $('.check-response-yn').on('click', function () {
-        const url = ($(this).val() == 'whole') ? "/qna/list.do?page=1" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=";
+        const url = ($(this).val() == 'whole') ? "/qna/list.do?page=" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=";
 
         console.log(url);
         $.ajax({
