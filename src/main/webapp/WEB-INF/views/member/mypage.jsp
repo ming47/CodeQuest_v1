@@ -464,7 +464,7 @@
 				<li data-target="game_records">게임기록</li>
 				<li data-target="my_posts">게시글</li>
 				<li data-target="my_qna">문의내역</li>
-				<li>회원탈퇴</li>
+				<li id="out_btn">회원탈퇴</li>
 			</ul>
 		</div>
 
@@ -620,7 +620,12 @@
 								<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm" />
 							</span>
 						</div>
-						<div class="play-time">답변: ${list.responseYn}</div>
+						<div class="play-time">답변 
+						    <c:choose>
+						        <c:when test="${list.responseYn == 'Y'}">✔️</c:when>
+						        <c:otherwise>❌</c:otherwise>
+						    </c:choose>
+						</div>
 					</div>
 				</c:forEach>
 			</div>
