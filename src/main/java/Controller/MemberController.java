@@ -19,15 +19,19 @@ import DAO.BoardDAO;
 import DAO.MemberDAO;
 
 import DAO.PlaytimeDAO;
+import DAO.QnADAO;
+import DAO.ViewCountDAO;
 import DAOImpl.BlackListDAOImpl;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DAOImpl.PlaytimeDAOImpl;
 import DAOImpl.QnADAOImpl;
+import DAOImpl.ViewCountDAOImpl;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
 import DTO.PlaytimeDTO;
 import DTO.QnADTO;
+import DTO.ViewCountDTO;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
@@ -36,7 +40,8 @@ public class MemberController extends HttpServlet {
 	private BoardDAO boardDao = BoardDAOImpl.INSTANCE;
 	private BlackListDAO blackListDao = BlackListDAOImpl.INSTANCE;
 	private PlaytimeDAO playtimeDao = PlaytimeDAOImpl.INSTANCE;
-	private QnADAOImpl qnaDao = QnADAOImpl.INSTACNE;
+	private QnADAO qnaDao = QnADAOImpl.INSTACNE;
+	private ViewCountDAO viewCountDao = ViewCountDAOImpl.INSTANCE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -78,6 +83,10 @@ public class MemberController extends HttpServlet {
 				//최근 작성한 게시글
 				List<BoardDTO> recentPost = boardDao.selectByMemberId(memberId);
 				request.setAttribute("recentPost", recentPost);
+				
+			    //최근 본 게시글
+			    List<ViewCountDTO> recentViewPost = viewCountDao.selectRecentByMemberId(memberId);
+			    request.setAttribute("recentViewPost", recentViewPost);
 				
 				//최근 플레이한 게임
 			    List<PlaytimeDTO> recentPlayTime = playtimeDao.selectRecentByMemberId(memberId);
@@ -210,7 +219,6 @@ public class MemberController extends HttpServlet {
 				}
 				// 밴 유저 검사
 				boolean banned = blackListDao.isBanned(member.getMemberId());
-				System.out.println("밴검사"+banned);
 				member.setIsbanned(banned);
 				request.getSession().setAttribute("member", member);
 				
@@ -251,16 +259,16 @@ public class MemberController extends HttpServlet {
 				System.out.println(emailDupli);
 			
 				
-				// 1. 인증코드 생성
+				// 인증코드 생성
 				int authCode = (int)(Math.random() * 900000) + 100000; 
 				String codeStr = String.valueOf(authCode);
 				System.out.println("컨트롤러 인증코드 : " + codeStr);
 
-				// 2. 세션에 인증 코드와 이메일 저장 (유효기간은 세션 타임아웃으로 대체 가능)
+				// 세션에 인증 코드와 이메일 저장 (유효기간은 세션 타임아웃으로 대체 가능)
 				request.setAttribute("authEmail", email);
 				request.setAttribute("authCode", codeStr);
 
-				// 3. 이메일 전송
+				// 이메일 전송
 				boolean emailSent = EmailUtil.sendResetEmail(email, codeStr);
 				if(emailSent) {
 					System.out.println("메일전송");

@@ -291,7 +291,7 @@ public enum BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { // 마이페이지 최근 작성한 게시글 5개 가져오기
+	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { // 마이페이지 최근 작성한 게시글 6개 가져오기
 		String sql = "SELECT * FROM ( "
 				+ "  SELECT BOARD_ID, MEMBER_ID, TITLE, REG_DATE, CONTENTS, VIEW_COUNT, REPLY_COUNT "
 				+ "    FROM board " + "   WHERE MEMBER_ID = ? " + "   ORDER BY BOARD_ID DESC " + ") WHERE ROWNUM <= 6";
@@ -304,7 +304,8 @@ public enum BoardDAOImpl implements BoardDAO {
 					String title = rs.getString("title");
 					Timestamp regDate = rs.getTimestamp("reg_date");
 					int viewCount = rs.getInt("view_count");
-					BoardDTO member = new BoardDTO(boardId, title, regDate, viewCount);
+					int replyCount = rs.getInt("reply_count");
+					BoardDTO member = new BoardDTO(boardId, title, regDate, viewCount, replyCount);
 					list.add(member);
 				}
 				return list;

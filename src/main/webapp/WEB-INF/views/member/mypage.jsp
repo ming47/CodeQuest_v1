@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -411,6 +412,11 @@ input[disabled] {
 	color: #666;
 	margin-right: 10px;
 }
+.logbox-container {
+	position: absolute;
+	right: 10px;
+	bottom: -35px;
+}
 </style>
 </head>
 
@@ -432,6 +438,11 @@ input[disabled] {
 				</c:choose>
 			</ul>
 		</div>
+			<c:if test="${member.memberId != null}">
+				<div class="logbox-container">
+					<%@ include file="/logbox.jsp"%>
+				</div>
+			</c:if>				
 	</div>
 	<div class="container">
 		<div class="sidebar">
@@ -519,14 +530,18 @@ input[disabled] {
 						<h3 style="font-size: 28px;">최근 플레이한 게임</h3>
 					</div>
 				</c:if>
-				<c:forEach var="pt" items="${recentPlayTime}">
+				<c:forEach var="list" items="${recentPlayTime}">
 					<div class="recent-game-row">
 						<img src="/game.png" alt="게임 이미지" />
 						<div class="game-title">
-							<a href="/game/list.do?gameId=${pt.gameId}"> 게임제목 들어올 공간 </a>
+							<a href="/game/list.do?gameId=${list.gameId}"> 게임제목 들어올 공간 </a>
 						</div>
-						<div class="play-date">플레이 날짜: ${pt.regDate}</div>
-						<div class="play-time">플레이 타임: ${pt.formatTime}</div>
+						<div class="play-date">플레이 날짜:
+            			<span class="relative-date" data-timestamp="${list.regDate.time}">
+							<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+						</span>
+						</div>
+						<div class="play-time">플레이 타임: ${list.formatTime}</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -539,23 +554,41 @@ input[disabled] {
 					</div>
 				</c:if>
 				<div class="posts-container">
-					<c:forEach var="post" items="${recentPost}">
+					<c:forEach var="list" items="${recentPost}">
 						<div class="post-card">
 							<div class="post-header">
-								<span class="post-number">#${post.boardId}</span> <a
-									class="post-title" href="/board/detail.do?id=${post.boardId}">${post.title}</a>
+								<span class="post-number">#${list.boardId}</span> <a
+									class="post-title" href="/board/detail.do?id=${list.boardId}">${list.title} [${list.replyCount}]</a>
 							</div>
 							<div class="post-info">
-								<span class="post-date">${post.regDate}</span> <span
-									class="post-view">${post.viewCount} 조회</span>
+								<span class="post-date relative-date" data-timestamp="${list.regDate.time}">
+								<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+								</span> 
+								<span class="post-view">${list.viewCount} 조회</span>
 							</div>
 						</div>
 					</c:forEach>
 				</div>
-
-				<div style="margin: 10px;">
-					<h3 style="font-size: 28px;">내가 최근에 본 게시글</h3>
-				</div>
+				<c:if test="${not empty recentViewPost}">
+					<div style="margin: 10px;">
+						<h3 style="font-size: 28px;">내가 최근에 본 게시글</h3>
+					</div>
+				</c:if>
+				<div class="posts-container">
+					<c:forEach var="list" items="${recentViewPost}">
+						<div class="post-card">
+							<div class="post-header">
+								<span class="post-number">#${list.boardId}</span> <a
+									class="post-title" href="/board/detail.do?id=${list.boardId}">${list.title} [${list.replyCnt}]</a>
+							</div>
+							<div class="post-info">
+								<span class="post-date relative-date" data-timestamp="${list.regDate.time}">
+								<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+								</span> 
+							</div>
+						</div>
+					</c:forEach>
+				</div>				
 			</div>
 			<div class="content" id="my_qna">
 				<h2 style="font-size: 50px;">문의내역</h2>
@@ -569,7 +602,11 @@ input[disabled] {
 						<div class="game-title">
 							<a href="/game/list.do?gameId=">${list.contents}</a>
 						</div>
-						<div class="play-date">작성 날짜: ${list.regDate}</div>
+						<div class="play-date">
+						<span class="post-date relative-date" data-timestamp="${list.regDate.time}">						
+						<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+						</span>
+						</div>
 						<div class="play-time">답변: ${list.responseYn}</div>
 					</div>
 				</c:forEach>
@@ -578,6 +615,22 @@ input[disabled] {
 	</div>
 <div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	<script>
+		var now = new Date();
+		 $('.relative-date').each(function(){
+		 	var timestamp = parseInt($(this).data('timestamp'), 10);
+			var postDate = new Date(timestamp);
+			var diffMinutes = Math.floor((now - postDate) / (1000 * 60));
+			    
+			if(diffMinutes < 1) {
+				$(this).text("방금 전");
+			} else if(diffMinutes < 60) {
+				$(this).text(diffMinutes + "분 전");
+			} else if(diffMinutes < 720) {
+			   var diffHours = Math.floor(diffMinutes / 60);
+			   $(this).text(diffHours + "시간 전");
+			}
+		 });
+	
         $(".sidebar ul li").on("click",function () {
             let targetId = $(this).attr("data-target");
             let targetElement = $("#" + targetId);

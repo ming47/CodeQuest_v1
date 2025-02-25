@@ -2,6 +2,7 @@ package DAO;
 
 import java.util.List;
 
+import DTO.QnADTO;
 import DTO.ViewCountDTO;
 
 public interface ViewCountDAO {
@@ -11,4 +12,6 @@ public interface ViewCountDAO {
 	int deleteById(int dto) throws Exception;
 	
 	int countByBoardId(int boardId) throws Exception;  // 게시글의 조회수
+	
+	List<ViewCountDTO> selectRecentByMemberId(int memberId) throws Exception;
 }
