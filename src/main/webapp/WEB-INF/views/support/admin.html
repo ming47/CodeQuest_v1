@@ -658,8 +658,6 @@
                                                 <option value="writer">작성자</option>
                                                 <option value="title">제목</option>
                                             </select>
-                                            <input type="text" placeholder="검색할 내용을 입력하세요" id="user-search-key">
-                                            <button id="search">검색</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1341,25 +1339,7 @@ function gameDetailCahrtSet(dataset) {
         	data = JSON.parse(data);
         	
         	makeUserList(data.members);
-        	$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
-        	$('.user-page-navi').on('click', function() {
-        		const clicked = $(this);
-        		
-        		$.ajax({
-        			url: '/service/member/list.do?page=' + clicked.attr('value'),
-        			type: 'GET'
-        		}).done(function(data) {
-        			data = JSON.parse(data);
-        			makeUserList(data.members);
-        			console.log(clicked.attr('value'));
-        			console.log(clicked.attr('tag'));
-        		
-        			if(typeof clicked.attr('tag') != 'undefined') {
-        				console.log(1);
-        				$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
-        			}
-        		});
-        	})
+        	makeUserPageNavi(data);
         });
         
         $.ajax({
@@ -1406,23 +1386,26 @@ function gameDetailCahrtSet(dataset) {
 		}
 	}
 	
-	function makePageNaviAction(url, makeListFunc) {
-		const clicked = $(this);
-		
-		$.ajax({
-			url: 'url' + clicked.attr('value'),
-			type: 'GET'
-		}).done(function(data) {
-			data = JSON.parse(data);
-			makeUserList(data.members);
-			console.log(clicked.attr('value'));
-			console.log(clicked.attr('tag'));
-		
-			if(typeof clicked.attr('tag') != 'undefined') {
-				console.log(1);
-				$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
-			}
-		});
+	function makeUserPageNavi(data) {
+    	$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
+    	$('.user-page-navi').on('click', function() {
+    		const clicked = $(this);
+    		
+    		$.ajax({
+    			url: '/service/member/list.do?page=' + clicked.attr('value'),
+    			type: 'GET'
+    		}).done(function(data) {
+    			data = JSON.parse(data);
+    			makeUserList(data.members);
+    			console.log(clicked.attr('value'));
+    			console.log(clicked.attr('tag'));
+    		
+    			if(typeof clicked.attr('tag') != 'undefined') {
+    				$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
+    				makeUserPageNavi(data);
+    			}
+    		});
+    	})
 	}
 	
 	function setUserData(item) {
@@ -1463,7 +1446,6 @@ function gameDetailCahrtSet(dataset) {
 			button.on('click', function() {
 				const id = $(this).attr('id');
 				
-				let message;
 				if (id == 'ban') {
 					const reason = $('#reason').val();
 					let endDate = ($('#end-date-select option:selected').val() == 0) ?
@@ -1474,8 +1456,6 @@ function gameDetailCahrtSet(dataset) {
 						return;
 					}
 					
-					console.log(reason, endDate);
-					
 					$.ajax({
 						url: '/service/member/ban/add.do',
 						type: 'POST',
@@ -1485,18 +1465,16 @@ function gameDetailCahrtSet(dataset) {
 							endDate: endDate
 						}
 					}).done(function(data) {
-						message = "차단되었습니다.";
+						alert("차단되었습니다.");
 					})
 				} else {
 					$.ajax({
 						url: '/service/member/ban/delete.do?id=' + item.memberId,
 						type: 'GET'
 					}).done(function(data) {
-						message = "차단이 해제되었습니다.";
-					})
+						alert("차단이 해제되었습니다.");
+					});
 				}
-				
-				alert(message);
 			})
 		});
 		

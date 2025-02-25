@@ -164,11 +164,13 @@ public enum BlackListDAOImpl implements BlackListDAO {
 
 	@Override
 	public int permanentBan(BlackListDTO dto) throws Exception {
-		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID) VALUES (BLACK_ID_SEQ.NEXTVAL, ?)";
+		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID, REASON, END_DATE) "
+				+ "VALUES (BLACK_ID_SEQ.NEXTVAL, ?, ?, SYSTIMESTAMP + INTERVAL '99' YEAR)";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, dto.getMemberId());
+			pstat.setString(2, dto.getReason());
 			
 			return pstat.executeUpdate();
 		}

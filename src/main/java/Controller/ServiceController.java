@@ -76,9 +76,9 @@ public class ServiceController extends HttpServlet {
 				if(target.equals("age")) {
 					dto = playtimeDAO.selectAnaGroupByAges(type);
 				} else if(target.equals("game")) {
-					dto = playtimeDAO.selectAnaGroupBy(type, target);
+					dto = playtimeDAO.selectAnaGroupByGameId(type);
 				}else {
-					dto = playtimeDAO.selectAnaGroupBy(type, target);
+					dto = playtimeDAO.selectAnaGroupByGender(type);
 				}
 				response.getWriter().append(g.toJson(dto));
 			} else if(cmd.equals("/service/admin/playtime/search/today.do")) {
