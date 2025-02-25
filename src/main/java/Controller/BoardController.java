@@ -21,18 +21,22 @@ import Common.Statics;
 import DAO.BoardDAO;
 import DAO.FilesDAO;
 import DAO.ReplyDAO;
+import DAO.ViewCountDAO;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.FilesDAOImpl;
 import DAOImpl.ReplyDAOImpl;
+import DAOImpl.ViewCountDAOImpl;
 import DTO.BoardDTO;
 import DTO.FilesDTO;
 import DTO.MemberDTO;
+import DTO.ViewCountDTO;
 
 @WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private BoardDAO dao = BoardDAOImpl.INSTANCE;
 	private FilesDAO fdao = FilesDAOImpl.INSTANCE;
 	private ReplyDAO rdao = ReplyDAOImpl.INSTANCE;
+	ViewCountDAO vdao = ViewCountDAOImpl.INSTANCE;
 
 	Gson g = new Gson();
 
@@ -163,6 +167,17 @@ public class BoardController extends HttpServlet {
 
 				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
 
+				ViewCountDTO viewCountDTO = null;
+				
+				if(dto != null) {
+					System.out.println(dto.getMemberId());
+					viewCountDTO = new ViewCountDTO(boardId, dto.getMemberId());
+					System.out.println(viewCountDTO.getMemberId());
+				} else {					
+					viewCountDTO = new ViewCountDTO(boardId);
+				}
+				vdao.insert(viewCountDTO);
+				
 				request.setAttribute("member", dto);
 				request.setAttribute("dto", dao.selectById(boardId));// 세션에서 아이디값 가져옴
 
