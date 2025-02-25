@@ -54,9 +54,7 @@ public class FileController extends HttpServlet {
 				
 				String uploadPath = FileUtil.getPath("image", requestPath);
 		        Path uploadDir = Paths.get(uploadPath);
-		        
-		        System.out.println(uploadPath);
-		        
+		        		        
 		        if (!Files.exists(uploadDir)) {
 		            Files.createDirectories(uploadDir);
 		        }

@@ -28,6 +28,11 @@ public class QnADTO {
 		this.regDate = regDate;
 		this.responseYn = responseYn;
 	}
+	public QnADTO(String contents, int memberId) {
+		super();
+		this.contents = contents;
+		this.memberId = memberId;
+	}
 
 	public QnADTO() {
 		super();
