@@ -74,10 +74,14 @@ public class ReplyController extends HttpServlet {
 				HttpSession session = request.getSession();
 				MemberDTO member = (MemberDTO) session.getAttribute("member");
 				if (member == null) {
-					response.sendRedirect("/login.do");
+					response.sendRedirect("/");
 					return;
-				}
-
+				} 
+//				else if(member.getIsbanned()) { // 밴 유저는 글쓰기 불가	추후 당겨오면 쓸 수 있게됨	
+//		               response.sendRedirect("/");
+//		               return;
+//				}
+ 
 				
 				
 				System.out.println(member.getMemberId() + ": memberId");

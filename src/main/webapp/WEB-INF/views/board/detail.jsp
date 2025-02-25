@@ -8,6 +8,17 @@
 <meta charset="UTF-8">
 <title>게시글 상세 보기</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 <style>
 * {
 	box-sizing: border-box;
@@ -214,27 +225,26 @@ td#contents {
 }
 /* 이모티콘 */
 .emoji-btn {
-    cursor: pointer;
-    font-size: 1.5em;
-    padding: 5px;
-    display: inline-block;
+	cursor: pointer;
+	font-size: 1.5em;
+	padding: 5px;
+	display: inline-block;
 }
 
 .emoji-btn:hover {
-    transform: scale(1.2);
-    transition: transform 0.2s;
+	transform: scale(1.2);
+	transition: transform 0.2s;
 }
 
 .emoticon {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    padding: 10px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 10px;
+	padding: 10px;
+	background: white;
+	border: 1px solid #ddd;
+	border-radius: 5px;
 }
-
 </style>
 <script>
 
@@ -242,8 +252,8 @@ td#contents {
 window.onload = function(){
    //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기 
    $(document).ready(function() {
-	   
-	   const $commentInput = $("#commentInput");
+      
+      const $commentInput = $("#commentInput");
        const $inputBtn = $("#inputbtn");
        
        // 초기상태 버튼 비활성화
@@ -281,7 +291,7 @@ window.onload = function(){
 
            this.submit();
        });
-	   
+      
     // 댓글 목록 불러오기
     $.ajax({
         url: "/reply/ContentsAll.do",
@@ -294,8 +304,8 @@ window.onload = function(){
             console.error("Error parsing JSON: ", e);
             return;
         }
-			let UserName = "${member.nickName}";	//작성자
-			let Master = "${member.role}";	// 관리자
+         let UserName = "${member.nickName}";   //작성자
+         let Master = "${member.role}";   // 관리자
 
         for (let i = 0; i < data.length; i++) {
             let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
@@ -307,7 +317,7 @@ window.onload = function(){
             let btnBox = $("<div>").addClass("btnbox");
 
 
-            if (data[i].writer === UserName || Master === "admin") {	//관리자이거나 작성자일 경우 보이게하기
+            if (data[i].writer === UserName || Master === "admin") {   //관리자이거나 작성자일 경우 보이게하기
                 let updateBtn = $("<button>").addClass("updatebtn").text("수정");
                 let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
                 btnBox.append(updateBtn, deleteBtn);
@@ -356,7 +366,7 @@ window.onload = function(){
                         updateOK.remove();
                         updateCancel.remove();
                         }else{
-                        	alert("수정을 못했습니다.");
+                           alert("수정을 못했습니다.");
                         }
                     }
                 });
@@ -387,13 +397,13 @@ window.onload = function(){
                     data: { id: replyId, boardId : ${dto.boardId}},
                     success: function(response) {
                         // 삭제 성공하면 해당 댓글을 화면에서 제거
-                        if(response) {                        	
-                        	commentItem.remove();
+                        if(response) {                           
+                           commentItem.remove();
                         } else {
-                        	alert("삭제하지 못했습니다.");
+                           alert("삭제하지 못했습니다.");
                         }
                         
-                    	
+                       
                     }
                 });
             }
@@ -447,7 +457,7 @@ window.onload = function(){
 			<tr>
 				<th>내용</th>
 				<!-- 내용 부분에 높이를 4배로 설정 -->
-				<td class="change" id="board_contents">${dto.contents}</td>
+				<td class="change" id="board_contents" height="500px">${dto.contents}</td>
 			</tr>
 
 		</table>
@@ -465,24 +475,22 @@ window.onload = function(){
 					<input type="hidden" id="memberId" name="memberId"
 						value="${sessionScope.MemberId}"> <input id="commentInput"
 						name="contents" placeholder="댓글을 입력하세요">
-						
+					<div id="a" contenteditable="true"
+						style="display: none; width: 50px; height: 100px;"></div>
 					<div class="emoticons" style="display: none;">
 						<div class="emoticon">
-							<span class="emoji-btn">😀</span>
-        					<span class="emoji-btn">😊</span>
-       						<span class="emoji-btn">😎</span>
-        					<span class="emoji-btn">😍</span>
-        					<span class="emoji-btn">🎉</span>
-        					<span class="emoji-btn">👍</span>
+							<span class="emoji-btn">😀</span> <span class="emoji-btn">😊</span>
+							<span class="emoji-btn">😎</span> <span class="emoji-btn">😍</span>
+							<span class="emoji-btn">🎉</span> <span class="emoji-btn">👍</span>
 						</div>
 					</div>
-			
-					
+
+
 				</div>
-						<div class = "buttonContainer">
-						<button id="emojiBtn" type = "button">😀</button>
-						<button id="inputbtn">등록</button>
-					</div>
+				<div class="buttonContainer">
+					<button id="emojiBtn" type="button">😀</button>
+					<button id="inputbtn" type="button">등록</button>
+				</div>
 			</form>
 			<div id="comments">
 				<ul id="commentList"></ul>
@@ -494,22 +502,21 @@ window.onload = function(){
 			<input name="title" type="hidden" id="hdtitle"> <input
 				name="contents" type="hidden" id="hdcontents">
 			<div class="footer">
-			
+
 				<button type="button" id="back">목록으로</button>
 
 				<!-- 여기 게시글 수정 삭제 버튼  -->
 
-				<c:if test="${dto.getMemberId() == member.getMemberId() || member.role == 'admin'}">
-				
+				<c:if
+					test="${dto.getMemberId() == member.getMemberId() || member.role == 'admin'}">
+
 					<td class="reply_button_area-${item.id}">
 						<button id="update" type="button">수정하기</button>
-						<button id="delete" type="button">삭제하기</button> 
-						</td>
-						</c:if>
-						
-						<script>
-						
-						
+						<button id="delete" type="button">삭제하기</button>
+					</td>
+				</c:if>
+
+				<script>       //게시글 수정  
                $("#inputbtn").on(
                      "click",
                      function() {
@@ -523,44 +530,6 @@ window.onload = function(){
                         $("#comments").append(updatecontents);
                         $("#commentsInput").val("");
                      });
-               
-               
-               
-              $(".deletebtn").on("click", function(){
-                  let target = $(this).attr("seq");
-                  
-                  location.href = "/delete.reply" + target;
-
-               let last_cpage = sessionStorage.getItem("last_cpage");
-               location.href = "/list.board?cpage=" + last_cpage;
-              });
-             
-               $(".updatebtn").on("click",   function(){
-                  
-                        //댓글 수정하기 버튼 눌렀을때    
-                           
-                        $(".writerdiv").attr("contentEditable", "true").focus();
-                        
-
-                        $(".updatebtn,.deletebtn").hide();
-                        //기존에 있던 버튼 숨기기 
-                        let updateOK = $("<button>");
-                        updateOK.html("수정완료").attr("id", "updateOK");
-
-                        let updateCancel = $("<button>");
-                        updateCancel.html("취소").attr("id","updateCancel")
-                              
-
-                        updateCancel.attr("type", "button");
-
-                        updateCancel.on("click", function() {
-                           location.reload();
-                        });
-
-                        $(".btnbox").append(updateOK, updateCancel);
-
-                     });
-
                  // 게시물 삭제하기 눌렀을때
                $("#delete").on("click", function() {                 
                    if (confirm("정말 삭제하시겠습니까")) {
@@ -572,8 +541,10 @@ window.onload = function(){
                 
              // 게시물 수정하기 눌렀을때 
                 $("#update").on("click", function() {
-                	
+                   
                  $(".change").attr("contentEditable", "true");
+                 $('#board_contents').summernote(setSummerNote());
+            
                  $('#board_title').focus();
                     
                     $("#update,#delete").hide();
@@ -595,84 +566,11 @@ window.onload = function(){
                
                  
                
-                });
-            
-                
-                
-                //댓글 수정하기 버튼 눌렀을때   
-                $(".updatebtn").on("click", function(){
-          
-                       
-                    $(".writerdiv").attr("contentEditable", "true").focus();
-                    
-
-                    $(".updatebtn,.deletebtn").hide();
-                    //기존에 있던 버튼 숨기기 
-                    let updateOK = $("<button>");
-                    updateOK.html("수정완료").attr("id", "reply-updateOK");
-
-                    let updateCancel = $("<button>");
-                    updateCancel.html("취소").attr("id","updateCancel")
-                          
-
-                    updateCancel.attr("type", "button");
-                    
-                    
-                    updateCancel.on("click", function() {
-                       location.reload();
-                    });
-
-                    $(".btnbox").append(updateOK, updateCancel);
-
-                // "수정완료" 버튼 클릭 시 처리                   
-                   updateOK.on("click", function() {
-                       let updatedContent = contentDiv.html(); // 수정된 내용을 가져옴
-                       let replyId = commentItem.find("input[name='id']").val(); // 댓글 ID 가져옴
-
-                       // AJAX 요청을 통해 서버에 수정된 댓글 전송
-                       $.ajax({
-                           url: '/reply/update.do', // 댓글 수정 API URL
-                           type: 'POST',
-                           data: {
-                               id: replyId,
-                               contents: updatedContent
-                           },
-                           success: function(response) {
-                               // 수정이 성공하면 댓글 내용을 업데이트
-                               contentDiv.html(updatedContent); // 수정된 내용을 댓글에 반영
-
-                               // 원래의 수정/삭제 버튼 다시 보이게 하기
-                               commentItem.find(".updatebtn, .deletebtn").show();
-
-                               // "수정완료"와 "취소" 버튼 제거
-                               updateOK.remove();
-                               updateCancel.remove();
-                           }
-                       });
-                   });	
-                
-                
-                 // "취소" 버튼 클릭 시 처리
-                   updateCancel.on("click", function() {
-                       // 수정 취소 시 원래의 내용으로 되돌리기
-                       contentDiv.html(contentDiv.attr("data-original-content"));
-
-                       // 원래의 수정/삭제 버튼 다시 보이게 하기
-                       commentItem.find(".updatebtn, .deletebtn").show();
-
-                       // "수정완료"와 "취소" 버튼 제거
-                       updateOK.remove();
-                       updateCancel.remove();
-                   });
-               
-                    
-                });
-               
-                   
+                });   
               
                $('#update-form').on('submit', function() {
-            	   $('#hdtitle').val($('#board_title').html());
-            	   $("#hdcontents").val($("#board_contents").html());
+                  $('#hdtitle').val($('#board_title').html());
+                  $("#hdcontents").val($("#board_contents").html());
          
                });// 게시물 수정 
                
@@ -681,7 +579,7 @@ window.onload = function(){
                   $("#hdtitle").val($("#board_title").html())
                   $("#hdcontents").val($("#board_contents").html())
             
-               })//댓글 수정 
+               });
                
             </script>
 			</div>
@@ -691,53 +589,198 @@ window.onload = function(){
 
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/board/list.do?cpage=" +last_cpage;  });
-
-         </script>
+            
          
-         <script>	//이모티콘
+         </script>
+
+		<script>   //이모티콘
          let isEmoticonPanelOpen = false;
          $("#emojiBtn").on("click", function(){
-       	  isEmoticonPanelOpen = !isEmoticonPanelOpen;
-       	  
-       	  if(isEmoticonPanelOpen){	
-       		  // 이모티콘 패널을 열면
-       		  $(this).text("🤢");
-       		  $(".emoticons").show();
-       		  $(".emoticon").css({
-       			  'background': 'linear-gradient(to bottom, #bacee0 0%, rgba(42, 81, 18950, 0.51) 100%)',
+            isEmoticonPanelOpen = !isEmoticonPanelOpen;
+            
+            if(isEmoticonPanelOpen){   
+               // 이모티콘 패널을 열면
+               $(this).text("🤢");
+               $(".emoticons").show();
+               $(".emoticon").css({
+                  'background': 'linear-gradient(to bottom, #bacee0 0%, rgba(42, 81, 18950, 0.51) 100%)',
                      'transition': 'background 1s ease'
-       		  });
-       	  } else{
-       		  //이모티콘 패널을 닫으면
-       		  $(this).text("😀");
-       		  $(".emoticons").hide();
-       		  $(".emoticon").css({
-       			  'background': '#bacee0',
+               });
+            } else{
+               //이모티콘 패널을 닫으면
+               $(this).text("😀");
+               $(".emoticons").hide();
+               $(".emoticon").css({
+                  'background': '#bacee0',
                      'transition': 'background 0.5s ease'
-       		  });
-       	  }
+               });
+            }
          });
          $(".emoji-btn").on("click", function(){
-        	    let emotion = $(this).text();
-        	    let currentText = $('#commentInput').val();
-        	    
-        	    //$('#a').html(currentText + emotion);
-        	    //$('#a').append(emotion);
-        	    
-        	    $('#commentInput').val(currentText + emotion);	//입력창에 이모티콘 넣기
-        	    //$('#commentInput').val($('#a').html()).trigger('input');
-        	    
-        	    $("#commentInput").focus();
-        	    //$(".emoticons").hide();	//여기있으면 하나 넣을때마다 패널 닫아버림ㅇㅇㅇ
-        	    $("#emojiBtn").text("😀");
-        	    isEmoticonPanelOpen = false;
-        	    
-        	});
+               let emotion = $(this).text();
+               let currentText = $('#commentInput').val();
+
+               $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기
+               
+               $("#commentInput").focus();
+               //$(".emoticons").hide();   //이거 있으면 하나 넣을때마다 패널 닫아버림ㅇㅇㅇ
+               $("#emojiBtn").text("😀");
+               isEmoticonPanelOpen = false;
+               
+           });
+
          
-         $('form').on("submint", function() {
-        	 $('#commentInput').val($('#a').html());
-         });
+         $('#inputbtn').on('click', function() {
+            console.log('sdfsd');
+            
+            let isLoggedIn = "${member.memberId}" !== ""; 
+              let isBanned   = "${member.isbanned}" == "true";
+
+              if (!isLoggedIn) {
+                  alert("회원만 글쓰기가 가능합니다.");
+                  event.preventDefault(); // 페이지 이동 방지
+                  return false;
+              } else if(isBanned) {
+                 $.ajax({
+                    url: '/service/member/ban/detail.do?id=' + ${member.memberId},
+                    type: 'GET'
+                 }).done(function(data) {
+                    data = JSON.parse(data);
+                    
+                    console.log(data);
+                    
+                    let message = "현재 차단된 계정입니다. 차단 이유: " + data.reason + "\n" 
+                    + "차단 기간: " + data.startDate + " ~ " + data.endDate;
+                    alert(message);
+                 });
          
+                  event.preventDefault();
+                  return false;
+              }
+            
+            $.ajax({
+                 url: '/reply/add.do',
+                  type: 'POST',
+                  data: {
+                     boardId: ${dto.boardId},
+                     contents: $('#commentInput').val(),
+                  } 
+               }).done(function(data) {
+                  alert('댓글이 등록되었습니다.');
+                  makeCommentItem();
+               });    
+           });
+         
+         function makeCommentItem() {
+            $.ajax({
+                url: "/reply/ContentsAll.do",
+                data: { 'boardId': ${dto.boardId} },
+                type: "get"
+            }).done(function(data) {
+               try{
+                data = JSON.parse(data);}
+               catch (e) {
+                    console.error("Error parsing JSON: ", e);
+                    return;
+                }
+                 let UserName = "${member.nickName}";   //작성자
+                 let Master = "${member.role}";   // 관리자
+               
+              $("#commentList").html('');
+                for (let i = 0; i < data.length; i++) {
+                    let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
+                    
+                    let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
+                    let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+                    let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
+                    
+                    let btnBox = $("<div>").addClass("btnbox");
+
+
+                    if (data[i].writer === UserName || Master === "admin") {   //관리자이거나 작성자일 경우 보이게하기
+                        let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+                        let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+                        btnBox.append(updateBtn, deleteBtn);
+                    }
+                    commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
+                    $("#commentList").append(commentItem);
+                }
+            });
+         }
+        
+         function setSummerNote(target) {
+             console.log('서머노트 세팅');
+
+             return {
+                placeholder : '내용을 입력하십시오',
+                height : 500,
+                minHeight : null, // set minimum height of editor
+                maxHeight : null, // set maximum height of editor
+                lang : 'ko-KR',
+                toolbar : [
+                      [ 'fontname', [ 'fontname' ] ],
+                      [ 'fontsize', [ 'fontsize' ] ],
+                      [
+                            'style',
+                            [ 'bold', 'italic', 'underline', 'strikethrough',
+                                  'clear' ] ],
+                      [ 'color', [ 'forecolor', 'color' ] ],
+                      [ 'table', [ 'table' ] ],
+                      [ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+                      [ 'height', [ 'height' ] ],
+                      [ 'insert', [ 'picture', 'link', 'video' ] ] ],
+                fontNames : [ 'Arial', 'Arial Black', 'Comic Sans MS',
+                      'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],
+                fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18', '20',
+                      '22', '24', '28', '30', '36', '50', '72' ],
+                callbacks : { //여기 부분이 이미지를 첨부하는 부분
+                   onImageUpload : function(files) {
+                      console.log(files[0], this);
+                      uploadImage(files[0], this);
+                   },
+
+                   onPaste : function(e) {
+                      console.log(e);
+
+                      var clipboardData = e.originalEvent.clipboardData;
+                      if (clipboardData && clipboardData.items
+                            && clipboardData.items.length) {
+                         var item = clipboardData.items[0];
+                         if (item.kind === 'file'
+                               && item.type.indexOf('image/') !== -1) {
+                            e.preventDefault();
+
+                         }
+                      }
+                   }
+                }
+             };
+          }
+
+
+          function uploadImage(file, editor) {
+             let formData = new FormData();
+             formData.append('file', file);
+             formData.append('request', 'board');
+
+             $.ajax({
+
+                url : '/file/image/upload.do',
+                data : formData,
+                type : 'POST',
+                //dataType:"multipart/form-data", 
+                contentType : false,
+                processData : false,
+                error : function(request, status, error) {
+                   console.log("code: " + request.status)
+                   console.log("message: " + request.responseText)
+                   console.log("error: " + error);
+                }
+             }).done(function(data) {
+
+                $(editor).summernote('insertImage', data.path);
+             });
+          }  
          </script>
 
 	</div>
