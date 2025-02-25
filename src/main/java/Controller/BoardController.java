@@ -97,8 +97,10 @@ public class BoardController extends HttpServlet {
 
 
 				List<BoardDTO> list = dao.selectTop5Boardlist();
-				request.setAttribute("list", list);//index에서 foreach로 list 풀기
-				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
+				for(int i=0;i<list.size();i++) {
+					System.out.println(list.get(i).getBoardId());
+				}
+				response.getWriter().append(g.toJson(list));
 
 			}
 			
