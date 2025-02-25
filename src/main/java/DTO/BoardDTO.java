@@ -47,11 +47,12 @@ public class BoardDTO {
 		this.contents = contents;
 	}
 	
-	public BoardDTO(int boardId, String title,Timestamp regDate, int viewCount) { //마이페이지
+	public BoardDTO(int boardId, String title,Timestamp regDate, int viewCount, int replyCount) { //마이페이지
 		this.boardId = boardId;
 		this.title = title;
 		this.regDate = regDate;
 		this.viewCount = viewCount;
+		this.replyCount = replyCount;
 	}
 
 	

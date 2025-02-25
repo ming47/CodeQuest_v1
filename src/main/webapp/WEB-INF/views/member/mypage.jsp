@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,9 +29,7 @@ body {
 	overflow-y: auto;
 }
 
-.header {
-	width: 100%;
-	height: 80px;
+.header, .footer {
 	background: #1e201d;
 	display: flex;
 	align-items: center;
@@ -38,58 +37,65 @@ body {
 	padding: 0 20px;
 	color: #b4c28a;
 	font-family: "Press Start 2P", serif;
-	font-size: 15px;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 1000;
+	font-weight: 400;
+	font-style: normal;
+	width: 100%;
+}
+.header {
+	height: 80px;
+	padding: 20px;
+	position: relative;
+}
+.footer {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	margin-top: 50px;
+}
+
+.header>.navi>.logo {
+	font-size: 20px;
 }
 
 .navi {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .logo {
-	font-size: 24px;
-	color: #b4c28a;
+	font-size: 20px;
 }
 
 .navi ul {
 	list-style: none;
 	display: flex;
+	gap: 20px;
 }
 
-.navi ul li {
-	width: 130px;
-	height: 30px;
+.menu {
+	list-style: none;
+	display: flex;
+	gap: 20px;
+}
+
+.menu li a {
 	padding: 10px 15px;
-	background: white;
-	color: #b4c28a;
+	background: #717171;
+	color: white;
 	border-radius: 5px;
 	cursor: pointer;
-	transition: 0.3s ease-in-out;
-	margin: 10px;
-	text-align: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.navi ul li a {
-	color: #b4c28a;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+		black;
 	text-decoration: none;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
-.navi ul li:hover {
-	background: #81a5bf;
+
+.menu li:hover a {
+	background: #3c3b39;
 	color: white;
 }
 
@@ -257,9 +263,10 @@ input[disabled] {
 	margin: 5px;
 	border: none;
 	border-radius: 6px;
-	font-size: 20px;
+	font-size: 16px;
 	cursor: pointer;
 	transition: 0.3s;
+	font-family: "Jua", serif;
 }
 
 .buttons button:first-child, .id-check-btn {
@@ -405,6 +412,11 @@ input[disabled] {
 	color: #666;
 	margin-right: 10px;
 }
+.logbox-container {
+	position: absolute;
+	right: 10px;
+	bottom: -35px;
+}
 </style>
 </head>
 
@@ -412,13 +424,25 @@ input[disabled] {
 	<div class="header">
 		<div class="navi">
 			<div class="logo">Team CodeQuest</div>
-			<ul>
+			<ul class="menu">
 				<li><a href="/">Home</a></li>
-				<li><a href="/game">Game</a></li>
-				<li><a href="#">Board</a></li>
-				<li><a href="#">Service</a></li>
+				<li><a href="/game/list.do">Game</a></li>
+				<li><a href="/board/list.do">Board</a></li>
+				<c:choose>					
+					<c:when test="${member.role == 'admin'}">
+						<li><a href="/service/admin/main.do">Service</a></li>
+					</c:when>
+					<c:otherwise>					 	
+						<li><a href="/service/qna/addForm.do">Service</a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
+			<c:if test="${member.memberId != null}">
+				<div class="logbox-container">
+					<%@ include file="/logbox.jsp"%>
+				</div>
+			</c:if>				
 	</div>
 	<div class="container">
 		<div class="sidebar">
@@ -501,60 +525,112 @@ input[disabled] {
 
 			<div class="content" id="game_records">
 				<h2 style="font-size: 50px;">게임기록</h2>
-				<h3 style="font-size: 28px;">최근 플레이한 게임</h3>
-
-				<c:forEach var="pt" items="${recentPlayTime}">
+				<c:if test="${not empty recentPlayTime}">
+					<div style="margin: 10px;">
+						<h3 style="font-size: 28px;">최근 플레이한 게임</h3>
+					</div>
+				</c:if>
+				<c:forEach var="list" items="${recentPlayTime}">
 					<div class="recent-game-row">
-						<!-- 1) 게임 이미지 -->
 						<img src="/game.png" alt="게임 이미지" />
-
-						<!-- 2) 게임 제목 (링크) -->
 						<div class="game-title">
-							<a href="/game/list.do?gameId=${pt.gameId}"> 게임제목 들어올 공간 </a>
+							<a href="/game/list.do?gameId=${list.gameId}"> 게임제목 들어올 공간 </a>
 						</div>
-
-						<!-- 3) 플레이 날짜, 오른쪽 정렬 -->
-						<div class="play-date">플레이 날짜: ${pt.regDate}</div>
-
-						<!-- 4) 플레이 타임, 오른쪽 정렬 -->
-						<div class="play-time">플레이 타임: ${pt.formatTime}</div>
+						<div class="play-date">플레이 날짜:
+            			<span class="relative-date" data-timestamp="${list.regDate.time}">
+							<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+						</span>
+						</div>
+						<div class="play-time">플레이 타임: ${list.formatTime}</div>
 					</div>
 				</c:forEach>
 			</div>
 
-
-
-
 			<div class="content" id="my_posts">
 				<h2 style="font-size: 50px; margin-bottom: 20px;">게시글</h2>
-				<div style="margin: 10px;">
-					<h3 style="font-size: 28px;">최근 작성한 게시글</h3>
-				</div>
+				<c:if test="${not empty recentPost}">
+					<div style="margin: 10px;">
+						<h3 style="font-size: 28px;">최근 작성한 게시글</h3>
+					</div>
+				</c:if>
 				<div class="posts-container">
-					<c:forEach var="post" items="${recentPost}">
+					<c:forEach var="list" items="${recentPost}">
 						<div class="post-card">
 							<div class="post-header">
-								<span class="post-number">#${post.boardId}</span> <a
-									class="post-title" href="/board/detail.do?id=${post.boardId}">${post.title}</a>
+								<span class="post-number">#${list.boardId}</span> <a
+									class="post-title" href="/board/detail.do?id=${list.boardId}">${list.title} [${list.replyCount}]</a>
 							</div>
 							<div class="post-info">
-								<span class="post-date">${post.regDate}</span> <span
-									class="post-view">${post.viewCount} 조회</span>
+								<span class="post-date relative-date" data-timestamp="${list.regDate.time}">
+								<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+								</span> 
+								<span class="post-view">${list.viewCount} 조회</span>
 							</div>
 						</div>
 					</c:forEach>
 				</div>
-
-				<div style="margin: 10px;">
-					<h3 style="font-size: 28px;">내가 최근에 본 게시글</h3>
-				</div>
+				<c:if test="${not empty recentViewPost}">
+					<div style="margin: 10px;">
+						<h3 style="font-size: 28px;">내가 최근에 본 게시글</h3>
+					</div>
+				</c:if>
+				<div class="posts-container">
+					<c:forEach var="list" items="${recentViewPost}">
+						<div class="post-card">
+							<div class="post-header">
+								<span class="post-number">#${list.boardId}</span> <a
+									class="post-title" href="/board/detail.do?id=${list.boardId}">${list.title} [${list.replyCnt}]</a>
+							</div>
+							<div class="post-info">
+								<span class="post-date relative-date" data-timestamp="${list.regDate.time}">
+								<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+								</span> 
+							</div>
+						</div>
+					</c:forEach>
+				</div>				
 			</div>
 			<div class="content" id="my_qna">
 				<h2 style="font-size: 50px;">문의내역</h2>
+				<c:if test="${not empty recentQna}">
+					<div style="margin: 10px;">
+						<h3 style="font-size: 28px;">내가 작성한 문의내역</h3>
+					</div>
+				</c:if>
+				<c:forEach var="list" items="${recentQna}">
+					<div class="recent-game-row">
+						<div class="game-title">
+							<a href="/game/list.do?gameId=">${list.contents}</a>
+						</div>
+						<div class="play-date">
+						<span class="post-date relative-date" data-timestamp="${list.regDate.time}">						
+						<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm"/>
+						</span>
+						</div>
+						<div class="play-time">답변: ${list.responseYn}</div>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
+<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	<script>
+		var now = new Date();
+		 $('.relative-date').each(function(){
+		 	var timestamp = parseInt($(this).data('timestamp'), 10);
+			var postDate = new Date(timestamp);
+			var diffMinutes = Math.floor((now - postDate) / (1000 * 60));
+			    
+			if(diffMinutes < 1) {
+				$(this).text("방금 전");
+			} else if(diffMinutes < 60) {
+				$(this).text(diffMinutes + "분 전");
+			} else if(diffMinutes < 720) {
+			   var diffHours = Math.floor(diffMinutes / 60);
+			   $(this).text(diffHours + "시간 전");
+			}
+		 });
+	
         $(".sidebar ul li").on("click",function () {
             let targetId = $(this).attr("data-target");
             let targetElement = $("#" + targetId);

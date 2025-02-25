@@ -53,8 +53,15 @@ public class BoardController extends HttpServlet {
 			System.out.println(ip);
 
 			if (cmd.equals("/board/addform.do")) {
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				if (member == null) { // 회원만 글쓰기 가능
+					response.sendRedirect("/");
+					return;
+				} else if(member.getIsbanned()) { // 밴 유저는 글쓰기 불가
+					response.sendRedirect("/");
+					return;
+				}
 				request.getRequestDispatcher("/WEB-INF/views/board/write.jsp").forward(request, response);
-
 			}
 
 			else if (cmd.equals("/board/printout.do")) {
@@ -99,7 +106,6 @@ public class BoardController extends HttpServlet {
 			}
 			else if (cmd.equals("/board/mainlist.do")) {// 게시글 목록 출력
 
-
 				List<BoardDTO> list = dao.selectTop5Boardlist();
 				for(int i=0;i<list.size();i++) {
 					System.out.println(list.get(i).getBoardId());
@@ -107,19 +113,17 @@ public class BoardController extends HttpServlet {
 				response.getWriter().append(g.toJson(list));
 
 			}
-			
-			
+
+
 			else if (cmd.equals("/board/search.do")) { // 검색 게시물 
 
 				String scpage = (String) request.getParameter("cpage");
-				 String searchField = "";
-					String searchText = "";
-					
-					
+				String searchField = "";
+				String searchText = "";
+
 				searchField = (String)request.getParameter("searchField");
 				searchText = (String)request.getParameter("searchText");
-				
-				
+
 				if (scpage == null || scpage.equals("null")) {
 					scpage = "1";
 				}
@@ -143,7 +147,7 @@ public class BoardController extends HttpServlet {
 				List<BoardDTO>searchResultList = dao.selectBoardList(searchField, searchText,cpage);
 
 				request.setAttribute("list",searchResultList);
-				
+
 
 				request.setAttribute("cpage", cpage);
 				PageNavi pageNavi = new PageNavi(cpage, dao.searchListgetSize(searchField,searchText));
@@ -152,10 +156,10 @@ public class BoardController extends HttpServlet {
 
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
 
-	
-			
+
+
 			}
-			
+
 
 			else if (cmd.equals("/board/detail.do")) { // 상세게시물
 
@@ -186,14 +190,14 @@ public class BoardController extends HttpServlet {
 
 				request.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(request, response);
 
-		
+
 			} else if (cmd.equals("/board/mypage.do")) {
 
 			}  else if (cmd.equals("/board/delete.do")) {// 게시글 삭제
 				int boardId = Integer.parseInt(request.getParameter("id"));
 
 				int result = dao.deleteById(boardId);
-	
+
 
 				response.sendRedirect("/board/list.do?cpage=1");				
 			}
@@ -247,7 +251,7 @@ public class BoardController extends HttpServlet {
 				String title = multi.getParameter("title");
 				String contents = multi.getParameter("contents");
 				dao.insert(new BoardDTO(boardId, title, memberId, contents));
-			
+
 				Enumeration<String> fileNames = multi.getFileNames(); // Enumeration => List와 같음
 
 				while (fileNames.hasMoreElements()) {
@@ -264,25 +268,25 @@ public class BoardController extends HttpServlet {
 
 				}
 				response.sendRedirect("/board/list.do");
-				
+
 			} else if (cmd.equals("/board/update.do")) {// 게시글 수정
-				
-			   
+
+
 				int boardId = Integer.parseInt(request.getParameter("id"));
 				String title = request.getParameter("title");
 				String contents = request.getParameter("contents");
 
 				BoardDTO dto = new BoardDTO(title, contents, boardId);
 				MemberDTO member = (MemberDTO)request.getSession().getAttribute("dto");
-				
-				
-			        // 수정 처리
+
+
+				// 수정 처리
 				int result = dao.update(dto);
-			
+
 				response.sendRedirect("/board/detail.do?id=" + boardId);
-				 }
-			
-		
+			}
+
+
 		}
 
 		catch (Exception e) {
