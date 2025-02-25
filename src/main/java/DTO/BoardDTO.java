@@ -120,5 +120,4 @@ public class BoardDTO {
 	public String getRole() {
 		return role;
 	}
-	
 }
