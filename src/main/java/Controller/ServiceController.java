@@ -171,6 +171,7 @@ public class ServiceController extends HttpServlet {
 				int memberId = Integer.parseInt(request.getParameter("id"));
 				
 				BlackListDTO dto = blackListDAO.selectBanByMmeberId(memberId);
+				
 				response.getWriter().append(g.toJson(dto));
 			} else if(cmd.equals("/service/member/ban/delete.do")) {
 				int memberId = Integer.parseInt(request.getParameter("id"));
