@@ -366,7 +366,10 @@ public enum BoardDAOImpl implements BoardDAO {
 				+ "    FROM VIEW_COUNT v "
 				+ "    WHERE TRUNC(V.REG_DATE) BETWEEN TRUNC(sysdate, 'iw') AND  TRUNC(sysdate, 'iw') + 6 "
 				+ "    GROUP BY BOARD_ID) V "
-				+ "ON B.BOARD_ID = V.BOARD_ID) A) "
+				+ "ON B.BOARD_ID = V.BOARD_ID "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON B.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE ROLE='user') A) "
 				+ "WHERE RNUM BETWEEN 1 AND 5";
 		
 		try (Connection con = getConnection();
