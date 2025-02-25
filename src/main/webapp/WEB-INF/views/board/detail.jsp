@@ -465,7 +465,7 @@ window.onload = function(){
 					<input type="hidden" id="memberId" name="memberId"
 						value="${sessionScope.MemberId}"> <input id="commentInput"
 						name="contents" placeholder="댓글을 입력하세요">
-						<div id="a" contenteditable="true" style="display: none; width: 50px; height: 100px;"></div>
+						
 					<div class="emoticons" style="display: none;">
 						<div class="emoticon">
 							<span class="emoji-btn">😀</span>
