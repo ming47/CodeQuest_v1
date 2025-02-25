@@ -145,21 +145,24 @@ html, body {
 	box-shadow: inset 0 0 8px #424242;
 	width: 73vw;
 	padding: 20px;
-	margin: 140px;
+	margin-top : 150px;
+	margin-bottom: 50px;
 }
 
 table {
 	border-collapse: collapse;
-	border: 1px solid #fff;
 	width: 70vw;
-	font-size: 17px;
+	font-size: 19px;
+	border-spacing: 3px;
+	border-collapse: separate;
+	background-color: transparent; 
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
 	border-radius: 1px;
-	border: 1px solid #fff;
+	border:none;
 	font-family: 'DungGeunMo';
 	color: black;
 	background-color: #fafbf4;
@@ -168,9 +171,6 @@ table th, table td {
 table tr {
 	border-radius: 1px;
 	font-family: 'DungGeunMo';
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	background-color: #bec2a9 color: black;
 }
 
 td {
@@ -262,7 +262,8 @@ input:focus {
 
 .writebtn {
 	margin-top: 10px;
-	margin-left: 10px;
+	padding:20px;
+	margin-left:-17px;
 }
 
 button {
@@ -315,8 +316,8 @@ button:focus {
 	background-color: 'red';
 }
 </style>
-
 </head>
+
 
 <body>
 
