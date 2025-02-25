@@ -69,7 +69,6 @@ public class ReplyController extends HttpServlet {
 		String cmd = request.getRequestURI();
 		try {
 			if (cmd.equals("/reply/add.do")) { // 댓글 출력
-				System.out.println("1");
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
 				String contents = request.getParameter("contents");
 				HttpSession session = request.getSession();

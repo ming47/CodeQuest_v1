@@ -20,12 +20,18 @@ import Common.TimeUtil;
 import DAO.BlackListDAO;
 import DAO.MemberDAO;
 import DAO.PlaytimeDAO;
+import DAO.QnADAO;
+import DAO.QnAReplyDAO;
 import DAOImpl.BlackListDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DAOImpl.PlaytimeDAOImpl;
+import DAOImpl.QnADAOImpl;
+import DAOImpl.QnAReplyDAOImpl;
 import DTO.AnalyzeDTO;
 import DTO.BlackListDTO;
 import DTO.MemberDTO;
+import DTO.QnADTO;
+import DTO.QnAReplyDTO;
 
 
 @WebServlet("/service/*")
@@ -33,6 +39,8 @@ public class ServiceController extends HttpServlet {
 	PlaytimeDAO playtimeDAO = PlaytimeDAOImpl.INSTANCE;
 	MemberDAO memberDAO = MemberDAOImpl.INSTANCE;
 	BlackListDAO blackListDAO = BlackListDAOImpl.INSTANCE;
+	QnADAO qnaDao = QnADAOImpl.INSTACNE;
+	QnAReplyDAO qnaReplyDao = QnAReplyDAOImpl.INSTANCE;
 	
 	Gson g = new Gson();
        
@@ -45,6 +53,11 @@ public class ServiceController extends HttpServlet {
 			
 			
 			if(cmd.equals("/service/qna/addForm.do")) {
+				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
+				if (dto == null) {
+					response.sendRedirect("/");
+					return;
+				}
 				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
@@ -171,6 +184,7 @@ public class ServiceController extends HttpServlet {
 				int memberId = Integer.parseInt(request.getParameter("id"));
 				
 				BlackListDTO dto = blackListDAO.selectBanByMmeberId(memberId);
+				
 				response.getWriter().append(g.toJson(dto));
 			} else if(cmd.equals("/service/member/ban/delete.do")) {
 				int memberId = Integer.parseInt(request.getParameter("id"));
@@ -194,6 +208,20 @@ public class ServiceController extends HttpServlet {
 				json.put("pageNavi", new PageNavi(page, memberDAO.getSelectByIsBannedSize(ban)).generate());
 				
 				response.getWriter().append(g.toJson(json));
+			} else if(cmd.equals("/service/qna/detail.do")) { //마이페이지에서 qna상세보기
+				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
+				String memberId = request.getParameter("memberId");
+				String response_yn = request.getParameter("response");
+				
+				//질문내용
+				QnADTO qnaDto = qnaDao.selectById(qnaId);
+				request.setAttribute("qnaDto", qnaDto);
+				
+				if(response_yn.equals("Y")) {
+					QnAReplyDTO qnaReplyDto = qnaReplyDao.selectByQnAId(qnaId);
+					request.setAttribute("qnaReplyDto", qnaReplyDto);
+				}
+				request.getRequestDispatcher("/WEB-INF/views/support/qnaDetail.jsp").forward(request, response);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -209,7 +237,6 @@ public class ServiceController extends HttpServlet {
 			
 			if(cmd.equals("/service/member/ban/add.do")) {
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
-				
 				if(member.getRole().equals("admin")) {
 					Integer memberId = Integer.parseInt(request.getParameter("memberId"));
 					String reason = request.getParameter("reason");
@@ -220,10 +247,19 @@ public class ServiceController extends HttpServlet {
 					} else {						
 						blackListDAO.insert(new BlackListDTO(memberId, reason, period));
 					}
-					
 					System.out.println(memberId + " " + reason + " " + period);
-					
 				}
+				
+			} else if(cmd.equals("/service/member/qna/add.do")) {
+				String contents = request.getParameter("contents");
+				int memberId = Integer.parseInt(request.getParameter("memberId"));
+				
+				int result = qnaDao.insert(new QnADTO(contents,memberId));
+				if(result > 0) {
+					System.out.println("QNA작성성공!");
+				}
+				response.sendRedirect("/");
+				
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

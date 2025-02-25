@@ -26,8 +26,10 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List<BoardDTO> selectTop5Boardlist() throws Exception {// index 최근게시물 뽑는 메서드
-		String sql = "select * from board b inner join members m "
-				+ "on b.member_id = m.member_id order by created_at desc limit 5;";
+		String sql = "SELECT * FROM (SELECT b.board_id,b.title,m.nickname,b.reg_date,b.view_count, ROW_NUMBER() "
+				+ "OVER (ORDER BY b.board_id DESC) AS rn FROM board b INNER JOIN members m ON b.member_id = m.member_id "
+				+ "where role = 'user') "
+				+ "WHERE rn <= 5";
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
@@ -37,16 +39,16 @@ public enum BoardDAOImpl implements BoardDAO {
 			while (rs.next()) {
 
 				int id = rs.getInt("board_id");
-				int memberId = rs.getInt("member_id");
-				String writer = rs.getString("nickname");
+//				int memberId = rs.getInt("member_id");
 				String title = rs.getString("title");
-				String contents = rs.getString("contents");
+				String writer = rs.getString("nickname");
+//				String contents = rs.getString("contents");
 				Timestamp regDate = rs.getTimestamp("reg_date");
 				int viewCount = rs.getInt("view_count");
-				int replyCount = rs.getInt("reply_count");
-				String role = rs.getString("role");
+//				int replyCount = rs.getInt("reply_count");
+//				String role = rs.getString("role");
 
-				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount, replyCount, writer, role));
+				dto.add(new BoardDTO(id, 0, title, regDate, "", viewCount, 0, writer, ""));
 			}
 			return dto;
 		}
@@ -291,7 +293,7 @@ public enum BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { // 마이페이지 최근 작성한 게시글 5개 가져오기
+	public List<BoardDTO> selectByMemberId(int memberId) throws Exception { // 마이페이지 최근 작성한 게시글 6개 가져오기
 		String sql = "SELECT * FROM ( "
 				+ "  SELECT BOARD_ID, MEMBER_ID, TITLE, REG_DATE, CONTENTS, VIEW_COUNT, REPLY_COUNT "
 				+ "    FROM board " + "   WHERE MEMBER_ID = ? " + "   ORDER BY BOARD_ID DESC " + ") WHERE ROWNUM <= 6";
@@ -304,7 +306,8 @@ public enum BoardDAOImpl implements BoardDAO {
 					String title = rs.getString("title");
 					Timestamp regDate = rs.getTimestamp("reg_date");
 					int viewCount = rs.getInt("view_count");
-					BoardDTO member = new BoardDTO(boardId, title, regDate, viewCount);
+					int replyCount = rs.getInt("reply_count");
+					BoardDTO member = new BoardDTO(boardId, title, regDate, viewCount, replyCount);
 					list.add(member);
 				}
 				return list;
@@ -348,5 +351,39 @@ public enum BoardDAOImpl implements BoardDAO {
 			pstat.executeUpdate();
 		}
 
+	}
+
+	@Override
+	public List<BoardDTO> selectTop5WeekendBoardList() throws Exception {
+		String sql = "SELECT * "
+				+ "FROM ( "
+				+ "SELECT A.*, ROW_NUMBER() OVER(ORDER BY C DESC) AS RNUM "
+				+ "FROM ( "
+				+ "SELECT * "
+				+ "FROM BOARD B "
+				+ "INNER JOIN ( "
+				+ "    SELECT COUNT(*) C, BOARD_ID "
+				+ "    FROM VIEW_COUNT v "
+				+ "    WHERE TRUNC(V.REG_DATE) BETWEEN TRUNC(sysdate, 'iw') AND  TRUNC(sysdate, 'iw') + 6 "
+				+ "    GROUP BY BOARD_ID) V "
+				+ "ON B.BOARD_ID = V.BOARD_ID "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON B.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE ROLE='user') A) "
+				+ "WHERE RNUM BETWEEN 1 AND 5";
+		
+		try (Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			List<BoardDTO> dto = new ArrayList<>();
+
+			while (rs.next()) {
+				dto.add(new BoardDTO(rs.getInt("BOARD_ID"), rs.getInt("MEMBER_ID"), rs.getString("TITLE"),
+						rs.getTimestamp("REG_DATE"), rs.getString("CONTENTS"), rs.getInt("VIEW_COUNT"),
+						rs.getInt("REPLY_COUNT"), rs.getString("NICKNAME"), rs.getString("ROLE")));
+			}
+
+			return dto;
+		}
 	}
 }
