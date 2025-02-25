@@ -36,11 +36,8 @@
 }
 
 html, body {
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
-	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
-	background-size: cover;
 }
 
 .container {
@@ -67,13 +64,21 @@ html, body {
 }
 
 .header {
-	width: 100vw;
+	width: 100%;
 	height: 80px;
 	background: #1e201d;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	position: fixed;
+}
+
+.body{
+	margin: 0;
+	width: 100%;
+	background-attachment: fixed;
+	background: url('/images/allback.jpg') no-repeat center;
+	background-size: cover;
 }
 
 .footer {
@@ -135,17 +140,15 @@ html, body {
 	background-color: rgb(255, 255, 255, 0.5);
 	border-radius: 16px;
 	box-shadow: inset 0 0 8px #424242;
-	width: 1200px;
+	width: 75vw;
 	padding: 20px;
 	margin: 140px;
 }
 
 table {
-	max-width: 1700px;
 	border-collapse: collapse;
-	min-width: 70%;
 	border: 1px solid #fff;
-	width: 1200px;
+	width: 70vw;
 	font-size: 17px;
 }
 
