@@ -692,59 +692,7 @@ window.onload = function(){
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/board/list.do?cpage=" +last_cpage;  });
             
-            $('#inputbtn').on('click', function() {
-            	console.log('sdfsd');
-            	
-            	$.ajax({
-           			url: '/reply/add.do',
-           	 		type: 'POST',
-           	 		data: {
-           	 			boardId: ${dto.boardId},
-           	 			contents: $('#commentInput').val(),
-           	 		} 
-           	 	}).done(function(data) {
-           		 	alert('댓글이 등록되었습니다.');
-           		 	makeCommentItem();
-           	 	});	 
-           	});
-            
-            function makeCommentItem() {
-            	$.ajax({
-        	        url: "/reply/ContentsAll.do",
-        	        data: { 'boardId': ${dto.boardId} },
-        	        type: "get"
-        	    }).done(function(data) {
-        	       try{
-        	        data = JSON.parse(data);}
-        	       catch (e) {
-        	            console.error("Error parsing JSON: ", e);
-        	            return;
-        	        }
-        				let UserName = "${member.nickName}";	//작성자
-        				let Master = "${member.role}";	// 관리자
-					
-        			$("#commentList").html('');
-        	        for (let i = 0; i < data.length; i++) {
-        	            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
-        	            
-        	            let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
-        	            let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-        	            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
-        	            
-        	            let btnBox = $("<div>").addClass("btnbox");
-
-
-        	            if (data[i].writer === UserName || Master === "admin") {	//관리자이거나 작성자일 경우 보이게하기
-        	                let updateBtn = $("<button>").addClass("updatebtn").text("수정");
-        	                let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
-        	                btnBox.append(updateBtn, deleteBtn);
-        	            }
-        	            commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
-        	            $("#commentList").append(commentItem);
-        	        }
-        	    });
-            }
-
+         
          </script>
          
          <script>	//이모티콘
@@ -786,10 +734,86 @@ window.onload = function(){
         	    isEmoticonPanelOpen = false;
         	    
         	});
+
          
-         $('form').on("submint", function() {
-        	 $('#commentInput').val($('#a').html());
-         });
+         $('#inputbtn').on('click', function() {
+         	console.log('sdfsd');
+         	
+         	let isLoggedIn = "${member.memberId}" !== ""; 
+		        let isBanned   = "${member.isbanned}" == "true";
+
+		        if (!isLoggedIn) {
+		            alert("회원만 글쓰기가 가능합니다.");
+		            event.preventDefault(); // 페이지 이동 방지
+		            return false;
+		        } else if(isBanned) {
+		        	$.ajax({
+		        		url: '/service/member/ban/detail.do?id=' + ${member.memberId},
+		        		type: 'GET'
+		        	}).done(function(data) {
+		        		data = JSON.parse(data);
+		        		
+		        		console.log(data);
+		        		
+		        		let message = "현재 차단된 계정입니다. 차단 이유: " + data.reason + "\n" 
+		        		+ "차단 기간: " + data.startDate + " ~ " + data.endDate;
+		        		alert(message);
+		        	});
+		   
+		            event.preventDefault();
+		            return false;
+		        }
+         	
+         	$.ajax({
+        			url: '/reply/add.do',
+        	 		type: 'POST',
+        	 		data: {
+        	 			boardId: ${dto.boardId},
+        	 			contents: $('#commentInput').val(),
+        	 		} 
+        	 	}).done(function(data) {
+        		 	alert('댓글이 등록되었습니다.');
+        		 	makeCommentItem();
+        	 	});	 
+        	});
+         
+         function makeCommentItem() {
+         	$.ajax({
+     	        url: "/reply/ContentsAll.do",
+     	        data: { 'boardId': ${dto.boardId} },
+     	        type: "get"
+     	    }).done(function(data) {
+     	       try{
+     	        data = JSON.parse(data);}
+     	       catch (e) {
+     	            console.error("Error parsing JSON: ", e);
+     	            return;
+     	        }
+     				let UserName = "${member.nickName}";	//작성자
+     				let Master = "${member.role}";	// 관리자
+					
+     			$("#commentList").html('');
+     	        for (let i = 0; i < data.length; i++) {
+     	            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
+     	            
+     	            let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
+     	            let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+     	            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
+     	            
+     	            let btnBox = $("<div>").addClass("btnbox");
+
+
+     	            if (data[i].writer === UserName || Master === "admin") {	//관리자이거나 작성자일 경우 보이게하기
+     	                let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+     	                let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+     	                btnBox.append(updateBtn, deleteBtn);
+     	            }
+     	            commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
+     	            $("#commentList").append(commentItem);
+     	        }
+     	    });
+         }
+
   
          </script>
 
