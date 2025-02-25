@@ -4,11 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>게시판리스트</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -20,7 +17,13 @@
 <style>
 * {
 	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   }
+   
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .container {
@@ -28,78 +31,89 @@
 	flex-direction: column; /* 헤더를 위에 두기 위해 column 방향으로 설정 */
 	align-items: center;
 	max-height: 2000px;
-	max-width: 1500px;
-	background: url('/allback.jpg') no-repeat center;
+	width: 100%;
+	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-	padding: 30px;
 	color: white;
 	background-size: cover;
 }
 
-.header {
-	top: 0; /* 맨 위에 붙이기 */
-	left: 0;
+.header, .footer {
 	background: #1e201d;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
 	color: #b4c28a;
 	font-family: "Press Start 2P", serif;
 	font-weight: 400;
 	font-style: normal;
 	width: 100%;
-	position: relative;
 }
-
-.container>.navi {
-	position: relative;
-	display: flex;
-	height: 5%;
-	align-items: center;
-	background-color: #2b2d42;
-	padding: 10px 20px;
-	border: 1px solid white;
-}
-
-.header>.logo {
-	font-size: 24px;
-	font-weight: bold;
-	color: white;
-}
-
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #2b2d42;
-	padding: 10px 20px;
-	border: 1px solid white;
+	height: 80px;
+	padding: 20px;
+	position: relative;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
-.header ul {
+.footer {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	margin-top: 40px;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+}
+.navi {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.logo {
+	font-size: 20px;
+}
+
+.navi ul {
 	list-style: none;
 	display: flex;
-	gap: 15px;
-	justify-content: flex-end;
-	margin-left: auto;
+	gap: 20px;
 }
 
-.header ul li {
+.navi ul li a {
 	padding: 10px 15px;
-	background: #0e0326;
+	background: #717171;
 	color: white;
 	border-radius: 5px;
 	cursor: pointer;
-	transition: background 0.3s ease;
-	font-size: 18px;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+		black;
+	text-decoration: none;
 }
 
-.header ul li:hover {
-	background: #2b2d42;
+.navi ul li:hover a {
+	background: #3c3b39;
+	color: white;
 }
 
 .logbox {
 	color: #f4f4f4;
 	font-weight: bold;
 	font-size: 16px;
+}
+.logbox-container {
+	position: absolute;
+	right: 10px;
+	bottom: -35px;
+	top:80px
 }
 
 table {
@@ -196,6 +210,10 @@ button {
 	transition: background-color 0.3s ease;
 	margin-top: 20px;
 }
+.writebtn {
+	margin:0;
+}
+
 
 button:hover {
 	background: #2b2d42;
@@ -244,8 +262,8 @@ button:hover {
 </head>
 
 <body>
-	<script>
 
+	<script>
 	$(function() {
 
 		$(".page").on("click", function() {
@@ -258,32 +276,32 @@ button:hover {
 	<div class="container">
 
 
-		<!-- index 헤더 가져옴 -->
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
 					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Service</a></li>
+					<li><a href="/game/list.do">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
-					<c:choose>
+					<c:choose>					
 						<c:when test="${member.role == 'admin'}">
-							<a href="/service/admin/main.do">
-						</c:when>
-						<c:otherwise>
-							<a href="/service/qna/addForm.do">
-						</c:otherwise>
+							<li><a href="/service/admin/main.do">Service</a></li>
+					 	</c:when>
+					 	<c:otherwise>					 	
+							<li><a href="/service/qna/addForm.do">Service</a></li>
+					 	</c:otherwise>
 					</c:choose>
-					Service
-					</a>
-					</li>
 				</ul>
 			</div>
 		</div>
 
+
+
+
+
 		<div class="body">
 
-			<c:if test="${member.loginId != null}">
+			<c:if test="${member.memberId != null}">
 				<div class="logbox-container">
 
 					<%@ include file="/logbox.jsp"%>
@@ -331,8 +349,8 @@ button:hover {
 
 
 				<form method="get" name="search" action="/board/search.do">
-					<tr>
 
+					<tr>
 						<td><select class="form-control" name="searchField">
 								<option class="choice" value="0">선택</option>
 								<option value="schTitle">제목</option>
@@ -344,7 +362,6 @@ button:hover {
 						<td></td>
 						<td></td>
 					</tr>
-
 				</form>
 
 			</table>
@@ -358,15 +375,14 @@ button:hover {
 						<button class="writebtn">작성하기</button>
 					</a>
 
-
 				</c:if>
 
 			</div>
 
 		</div>
 	</div>
-</html>
 </body>
+</html>
 <script>
 	function makePageNavi(url) {
 		const pageNavi = $('<div>');
@@ -423,18 +439,18 @@ button:hover {
 	 $(document).ready(function() {
 		    $(".writebtn").on("click", function(event) {
 		        let isLoggedIn = "${member.loginId}" !== ""; 
+		        let isBanned   = "${member.isbanned}" == "true";
 
 		        if (!isLoggedIn) {
 		            alert("회원만 글쓰기가 가능합니다.");
 		            event.preventDefault(); // 페이지 이동 방지
 		            return false;
+		        } else if(isBanned) {
+		        	alert("글쓰기가 제한된 계정입니다.");
+		            event.preventDefault();
+		            return false;
 		        }
 		    });
 		});
-	 
-<<<<<<< HEAD
-	 
-=======
->>>>>>> 90361822b0268d1ff8112f51ab7fa075d8c7eded
 
 </script>
