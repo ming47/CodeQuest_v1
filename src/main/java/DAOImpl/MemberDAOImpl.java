@@ -276,7 +276,7 @@ public enum MemberDAOImpl implements MemberDAO {
 	@Override
 	public List<MemberDTO> selectByIsBanned(boolean isBanned) throws Exception {
 		String insertString = (isBanned) ? "" : "not";
-		String sql = "SELECT * FROM MEMBERS WHERE MEMBER_ID " + insertString + " IN (SELECT MEMBER_ID FROM BLACK_LIST WHERE END_DATE >= SYSTIMESTAMP";
+		String sql = "SELECT * FROM MEMBERS WHERE MEMBER_ID " + insertString + " IN (SELECT MEMBER_ID FROM BLACK_LIST WHERE END_DATE >= SYSTIMESTAMP)";
 		
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			try (ResultSet rs = pstat.executeQuery()) {
@@ -366,6 +366,66 @@ public enum MemberDAOImpl implements MemberDAO {
 				return dto;
 			}
 		}
+	}
+
+	@Override
+	public List<MemberDTO> selectByIsBanned(boolean isBanned, int page) throws Exception {
+		String insertString = (isBanned) ? "" : "not";
+		String sql = "SELECT *  FROM "
+				+ "(SELECT M.*, ROW_NUMBER() OVER(ORDER BY MEMBER_ID) AS RNUM "
+				+ "FROM MEMBERS M WHERE ROLE='user' AND "
+				+ "MEMBER_ID " + insertString + " IN (SELECT MEMBER_ID FROM BLACK_LIST WHERE END_DATE >= SYSTIMESTAMP)) A "
+				+ "WHERE A.RNUM BETWEEN ? AND ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > getSelectByIsBannedSize(isBanned)) ? getSelectByIsBannedSize(isBanned) : endIndex;
+		
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, startIndex);
+			pstat.setInt(2, endIndex);
+			
+			try (ResultSet rs = pstat.executeQuery()) {
+				
+				List<MemberDTO> dto = new ArrayList<>();
+				while (rs.next()) {
+					int memberId = rs.getInt("member_id");
+					String loginId = rs.getString("login_id");
+					String name = rs.getString("name");
+					String nickName = rs.getString("nickname");
+					String ssn = rs.getString("ssn");
+					String email = rs.getString("email");
+					String phone = rs.getString("phone");
+					int postcode = rs.getInt("zip_code");
+					String address = rs.getString("address");
+					String detail_address = rs.getString("detail_address");
+					String role = rs.getString("role");
+					Timestamp date = rs.getTimestamp("reg_date");
+					
+					dto.add(new MemberDTO(memberId,loginId,name,nickName,ssn,
+						email,phone,postcode,address,detail_address, role,date));
+				}
+				
+				return dto;
+			}
+		}
+	}
+
+	@Override
+	public int getSelectByIsBannedSize(boolean isBanned) throws Exception {
+		String insertString = (isBanned) ? "" : "not";
+		String sql = "SELECT COUNT(*) FROM MEMBERS WHERE MEMBER_ID " + insertString 
+				+ " IN (SELECT MEMBER_ID FROM BLACK_LIST WHERE END_DATE >= SYSTIMESTAMP)";
+		
+		try (Connection con = this.getConnection(); 
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+				
+				rs.next();
+				
+				return rs.getInt(1);
+			}
 	}
 
 }

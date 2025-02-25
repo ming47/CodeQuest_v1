@@ -626,7 +626,7 @@
             </div>
             <div class="board-management">
                 <div class="contents-form inner">
-                    <div class="title title-form">게시판 관리</div>
+                    <div class="title title-form">유저 관리</div>
                     <div class="contents-inner board-management-inner">
                         <div class="ban-list center-align">
                             <div class="inner">
@@ -648,9 +648,9 @@
                                 <div class="qna-list-controller">
                                     <div class="inner">
                                         <div>
-                                            <button class="check-response-yn" value="y">Y</button>
-                                            <button class="check-response-yn" value="n">N</button>
-                                            <button class="check-response-yn" value="whole">전체</button>
+                                            <button class="check-ban" value="true">Y</button>
+                                            <button class="check-ban" value="false">N</button>
+                                            <button class="check-ban" value="whole">전체</button>
                                         </div>
                                         <div>
                                             <select id="user-search-conditions-select">
@@ -1339,7 +1339,7 @@ function gameDetailCahrtSet(dataset) {
         	data = JSON.parse(data);
         	
         	makeUserList(data.members);
-        	makeUserPageNavi(data);
+        	makeUserPageNavi(data, '/service/member/list.do?page=');
         });
         
         $.ajax({
@@ -1386,13 +1386,13 @@ function gameDetailCahrtSet(dataset) {
 		}
 	}
 	
-	function makeUserPageNavi(data) {
+	function makeUserPageNavi(data, url) {
     	$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
     	$('.user-page-navi').on('click', function() {
     		const clicked = $(this);
     		
     		$.ajax({
-    			url: '/service/member/list.do?page=' + clicked.attr('value'),
+    			url: url + clicked.attr('value'),
     			type: 'GET'
     		}).done(function(data) {
     			data = JSON.parse(data);
@@ -1524,7 +1524,31 @@ function gameDetailCahrtSet(dataset) {
 			$('#reason').attr('disabled', false);
 			$('#end-date').attr('disabled', false);
 		}
-	})
+	});
+	
+	$('.check-ban').on('click', function() {
+		const value = $(this).val();
+		
+		console.log(value);	
+		
+		let url;
+		if (value == 'whole') {
+			url = "/service/member/list.do?page=";
+		} else {
+			url = "/service/member/isbanned/list.do?ban=" + value + "&page=";
+		}
+		
+		$.ajax({
+			url: url + '1',
+			type: 'GET'
+		}).done(function(data) {
+			data = JSON.parse(data);
+			console.log(data);
+			
+			makeUserList(data.members);
+        	makeUserPageNavi(data, url);
+		})
+	});
 </script>
 <script tag="qna">
     $('.check-response-yn').on('click', function () {

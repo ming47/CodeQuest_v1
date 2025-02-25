@@ -180,6 +180,20 @@ public class ServiceController extends HttpServlet {
 				if(member.getRole().equals("admin")) {
 					blackListDAO.deleteBanByMemberId(memberId);
 				}
+			} else if(cmd.equals("/service/member/isbanned/list.do")) {
+				int page = Integer.parseInt(request.getParameter("page"));
+				boolean ban = Boolean.parseBoolean(request.getParameter("ban"));
+				
+				Map<String, Object> json = new HashMap<>();
+				
+				List<MemberDTO> dto = memberDAO.selectByIsBanned(ban, page);
+				for(MemberDTO a : dto) {
+					System.out.println(a.getNickName());
+				}
+				json.put("members", dto);
+				json.put("pageNavi", new PageNavi(page, memberDAO.getSelectByIsBannedSize(ban)).generate());
+				
+				response.getWriter().append(g.toJson(json));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
