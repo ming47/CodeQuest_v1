@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import Common.Statics;
 import javax.naming.Context;
 
 import DAO.QnADAO;
+import DTO.PlaytimeDTO;
 import DTO.QnADTO;
 
 public enum QnADAOImpl implements QnADAO {
@@ -279,5 +281,33 @@ public enum QnADAOImpl implements QnADAO {
 	public List<QnADTO> selectByContentLike(String content, int page) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<QnADTO> selectRecentByMemberId(int inputMemberId) throws Exception { //마이페이지에서 작성한 문의내역
+		String sql = "SELECT * FROM ( "
+		           + "    SELECT q.qna_id, q.member_id, q.content, q.reg_date, q.response_yn, m.name "
+		           + "      FROM qna q "
+		           + "      JOIN members m ON q.member_id = m.member_id "
+		           + "     WHERE q.member_id = ? "
+		           + "     ORDER BY q.reg_date DESC "
+		           + ") WHERE ROWNUM <= 5";
+	    
+	    try (Connection con = getConnection();
+	         PreparedStatement pstat = con.prepareStatement(sql)) {
+	        pstat.setInt(1, inputMemberId);
+	        try (ResultSet rs = pstat.executeQuery()) {
+	            List<QnADTO> list = new ArrayList<>();
+	            while (rs.next()) {
+	            	int qnaId = rs.getInt("qna_id");
+	            	String contents = rs.getString("content");
+	            	Timestamp regDate = rs.getTimestamp("reg_date");
+	            	String responseYn = rs.getString("response_yn");
+	            	QnADTO dto = new QnADTO(qnaId,contents,regDate,responseYn);
+	            	list.add(dto);
+	            }
+	            return list;
+	        }
+	    }
 	}
 }

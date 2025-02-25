@@ -11,7 +11,7 @@ public class QnADTO {
 	private Timestamp regDate;
 	private String responseYn;
 	private String writer;
-	
+
 	public QnADTO(int qnaId, int memberId, String contents, Timestamp regDate, String responseYn, String writer) {
 		super();
 		this.qnaId = qnaId;
@@ -20,6 +20,13 @@ public class QnADTO {
 		this.regDate = regDate;
 		this.responseYn = responseYn;
 		this.writer = writer;
+	}
+	public QnADTO(int qnaId, String contents, Timestamp regDate, String responseYn) {
+		super();
+		this.qnaId = qnaId;
+		this.contents = contents;
+		this.regDate = regDate;
+		this.responseYn = responseYn;
 	}
 
 	public QnADTO() {
