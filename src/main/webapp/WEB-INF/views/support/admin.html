@@ -646,19 +646,10 @@
                                     <div class="page-navi-inner" id="user-page-navi"></div>
                                 </div>
                                 <div class="qna-list-controller">
-                                    <div class="inner">
-                                        <div>
-                                            <button class="check-ban" value="true">Y</button>
-                                            <button class="check-ban" value="false">N</button>
-                                            <button class="check-ban" value="whole">전체</button>
-                                        </div>
-                                        <div>
-                                            <select id="user-search-conditions-select">
-                                                <option value="whole">전체</option>
-                                                <option value="writer">작성자</option>
-                                                <option value="title">제목</option>
-                                            </select>
-                                        </div>
+                                    <div class="inner center-align">
+                                        <button class="check-ban" value="true">Y</button>
+                                        <button class="check-ban" value="false">N</button>
+                                        <button class="check-ban" value="whole">전체</button>
                                     </div>
                                 </div>
                             </div>
@@ -687,7 +678,14 @@
                                 <div class="resent-board center-align">
                                     <div class="inner-fat">
                                         <div class="resent-title title-form">최근 게시글</div>
-                                        <table border="1" id="resent-board-table"></table>
+                                        <table border="1" id="resent-board-table">
+                                        	<tr>
+                                        		<th width="10%">번호</th>
+                                        		<th width="60%">내용</th>
+                                        		<th width="20%">날짜</th>
+                                        		<th width="10%">조회수</th>
+                                        	</tr>
+                                        </table>
                                         <div class="page-navi-form">
                                             <div class="page-navi-inner"></div>
                                         </div>
