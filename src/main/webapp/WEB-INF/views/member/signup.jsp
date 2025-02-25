@@ -248,8 +248,6 @@ input[disabled] {
 
 <body>
 	<div class="container">
-	
-	
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
@@ -268,7 +266,6 @@ input[disabled] {
 				</ul>
 			</div>
 		</div>
-
 		<div class="headline">
 			<h2>회원가입</h2>
 		</div>
