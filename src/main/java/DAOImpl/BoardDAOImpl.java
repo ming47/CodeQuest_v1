@@ -26,8 +26,10 @@ public enum BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List<BoardDTO> selectTop5Boardlist() throws Exception {// index 최근게시물 뽑는 메서드
-		String sql = "select * from board b inner join members m "
-				+ "on b.member_id = m.member_id order by created_at desc limit 5;";
+		String sql = "SELECT * FROM (SELECT b.board_id,b.title,m.nickname,b.reg_date,b.view_count, ROW_NUMBER() "
+				+ "OVER (ORDER BY b.board_id DESC) AS rn FROM board b INNER JOIN members m ON b.member_id = m.member_id "
+				+ "where role = 'user') "
+				+ "WHERE rn <= 5";
 		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
@@ -37,16 +39,16 @@ public enum BoardDAOImpl implements BoardDAO {
 			while (rs.next()) {
 
 				int id = rs.getInt("board_id");
-				int memberId = rs.getInt("member_id");
-				String writer = rs.getString("nickname");
+//				int memberId = rs.getInt("member_id");
 				String title = rs.getString("title");
-				String contents = rs.getString("contents");
+				String writer = rs.getString("nickname");
+//				String contents = rs.getString("contents");
 				Timestamp regDate = rs.getTimestamp("reg_date");
 				int viewCount = rs.getInt("view_count");
-				int replyCount = rs.getInt("reply_count");
-				String role = rs.getString("role");
+//				int replyCount = rs.getInt("reply_count");
+//				String role = rs.getString("role");
 
-				dto.add(new BoardDTO(id, memberId, title, regDate, contents, viewCount, replyCount, writer, role));
+				dto.add(new BoardDTO(id, 0, title, regDate, "", viewCount, 0, writer, ""));
 			}
 			return dto;
 		}
