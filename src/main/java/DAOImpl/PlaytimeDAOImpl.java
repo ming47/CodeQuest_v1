@@ -302,13 +302,13 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 				ResultSet rs = pstat.executeQuery()) {
 			
 			List<AnalyzeDTO> dto = new ArrayList<>();
-			LocalDate now = LocalDate.now();
+			LocalDate now = LocalDate.now();  // 2025-2-25
 			
 			rs.next();
 			String date = rs.getString(2);
 			
 			for (int i = 7; i >= 0; i--) {
-				String label = now.minusDays(i).toString();
+				String label = now.minusDays(i).toString(); 
 				
 				date = date.split(" ")[0];
 				
@@ -357,52 +357,6 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			return dto;
 		}	
 	}
-
-
-	@Override
-	public List<AnalyzeDTO> selectAnaGroupBy(String type, String target) throws Exception {
-		String sql ="";
-		
-		String insertType = "";
-		type = type.toLowerCase();
-		if(type.equals("sum")) {
-			insertType = "SUM(PLAY_TIME)";
-		} else if(type.equals("avg")) {
-			insertType = "AVG(PLAY_TIME)";
-		} else if(type.equals("count")) {
-			insertType = "COUNT(*)";
-		}
-		
-		String insertTarget = "";
-		target = target.toLowerCase();
-		if(target.equals("game")) {			
-			sql = "SELECT " + insertType + ", GAME_ID "
-					+ "FROM PLAY_TIME "
-					+ "GROUP BY GAME_ID";
-		} else {
-			if (target.equals("gender")) {
-				insertTarget = "SUBSTR(SSN, 8, 1)";
-			} 
-			sql = "SELECT " + insertType + ", " + insertTarget + " "
-					+ "FROM PLAY_TIME p "
-					+ "INNER JOIN MEMBERS m "
-					+ "ON p.MEMBER_ID = m.MEMBER_ID "
-					+ "GROUP BY " + insertTarget;
-			
-		}
-		
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();) {
-			
-			List<AnalyzeDTO> dto = new ArrayList<>();
-			while(rs.next()) {
-				dto.add(AnalyzeDTO.of(rs));
-			}
-			return dto;
-		}		
-	}
-
 
 	@Override
 	public List<AnalyzeDTO> selectAnaGroupByAges(String type) throws Exception {
@@ -623,5 +577,66 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 				return rs.getDouble(1);
 			}
 		}
+	}
+
+
+	@Override
+	public List<AnalyzeDTO> selectAnaGroupByGender(String type) throws Exception {
+		String insertType = "";
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertType = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertType = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertType = "COUNT(*)";
+		}
+
+		String sql = "SELECT " + insertType + ", SUBSTR(SSN, 8, 1) "
+					+ "FROM PLAY_TIME p "
+					+ "INNER JOIN MEMBERS m "
+					+ "ON p.MEMBER_ID = m.MEMBER_ID "
+					+ "GROUP BY SUBSTR(SSN, 8, 1)";
+					
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			
+			List<AnalyzeDTO> dto = new ArrayList<>();
+			while(rs.next()) {
+				dto.add(AnalyzeDTO.of(rs));
+			}
+			return dto;
+		}		
+	}
+
+	@Override
+	public List<AnalyzeDTO> selectAnaGroupByGameId(String type) throws Exception {
+		String insertString = "";
+		
+		type = type.toLowerCase();
+		if(type.equals("sum")) {
+			insertString = "SUM(PLAY_TIME)";
+		} else if(type.equals("avg")) {
+			insertString = "AVG(PLAY_TIME)";
+		} else if(type.equals("count")) {
+			insertString = "COUNT(*)";
+		}
+		
+		String sql = "SELECT " + insertString + ", GAME_ID "
+				+ "FROM PLAY_TIME "
+				+ "GROUP BY GAME_ID";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			
+			List<AnalyzeDTO> dto = new ArrayList<>();
+			while(rs.next()) {
+				String label = rs.getString(2) + "0대";
+				dto.add(new AnalyzeDTO(rs.getDouble(1), label));
+			}
+			return dto;
+		}	
 	}
 }
