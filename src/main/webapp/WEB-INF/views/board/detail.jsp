@@ -481,7 +481,7 @@ window.onload = function(){
 				</div>
 						<div class = "buttonContainer">
 						<button id="emojiBtn" type = "button">😀</button>
-						<button id="inputbtn">등록</button>
+						<button id="inputbtn" type="button">등록</button>
 					</div>
 			</form>
 			<div id="comments">
@@ -691,6 +691,57 @@ window.onload = function(){
 
                let last_cpage = sessionStorage.getItem("last_cpage");
                location.href = "/board/list.do?cpage=" +last_cpage;  });
+            
+            $('#inputbtn').on('click', function() {
+            	console.log('sdfsd');
+            	
+            	$.ajax({
+           			url: '/reply/add.do',
+           	 		type: 'POST',
+           	 		data: {
+           	 			boardId: ${dto.boardId},
+           	 			contents: $('#commentInput').val(),
+           	 		} 
+           	 	}).done(function(data) {
+           		 	alert('댓글이 등록되었습니다.');
+           		 	
+           		 $.ajax({
+            	        url: "/reply/ContentsAll.do",
+            	        data: { 'boardId': ${dto.boardId} },
+            	        type: "get"
+            	    }).done(function(data) {
+            	       try{
+            	        data = JSON.parse(data);}
+            	       catch (e) {
+            	            console.error("Error parsing JSON: ", e);
+            	            return;
+            	        }
+            				let UserName = "${member.nickName}";	//작성자
+            				let Master = "${member.role}";	// 관리자
+ 					
+            			$("#commentList").html('');
+            	        for (let i = 0; i < data.length; i++) {
+            	            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
+            	            
+            	            let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
+            	            let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+            	            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
+            	            
+            	            let btnBox = $("<div>").addClass("btnbox");
+
+
+            	            if (data[i].writer === UserName || Master === "admin") {	//관리자이거나 작성자일 경우 보이게하기
+            	                let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+            	                let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+            	                btnBox.append(updateBtn, deleteBtn);
+            	            }
+            	            commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
+            	            $("#commentList").append(commentItem);
+            	        }
+            	    });
+           	 	});	 
+           	});
+            
 
          </script>
          
@@ -737,7 +788,7 @@ window.onload = function(){
          $('form').on("submint", function() {
         	 $('#commentInput').val($('#a').html());
          });
-         
+  
          </script>
 
 	</div>
