@@ -9,7 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
-  integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+	integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka"
+	crossorigin="anonymous"></script>
+<script>
+  Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
+</script>
 
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -217,7 +221,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap:10px;
+	gap: 10px;
 }
 
 /* ✅ 로그인 전 랭킹보드 기본 크기 */
@@ -392,6 +396,25 @@
 .boardlist li {
 	margin-bottom: 10px;
 }
+
+table {
+    width: 100%;
+}
+thead, tbody{
+	width: 100%;
+
+}
+
+#title{
+	width: 100%;
+}
+
+td, th {
+	width:100%;
+    padding: 8px; /* 여백 추가 */
+    text-align: center; /* 가운데 정렬 */
+}
+
 </style>
 </head>
 
@@ -411,13 +434,13 @@
 					<li><a href="/">Home</a></li>
 					<li><a href="/game/list.do">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
-					<c:choose>					
+					<c:choose>
 						<c:when test="${member.role == 'admin'}">
 							<li><a href="/service/admin/main.do">Service</a></li>
-					 	</c:when>
-					 	<c:otherwise>					 	
+						</c:when>
+						<c:otherwise>
 							<li><a href="/service/qna/addForm.do">Service</a></li>
-					 	</c:otherwise>
+						</c:otherwise>
 					</c:choose>
 				</ul>
 			</div>
@@ -475,11 +498,20 @@
 
 				<div class="boardlist">
 					<h3>📢 최근 게시물</h3>
-					<ul>
-						<li>게시글 1</li>
-						<li>게시글 2</li>
-						<li>게시글 3</li>
-					</ul>
+					<table>
+					<thead>
+						<tr id="title">
+							<th style="width: 12%;">번호</th>
+							<th style="width: 42%;">제목</th>
+							<th style="width: 17%;">작성자</th>
+							<th style="width: 17%;">날짜</th>
+							<th style="width: 12%;">조회</th>
+						</tr>
+						</thead>
+						<tbody id="latestboard">
+
+						</tbody>
+					</table>
 				</div>
 			</div>
 
@@ -497,8 +529,8 @@
 							</div>
 						</form>
 						<div class="login-links">
-						<a id="kakao-login-btn" href="javascript:loginWithKakao()"><button>간편 로그인</button> </a>
-							<a href="/member/addForm.do"><button>회원가입</button></a>
+							<a id="kakao-login-btn" href="javascript:loginWithKakao()"><button>간편
+									로그인</button> </a> <a href="/member/addForm.do"><button>회원가입</button></a>
 							<button type="button" id="pwFinder">비밀번호 재설정</button>
 						</div>
 					</div>
@@ -539,7 +571,6 @@
 	</div>
 
 	<script>
-	  Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
 		function loginWithKakao() {
 			    Kakao.Auth.authorize({
 			      redirectUri: 'http://10.5.5.14/KakaoLogin',
@@ -562,6 +593,49 @@
 						$(".starter").hide();
 						$(".container").show();
 					}
+					
+					function callLatestBoard() {
+					    $.ajax({
+					        url: "/board/mainlist.do",
+					        type: "GET",
+					        dataType: "json"
+					    }).done(function(calld) {
+					        console.log(calld);
+					        let latestBoard = $('#latestboard');
+
+					        // 기존 데이터 지우기
+					        latestBoard.empty();
+
+					        if (!calld || calld.length === 0) {
+					            latestBoard.append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
+					            return;
+					        }
+
+					        // 게시글 데이터 추가
+					        for (let i = 0; i < calld.length; i++) {
+					            const tr = $('<tr>');
+
+					            tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
+					            tr.append($('</td>'));
+					            tr.append($('<td style="width: 42%;">').append(
+					                $('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)
+					            ));
+					            tr.append($('</td>'));
+					            tr.append($('<td style="width: 17%;">').text(calld[i].writer));
+					            tr.append($('</td>'));
+					            tr.append($('<td style="width: 17%;">').text(calld[i].regDate));
+					            tr.append($('</td>'));
+					            tr.append($('<td style="width: 12%;">').text(calld[i].viewCount));
+					            tr.append($('</td>'));
+
+					            latestBoard.append(tr);
+					        }
+					    }).fail(function(xhr, status, error) {
+					        console.log("게시판 데이터 로딩 실패:", error);
+					    });
+					}
+					
+					callLatestBoard();
 
 					function loadRanking(gameId) {
 						console.log(gameId);
@@ -621,6 +695,7 @@
 							gameId = gameId.replace("game", "");
 							gameId = Number(80000 + gameId);
 						}
+
 						loadRanking(gameId);
 					});
 				});
