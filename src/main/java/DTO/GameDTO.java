@@ -10,23 +10,37 @@ public class GameDTO {
 	private String gameIntro;
 	private String gameDescript;
 	private String gameThumb;
+	private String gameGateway;
 	
+
+	public GameDTO(int gameId, String gameName, String gameIntro, String gameDescript, String gameThumb,
+			String gameGateway) {
+		super();
+		this.gameId = gameId;
+		this.gameName = gameName;
+		this.gameIntro = gameIntro;
+		this.gameDescript = gameDescript;
+		this.gameThumb = gameThumb;
+		this.gameGateway = gameGateway;
+	}
+
+	public GameDTO() {
+		super();
+	}
+
+
 	public int getGameId() {
 		return gameId;
 	}
-
 
 
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
 	}
 
-
-
 	public String getGameName() {
 		return gameName;
 	}
-
 
 
 	public void setGameName(String gameName) {
@@ -34,11 +48,9 @@ public class GameDTO {
 	}
 
 
-
 	public String getGameIntro() {
 		return gameIntro;
 	}
-
 
 
 	public void setGameIntro(String gameIntro) {
@@ -46,11 +58,9 @@ public class GameDTO {
 	}
 
 
-
 	public String getGameDescript() {
 		return gameDescript;
 	}
-
 
 
 	public void setGameDescript(String gameDescript) {
@@ -58,11 +68,9 @@ public class GameDTO {
 	}
 
 
-
 	public String getGameThumb() {
 		return gameThumb;
 	}
-
 
 
 	public void setGameThumb(String gameThumb) {
@@ -70,22 +78,14 @@ public class GameDTO {
 	}
 
 
-
-	public GameDTO() {
-		super();
+	public String getGameGateway() {
+		return gameGateway;
 	}
 
 
-
-	public GameDTO(int gameId, String gameName, String gameIntro, String gameDescript, String gameThumb) {
-		super();
-		this.gameId = gameId;
-		this.gameName = gameName;
-		this.gameIntro = gameIntro;
-		this.gameDescript = gameDescript;
-		this.gameThumb = gameThumb;
+	public void setGameGateway(String gameGateway) {
+		this.gameGateway = gameGateway;
 	}
-
 
 
 	public static GameDTO of(ResultSet rs) throws SQLException {
@@ -94,6 +94,7 @@ public class GameDTO {
 				rs.getString("GAME_NAME"),
 				rs.getString("intro"),
 				rs.getString("descript"),
-				rs.getString("thumb"));
+				rs.getString("thumb"),
+				rs.getString("gateway"));
 	}
 }
