@@ -655,12 +655,12 @@ td, th {
                callLatestBoard();
                
                $.ajax({
-            	   url: '/board/hotweek/list.do',
-            	   type: 'GET',
-            	   dataType: 'json'
+                  url: '/board/hotweek/list.do',
+                  type: 'GET',
+                  dataType: 'json'
                }).done(function(calld) {
-            	   console.log(calld);
-            	   let latestBoard = $('#hot-weekend-board');
+                  console.log(calld);
+                  let latestBoard = $('#hot-weekend-board');
 
                    // 기존 데이터 지우기
                    latestBoard.empty();
