@@ -17,6 +17,15 @@ public class ViewCountDTO {
 		this.regDate = regDate;
 	}
 	
+	public ViewCountDTO(int boardId, int memberId) {
+		this.boardId = boardId;
+		this.memberId = memberId;
+	}
+	
+	public ViewCountDTO(int boardId) {
+		this.boardId = boardId;
+	}
+	
 	public ViewCountDTO() {
 		super();
 	}

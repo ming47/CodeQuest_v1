@@ -614,7 +614,7 @@ z-index
 	    });
 	 $(document).ready(function() {
 		    $(".writebtn").on("click", function(event) {
-		        let isLoggedIn = "${member.loginId}" !== ""; 
+		        let isLoggedIn = "${member.memberId}" !== ""; 
 		        let isBanned   = "${member.isbanned}" == "true";
 
 		        if (!isLoggedIn) {
@@ -622,7 +622,19 @@ z-index
 		            event.preventDefault(); // 페이지 이동 방지
 		            return false;
 		        } else if(isBanned) {
-		        	alert("글쓰기가 제한된 계정입니다.");
+		        	$.ajax({
+		        		url: '/service/member/ban/detail.do?id=' + ${member.memberId},
+		        		type: 'GET'
+		        	}).done(function(data) {
+		        		data = JSON.parse(data);
+		        		
+		        		console.log(data);
+		        		
+		        		let message = "현재 차단된 계정입니다. 차단 이유: " + data.reason + "\n" 
+		        		+ "차단 기간: " + data.startDate + " ~ " + data.endDate;
+		        		alert(message);
+		        	});
+		   
 		            event.preventDefault();
 		            return false;
 		        }
