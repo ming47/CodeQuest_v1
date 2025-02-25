@@ -10,6 +10,10 @@
 <meta charset="UTF-8">
 
 <title>게시판리스트</title>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +24,16 @@
 <style>
 * {
 	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-family: 'DungGeunMo';
+}
+
+@font-face {
+	font-family: 'DungGeunMo';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 .container {
@@ -29,26 +42,25 @@
 	align-items: center;
 	max-height: 2000px;
 	max-width: 1500px;
-	background: url('/allback.jpg') no-repeat center; background-size :
-	cover;
+	background: url('/allback.jpg') no-repeat center;
+	background-size: cover;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	padding: 30px;
 	color: white;
-	background-size: cover;
+	t background-size: cover;
+	font-family: 'DungGeunMo';
 }
 
 .header {
-
-    top: 0;  /* 맨 위에 붙이기 */
-    left: 0;
-
+	top: 0; /* 맨 위에 붙이기 */
+	left: 0;
 	background: #1e201d;
 	color: #b4c28a;
 	font-family: "Press Start 2P", serif;
 	font-weight: 400;
 	font-style: normal;
 	width: 100%;
-		position: relative;
+	position: relative;
 }
 
 .container>.navi {
@@ -68,8 +80,6 @@
 }
 
 .header {
-
-
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -106,33 +116,57 @@
 	font-size: 16px;
 }
 
+.tablebox {
+	border: none;
+	background-color: rgb(255, 255, 255, 0.5);
+	border-radius: 16px;
+	box-shadow: inset 0 0 8px #424242;
+	max-width: 1800px;
+	width: 1100px;
+	padding: 20px;
+}
+
 table {
-	max-width: 1500px;
-	border-collapse: collapse;
-	margin-top: 20px;
-	min-width: 60%;
-	background-color: #868686;
+	max-width: 1700px; //
+	border-collapse: collapse; 
+	<%-- 테이블 띄워지는거 없애고싶으면 주석 지우기 margin-top : 20px;--%>
+	min-width: 70%;
 	border: 1px solid #fff;
+		
+
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
-	color: white;
+	border-radius: 1px;
 	border: 1px solid #fff;
+	font-family: 'DungGeunMo';
+		color: black;
+		background-color:#fafbf4;
+
 }
 
-table th {
-	background-color: #0e0326;
-	color: #fff;
-	empty-cells: hide;
+table tr {
+	border-radius: 1px;
+	font-family: 'DungGeunMo';
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color:#bec2a9
+		color: black;
+}
+
+td {
+	color: black;
+	border-radius: 1px;
+	font-family: 'DungGeunMo';
 }
 
 table a {
 	color: #0e0326;
 	text-decoration: none;
 	font-weight: bold;
-	color: white;
+	color: black;
 	font-color: white;
 }
 
@@ -190,19 +224,69 @@ table a:hover {
 	color: white;
 }
 
+select {
+	width: 100%;
+	padding: 8px 20px 5px 7px;
+	border: 2px solid #ccc;
+	outline: none;
+	font-size: 16px;
+	transition: 0.3s;
+	border-radius: 5px;
+}
+
+input {
+	width: 100%;
+	padding: 10px 40px 10px 15px;
+	border: 2px solid #ccc;
+	outline: none;
+	font-size: 16px;
+	transition: 0.3s;
+	border-radius: 5px;
+	    text-align: center;
+}
+
+input:focus {
+	border-color: gray;
+	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.writebtn {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
 button {
 	padding: 10px 20px;
-	background-color: #0e0326;
+	background-color: #717171;
 	color: white;
-	border: none;
+	border: 3px solid text-transform: uppercase;
+	letter-spacing: 5px;
+	font-weight: bold;
+	position: relative;
+	transition: all 0.4s;
+	overflow: hidden;
 	border-radius: 5px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-	margin-top: 20px;
 }
 
 button:hover {
-	background: #2b2d42;
+background: #3c3b39;
+	transform: scale(1.1);
+}
+
+button:focus {
+	outline: none;
+}
+
+
+background: #3c3b39;
+	top: 100%;
+	left: 0;
+	transition: all 0.4s;
+	z-index: -1;
+}
+
+button:hover::before {
+	transform: translateY(-100%);
 }
 
 #name, #title, #number, #buttonbox {
@@ -242,6 +326,19 @@ button:hover {
 	button {
 		width: 100%;
 	}
+#searchbar td {
+    border: none !important; /* 테두리 없애기 */
+    text-align: center; /* 가운데 정렬 */
+    padding: 15px 0;
+}
+
+
+#searchbar form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-start;
+}
 }
 </style>
 
@@ -284,95 +381,101 @@ button:hover {
 				</ul>
 			</div>
 		</div>
-		
+
 
 
 
 
 		<div class="body">
 
-<c:if test="${member.loginId != null}">
-			<div class="logbox-container">
+			<c:if test="${member.loginId != null}">
+				<div class="logbox-container">
 
-				<%@ include file="/logbox.jsp"%>
+					<%@ include file="/logbox.jsp"%>
+
+				</div>
+			</c:if>
+			<div class="tablebox">
+				<table>
+					<tr id="name">
+						<td colspan="8">자유게시판</td>
+					</tr>
+					<tr id="title">
+						<th style="width: 12%;">번호</th>
+						<th style="width: 42%;">제목</th>
+						<th style="width: 17%;">작성자</th>
+						<th style="width: 17%;">날짜</th>
+						<th style="width: 12%;">조회</th>
+					</tr>
+					<c:forEach var="dto" items="${noticeList}">
+						<tr>
+							<td>${dto.boardId}</td>
+							<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+
+
+								<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
+								<span class="reply-count">[${dto.replyCount}]</span></td>
+
+							<td>${dto.writer}</td>
+							<td>${dto.regDate}</td>
+							<td>${dto.viewCount}</td>
+						</tr>
+					</c:forEach>
+					<c:forEach var="dto" items="${list}">
+						<tr>
+							<td>${dto.boardId}</td>
+							<td class="contents"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
+								<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a>
+								<span class="reply-count">[${dto.replyCount}]</span></td>
+							<td>${dto.writer}</td>
+							<td>${dto.regDate}</td>
+							<td>${dto.viewCount}</td>
+						</tr>
+					</c:forEach>
+
+
+					<tr id="number">
+						<td colspan="8" align="center"></td>
+					</tr>
+					</div>
+
+					<form method="get" name="search" action="/board/search.do">
+						<tr id="searchbar">
+							<td colspan="5">
+								<form method="get" name="search" action="/board/search.do"
+									style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+									<select class="form-control" name="searchField"
+										style="width: 120px;">
+										<option value="0">선택</option>
+										<option value="schTitle">제목</option>
+										<option value="schWriter">작성자</option>
+									</select> <input type="text" class="form-control" placeholder="검색어 입력"
+										name="searchText" maxlength="100" style="width: 300px;">
+									<button type="submit" class="btn btn-success">검색</button>
+								</form>
+							</td>
+						</tr>
+
+					</form>
+
+				</table>
+
+				<div colspan="3" id="buttonbox">
+
+					<c:if test="${dto == null}">
+
+
+						<a href="/board/addform.do" method="post">
+							<button class="writebtn">작성하기</button>
+						</a>
+
+
+					</c:if>
+
+				</div>
 
 			</div>
-		</c:if>
-			<table>
-				<tr id="name">
-					<td colspan="8">자유게시판</td>
-				</tr>
-				<tr id="title">
-					<th style="width: 12%;">번호</th>
-					<th style="width: 42%;">제목</th>
-					<th style="width: 17%;">작성자</th>
-					<th style="width: 17%;">날짜</th>
-					<th style="width: 12%;">조회</th>
-				</tr>
-				<c:forEach var="dto" items="${noticeList}">
-					<tr>
-						<td>${dto.boardId}</td>
-						<td class="contents notice"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
-							class="reply-count">[${dto.replyCount}]</span></td>
-						<td>${dto.writer}</td>
-						<td>${dto.regDate}</td>
-						<td>${dto.viewCount}</td>
-					</tr>
-				</c:forEach>
-				<c:forEach var="dto" items="${list}">
-					<tr>
-						<td>${dto.boardId}</td>
-						<td class="contents"><span class="content-type">${(dto.role == 'user') ? '게시글' : '공지'}</span>
-							<a href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
-							class="reply-count">[${dto.replyCount}]</span></td>
-						<td>${dto.writer}</td>
-						<td>${dto.regDate}</td>
-						<td>${dto.viewCount}</td>
-					</tr>
-				</c:forEach>
-
-
-				<tr id="number">
-					<td colspan="8" align="center"></td>
-				</tr>
-
-
-				<form method="get" name="search" action="/board/search.do">
-				<tr>
-
-					<td><select class="form-control" name="searchField">
-							<option class="choice" value="0">선택</option>
-							<option value="schTitle">제목</option>
-							<option value="schWriter">작성자</option>
-					</select></td>
-					<td class="searchtd"><input type="text" class="form-control"
-						placeholder="검색어 입력" name="searchText" maxlength="100"></td>
-					<td><button type="submit" class="btn btn-success">검색</button></td>
-					<td></td>
-					<td></td>
-				</tr>
-
-				</form>
-
-			</table>
-
-			<div colspan="3" id="buttonbox">
-
-				<c:if test="${dto == null}">
-
-
-					<a href="/board/addform.do" method="post">
-						<button class="writebtn">작성하기</button>
-					</a>
-
-
-				</c:if>
-
-			</div>
-
 		</div>
-	</div>
 </html>
 </body>
 <script>
