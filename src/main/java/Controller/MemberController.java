@@ -203,6 +203,7 @@ public class MemberController extends HttpServlet {
 				}
 				// 밴 유저 검사
 				boolean banned = blackListDao.isBanned(member.getMemberId());
+				System.out.println("밴검사"+banned);
 				member.setIsbanned(banned);
 				request.getSession().setAttribute("member", member);
 				
