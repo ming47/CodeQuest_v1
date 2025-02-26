@@ -727,7 +727,7 @@
 			}
 		});
 		$(".popup").on("click", function () {
-			window.open("/service/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=700");
+			window.open("/member/qna_detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=700");
 		});
 
 		$(".sidebar ul li").on("click", function () {

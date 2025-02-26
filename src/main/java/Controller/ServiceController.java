@@ -210,19 +210,6 @@ public class ServiceController extends HttpServlet {
 				json.put("pageNavi", new PageNavi(page, memberDAO.getSelectByIsBannedSize(ban)).generate());
 				
 				response.getWriter().append(g.toJson(json));
-			} else if(cmd.equals("/service/qna/detail.do")) { //마이페이지에서 qna상세보기
-				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
-				String response_yn = request.getParameter("response");
-				
-				//질문내용
-				QnADTO qnaDto = qnaDao.selectById(qnaId);
-				request.setAttribute("qnaDto", qnaDto);
-				
-				if(response_yn.equals("Y")) {
-					QnAReplyDTO qnaReplyDto = qnaReplyDao.selectByQnAId(qnaId);
-					request.setAttribute("qnaReplyDto", qnaReplyDto);
-				}
-				request.getRequestDispatcher("/WEB-INF/views/support/qnaDetail.jsp").forward(request, response);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

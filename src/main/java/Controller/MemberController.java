@@ -21,17 +21,20 @@ import DAO.MemberDAO;
 
 import DAO.PlaytimeDAO;
 import DAO.QnADAO;
+import DAO.QnAReplyDAO;
 import DAO.ViewCountDAO;
 import DAOImpl.BlackListDAOImpl;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DAOImpl.PlaytimeDAOImpl;
 import DAOImpl.QnADAOImpl;
+import DAOImpl.QnAReplyDAOImpl;
 import DAOImpl.ViewCountDAOImpl;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
 import DTO.PlaytimeDTO;
 import DTO.QnADTO;
+import DTO.QnAReplyDTO;
 import DTO.ViewCountDTO;
 
 @WebServlet("/member/*")
@@ -43,6 +46,8 @@ public class MemberController extends HttpServlet {
 	private PlaytimeDAO playtimeDao = PlaytimeDAOImpl.INSTANCE;
 	private QnADAO qnaDao = QnADAOImpl.INSTACNE;
 	private ViewCountDAO viewCountDao = ViewCountDAOImpl.INSTANCE;
+	QnAReplyDAO qnaReplyDao = QnAReplyDAOImpl.INSTANCE;
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -51,6 +56,7 @@ public class MemberController extends HttpServlet {
 
 		try {
 			String cmd = ConvertURL.of(request);
+			System.out.println("멤버접근!"+cmd);
 			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 
@@ -145,6 +151,7 @@ public class MemberController extends HttpServlet {
 
 		try {
 			String cmd = ConvertURL.of(request);
+			System.out.println("멤버접근!"+cmd);
 			if (cmd.equals("/member/add.do")) { //회원가입
 
 				String id = request.getParameter("id");
@@ -250,8 +257,6 @@ public class MemberController extends HttpServlet {
 				}
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
-			} else if (cmd.equals("/delete.do")) {
-
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
 				String action = "reset";
@@ -292,6 +297,20 @@ public class MemberController extends HttpServlet {
 					System.out.println("패스워드 변경 성공!");
 					response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
 				}
+			} else if(cmd.equals("/member/qna_detail.do")) { // 마이페이지에서 qna상세보기
+				System.out.println("상세보기 출력!");
+				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
+				String response_yn = request.getParameter("response");
+				
+				//질문내용
+				QnADTO qnaDto = qnaDao.selectById(qnaId);
+				request.setAttribute("qnaDto", qnaDto);
+				
+				if(response_yn.equals("Y")) {
+					QnAReplyDTO qnaReplyDto = qnaReplyDao.selectByQnAId(qnaId);
+					request.setAttribute("qnaReplyDto", qnaReplyDto);
+				}
+				request.getRequestDispatcher("/WEB-INF/views/member/qnaDetail.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
