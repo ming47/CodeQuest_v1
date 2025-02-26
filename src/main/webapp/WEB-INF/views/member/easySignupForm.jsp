@@ -35,7 +35,7 @@
 			border-radius: 10px;
 			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 			text-align: center;
-			background: url('/allback.jpg') no-repeat center;
+			background: url('/images/allback.jpg') no-repeat center;
 			background-size: cover;
 		}
 
@@ -120,7 +120,8 @@
 			text-align: left;
 			font-family: "Jua", serif;
 			background: linear-gradient(to right, #abaaaa, #212020);
-			text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 5px 0 black, 0 3px 0 black;
+			text-shadow: 1px 1px 2px rgba(230, 230, 230, 0.7);
+			
 		}
 
 		legend {
@@ -128,6 +129,7 @@
 			font-weight: bold;
 			color: #dfedb6;
 			padding: 5px;
+			text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0 black;
 		}
 
 		.input-group {
@@ -332,14 +334,14 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_name").css({
-					"color": "red",
-					"font-size": "12px"
+					"color": "#BB3A48",
+					"font-size": "16px"
 				}).html("사용 불가능한 이름입니다.");
 				name_val = false;
 			} else {
 				$("#result_name").css({
 					"color": "green",
-					"font-size": "12px"
+					"font-size": "16px"
 				}).html("사용 가능한 이름 입니다.");
 				name_val = true;
 			}
@@ -361,14 +363,14 @@
 			}).done(function (resp) {
 				if (resp.trim() === "exist") {
 					$("#result_nickName").css({
-						"color": "red",
-						"font-size": "12px"
+						"color": "#BB3A48",
+						"font-size": "16px"
 					}).html("이미 사용중인 닉네임입니다.");
 					nickName_val = false;
 				} else {
 					$("#result_nickName").css({
 						"color": "green",
-						"font-size": "12px"
+						"font-size": "16px"
 					}).html("사용가능한 닉네임입니다.");
 					nickName_val = true;
 				}
@@ -382,14 +384,14 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_phone").css({
-					"color": "red",
-					"font-size": "12px"
+					"color": "#BB3A48",
+					"font-size": "16px"
 				}).html("유효하지 않는 전화번호입니다.");
 				tel_val = false;
 			} else {
 				$("#result_phone").css({
 					"color": "green",
-					"font-size": "12px"
+					"font-size": "16px"
 				}).html("유효한 전화번호입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
@@ -402,14 +404,14 @@
 				}).done(function (resp) {
 					if (resp.trim() === "exist") {
 						$("#result_phone").css({
-							"color": "red",
-							"font-size": "12px"
+							"color": "#BB3A48",
+							"font-size": "16px"
 						}).html("이미 사용중인 전화번호입니다.");
 						tel_val = false;
 					} else {
 						$("#result_phone").css({
 							"color": "green",
-							"font-size": "12px"
+							"font-size": "16px"
 						}).html("사용가능한 전화번호입니다");
 						tel_val = true;
 					}
@@ -424,14 +426,14 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_email").css({
-					"color": "red",
-					"font-size": "12px"
+					"color": "#BB3A48",
+					"font-size": "16px"
 				}).html("유효하지 않는 이메일입니다.");
 				email_val = false;
 			} else {
 				$("#result_email").css({
 					"color": "green",
-					"font-size": "12px"
+					"font-size": "16px"
 				}).html("유효한 이메일 입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
@@ -444,14 +446,14 @@
 				}).done(function (resp) {
 					if (resp.trim() === "exist") {
 						$("#result_email").css({
-							"color": "red",
-							"font-size": "12px"
+							"color": "#BB3A48",
+							"font-size": "16px"
 						}).html("이미 사용중인 이메일입니다.");
 						email_val = false;
 					} else {
 						$("#result_email").css({
 							"color": "green",
-							"font-size": "12px"
+							"font-size": "16px"
 						}).html("사용가능한 이메일입니다.");
 						email_val = true;
 					}
