@@ -185,7 +185,6 @@ public class ServiceController extends HttpServlet {
 				response.getWriter().append(g.toJson(dto));
 			} else if(cmd.equals("/service/member/ban/detail.do")) {
 				int memberId = Integer.parseInt(request.getParameter("id"));
-				
 				BlackListDTO dto = blackListDAO.selectBanByMmeberId(memberId);
 				
 				response.getWriter().append(g.toJson(dto));
@@ -213,7 +212,6 @@ public class ServiceController extends HttpServlet {
 				response.getWriter().append(g.toJson(json));
 			} else if(cmd.equals("/service/qna/detail.do")) { //마이페이지에서 qna상세보기
 				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
-				String memberId = request.getParameter("memberId");
 				String response_yn = request.getParameter("response");
 				
 				//질문내용
