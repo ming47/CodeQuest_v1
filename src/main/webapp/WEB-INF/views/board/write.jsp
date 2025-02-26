@@ -24,10 +24,6 @@
 <meta charset="UTF-8">
 <title>게시글쓰기</title>
 
-
-
-
-
 <style>
 @font-face {
 	font-family: 'DungGeunMo';
@@ -49,7 +45,8 @@
 	align-items: center;
 	display: flex;
 	width: 100vw;
-	height: 100%; justify-content : center;
+	height: 100%;
+	justify-content: center;
 	align-items: center;
 	background-attachment: fixed;
 	background: url('/images/allback.jpg') no-repeat center;
@@ -128,7 +125,7 @@
 }
 
 h1 {
-	text-align: left; /* 왼쪽 정렬 */
+	text-align: left;
 	font-size: 28px;
 	color: #ffffff;
 	margin-bottom: 20px;
@@ -139,15 +136,12 @@ h1 {
 }
 
 .body {
-
 	font-family: 'DungGeunMo';
 	width: 70%;
 	background-attachment: fixed;
 	background-size: cover;
 	align-items: center;
 	justify-content: center;
-
-
 }
 
 .body>div {
@@ -172,7 +166,7 @@ table td {
 input[type="text"], input[type="file"], textarea {
 	width: 100%;
 	padding: 14px;
-	border: 2px solid #e0dfed; /* 선 색상 변경 */
+	border: 2px solid #e0dfed;
 	border-radius: 8px;
 	margin-top: 10px;
 	font-size: 16px;
@@ -197,13 +191,12 @@ button {
 	overflow: hidden;
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
-	heghit : 20px;
+	heghit: 20px;
 }
 
 button:hover {
 	background: #66635f;
 }
-
 
 .card {
 	border-radius: 10px;
@@ -229,7 +222,6 @@ button:hover {
 
 .card-body input {
 	margin-bottom: 15px;
-	
 }
 
 .card-body textarea {
@@ -238,13 +230,13 @@ button:hover {
 
 #buttonbox {
 	display: flex;
-	justify-content: flex-end; /* 오른쪽 정렬 */
+	justify-content: flex-end;
 	gap: 20px;
 	margin-top: 20px;
 }
 
 #writebtn, #listbtn {
-	width: 150px; /* 버튼 너비를 동일하게 설정 */
+	width: 150px;
 }
 
 #buttonbox a {
@@ -328,14 +320,7 @@ button:hover {
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>
 
-
-
-
-
-</body>
-</html>
-
-<script>
+	<script>
 	$(document).ready(function() {
 
 		$('#contents').summernote(setSummerNote());
@@ -424,3 +409,7 @@ button:hover {
 		location.href = "/board/list.do?cpage=" + last_cpage;
 	});
 </script>
+
+</body>
+</html>
+
