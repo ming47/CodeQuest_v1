@@ -345,7 +345,7 @@
 		});
 		//회원가입 정규식 유효성 검사
 		$("#id").on("keyup", function () {
-			let regex = /^[a-z0-9_]{8,20}$/;
+			let regex = /^(?=.*[a-z])(?=.*\d)[a-z0-9_]{8,20}$/;
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_id").css({
@@ -353,37 +353,33 @@
 					"font-size": "16px"
 				}).html("ID는 영어소문자,숫자 8자리이상 20자리이하로 작성해주세요.");
 				id_val = false;
-			} else {
-				$("#result_id").css({
-					"color": "green",
-					"font-size": "16px"
-				}).html("사용가능한 ID입니다.");
-				$.ajax({
-					url: "/member/valueCheck.do",
-					data: {
-						field: "login_id",
-						value: $("#id").val()
-					},
-					method: "GET",
-					dataType: "text"
-				}).done(function (resp) {
-					if (resp.trim() === "exist") {
-						$("#result_id").css({
-							"color": "#BB3A48",
-							"font-size": "16px"
-						}).html("이미 사용중인 ID입니다");
-						id_val = false;
-					} else {
-						$("#result_id").css({
-							"color": "green",
-							"font-size": "16px"
-						}).html("사용가능한 ID입니다.");
-						id_val = true;
-					}
-				}).fail(function (xhr, status, error) {
-					console.error("AJAX 요청 실패:", error);
-				});
+				return
 			}
+			$.ajax({
+				url: "/member/valueCheck.do",
+				data: {
+					field: "login_id",
+					value: $("#id").val()
+				},
+				method: "GET",
+				dataType: "text"
+			}).done(function (resp) {
+				if (resp.trim() === "exist") {
+					$("#result_id").css({
+						"color": "#BB3A48",
+						"font-size": "16px"
+					}).html("이미 사용중인 ID입니다");
+					id_val = false;
+				} else {
+					$("#result_id").css({
+						"color": "green",
+						"font-size": "16px"
+					}).html("사용가능한 ID입니다.");
+					id_val = true;
+				}
+			}).fail(function (xhr, status, error) {
+				console.error("AJAX 요청 실패:", error);
+			});
 		});
 
 		$("#pw").on("keyup", function () {
@@ -395,6 +391,7 @@
 					"font-size": "16px"
 				}).html("사용불가능한 PW입니다.");
 				pw_val = false;
+				return;
 			} else {
 				$("#result_pw").css({
 					"color": "green",
@@ -417,6 +414,7 @@
 					"font-size": "16px"
 				}).html("패스워드 일치하지 않음!");
 				pw_val = false;
+				return;
 			}
 		});
 
@@ -429,6 +427,7 @@
 					"font-size": "16px"
 				}).html("사용 불가능한 이름입니다.");
 				name_val = false;
+				return;
 			} else {
 				$("#result_name").css({
 					"color": "green",
@@ -479,79 +478,70 @@
 					"font-size": "16px"
 				}).html("사용 불가능한 전화번호입니다.");
 				tel_val = false;
-			} else {
-				$("#result_phone").css({
-					"color": "green",
-					"font-size": "16px"
-				}).html("사용 가능한 전화번호입니다.");
-				$.ajax({
-					url: "/member/valueCheck.do",
-					data: {
-						field: "phone",
-						value: $("#phone").val()
-					},
-					method: "GET",
-					dataType: "text"
-				}).done(function (resp) {
-					if (resp.trim() === "exist") {
-						$("#result_phone").css({
-							"color": "#BB3A48",
-							"font-size": "16px"
-						}).html("이미 사용중인 전화번호입니다.");
-						tel_val = false;
-					} else {
-						$("#result_phone").css({
-							"color": "green",
-							"font-size": "16px"
-						}).html("사용가능한 전화번호입니다");
-						tel_val = true;
-					}
-				}).fail(function (xhr, status, error) {
-					console.error("AJAX 요청 실패:", error);
-				});
+				return;
 			}
+			$.ajax({
+				url: "/member/valueCheck.do",
+				data: {
+					field: "phone",
+					value: $("#phone").val()
+				},
+				method: "GET",
+				dataType: "text"
+			}).done(function (resp) {
+				if (resp.trim() === "exist") {
+					$("#result_phone").css({
+						"color": "#BB3A48",
+						"font-size": "16px"
+					}).html("이미 사용중인 전화번호입니다.");
+					tel_val = false;
+				} else {
+					$("#result_phone").css({
+						"color": "green",
+						"font-size": "16px"
+					}).html("사용가능한 전화번호입니다");
+					tel_val = true;
+				}
+			}).fail(function (xhr, status, error) {
+				console.error("AJAX 요청 실패:", error);
+			});
 		});
 
 		$("#email").on("keyup", function () {
 			let regex = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[a-zA-Z]{3,4}$/;
 			let vali = regex.exec($(this).val());
+
+			//정규식 검사
 			if (vali == null) {
 				$("#result_email").css({
 					"color": "#BB3A48",
 					"font-size": "16px"
 				}).html("사용 불가능한 이메일입니다.");
 				email_val = false;
-			} else {
-				$("#result_email").css({
-					"color": "green",
-					"font-size": "16px"
-				}).html("사용 가능한 이메일입니다.");
-				$.ajax({
-					url: "/member/valueCheck.do",
-					data: {
-						field: "email",
-						value: $("#email").val()
-					},
-					method: "GET",
-					dataType: "text"
-				}).done(function (resp) {
-					if (resp.trim() === "exist") {
-						$("#result_email").css({
-							"color": "#BB3A48",
-							"font-size": "16px"
-						}).html("이미 사용중인 이메일입니다.");
-						email_val = false;
-					} else {
-						$("#result_email").css({
-							"color": "green",
-							"font-size": "16px"
-						}).html("사용가능한 이메일입니다.");
-						email_val = true;
-					}
-				}).fail(function (xhr, status, error) {
-					console.error("AJAX 요청 실패:", error);
-				});
-			}
+				return;
+			} 
+			$.ajax({
+				url: "/member/valueCheck.do",
+				data: {
+					field: "email",
+					value: $("#email").val()
+				},
+				method: "GET",
+				dataType: "text"
+			}).done(function (resp) {
+				if (resp.trim() == "exist") {
+					$("#result_email").css({
+						"color": "#BB3A48",
+						"font-size": "16px"
+					}).html("이미 사용중인 이메일입니다.");
+					email_val = false;
+				} else {
+					$("#result_email").html("");
+					email_val = true;
+				}
+			}).fail(function (xhr, status, error) {
+				console.error("AJAX 요청 실패:", error);
+			});
 		});
 
 		//회원가입 submit 전 유효성 검사
