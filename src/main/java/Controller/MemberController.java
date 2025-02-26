@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -73,6 +74,7 @@ public class MemberController extends HttpServlet {
 						response.getWriter().append("exist");
 					}
 				}
+				
 			} else if (cmd.equals("/member/mypage.do")) { //마이페이지 폼
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 				if (member == null) {
@@ -95,30 +97,30 @@ public class MemberController extends HttpServlet {
 			    //문의내역
 			    List<QnADTO> recentQna = qnaDao.selectRecentByMemberId(memberId);
 			    request.setAttribute("recentQna", recentQna);
-			    
-			    for (PlaytimeDTO pt : recentPlayTime) {
-			        int totalSeconds = pt.getPlaytime();
-			        int minutes = totalSeconds / 60;
-			        int seconds = totalSeconds % 60;
-			        String formattedTime = minutes + "분 " + seconds + "초";
-			        pt.setFormatTime(formattedTime);
-			    }
 				
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
+				
 			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
 				response.sendRedirect("/");
 
 			} else if (cmd.equals("/member/pwResetForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
+				
+			} else if(cmd.equals("/member/outForm.do")) { //탈퇴 폼
+				request.getRequestDispatcher("/WEB-INF/views/member/outForm.jsp").forward(request, response);
+				
 			} else if (cmd.equals("/member/out.do")) { //회원 탈퇴
 				int id = Integer.parseInt(request.getParameter("id"));
 				int result = dao.deleteById(id);
 				if (result > 0) {
+					System.out.println("탈퇴성공!");
 					request.getSession().invalidate();
+					PrintWriter out = response.getWriter();
+					out.println("<script>window.close();</script>");
+					out.flush();
+					return;
 				}
-				response.sendRedirect("/");
-
 			} else if (cmd.equals("/member/emailDuplCheck.do")) {
 				String email = request.getParameter("email");
 				boolean result = dao.getMemberByEmail(email);
@@ -252,7 +254,11 @@ public class MemberController extends HttpServlet {
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
-								
+				String action = "reset";
+				String member_out = request.getParameter("member_out");
+				if(member_out != null) {
+					action = "out";
+				}	
 				// 인증코드 생성
 				int authCode = (int)(Math.random() * 900000) + 100000; 
 				String codeStr = String.valueOf(authCode);
@@ -263,12 +269,18 @@ public class MemberController extends HttpServlet {
 				request.setAttribute("authCode", codeStr);
 
 				// 이메일 전송
-				boolean emailSent = EmailUtil.sendResetEmail(email, codeStr);
+				boolean emailSent = EmailUtil.sendResetEmail(email, codeStr, action);
+				
 				if(emailSent) {
 					System.out.println("메일전송");
 				} else {
 					System.out.println("메일전송 실패");
 				}
+				if("true".equals(member_out)) { //회원탈퇴 이메일 처리
+					request.getRequestDispatcher("/WEB-INF/views/member/outForm.jsp").forward(request, response);
+					return;
+				}
+				
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/pwReset.do")) {

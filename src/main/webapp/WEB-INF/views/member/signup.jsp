@@ -108,7 +108,7 @@
 			margin-bottom: 20px;
 			margin-top: 30px;
 			font-family: "Jua", serif;
-			text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 9px 0 black, 0 3px 0 black;
+			text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 5px 0 black, 0 3px 0 black;
 		}
 
 		fieldset {
@@ -121,7 +121,7 @@
 			text-align: left;
 			font-family: "Jua", serif;
 			background: linear-gradient(to right, #abaaaa, #212020);
-			text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 5px 0 black, 0 3px 0 black;
+			text-shadow: 1px 1px 2px rgba(230, 230, 230, 0.7);
 		}
 
 		legend {
@@ -129,6 +129,7 @@
 			font-weight: bold;
 			color: #dfedb6;
 			padding: 5px;
+			text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0 black;
 		}
 
 		.input-group {
@@ -273,7 +274,7 @@
 				<div class="input-group">
 					<input type="text" name="id" id="id" placeholder="8~20자 이내 영어소문자,숫자를 포함한 ID를 입력해주세요">
 				</div>
-				<span id="result_id"></span> <span id="result_id_dupl"></span> <input type="password" name="pw" id="pw"
+				<span id="result_id"></span><input type="password" name="pw" id="pw"
 					placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요"> <span id="result_pw"></span> <input type="password"
 					name="pwr" id="pwr" placeholder="패스워드를 다시 입력하세요"> <span id="result_pwr"></span>
 			</fieldset>
@@ -348,15 +349,15 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_id").css({
-					"color": "red",
-					"font-size": "12px"
+					"color": "#BB3A48",
+					"font-size": "16px"
 				}).html("ID는 영어소문자,숫자 8자리이상 20자리이하로 작성해주세요.");
 				id_val = false;
 			} else {
 				$("#result_id").css({
 					"color": "green",
-					"font-size": "12px"
-				}).html("유효한 ID입니다.");
+					"font-size": "16px"
+				}).html("사용가능한 ID입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
 					data: {
@@ -367,15 +368,15 @@
 					dataType: "text"
 				}).done(function (resp) {
 					if (resp.trim() === "exist") {
-						$("#result_id_dupl").css({
-							"color": "red",
-							"font-size": "12px"
+						$("#result_id").css({
+							"color": "#BB3A48",
+							"font-size": "16px"
 						}).html("이미 사용중인 ID입니다");
 						id_val = false;
 					} else {
-						$("#result_id_dupl").css({
+						$("#result_id").css({
 							"color": "green",
-							"font-size": "12px"
+							"font-size": "16px"
 						}).html("사용가능한 ID입니다.");
 						id_val = true;
 					}
@@ -390,15 +391,15 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_pw").css({
-					"color": "red",
-					"font-size": "12px"
-				}).html("유효하지 않는 PW입니다.");
+					"color": "#BB3A48",
+					"font-size": "16px"
+				}).html("사용불가능한 PW입니다.");
 				pw_val = false;
 			} else {
 				$("#result_pw").css({
 					"color": "green",
-					"font-size": "12px"
-				}).html("유효한 PW 입니다.");
+					"font-size": "16px"
+				}).html("사용가능한 PW 입니다.");
 				pw_val = true;
 			}
 		});
@@ -407,13 +408,13 @@
 			if ($("#pw").val() === $(this).val()) {
 				$("#result_pwr").css({
 					"color": "green",
-					"font-size": "12px"
+					"font-size": "16px"
 				}).html("패스워드 일치!");
 				pw_val = true;
 			} else {
 				$("#result_pwr").css({
-					"color": "red",
-					"font-size": "12px"
+					"color": "#BB3A48",
+					"font-size": "16px"
 				}).html("패스워드 일치하지 않음!");
 				pw_val = false;
 			}
@@ -424,14 +425,14 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_name").css({
-					"color": "red",
-					"font-size": "12px"
+					"color": "#BB3A48",
+					"font-size": "16px"
 				}).html("사용 불가능한 이름입니다.");
 				name_val = false;
 			} else {
 				$("#result_name").css({
 					"color": "green",
-					"font-size": "12px"
+					"font-size": "16px"
 				}).html("사용 가능한 이름 입니다.");
 				name_val = true;
 			}
@@ -453,14 +454,14 @@
 			}).done(function (resp) {
 				if (resp.trim() === "exist") {
 					$("#result_nickName").css({
-						"color": "red",
-						"font-size": "12px"
+						"color": "#BB3A48",
+						"font-size": "16px"
 					}).html("이미 사용중인 닉네임입니다.");
 					nickName_val = false;
 				} else {
 					$("#result_nickName").css({
 						"color": "green",
-						"font-size": "12px"
+						"font-size": "16px"
 					}).html("사용가능한 닉네임입니다.");
 					nickName_val = true;
 				}
@@ -474,15 +475,15 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_phone").css({
-					"color": "red",
-					"font-size": "12px"
-				}).html("유효하지 않는 전화번호입니다.");
+					"color": "#BB3A48",
+					"font-size": "16px"
+				}).html("사용 불가능한 전화번호입니다.");
 				tel_val = false;
 			} else {
 				$("#result_phone").css({
 					"color": "green",
-					"font-size": "12px"
-				}).html("유효한 전화번호입니다.");
+					"font-size": "16px"
+				}).html("사용 가능한 전화번호입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
 					data: {
@@ -494,14 +495,14 @@
 				}).done(function (resp) {
 					if (resp.trim() === "exist") {
 						$("#result_phone").css({
-							"color": "red",
-							"font-size": "12px"
+							"color": "#BB3A48",
+							"font-size": "16px"
 						}).html("이미 사용중인 전화번호입니다.");
 						tel_val = false;
 					} else {
 						$("#result_phone").css({
 							"color": "green",
-							"font-size": "12px"
+							"font-size": "16px"
 						}).html("사용가능한 전화번호입니다");
 						tel_val = true;
 					}
@@ -516,15 +517,15 @@
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_email").css({
-					"color": "red",
-					"font-size": "12px"
-				}).html("유효하지 않는 이메일입니다.");
+					"color": "#BB3A48",
+					"font-size": "16px"
+				}).html("사용 불가능한 이메일입니다.");
 				email_val = false;
 			} else {
 				$("#result_email").css({
 					"color": "green",
-					"font-size": "12px"
-				}).html("유효한 이메일 입니다.");
+					"font-size": "16px"
+				}).html("사용 가능한 이메일입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
 					data: {
@@ -536,14 +537,14 @@
 				}).done(function (resp) {
 					if (resp.trim() === "exist") {
 						$("#result_email").css({
-							"color": "red",
-							"font-size": "12px"
+							"color": "#BB3A48",
+							"font-size": "16px"
 						}).html("이미 사용중인 이메일입니다.");
 						email_val = false;
 					} else {
 						$("#result_email").css({
 							"color": "green",
-							"font-size": "12px"
+							"font-size": "16px"
 						}).html("사용가능한 이메일입니다.");
 						email_val = true;
 					}

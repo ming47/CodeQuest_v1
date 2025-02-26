@@ -70,10 +70,10 @@ html, body {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	position: fixed;
+
 }
 
-.body{
+.body {
 	margin: 0;
 	width: 100%;
 	background-attachment: fixed;
@@ -82,6 +82,7 @@ html, body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-height: 100vh;
 }
 
 .footer {
@@ -132,7 +133,7 @@ html, body {
 }
 
 .logbox-container {
-	position: fixed;
+    position: absolute;
 	right: 10px;
 	bottom: -35px;
 	top: 80px
@@ -145,7 +146,7 @@ html, body {
 	box-shadow: inset 0 0 8px #424242;
 	width: 73vw;
 	padding: 20px;
-	margin-top : 150px;
+	margin-top: 150px;
 	margin-bottom: 50px;
 }
 
@@ -155,22 +156,24 @@ table {
 	font-size: 19px;
 	border-spacing: 3px;
 	border-collapse: separate;
-	background-color: transparent; 
+	background-color: transparent;
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
 	border-radius: 1px;
-	border:none;
+	border: none;
 	font-family: 'DungGeunMo';
 	color: black;
 	background-color: #fafbf4;
+	height: 58px;
 }
 
 table tr {
 	border-radius: 1px;
 	font-family: 'DungGeunMo';
+	height: 58px;
 }
 
 td {
@@ -203,7 +206,7 @@ table a:hover {
 	background-color: #2b2d42;
 	transition: background-color 0.3s ease;
 }
-/* ✅ 로그인 박스 */
+
 .loginbox {
 	width: 80%;
 	background: url('/login.jpg') no-repeat center;
@@ -218,7 +221,6 @@ table a:hover {
 	margin-right: 75px;
 }
 
-/* ✅ 로그인 버튼 및 입력 필드 배치 */
 .loginbox h2 {
 	font-family: "Jua", serif;
 	font-weight: 400;
@@ -251,19 +253,18 @@ input {
 	font-size: 16px;
 	transition: 0.3s;
 	border-radius: 5px;
-	text-align: center;
 	font-family: 'DungGeunMo';
 }
 
 input:focus {
 	border-color: gray;
-	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+	box-shadow: 0 0 8px rgba(128, 128, 128, 0.5);
 }
 
 .writebtn {
 	margin-top: 10px;
-	padding:20px;
-	margin-left:-17px;
+	padding: 20px;
+	margin-left: -17px;
 }
 
 button {
@@ -278,6 +279,13 @@ button {
 	overflow: hidden;
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
+}
+
+#searchbar form {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
 }
 
 .writebtn {
@@ -299,7 +307,6 @@ button:focus {
 	outline: none;
 }
 
-
 #name, #title, #number, #buttonbox {
 	height: 50px;
 	color: white;
@@ -317,6 +324,7 @@ button:focus {
 	background-color: 'red';
 }
 </style>
+<script src = "${pageContext.request.contextPath}/detail.js"></script>
 </head>
 
 
@@ -397,11 +405,9 @@ button:focus {
 
 					<tr id="searchbar">
 						<td colspan="5">
-							<form method="get" name="search" action="/board/search.do"
-								style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+							<form method="get" name="search" action="/board/search.do">
 								<select class="form-control" name="searchField"
 									style="width: 120px;">
-									<option value="0">선택</option>
 									<option value="schTitle">제목</option>
 									<option value="schWriter">작성자</option>
 								</select> <input type="text" class="form-control" placeholder="검색어 입력"
@@ -491,49 +497,40 @@ button:focus {
 		return pageNavi;
 	}
 
-	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
+	$('#number>td').append(makePageNavi('${pageUrl}'));
 	
 	 $(document).ready(function() {
-	        $('form[name="search"]').submit(function(event) {
-	            let searchField = $('select[name="searchField"]').val(); 
+         $(".writebtn").on("click", function(event) {
+             let isLoggedIn =  "${member.memberId}" !== ""; 
+             let isBanned   = "${member.isbanned}" == "true";
 
-	            if (searchField === "0") {
-	                alert("옵션을 선택해주세요!"); 
-	                event.preventDefault(); // 폼 제출 방지
-	             
-	            }
-	        });
-	    });
-	 $(document).ready(function() {
-		    $(".writebtn").on("click", function(event) {
-		        let isLoggedIn = "${member.memberId}" !== ""; 
-		        let isBanned   = "${member.isbanned}" == "true";
-
-		        if (!isLoggedIn) {
-		            alert("회원만 글쓰기가 가능합니다.");
-		            event.preventDefault(); // 페이지 이동 방지
-		            return false;
-		            
-		            
-		        } else if(isBanned) {
-		        	$.ajax({
-		        		url: '/service/member/ban/detail.do?id=' + ${member.memberId},
-		        		type: 'GET'
-		        	}).done(function(data) {
-		        		data = JSON.parse(data);
-		        		
-		        		parseDate(data.endDate);
-		        		
-		        		let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
-		        		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
-		        		alert(message);
-		        	});
-		   
-		            event.preventDefault();
-		            return false;
-		        }
-		    });
-		});
+             if (!isLoggedIn) {
+                 if(confirm("회원만 글쓰기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
+                    location.href="/";
+                 }
+                 event.preventDefault(); 
+                 return false;
+                 
+                 
+             } else if(isBanned) {
+                
+                $.ajax({
+                   url: '/service/member/ban/detail.do?id=${member.memberId}'
+                }).done(function(data) {
+                   data = JSON.parse(data);
+                   
+                   parseDate(data.endDate);
+                   
+                   let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+                   + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+                   alert(message);
+                });
+        
+                 event.preventDefault();
+                 return false;
+             }
+         });
+     });
 	 
 	 function parseDate(timestamp) {
 		 const date = new Date(timestamp);

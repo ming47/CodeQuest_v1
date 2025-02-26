@@ -3,7 +3,9 @@ package Controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import Common.PageNavi;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.ReplyDAOImpl;
 import DTO.MemberDTO;
@@ -50,10 +53,19 @@ public class ReplyController extends HttpServlet {
 			}
 
 			else if (cmd.equals("/reply/ContentsAll.do")) {
+				int page = Integer.parseInt(request.getParameter("page"));
 				int id = Integer.parseInt(request.getParameter("boardId"));
-				List<ReplyDTO> rdto = rdao.selectByBoardId(id);
+				
+				Map<String, Object> json = new HashMap<>();
+				
+				List<ReplyDTO> rdto = rdao.selectByBoardId(id, page);
+				json.put("list", rdto);
+				
+				PageNavi pageNavi = new PageNavi(page, rdao.getSelectByBoardIdSize(id));
+				json.put("pageNavi", pageNavi.generate());
+				
 				response.setContentType("text/html; charset=utf8");
-				response.getWriter().append(g.toJson(rdto));
+				response.getWriter().append(g.toJson(json));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,10 +86,14 @@ public class ReplyController extends HttpServlet {
 				HttpSession session = request.getSession();
 				MemberDTO member = (MemberDTO) session.getAttribute("member");
 				if (member == null) {
-					response.sendRedirect("/login.do");
+					response.sendRedirect("/");
 					return;
-				}
-
+				} 
+//				else if(member.getIsbanned()) { // 밴 유저는 글쓰기 불가	추후 당겨오면 쓸 수 있게됨	
+//		               response.sendRedirect("/");
+//		               return;
+//				}
+ 
 				
 				
 				System.out.println(member.getMemberId() + ": memberId");
@@ -91,6 +107,7 @@ public class ReplyController extends HttpServlet {
 				bdao.increaseReplyCount(boardId);	//댓글 카운트 추가
 				response.sendRedirect("/board/detail.do?id=" + boardId);
 			} else if (cmd.equals("/reply/delete.do")) { // 삭제 내일 다시와서 볼것
+				System.out.println("1");
 				int dto = Integer.parseInt(request.getParameter("id"));
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
 
