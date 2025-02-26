@@ -826,7 +826,7 @@ td#contents {
                 url : '/file/image/upload.do',
                 data : formData,
                 type : 'POST',
-                //dataType:"multipart/form-data", 
+                //dataType:"multipart/form-data"e, 
                 contentType : false,
                 processData : false,
                 error : function(request, status, error) {
