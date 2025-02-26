@@ -56,9 +56,12 @@
 }
 
 .header {
-   height: 80px;
+   height: 60px;
    padding: 20px;
    position: relative;
+      display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .footer {
@@ -79,6 +82,12 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
+   position: fixed;
+   top: 0;
+   left: 0;
+   background: #1e201d;
+   padding: 15px 20px;
+   z-index: 1000;
 }
 
 .menu {
@@ -131,7 +140,7 @@
 
 /* ✅ 로그인 박스 */
 .loginbox {
-   width: 80%;
+   width: 85%;
    background-size: cover;
    padding: 10px;
    border-radius: 20px;
@@ -226,8 +235,8 @@
 
 /* ✅ 로그인 전 랭킹보드 기본 크기 */
 .rankingboard {
-   width: 80%;
-   height: 500px;
+   width: 85%;
+   height: 380px;
    background: white;
    padding: 20px;
    border-radius: 10px;
@@ -238,16 +247,7 @@
    font-weight: 400;
    font-style: normal;
    font-size: 20px;
-   margin-top: 30px;
    margin-right: 80px;
-}
-
-/* ✅ 로그인 후 랭킹보드 크기 조정 (body의 절반) */
-.rankingboard.expanded {
-   width: 80%;
-   height: 50%;
-   padding: 30px;
-   margin-top: 40px;
 }
 
 /* ✅ 랭킹 탭 버튼 스타일 */
@@ -268,7 +268,7 @@
 }
 
 .tab-btn {
-   padding: 8px 12px;
+   padding: 6px 2px;
    background: #ddd;
    border: none;
    cursor: pointer;
@@ -296,9 +296,10 @@
 }
 
 .logbox-container {
-   position: absolute;
-   right: 10px;
-   bottom: -35px;
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    z-index: 1000;
 }
 
 .rankingboard ul {
@@ -416,6 +417,15 @@ td, th {
 }
 
 </style>
+<c:if test="${member.memberId != null}">
+<style>
+	#ranking {
+	margin-top : 40px;
+	width: 85%;
+   	height: 660px;
+	}
+</style>
+</c:if>
 </head>
 
 
@@ -459,39 +469,39 @@ td, th {
          <div class="body">
             <div class="gameList">
                <div class="game">
-                  <img src="game1.jpg">
-                  <h3>Game 1</h3>
-                  <p>RPG</p>
+                  <img src="/images/skipstone.png">
+                  <h3>Skipping Stone</h3>
+                  <p>Action</p>
+                  <a href="/games/SkippingStone/main.html"><button>Play</button></a>
+               </div>
+               <div class="game">
+                  <img src="/images/2048.png">
+                  <h3>2048</h3>
+                  <p>Puzzle</p>
                   <button>Play</button>
                </div>
                <div class="game">
-                  <img src="game2.jpg">
-                  <h3>Game 2</h3>
-                  <p>FPS</p>
-                  <button>Play</button>
-               </div>
-               <div class="game">
-                  <img src="game3.jpg">
-                  <h3>Game 3</h3>
+                  <img src="/images/warplane.png">
+                  <h3>World Of WarPlane</h3>
                   <p>Action</p>
                   <button>Play</button>
                </div>
                <div class="game">
-                  <img src="game4.jpg">
-                  <h3>Game 4</h3>
-                  <p>Adventure</p>
-                  <button>Play</button>
-               </div>
-               <div class="game">
-                  <img src="game5.jpg">
-                  <h3>Game 5</h3>
+                  <img src="/images/metro.png">
+                  <h3>Mini Metro</h3>
                   <p>Strategy</p>
                   <button>Play</button>
                </div>
                <div class="game">
-                  <img src="game6.jpg">
-                  <h3>Game 6</h3>
-                  <p>Sports</p>
+                  <img src="/images/tetris.png">
+                  <h3>Tetris</h3>
+                  <p>Puzzle</p>
+                  <button>Play</button>
+               </div>
+               <div class="game">
+                  <img src="/images/chess.jpg">
+                  <h3>Chess</h3>
+                  <p>Stretegy</p>
                   <button>Play</button>
                </div>
             </div>
@@ -552,30 +562,37 @@ td, th {
                   </div>
                </div>
             </c:if>
-            <div class="rankingboard">
+
+            <div class="rankingboard" id="ranking">
                <h3>🏆 랭킹 보드</h3>
 
                <div class="ranking-tabs">
-                  <button class="tab-btn active" data-game="game1">Game 1</button>
-                  <button class="tab-btn" data-game="game2">Game 2</button>
-                  <button class="tab-btn" data-game="game3">Game 3</button>
+                  <button class="tab-btn active" data-game="game1">Skipping</button>
+                  <button class="tab-btn" data-game="game2">2048</button>
+                  <button class="tab-btn" data-game="game3">Warplane</button>
+                  <button class="tab-btn" data-game="game4">Metro</button>
+                  <button class="tab-btn" data-game="game5">Tetris</button>
+                  <button class="tab-btn" data-game="game6">Chess</button>
                </div>
 
                <div class="ranking-content">
                   <ul class="ranking-list" id="game1">
-                     <li>1위 - 플레이어1 (1200점)</li>
-                     <li>2위 - 플레이어2 (1100점)</li>
-                     <li>3위 - 플레이어3 (1050점)</li>
+ 
                   </ul>
                   <ul class="ranking-list hidden" id="game2">
-                     <li>1위 - 플레이어A (2000점)</li>
-                     <li>2위 - 플레이어B (1800점)</li>
-                     <li>3위 - 플레이어C (1750점)</li>
+
                   </ul>
                   <ul class="ranking-list hidden" id="game3">
-                     <li>1위 - 플레이어X (900점)</li>
-                     <li>2위 - 플레이어Y (850점)</li>
-                     <li>3위 - 플레이어Z (800점)</li>
+
+                  </ul>
+                  <ul class="ranking-list hidden" id="game4">
+
+                  </ul>
+                  <ul class="ranking-list hidden" id="game5">
+
+                  </ul>
+                  <ul class="ranking-list hidden" id="game6">
+
                   </ul>
                </div>
             </div>
@@ -610,7 +627,13 @@ td, th {
                   $(".starter").hide();
                   $(".container").show();
                }
-               
+              /* 
+            	let memberSession = ${member} !== "";   
+              	if (memberSession){ 
+            	        $(".rankingboard").css("height", "2000px"); // 높이 조정
+            	        $(".rankingboard").addClass("expanded"); // 추가적인 스타일 적용 가능
+            	  }
+               */
                function callLatestBoard() {
                    $.ajax({
                        url: "/board/mainlist.do",
