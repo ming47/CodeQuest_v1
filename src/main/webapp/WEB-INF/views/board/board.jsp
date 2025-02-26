@@ -21,300 +21,306 @@
 
 <style>
 @font-face {
-	font-family: 'DungGeunMo';
-	src:
-		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+   font-family: 'DungGeunMo';
+   src:
+      url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+      format('woff');
+   font-weight: normal;
+   font-style: normal;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
 }
 
 html, body {
-	width: 100%;
-	height: 100vh;
+   width: 100%;
+   height: 100vh;
 }
 
 .container {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-	color: white;
-	font-family: 'DungGeunMo';
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+   color: white;
+   font-family: 'DungGeunMo';
 }
 
 .header, .footer {
-	background: #1e201d;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 0 20px;
-	color: #b4c28a;
-	font-family: "Press Start 2P", serif;
-	font-weight: 400;
-	font-style: normal;
-	width: 100%;
+   background: #1e201d;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 20px;
+   color: #b4c28a;
+   font-family: "Press Start 2P", serif;
+   font-weight: 400;
+   font-style: normal;
+   width: 100%;
 }
 
 .header {
-	width: 100%;
-	height: 80px;
-	background: #1e201d;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	position: fixed;
+   width: 100%;
+   height: 80px;
+   background: #1e201d;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   position: fixed;
 }
 
 .body{
-	margin: 0;
-	width: 100%;
-	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
-	background-size: cover;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+   margin: 0;
+   width: 100%;
+   background-attachment: fixed;
+   background: url('/images/allback.jpg') no-repeat center;
+   background-size: cover;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .footer {
-	height: 60px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 14px;
+   height: 60px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 14px;
 }
 
 .navi {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
 }
 
 .logo {
-	font-size: 20px;
+   font-size: 20px;
 }
 
 .navi ul {
-	list-style: none;
-	display: flex;
-	gap: 20px;
+   list-style: none;
+   display: flex;
+   gap: 20px;
 }
 
 .navi ul li a {
-	padding: 10px 15px;
-	background: #717171;
-	color: white;
-	border-radius: 5px;
-	cursor: pointer;
-	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
-		black;
-	text-decoration: none;
+   padding: 10px 15px;
+   background: #717171;
+   color: white;
+   border-radius: 5px;
+   cursor: pointer;
+   text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+      black;
+   text-decoration: none;
 }
 
 .navi ul li:hover a {
-	background: #3c3b39;
-	color: white;
+   background: #3c3b39;
+   color: white;
 }
 
 .logbox {
-	color: #f4f4f4;
-	font-weight: bold;
-	font-size: 16px;
+   color: #f4f4f4;
+   font-weight: bold;
+   font-size: 16px;
 }
 
 .logbox-container {
-	position: fixed;
-	right: 10px;
-	bottom: -35px;
-	top: 80px
+   position: fixed;
+   right: 10px;
+   bottom: -35px;
+   top: 80px
 }
 
 .tablebox {
-	border: none;
-	background-color: rgb(255, 255, 255, 0.5);
-	border-radius: 16px;
-	box-shadow: inset 0 0 8px #424242;
-	width: 73vw;
-	padding: 20px;
-	margin-top : 150px;
-	margin-bottom: 50px;
+   border: none;
+   background-color: rgb(255, 255, 255, 0.5);
+   border-radius: 16px;
+   box-shadow: inset 0 0 8px #424242;
+   width: 73vw;
+   padding: 20px;
+   margin-top : 150px;
+   margin-bottom: 50px;
 }
 
 table {
-	border-collapse: collapse;
-	width: 70vw;
-	font-size: 19px;
-	border-spacing: 3px;
-	border-collapse: separate;
-	background-color: transparent; 
+   border-collapse: collapse;
+   width: 70vw;
+   font-size: 19px;
+   border-spacing: 3px;
+   border-collapse: separate;
+   background-color: transparent; 
 }
 
 table th, table td {
-	padding: 10px;
-	text-align: center;
-	border-radius: 1px;
-	border:none;
-	font-family: 'DungGeunMo';
-	color: black;
-	background-color: #fafbf4;
+   padding: 10px;
+   text-align: center;
+   border-radius: 1px;
+   border:none;
+   font-family: 'DungGeunMo';
+   color: black;
+   background-color: #fafbf4;
 }
 
 table tr {
-	border-radius: 1px;
-	font-family: 'DungGeunMo';
+   border-radius: 1px;
+   font-family: 'DungGeunMo';
 }
 
 td {
-	color: black;
-	border-radius: 1px;
-	font-family: 'DungGeunMo';
+   color: black;
+   border-radius: 1px;
+   font-family: 'DungGeunMo';
 }
 
 table a {
-	color: #0e0326;
-	text-decoration: none;
-	font-weight: bold;
-	color: black;
-	font-color: white;
+   color: #0e0326;
+   text-decoration: none;
+   font-weight: bold;
+   color: black;
+   font-color: white;
 }
 
 table a:hover {
-	text-decoration: underline;
+   text-decoration: underline;
 }
 
 .paging {
-	cursor: pointer;
-	border: 1px solid #0e0326;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	text-align: center;
-	line-height: 30px;
-	margin: 0 5px;
-	background-color: #2b2d42;
-	transition: background-color 0.3s ease;
-}
-/* ✅ 로그인 박스 */
-.loginbox {
-	width: 80%;
-	background: url('/login.jpg') no-repeat center;
-	background-size: cover;
-	padding: 10px;
-	border-radius: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	font-family: "Jua", serif;
-	margin-bottom: 50px;
-	margin-top: 80px;
-	margin-right: 75px;
+   cursor: pointer;
+   border: 1px solid #0e0326;
+   width: 30px;
+   height: 30px;
+   display: inline-block;
+   text-align: center;
+   line-height: 30px;
+   margin: 0 5px;
+   background-color: #2b2d42;
+   transition: background-color 0.3s ease;
 }
 
-/* ✅ 로그인 버튼 및 입력 필드 배치 */
+.loginbox {
+   width: 80%;
+   background: url('/login.jpg') no-repeat center;
+   background-size: cover;
+   padding: 10px;
+   border-radius: 20px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   text-align: center;
+   font-family: "Jua", serif;
+   margin-bottom: 50px;
+   margin-top: 80px;
+   margin-right: 75px;
+}
+
 .loginbox h2 {
-	font-family: "Jua", serif;
-	font-weight: 400;
-	font-style: normal;
-	margin: 10px;
-	color: #2f2b2b;
+   font-family: "Jua", serif;
+   font-weight: 400;
+   font-style: normal;
+   margin: 10px;
+   color: #2f2b2b;
 }
 
 .paging:hover {
-	background-color: #2e0f73;
-	color: white;
+   background-color: #2e0f73;
+   color: white;
 }
 
 select {
-	width: 100%;
-	padding: 8px 20px 5px 7px;
-	border: 2px solid #ccc;
-	outline: none;
-	font-size: 16px;
-	transition: 0.3s;
-	border-radius: 5px;
-	font-family: 'DungGeunMo';
+   width: 100%;
+   padding: 8px 20px 5px 7px;
+   border: 2px solid #ccc;
+   outline: none;
+   font-size: 16px;
+   transition: 0.3s;
+   border-radius: 5px;
+   font-family: 'DungGeunMo';
+   
 }
 
 input {
-	width: 100%;
-	padding: 10px 40px 10px 15px;
-	border: 2px solid #ccc;
-	outline: none;
-	font-size: 16px;
-	transition: 0.3s;
-	border-radius: 5px;
-	text-align: center;
-	font-family: 'DungGeunMo';
+   width: 100%;
+   padding: 10px 40px 10px 15px;
+   border: 2px solid #ccc;
+   outline: none;
+   font-size: 16px;
+   transition: 0.3s;
+   border-radius: 5px;
+
+   font-family: 'DungGeunMo';
+
 }
 
 input:focus {
-	border-color: gray;
-	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+   border-color: gray;
+   box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
 }
 
 .writebtn {
-	margin-top: 10px;
-	padding:20px;
-	margin-left:-17px;
+   margin-top: 10px;
+   padding:20px;
+   margin-left:-17px;
 }
 
 button {
-	padding: 10px 20px;
-	background-color: #3c3b39;
-	color: white;
-	border: none;
-	letter-spacing: 5px;
-	font-weight: bold;
-	position: relative;
-	transition: all 0.4s;
-	overflow: hidden;
-	border-radius: 5px;
-	font-family: 'DungGeunMo';
+   padding: 10px 20px;
+   background-color: #3c3b39;
+   color: white;
+   border: none;
+   letter-spacing: 5px;
+   font-weight: bold;
+   position: relative;
+   transition: all 0.4s;
+   overflow: hidden;
+   border-radius: 5px;
+   font-family: 'DungGeunMo';
 }
-
+#searchbar form {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; 
+    gap: 10px;
+}
 .writebtn {
-	margin-top: 15px;
+   margin-top: 15px;
 }
 
 .contents {
-	text-align: left;
-	padding-left: 30px;
+   text-align: left;
+   padding-left: 30px;
 }
 
 button:hover {
-	background: #66635f;
-	transform: scale(1.1);
-	color: white;
+   background: #66635f;
+   transform: scale(1.1);
+   color: white;
 }
 
 button:focus {
-	outline: none;
+   outline: none;
 }
 
 
 #name, #title, #number, #buttonbox {
-	height: 50px;
-	color: white;
+   height: 50px;
+   color: white;
 }
 
 #buttonbox {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	padding: 20px;
-	border: none;
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   padding: 20px;
+   border: none;
 }
 
 .notice {
-	background-color: 'red';
+   background-color: 'red';
 }
 </style>
 </head>
@@ -397,11 +403,9 @@ button:focus {
 
 					<tr id="searchbar">
 						<td colspan="5">
-							<form method="get" name="search" action="/board/search.do"
-								style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+							<form method="get" name="search" action="/board/search.do">
 								<select class="form-control" name="searchField"
 									style="width: 120px;">
-									<option value="0">선택</option>
 									<option value="schTitle">제목</option>
 									<option value="schWriter">작성자</option>
 								</select> <input type="text" class="form-control" placeholder="검색어 입력"
@@ -491,49 +495,40 @@ button:focus {
 		return pageNavi;
 	}
 
-	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
+	$('#number>td').append(makePageNavi('${pageUrl}'));
 	
 	 $(document).ready(function() {
-	        $('form[name="search"]').submit(function(event) {
-	            let searchField = $('select[name="searchField"]').val(); 
+         $(".writebtn").on("click", function(event) {
+             let isLoggedIn =  "${member.memberId}" !== ""; 
+             let isBanned   = "${member.isbanned}" == "true";
 
-	            if (searchField === "0") {
-	                alert("옵션을 선택해주세요!"); 
-	                event.preventDefault(); // 폼 제출 방지
-	             
-	            }
-	        });
-	    });
-	 $(document).ready(function() {
-		    $(".writebtn").on("click", function(event) {
-		        let isLoggedIn = "${member.memberId}" !== ""; 
-		        let isBanned   = "${member.isbanned}" == "true";
-
-		        if (!isLoggedIn) {
-		            alert("회원만 글쓰기가 가능합니다.");
-		            event.preventDefault(); // 페이지 이동 방지
-		            return false;
-		            
-		            
-		        } else if(isBanned) {
-		        	$.ajax({
-		        		url: '/service/member/ban/detail.do?id=' + ${member.memberId},
-		        		type: 'GET'
-		        	}).done(function(data) {
-		        		data = JSON.parse(data);
-		        		
-		        		parseDate(data.endDate);
-		        		
-		        		let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
-		        		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
-		        		alert(message);
-		        	});
-		   
-		            event.preventDefault();
-		            return false;
-		        }
-		    });
-		});
+             if (!isLoggedIn) {
+                 if(confirm("회원만 글쓰기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
+                    location.href="/";
+                 }
+                 event.preventDefault(); // 페이지 이동 방지
+                 return false;
+                 
+                 
+             } else if(isBanned) {
+                
+                $.ajax({
+                   url: '/service/member/ban/detail.do?id=${member.memberId}'
+                }).done(function(data) {
+                   data = JSON.parse(data);
+                   
+                   parseDate(data.endDate);
+                   
+                   let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+                   + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+                   alert(message);
+                });
+        
+                 event.preventDefault();
+                 return false;
+             }
+         });
+     });
 	 
 	 function parseDate(timestamp) {
 		 const date = new Date(timestamp);

@@ -26,4 +26,5 @@ public interface BoardDAO {
 	List<BoardDTO> selectTop5Boardlist()throws Exception;
 	
 	List<BoardDTO> selectTop5WeekendBoardList() throws Exception;
+	List<BoardDTO> selectRecentNotice() throws Exception;
 }

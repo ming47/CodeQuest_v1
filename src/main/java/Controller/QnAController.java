@@ -55,10 +55,10 @@ public class QnAController<QnADAO> extends HttpServlet {
 				
 				Map<String, Object> json = new HashMap<>();
 				
-				List<QnADTO> dtos = dao.selectByResponseYN(responseYN);
+				List<QnADTO> dtos = dao.selectByResponseYN(responseYN, page);
 				json.put("qnaList", dtos);
 				
-				json.put("pageNavi", new PageNavi(page, dtos.size(), 10, 10).generate());
+				json.put("pageNavi", new PageNavi(page, dao.selectByResponseYN(responseYN).size(), 10, 10).generate());
 				response.getWriter().append(g.toJson(json));
 			} else if (cmd.equals("/qna/list/search.do")) {
 				int page = Integer.parseInt(request.getParameter("page"));
@@ -68,14 +68,17 @@ public class QnAController<QnADAO> extends HttpServlet {
 				Map<String, Object> json = new HashMap<>();
 				
 				List<QnADTO> dtos = new ArrayList<>();
+				int size = 0;
 				if(conditions.equals("writer")) {
-					dtos = dao.selectByWriterLike(searchKey);
+					dtos = dao.selectByWriterLike(searchKey, page);
+					size = dao.selectByWriterLike(searchKey).size();
 				} else if(conditions.equals("contents")) {
-					dtos = dao.selectByContentLike(searchKey);
+					dtos = dao.selectByContentLike(searchKey, page);
+					size = dao.selectByContentLike(searchKey).size();
 				}
 				json.put("qnaList", dtos);
 				
-				json.put("pageNavi", new PageNavi(page, dtos.size(), 10, 10).generate());
+				json.put("pageNavi", new PageNavi(page, size, 10, 10).generate());
 				response.getWriter().append(g.toJson(json));
 			} else if (cmd.equals("/qna/delete.do")) {
 				int id = Integer.parseInt(request.getParameter("id"));
