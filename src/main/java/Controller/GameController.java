@@ -24,7 +24,7 @@ import DTO.PlaytimeDTO;
 @WebServlet("/game/*")
 public class GameController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private GameDAO daog= GameImpl.INSTANCE;
+	private GameDAO gdao = GameImpl.INSTANCE;
 	PlaytimeDAO pdao = PlaytimeDAOImpl.INSTANCE;
 	
 	Gson g = new Gson();
@@ -39,10 +39,17 @@ public class GameController extends HttpServlet {
 			System.out.println(ip);
 			
 			if(cmd.equals("/game/list.do")) {
+				int id = Integer.parseInt(request.getParameter("id"));
+				GameDTO game = gdao.selectById(id);
+				
+				List<GameDTO> games = gdao.selectAll();
+				request.setAttribute("list", games);
+				
+				request.setAttribute("game", game);
 				request.getRequestDispatcher("/WEB-INF/views/game/gamelist.jsp").forward(request, response);
 			}else if(cmd.equals("/game/call.do")) {
 				int id = Integer.parseInt(request.getParameter("gameId"));
-				GameDTO game = daog.selectById(id);
+				GameDTO game = gdao.selectById(id);
 				response.getWriter().append(g.toJson(game));
 				
                 if (game == null) {
@@ -50,13 +57,17 @@ public class GameController extends HttpServlet {
                     response.getWriter().write("{\"error\": \"Game not found\"}");
                     return;
                 }
-
                 // JSON 응답 설정
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(g.toJson(game));
-			} else {
-				request.getRequestDispatcher("/WEB-INF/views/support/test.html").forward(request, response);
+
+			} else if(cmd.equals("/game/play.do")) { // /game/play.do?id=800001
+				int gameId = Integer.parseInt(request.getParameter("id"));
+				
+				GameDTO game = gdao.selectById(gameId);
+				
+				response.sendRedirect(game.getGameGateway());
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

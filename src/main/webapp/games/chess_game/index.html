@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="index_sty.css" rel="stylesheet">
+    <title>AI Chess</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script> -->
+</head>
+
+<body>
+    <div class="header_wrap">
+        <div class="logo">
+            <a href="./chess.html"><i class="fa-solid fa-chess fa-lg"></i></a>
+        </div>
+        <div class="city">
+            <a href="/store">스토어</a>
+        </div>
+        <div class="user_menu">
+            <a href="/login">로그인</a>
+            <a href="/signup">회원가입</a>
+        </div>
+    </div>
+    <div class="header_menu">
+        <ul class="menu_list">
+            <li><a href="./chess.html">기초</a></li>
+            <li><a href="">퀴즈</a></li>
+            <li><a href="./index.html">플레이</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>Play Chess with AI</h1>
+        <div id="game-container">
+            <div>
+                <div id="chessboard"></div>
+                <button id="restart">Restart Game</button>
+            </div>
+            <div class="game-info">
+                <div id="turn-indicator">
+                    현재 턴: <span id="current-turn" class="turn-active">흰색</span>
+                </div>
+                <div id="stats-container">
+                    <div id="white-counter">White Wins: 0</div>
+                    <div id="black-counter">Black Wins: 0</div>
+                    <div class="stat-item">총 게임: <span id="total-games">0</span></div>
+                </div>
+                
+                <div id="notation-container">
+                    <div id="notation-header">기보</div>
+                    <div id="notation" class="notation-area">
+                        <!-- 기보가 여기에 표시됩니다 -->
+                    </div>
+                </div>
+                <div id="arrow-container">
+                    <button id="left-arrow" class="arrow-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="right-arrow" class="arrow-btn">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    
+                </div>
+                <div id="surrender-container">
+                    
+                    <img id="surrender-icon" src="pngwing.com.png" alt="항복" title="항복하기">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-icons">
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-solid fa-phone"></i>
+        </div>
+        <div class="footer-text">
+            CWY 2025-01-07
+        </div>
+    </div>
+    <script src="chess.js"></script>
+</body>
+
+</html>
