@@ -49,6 +49,7 @@ public class GameController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/game/gamelist.jsp").forward(request, response);
 			}else if(cmd.equals("/game/call.do")) {
 				int id = Integer.parseInt(request.getParameter("gameId"));
+				
 				GameDTO game = gdao.selectById(id);
 				response.getWriter().append(g.toJson(game));
 				

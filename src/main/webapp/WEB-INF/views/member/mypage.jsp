@@ -783,7 +783,7 @@
 			});
 			//이메일
 			$("#email").on("keyup", function () {
-				let regex = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[a-zA-Z]{3,4}$/;
+				let regex = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[a-zA-Z]{2,4}$/;
 				let vali = regex.exec($(this).val());
 
 				//정규식 검사

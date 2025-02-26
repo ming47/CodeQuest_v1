@@ -58,6 +58,7 @@ public class ScoreController extends HttpServlet {
 			String cmd = ConvertURL.of(request);
 			
 			if(cmd.equals("/score/add.do")) {
+				System.out.println(cmd);
 				int gameId = Integer.parseInt(request.getParameter("gameId"));
 				int score = Integer.parseInt(request.getParameter("score"));
 				
