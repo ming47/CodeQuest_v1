@@ -20,9 +20,10 @@
 			padding: 0;
 		}
 
-		html,body {
-		    margin: 0;
-    		padding: 0;
+		html,
+		body {
+			margin: 0;
+			padding: 0;
 			background: #f4f7f8;
 			overflow-y: auto;
 			width: 100%;
@@ -427,8 +428,9 @@
 			right: 10px;
 			bottom: -35px;
 		}
+
 		.popup {
-		    cursor: pointer;
+			cursor: pointer;
 		}
 	</style>
 </head>
@@ -498,10 +500,12 @@
 						<div class="input-group">
 							<label for="email">이메일</label> <input type="text" name="email" id="email"
 								value=${member.email } readonly>
+							<span id="result_email"></span>
 						</div>
 						<div class="input-group">
 							<label for="phone">전화번호</label> <input type="text" name="phone" id="phone"
 								value=${member.phone } readonly>
+							<span id="result_phone"></span>
 						</div>
 						<div class="input-group">
 							<label for="zipcode">우편번호</label> <input type="text" name="zipCode" id="zipCode"
@@ -614,7 +618,7 @@
 					<div class="recent-game-row">
 						<div class="game-title">
 							<div class="popup" value="${list.qnaId}" data="${list.responseYn}">
-							${list.contents}
+								${list.contents}
 							</div>
 						</div>
 						<div class="play-date">
@@ -622,11 +626,11 @@
 								<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd HH:mm" />
 							</span>
 						</div>
-						<div class="play-time">답변 
-						    <c:choose>
-						        <c:when test="${list.responseYn == 'Y'}">✔️</c:when>
-						        <c:otherwise>❌</c:otherwise>
-						    </c:choose>
+						<div class="play-time">답변
+							<c:choose>
+								<c:when test="${list.responseYn == 'Y'}">✔️</c:when>
+								<c:otherwise>❌</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</c:forEach>
@@ -635,7 +639,13 @@
 	</div>
 	<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	<script>
-		let originNickName = $("#nickName");
+		let originNickName = $("#nickName").val();
+		let originEmail = $("#email").val();
+		let originPhone = $("#phone").val();
+		let phone_val = true;
+		let email_val = true;
+		let nickName_val = true;
+
 		var now = new Date();
 		$('.relative-date').each(function () {
 			var timestamp = parseInt($(this).data('timestamp'), 10);
@@ -651,8 +661,8 @@
 				$(this).text(diffHours + "시간 전");
 			}
 		});
-		$(".popup").on("click", function() {
-			window.open("/service/qna/detail.do?qnaId=" + $(this).attr('value') + "&response="+ $(this).attr('data'), "", "width=1000, height=700");
+		$(".popup").on("click", function () {
+			window.open("/service/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=700");
 		});
 
 		$(".sidebar ul li").on("click", function () {
@@ -679,13 +689,11 @@
 			});
 			$(".buttons").append(updateOk, updateCancel);
 			$("#update_address").css("visibility", "visible");
-			
+
+			//닉네임
 			$("#nickName").on("keyup", function () {
-				console.log(originNickName+"오리진 닉네임");
-				if ($("#nickName") == "") {
-					$("#result_nickName").html("");
-					return;
-				} else if($("#nickName").val() == originNickName) {
+				// 원래 입력되어있던 값 제외
+				if ($("#nickName") == originNickName) {
 					$("#result_nickName").html("");
 					nickName_val = true;
 					return;
@@ -699,40 +707,132 @@
 					method: "GET",
 					dataType: "text"
 				}).done(function (resp) {
-					if (resp.trim() == "exist" && originNickName != $("#nickName").val()) {
+					if (resp.trim() == "exist") {
 						$("#result_nickName").css({
 							"color": "#BB3A48",
 							"font-size": "16px"
 						}).html("이미 사용중인 닉네임입니다.");
 						nickName_val = false;
 					} else {
-						$("#result_nickName").css({
-							"color": "green",
-							"font-size": "16px"
-						}).html("사용가능한 닉네임입니다.");
+						$("#result_nickName").html("");
 						nickName_val = true;
 					}
 				}).fail(function (xhr, status, error) {
 					console.error("AJAX 요청 실패:", error);
 				});
-			});			
+			});
+			//이메일
+			$("#email").on("keyup", function () {
+				let regex = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[a-zA-Z]{3,4}$/;
+				let vali = regex.exec($(this).val());
 
-		});
-		$("#update_address").on("click", function () {
-			new daum.Postcode({
-				oncomplete: function (data) {
-					$("#zipCode").val(data.zonecode);
-					$("#address").val(data.roadAddress);
-					$("#detailAddress").focus();
+				//정규식 검사
+				if (vali == null) {
+					$("#result_email").css({
+						"color": "#BB3A48",
+						"font-size": "16px"
+					}).html("사용 불가능한 이메일입니다.");
+					email_val = false;
+					return;
 				}
-			}).open();
-		});	
-	    $("#out_btn").on("click", function() {
-			window.open("/member/outForm.do", "", "width=550, height=300");
-		});	
-	    $("#out_btn_2").on("click", function() {
-			window.open("/member/outForm.do", "", "width=550, height=300");
-		});		
+
+				// 원래 입력되어있던 값 제외
+				if ($("#email") == originEmail) {
+					$("#result_email").html("");
+					email_val = true;
+					return;
+				}
+				$.ajax({
+					url: "/member/valueCheck.do",
+					data: {
+						field: "email",
+						value: $("#email").val()
+					},
+					method: "GET",
+					dataType: "text"
+				}).done(function (resp) {
+					if (resp.trim() == "exist") {
+						$("#result_email").css({
+							"color": "#BB3A48",
+							"font-size": "16px"
+						}).html("이미 사용중인 이메일입니다.");
+						email_val = false;
+					} else {
+						$("#result_email").html("");
+						email_val = true;
+					}
+				}).fail(function (xhr, status, error) {
+					console.error("AJAX 요청 실패:", error);
+				});
+			});
+			//전화번호
+			$("#phone").on("keyup", function () {
+				let regex = /^010[ -]?\d{4}[ -]?\d{4}$/;
+				let vali = regex.exec($(this).val());
+
+				//정규식 검사
+				if (vali == null) {
+					$("#result_phone").css({
+						"color": "#BB3A48",
+						"font-size": "16px"
+					}).html("사용 불가능한 전화번호입니다.");
+					phone_val = false;
+					return;
+				}
+				// 원래 입력되어있던 값 제외
+				if ($("#phone") == originPhone) {
+					$("#result_phone").html("");
+					phone_val = true;
+					return;
+				}
+				$.ajax({
+					url: "/member/valueCheck.do",
+					data: {
+						field: "phone",
+						value: $("#phone").val()
+					},
+					method: "GET",
+					dataType: "text"
+				}).done(function (resp) {
+					if (resp.trim() == "exist") {
+						$("#result_phone").css({
+							"color": "#BB3A48",
+							"font-size": "16px"
+						}).html("이미 사용중인 전화번호입니다.");
+						phone_val = false;
+					} else {
+						$("#result_phone").html("");
+						phone_val = true;
+					}
+				}).fail(function (xhr, status, error) {
+					console.error("AJAX 요청 실패:", error);
+				});
+			});
+			$("#update_address").on("click", function () {
+				new daum.Postcode({
+					oncomplete: function (data) {
+						$("#zipCode").val(data.zonecode);
+						$("#address").val(data.roadAddress);
+						$("#detailAddress").focus();
+					}
+				}).open();
+			});
+			$("#out_btn").on("click", function () {
+				window.open("/member/outForm.do", "", "width=550, height=300");
+			});
+			$("#out_btn_2").on("click", function () {
+				window.open("/member/outForm.do", "", "width=550, height=300");
+			});
+			$("#frm").on("submit", function (event) {
+				console.log("폰 : " + phone_val)
+				console.log("메일 : " + email_val)
+				console.log("닉네임 : " + nickName_val)
+				if (!(phone_val && email_val && nickName_val)) {
+					alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
+					return false;
+				}
+			});
+		});
 
 	</script>
 </body>
