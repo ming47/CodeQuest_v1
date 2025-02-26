@@ -56,7 +56,6 @@ public class MemberController extends HttpServlet {
 
 		try {
 			String cmd = ConvertURL.of(request);
-			System.out.println("멤버접근!"+cmd);
 			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 
@@ -134,8 +133,20 @@ public class MemberController extends HttpServlet {
 					response.getWriter().append("true");
 				}
 
-			} else if (cmd.equals("/shortvalid.do")) {
-
+			} else if(cmd.equals("/member/qna/detail.do")) { // 마이페이지에서 qna상세보기
+				System.out.println("상세보기 출력!");
+				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
+				String response_yn = request.getParameter("response");
+				
+				//질문내용
+				QnADTO qnaDto = qnaDao.selectById(qnaId);
+				request.setAttribute("qnaDto", qnaDto);
+				
+				if(response_yn.equals("Y")) {
+					QnAReplyDTO qnaReplyDto = qnaReplyDao.selectByQnAId(qnaId);
+					request.setAttribute("qnaReplyDto", qnaReplyDto);
+				}
+				request.getRequestDispatcher("/WEB-INF/views/member/qnaDetail.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,7 +162,6 @@ public class MemberController extends HttpServlet {
 
 		try {
 			String cmd = ConvertURL.of(request);
-			System.out.println("멤버접근!"+cmd);
 			if (cmd.equals("/member/add.do")) { //회원가입
 
 				String id = request.getParameter("id");
@@ -297,20 +307,15 @@ public class MemberController extends HttpServlet {
 					System.out.println("패스워드 변경 성공!");
 					response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
 				}
-			} else if(cmd.equals("/member/qna_detail.do")) { // 마이페이지에서 qna상세보기
-				System.out.println("상세보기 출력!");
-				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
-				String response_yn = request.getParameter("response");
+			} else if(cmd.equals("/member/qna/add.do")) {
+				String contents = request.getParameter("contents");
+				int memberId = Integer.parseInt(request.getParameter("memberId"));
 				
-				//질문내용
-				QnADTO qnaDto = qnaDao.selectById(qnaId);
-				request.setAttribute("qnaDto", qnaDto);
-				
-				if(response_yn.equals("Y")) {
-					QnAReplyDTO qnaReplyDto = qnaReplyDao.selectByQnAId(qnaId);
-					request.setAttribute("qnaReplyDto", qnaReplyDto);
+				int result = qnaDao.insert(new QnADTO(contents,memberId));
+				if(result > 0) {
+					System.out.println("QNA작성성공!");
 				}
-				request.getRequestDispatcher("/WEB-INF/views/member/qnaDetail.jsp").forward(request, response);
+				response.sendRedirect("/");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

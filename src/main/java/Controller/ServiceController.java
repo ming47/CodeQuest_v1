@@ -50,15 +50,14 @@ public class ServiceController extends HttpServlet {
 		
 		try {		
 			String cmd = ConvertURL.of(request);
-			
-			
+			 
 			if(cmd.equals("/service/qna/addForm.do")) {
 				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
 				if (dto == null) {
 					response.sendRedirect("/");
 					return;
 				}
-				request.getRequestDispatcher("/WEB-INF/views/support/servicewrite.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/views/support/qnaWrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
 			} else if(cmd.equals("/service/admin/playtime/search/days.do")) {
@@ -237,16 +236,6 @@ public class ServiceController extends HttpServlet {
 					}
 					System.out.println(memberId + " " + reason + " " + period);
 				}
-				
-			} else if(cmd.equals("/service/member/qna/add.do")) {
-				String contents = request.getParameter("contents");
-				int memberId = Integer.parseInt(request.getParameter("memberId"));
-				
-				int result = qnaDao.insert(new QnADTO(contents,memberId));
-				if(result > 0) {
-					System.out.println("QNA작성성공!");
-				}
-				response.sendRedirect("/");
 				
 			}
 		} catch(Exception e) {
