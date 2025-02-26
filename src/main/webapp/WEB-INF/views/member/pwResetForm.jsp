@@ -9,8 +9,15 @@
 <meta charset="UTF-8">
 <title>비밀번호 재설정</title>
 <style>
+@font-face {
+	font-family: 'DungGeunMo';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 body {
-	font-family: 'Jua', sans-serif;
 	background: #f8f9fa;
 	margin: 0;
 	padding: 0;
@@ -20,6 +27,7 @@ body {
 	height: 100vh;
 	background: url('/images/pop.jpg') no-repeat center;
 	background-size: cover;
+	font-family: 'DungGeunMo';
 }
 
 .pw-container {
@@ -51,6 +59,7 @@ body {
 	border: 1px solid #ddd;
 	border-radius: 6px;
 	outline: none;
+	font-family: 'DungGeunMo';
 }
 
 .pw-container input[type="text"]:focus {
@@ -62,13 +71,13 @@ body {
 	width: 80%;
 	background: #b4c28a;
 	color: #ffffff;
-	font-size: 16px;
+	font-size: 17px;
 	border: none;
 	padding: 12px;
 	border-radius: 6px;
 	cursor: pointer;
 	transition: background 0.3s;
-	font-weight:bold;
+	font-family: 'DungGeunMo';
 }
 
 .pw-container button:hover {

@@ -29,6 +29,9 @@
 			width: 100%;
 			height: 100vh;
 		}
+		body{
+		  background: url('/images/밤.gif') no-repeat center;
+   background-size: cover;}
 
 		.header,
 		.footer {
@@ -110,6 +113,8 @@
 			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 			padding: 20px;
 			display: flex;
+			
+			
 			/*  margin-left: 350px; */
 		}
 

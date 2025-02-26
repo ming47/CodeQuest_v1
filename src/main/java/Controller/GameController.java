@@ -47,21 +47,6 @@ public class GameController extends HttpServlet {
 				
 				request.setAttribute("game", game);
 				request.getRequestDispatcher("/WEB-INF/views/game/gamelist.jsp").forward(request, response);
-			}else if(cmd.equals("/game/call.do")) {
-				int id = Integer.parseInt(request.getParameter("gameId"));
-				
-				GameDTO game = gdao.selectById(id);
-				response.getWriter().append(g.toJson(game));
-				
-                if (game == null) {
-                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    response.getWriter().write("{\"error\": \"Game not found\"}");
-                    return;
-                }
-                // JSON 응답 설정
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(g.toJson(game));
 
 			} else if(cmd.equals("/game/play.do")) { // /game/play.do?id=800001
 				int gameId = Integer.parseInt(request.getParameter("id"));
