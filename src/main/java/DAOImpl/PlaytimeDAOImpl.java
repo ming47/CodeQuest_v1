@@ -44,7 +44,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 	@Override
 	public int insert(PlaytimeDTO dto) throws Exception {
-		String sql = "INSERT INTO PLAY_TIME(PLAY_TIME_ID, MEMBER_ID, GAME_ID, PLAY_TIME) VALUES(PLAY_TIME_ID_SEQ.NEXTVAL, ?, ?, ?)";
+		String sql = "INSERT INTO PLAY_TIME(PLAYTIME_ID, MEMBER_ID, GAME_ID, PLAY_TIME) VALUES(PLAYTIME_ID_SEQ.NEXTVAL, ?, ?, ?)";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {

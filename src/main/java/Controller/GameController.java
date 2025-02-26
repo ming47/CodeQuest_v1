@@ -13,14 +13,20 @@ import com.google.gson.Gson;
 
 import Common.ConvertURL;
 import DAO.GameDAO;
+import DAO.PlaytimeDAO;
 import DAOImpl.GameImpl;
+import DAOImpl.PlaytimeDAOImpl;
 import DTO.GameDTO;
+import DTO.MemberDTO;
+import DTO.PlaytimeDTO;
 
 
 @WebServlet("/game/*")
 public class GameController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private GameDAO daog= GameImpl.INSTANCE;
+	PlaytimeDAO pdao = PlaytimeDAOImpl.INSTANCE;
+	
 	Gson g = new Gson();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,6 +55,8 @@ public class GameController extends HttpServlet {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(g.toJson(game));
+			} else {
+				request.getRequestDispatcher("/WEB-INF/views/support/test.html").forward(request, response);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -56,7 +64,25 @@ public class GameController extends HttpServlet {
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 
+		try {		
+			String cmd = ConvertURL.of(request);
+			
+			if (cmd.equals("/game/playtime/add.do")) {
+				System.out.println(cmd);
+				
+				int gameId = Integer.parseInt(request.getParameter("gameId"));
+				int playtime = Integer.parseInt(request.getParameter("playtime"));
+				
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				
+				pdao.insert(new PlaytimeDTO(gameId, member.getMemberId(), playtime));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -646,19 +646,10 @@
                                     <div class="page-navi-inner" id="user-page-navi"></div>
                                 </div>
                                 <div class="qna-list-controller">
-                                    <div class="inner">
-                                        <div>
-                                            <button class="check-ban" value="true">Y</button>
-                                            <button class="check-ban" value="false">N</button>
-                                            <button class="check-ban" value="whole">전체</button>
-                                        </div>
-                                        <div>
-                                            <select id="user-search-conditions-select">
-                                                <option value="whole">전체</option>
-                                                <option value="writer">작성자</option>
-                                                <option value="title">제목</option>
-                                            </select>
-                                        </div>
+                                    <div class="inner center-align">
+                                        <button class="check-ban" value="true">Y</button>
+                                        <button class="check-ban" value="false">N</button>
+                                        <button class="check-ban" value="whole">전체</button>
                                     </div>
                                 </div>
                             </div>
@@ -687,7 +678,14 @@
                                 <div class="resent-board center-align">
                                     <div class="inner-fat">
                                         <div class="resent-title title-form">최근 게시글</div>
-                                        <table border="1" id="resent-board-table"></table>
+                                        <table border="1" id="resent-board-table">
+                                        	<tr>
+                                        		<th width="10%">번호</th>
+                                        		<th width="60%">내용</th>
+                                        		<th width="20%">날짜</th>
+                                        		<th width="10%">조회수</th>
+                                        	</tr>
+                                        </table>
                                         <div class="page-navi-form">
                                             <div class="page-navi-inner"></div>
                                         </div>
@@ -711,7 +709,7 @@
                                 <div class="ban-controller center-align">
                                     <div class="inner-fat">
                                         <div class="ban-detail-setting">
-                                            <div class="ban-reason-controller">
+                                            <div class="ban-reason-controller center-align">
                                                 <select class="ban-select" id="reason-select">
                                                 	<option>광고</option>
                                                 	<option>분탕</option>
@@ -722,7 +720,7 @@
                                                 </select>
                                                 <input type="text" placeholder="차단 사유" id="reason" disabled>
                                             </div>
-                                            <div class="ban-end-date-controller">
+                                            <div class="ban-end-date-controller center-align">
                                                 <select class="ban-select" id="end-date-select" disabled>
                                                 	<option value="720">30일</option>
                                                 	<option value="72">3일</option>
@@ -734,7 +732,7 @@
                                                 <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)" id="end-date" disabled>
                                             </div>
                                         </div>
-                                        <div class="ban-button"></div>
+                                        <div class="ban-button center-align"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1552,7 +1550,7 @@ function gameDetailCahrtSet(dataset) {
 </script>
 <script tag="qna">
     $('.check-response-yn').on('click', function () {
-        const url = ($(this).val() == 'whole') ? "/qna/list.do?page=1" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=";
+        const url = ($(this).val() == 'whole') ? "/qna/list.do?page=" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=";
 
         console.log(url);
         $.ajax({
@@ -1729,7 +1727,9 @@ function gameDetailCahrtSet(dataset) {
         div.append($('<div>').html(item.writer + "의 답변입니다.").addClass('qna-reply-writer'));
         div.append($('<div>').html("답변 시간: " + item.regDate).addClass('qna-reply-regDate'));
         div.append($('<div>').html(item.context).addClass('qna-reply-context'));
-        div.css('margin-top', '30px');
+        div.css({'margin-top': '60px',
+        		'border-top': '1px solid black',
+        		'padding-top': '10px'});
 
         $('#qna-contents-contents').append(div);
     }

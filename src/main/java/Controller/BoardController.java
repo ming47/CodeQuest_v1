@@ -84,7 +84,7 @@ public class BoardController extends HttpServlet {
 					cpage = pageTotalCount;
 				}
 
-				List<BoardDTO> noticeList = dao.selectAllNotice();
+				List<BoardDTO> noticeList = dao.selectRecentNotice();
 				request.setAttribute("noticeList", noticeList);
 
 				List<BoardDTO> list = dao.selectAll(cpage);
