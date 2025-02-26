@@ -150,7 +150,10 @@ public class ServiceController extends HttpServlet {
 				}
 				
 				double rate = 0;
-				if (startData != 0) {					
+				if (startData != 0 || (startData == 0 && endData > 0)) {
+					if(startData == 0) {
+						startData = 1;
+					}
 					rate = Math.round(((endData - startData) / startData) * 100 * 100) / 100.0;
 				}
 
