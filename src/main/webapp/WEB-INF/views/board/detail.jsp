@@ -365,7 +365,7 @@ td#contents {
 </style>
 </head>
 <body>
-<div class="header">
+	<div class="header">
       <div class="navi">
          <div class="logo">Team CodeQuest</div>
          <ul class="menu">
@@ -395,7 +395,6 @@ td#contents {
       <div class="top">
          <h1>게시글 상세 보기</h1>
       </div>
-
       <table>
          <tr>
             <th>글 번호</th>
@@ -409,7 +408,6 @@ td#contents {
             <th>작성 날짜</th>
             <td>${dto.regDate}</td>
          </tr>
-
          <tr>
             <th>첨부된 파일:</th>
             <td><c:forEach var="i" items="${filelist}">
@@ -419,9 +417,7 @@ td#contents {
                   <br>
                </c:forEach></td>
          </tr>
-
          <tr>
-
             <th>제목</th>
             <td class="change" id="board_title">${dto.title}</td>
          </tr>
@@ -430,23 +426,12 @@ td#contents {
             <!-- 내용 부분에 높이를 4배로 설정 -->
             <td class="change" id="board_contents" height="500px">${dto.contents}</td>
          </tr>
-
       </table>
-
-
-
-
-
+      
       <div class="commentSection">
-
-         <form action="/reply/add.do" method="post" id="frm">
             <!-- 댓글 목록 -->
             <div id="commentInputContainer">
-               <input name="parent_seq" type="hidden" value="${dto.boardId}">
-               <input type="hidden" id="memberId" name="memberId"
-                  value="${sessionScope.MemberId}"> <input id="commentInput"
-                  name="contents" placeholder="댓글을 입력하세요">
-                  <div id="a" contenteditable="true" style="display: none; width: 50px; height: 100px;"></div>
+              	<input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
                <div class="emoticons" style="display: none;">
                   <div class="emoticon">
                      <span class="emoji-btn">😀</span>
@@ -457,14 +442,11 @@ td#contents {
                        <span class="emoji-btn">👍</span>
                   </div>
                </div>
-         
-               
             </div>
                   <div class = "buttonContainer">
                   <button id="emojiBtn" type = "button">😀</button>
                   <button id="inputbtn" type="button">등록</button>
                </div>
-         </form>
          <div id="comments">
             <ul id="commentList"></ul>
             <!-- AJAX로 댓글이 추가될 부분 -->
@@ -472,21 +454,17 @@ td#contents {
       </div>
       <form action="/board/update.do" method="post" id="update-form">
          <input id="id" type="hidden" name="id" value="${dto.boardId}">
-         <input name="title" type="hidden" id="hdtitle"> <input
-            name="contents" type="hidden" id="hdcontents">
+         <input name="title" type="hidden" id="hdtitle"> 
+         <input name="contents" type="hidden" id="hdcontents">
          <div class="bottom">
-         
             <button type="button" id="back">목록으로</button>
-
             <!-- 여기 게시글 수정 삭제 버튼  -->
-
             <c:if test="${dto.getMemberId() == member.getMemberId() || member.role == 'admin'}">
-            
                <td class="reply_button_area-${item.id}">
                   <button id="update" type="button">수정하기</button>
                   <button id="delete" type="button">삭제하기</button> 
-                  </td>
-                  </c:if>
+               </td>
+             </c:if>
          </div>
       </form>
    </div>
@@ -615,7 +593,56 @@ td#contents {
           })
     }
    
-   function validInput($inputBtn) {
+   function commentInput($commentInput, $inputBtn) {	//키보드 이벤트
+	   let commentText = $("#commentInput").val().trim();
+       if (commentText == "") {
+          alert("댓글을 입력하세요")
+          return;
+      } else {
+         let isLoggedIn = "${member.memberId}" !== ""; 
+          let isBanned   = "${member.isbanned}" == "true";
+
+          if (!isLoggedIn) {
+              alert("회원만 글쓰기가 가능합니다.");
+              event.preventDefault(); // 페이지 이동 방지
+              return false;
+          } else if(isBanned) {
+                $.ajax({
+                   url: '/service/member/ban/detail.do?id=${member.memberId}',
+                   type: 'GET'
+                }).done(function(data) {
+                   data = JSON.parse(data);
+                
+                   let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+                      + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+                   alert(message);
+                });
+     
+              event.preventDefault();
+              return false;
+          }
+
+           $.ajax({
+              url: '/reply/add.do',
+              type: 'POST',
+              data: {
+                    boardId: ${dto.boardId},
+                    contents: $commentInput.val(),
+              } 
+          }).done(function(data) {
+              alert('댓글이 등록되었습니다.');
+              makeCommentItem();
+              $commentInput.val("");
+          });  
+      }
+       
+       let updatecontents = $("<div>").addClass("comment-box");
+        $("#comments").append(updatecontents);
+        
+        validInput($inputBtn);
+   }
+   
+   function validInput($inputBtn) {	//등록 버튼 이벤트
       if ($("#commentInput").val().trim() === "") {
            $inputBtn.prop("disabled", true);
             $inputBtn.css({
@@ -641,6 +668,13 @@ td#contents {
              "background-color": "#ffd1dc",
           "cursor": "not-allowed"
        });
+       
+       $commentInput.on('keyup', function(event) {
+    	   if(event.key == "Enter") {    		   
+	    	  commentInput($commentInput, $inputBtn);
+    	   }
+    	   validInput($inputBtn);
+       });
 
          // 입력창 이벤트 리스너
        $commentInput.on("input", function() {
@@ -648,52 +682,7 @@ td#contents {
        });
 
       $inputBtn.on("click",function() {
-            let commentText = $("#commentInput").val().trim();
-            if (commentText == "") {
-               alert("댓글을 입력하세요")
-               return;
-           } else {
-              let isLoggedIn = "${member.memberId}" !== ""; 
-               let isBanned   = "${member.isbanned}" == "true";
-   
-               if (!isLoggedIn) {
-                   alert("회원만 글쓰기가 가능합니다.");
-                   event.preventDefault(); // 페이지 이동 방지
-                   return false;
-               } else if(isBanned) {
-                     $.ajax({
-                        url: '/service/member/ban/detail.do?id=${member.memberId}',
-                        type: 'GET'
-                     }).done(function(data) {
-                        data = JSON.parse(data);
-                     
-                        let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
-                           + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
-                        alert(message);
-                     });
-          
-                   event.preventDefault();
-                   return false;
-               }
-   
-                $.ajax({
-                     url: '/reply/add.do',
-                   type: 'POST',
-                   data: {
-                         boardId: ${dto.boardId},
-                         contents: $commentInput.val(),
-                   } 
-               }).done(function(data) {
-                   alert('댓글이 등록되었습니다.');
-                   makeCommentItem();
-                   $commentInput.val("");
-               });  
-           }
-            
-            let updatecontents = $("<div>").addClass("comment-box");
-             $("#comments").append(updatecontents);
-             
-             validInput($inputBtn);
+    	  commentInput($commentInput, $inputBtn);
        });
       
        makeCommentItem();
@@ -829,18 +818,15 @@ td#contents {
              };
           }
 
-
           function uploadImage(file, editor) {
              let formData = new FormData();
              formData.append('file', file);
              formData.append('request', 'board');
-
              $.ajax({
-
                 url : '/file/image/upload.do',
                 data : formData,
                 type : 'POST',
-                //dataType:"multipart/form-data", 
+                //dataType:"multipart/form-data"ee, 
                 contentType : false,
                 processData : false,
                 error : function(request, status, error) {
