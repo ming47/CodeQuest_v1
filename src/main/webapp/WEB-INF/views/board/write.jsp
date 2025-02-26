@@ -148,7 +148,7 @@ h1 {
 .body>div {
 	margin-top: 100px;
 }
-''
+
 .logbox-container {
 	right: 10px;
 	top: 100px;
