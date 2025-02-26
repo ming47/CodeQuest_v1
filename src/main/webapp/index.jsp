@@ -276,7 +276,6 @@
 	white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
 }
 
-/* 활성화된 버튼 스타일 */
 .tab-btn.active {
 	background: #5e5d5a;
 	color: white;
@@ -290,7 +289,7 @@
 	color: #2f2b2b;
 }
 
-/* ✅ 각 게임별 랭킹 리스트 숨김 */
+
 .hidden {
 	display: none;
 }
@@ -317,7 +316,7 @@
 	font-size: 17px;
 }
 
-/* ✅ 게임 리스트 */
+
 .gameList {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -462,12 +461,13 @@ table tr {
 	<div class="container" style="display: none">
 
 
+		<!-- ✅ 헤더 -->
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
 					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Game</a></li>
+					<li><a href="/game/list.do?id=800001">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
 					<c:choose>
 						<c:when test="${member.role == 'admin'}">
@@ -491,46 +491,46 @@ table tr {
 		<div class="main-content">
 
 
-
 			<div class="body">
 				<div class="gameList">
 					<div class="game">
 						<img src="/images/skipstone.png">
 						<h3>Skipping Stone</h3>
 						<p>Action</p>
-						<a href="/games/SkippingStone/main.html"><button>Play</button></a>
+						<a href="/game/list.do?id=800001"><button>Play</button></a>
 					</div>
 					<div class="game">
 						<img src="/images/2048.png">
 						<h3>2048</h3>
 						<p>Puzzle</p>
-						<button>Play</button>
+						<a href="/game/list.do?id=800002"><button>Play</button></a>
 					</div>
 					<div class="game">
 						<img src="/images/warplane.png">
 						<h3>World Of WarPlane</h3>
 						<p>Action</p>
-						<button>Play</button>
+						<a href="/game/list.do?id=800003"><button>Play</button></a>
 					</div>
 					<div class="game">
 						<img src="/images/metro.png">
 						<h3>Mini Metro</h3>
 						<p>Strategy</p>
-						<button>Play</button>
+						<a href="/game/list.do?id=800004"><button>Play</button></a>
 					</div>
 					<div class="game">
 						<img src="/images/tetris.png">
 						<h3>Tetris</h3>
 						<p>Puzzle</p>
-						<button>Play</button>
+						<a href="/game/list.do?id=800005"><button>Play</button></a>
 					</div>
 					<div class="game">
 						<img src="/images/chess.jpg">
 						<h3>Chess</h3>
 						<p>Stretegy</p>
-						<button>Play</button>
+						<a href="/game/list.do?id=800006"><button>Play</button></a>
 					</div>
 				</div>
+
 
 				<div class="boardlist">
 					<h3>📢 최근 게시물</h3>
@@ -674,7 +674,7 @@ table tr {
 													console.log(calld);
 													let latestBoard = $('#latestboard');
 
-													// 기존 데이터 지우기
+												
 													latestBoard.empty();
 
 													if (!calld
@@ -684,7 +684,7 @@ table tr {
 														return;
 													}
 
-													// 게시글 데이터 추가
+												
 													for (let i = 0; i < calld.length; i++) {
 														const tr = $('<tr>');
 
@@ -749,7 +749,7 @@ table tr {
 												console.log(calld);
 												let latestBoard = $('#hot-weekend-board');
 
-												// 기존 데이터 지우기
+											
 												latestBoard.empty();
 
 												if (!calld
@@ -759,7 +759,7 @@ table tr {
 													return;
 												}
 
-												// 게시글 데이터 추가
+												
 												for (let i = 0; i < calld.length; i++) {
 													const tr = $('<tr>');
 
@@ -852,18 +852,17 @@ table tr {
 												});
 							}
 
-							// ✅ 초기에 첫 번째 게임 랭킹 불러오기
-							let defaultGameId = "800001"; // ✅ 초기값 설정
+							let defaultGameId = "800001"; 
 							loadRanking(defaultGameId);
 
-							// ✅ 랭킹 탭 클릭 시 해당 게임 랭킹 로드
+						
 							$(".tab-btn").click(function() {
 								$(".tab-btn").removeClass("active");
 								$(this).addClass("active");
 
 								let gameId = $(this).data("game");
 
-								// ✅ "game1" → "1"로 변환
+							
 								if (gameId.startsWith("game")) {
 									gameId = gameId.replace("game", "");
 									gameId = Number(80000 + gameId);

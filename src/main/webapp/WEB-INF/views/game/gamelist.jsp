@@ -233,23 +233,22 @@
 				<div class="sidebar">
 					<h2>Game List</h2>
 					<ul>
-						<li value="800001">Game 1</li>
-						<li value="800002">Game 2</li>
-						<li value="800003">Game 3</li>
-						<li value="800004">Game 4</li>
-						<li value="800005">Game 5</li>
-						<li value="800006">Game 6</li>
+					<c:forEach var="dto" items="${list}">
+						<a href="/game/list.do?id=${dto.gameId}">
+							<li>${dto.gameName}</li>
+						</a>
+					</c:forEach>
 					</ul>
 				</div>
 			</div>
 			<div class="gamedetail">
 				<div class="gameheader">
-					<img id="game-thumbnail" src="/images/default.png">
+					<img id="game-thumbnail" src="${game.gameThumb}">
 					<div class="gamepractice">
-						<div class="practicehead">게임 소개</div>
-						<div class="practicebody">게임 설명이 여기에 표시됩니다.</div>
+						<div class="practicehead">${game.gameIntro}</div>
+						<div class="practicebody">${game.gameDescript}</div>
 						<div class="practicebutton">
-							<button>Game Start</button>
+							<a href="/game/play.do?id=${game.gameId}"><button>Game Start</button></a>
 						</div>
 					</div>
 				</div>

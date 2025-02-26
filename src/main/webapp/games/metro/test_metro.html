@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link href="stylesheet.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container border">
+        <div class="game-display border">
+            <div class="main-page border"></div>
+            <div class="log-display"></div>
+        </div>
+        <div class="game-controller">
+            <div class="game-controller-inner">
+                <div class="score-form">
+                    <div class="border">
+                        <div class="score-title title">
+                            score
+                        </div>
+                        <div class="score display">
+                            0
+                        </div>
+                    </div>
+                </div>
+                <div class="leftTime-form">
+                    <div class="border">
+                        <div class="leftTime-title title">
+                            남은 시간
+                        </div>
+                        <div class="leftTime display">
+                            0:30
+                        </div>
+                    </div>
+                </div>
+                <div class="train-form">
+                    <div>
+                        <div class="train-state-form" id="red-state-form">
+                            <div class="train-state border">
+                                <div class="line-color" style="background-color: red;"></div>
+                                <div class="passenger-count-form">
+                                    <div class="passenger-title title">
+                                        승객 현황
+                                    </div>
+                                    <div class="passenger-count">
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="circle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="red-circle">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="top-left-radius train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="red-top-left-radius">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="rectangle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="red-rectangle">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="train-set-button-form">
+                                    <button class="train-set" id="red-set" style="background-color: red;"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="train-state-form disabled" id="blue-state-form">
+                            <div class="train-state border">
+                                <div class="line-color" style="background-color: blue;"></div>
+                                <div class="passenger-count-form">
+                                    <div class="passenger-title title">
+                                        승객 현황
+                                    </div>
+                                    <div class="passenger-count">
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="circle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="blue-circle">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="top-left-radius train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="blue-top-left-radius">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="rectangle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="blue-rectangle">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="train-set-button-form">
+                                    <button class="train-set" id="blue-set" style="background-color: blue;"
+                                        disabled></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="train-state-form disabled" id="green-state-form">
+                            <div class="train-state border">
+                                <div class="line-color" style="background-color: green;"></div>
+                                <div class="passenger-count-form">
+                                    <div class="passenger-title title">
+                                        승객 현황
+                                    </div>
+                                    <div class="passenger-count">
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="circle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="green-circle">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="top-left-radius train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="green-top-left-radius">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="rectangle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="green-rectangle">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="train-set-button-form">
+                                    <button class="train-set" id="green-set" style="background-color: green;"
+                                        disabled></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="train-state-form disabled" id="purple-state-form">
+                            <div class="train-state border">
+                                <div class="line-color" style="background-color: purple;"></div>
+                                <div class="passenger-count-form">
+                                    <div class="passenger-title title">
+                                        승객 현황
+                                    </div>
+                                    <div class="passenger-count">
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="circle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="purple-circle">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="top-left-radius train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="purple-top-left-radius">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="passenger-count-inner">
+                                            <div>
+                                                <div class="passenger-type">
+                                                    <div class="rectangle train-type-display-from"></div>
+                                                </div>
+                                                <div class="count" id="purple-rectangle">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="train-set-button-form">
+                                    <button class="train-set" id="purple-set" style="background-color: purple;"
+                                        disabled></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-form">
+                    <div class="border">
+                        <button class="controll-button" id="pause">일시 정지</button>
+                        <button class="controll-button" id="reload" onclick="location.href = location.href">
+                            재시작
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function Node(item) {
+        this.item = item;
+        this.next = null;
+        this.prev = null;
+
+        this.isAlone = function () {
+            return this.prev === null && this.next === null;
+        }
+
+        this.setNext = function (item) {
+            this.next = item;
+        }
+
+        this.setPrev = function (item) {
+            this.prev = item;
+        }
+    }
+
+    function LinkedList() {
+        this.array = [];
+        this.head = null;
+        this.tail = null;
+        this.current = null;
+
+        this.hasPrev = function () {
+            return this.head !== this.current;
+        }
+
+        this.prev = function () {
+            this.current = this.current.prev;
+
+            return this.current.item;
+        }
+
+        this.hasNext = function () {
+            return this.current !== this.tail;
+        }
+
+        this.next = function () {
+            const item = this.current.item;
+            this.current = this.current.next;
+
+            return item;
+        }
+
+        let moveForword = true;
+        this.cycle = function () {
+            let item = this.current.item;
+
+            if (moveForword) {
+                this.next();
+
+                if (!this.hasNext()) {
+                    moveForword = false;
+                    this.current = this.tail;
+                }
+            } else {
+                this.prev();
+
+                if (!this.hasPrev()) {
+                    moveForword = true;
+                    this.current = this.head;
+                }
+            }
+
+            return item;
+        }
+
+        this.size = function () {
+            return this.array.length;
+        }
+
+        this.push = function (item) {
+            const node = new Node(item);
+
+            if (this.current == null) {
+                this.current = node;
+                this.head = this.current;
+                this.tail = this.current;
+            } else {
+                node.setPrev(this.tail);
+                this.tail.setNext(node);
+
+                this.tail = node;
+            }
+
+            this.array.push(node);
+        }
+
+        this.unshift = function (item) {
+            const node = new Node(item);
+
+            if (this.current === null) {
+                this.current = node;
+                this.head = this.current;
+                this.tail = this.current;
+            } else {
+                node.setNext(this.head);
+                this.head.setPrev(node);
+
+                this.head = node;
+            }
+
+            this.array.unshift(node);
+        }
+
+        this.init = function () {
+            this.current = this.array[0];
+            moveForword = true;
+        }
+    }
+</script>
+<script>
+    function CustomType() {
+        this.array = ['circle', 'top-left-radius', 'rectangle'];
+
+        this.genereateRandomType = function () {
+            return this.array[Math.floor(Math.random() * this.array.length)];
+        }
+    }
+
+    const customType = new CustomType();
+
+    function Passenger(type) {
+        this.type = type;
+        this.count = 0;
+
+        this.ride = function () {
+            this.count += 1;
+        }
+
+        this.leave = function () {
+            this.count -= 1;
+        }
+
+        this.isEmpty = function () {
+            this.count == 0;
+        }
+
+        this.isEquals = function (target) {
+            return this.type == target.type;
+        }
+    }
+
+    function Position(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    function Station(div, name, position, type, passsengers) {
+        this.div = div;
+        this.name = name;
+        this.position = position;
+        this.type = type;
+        this.passengers = passsengers;
+        this.line = null;
+        this.inputPassengersTime = 0;
+        this.inputPassengersCount = Math.floor(Math.random() * 5) + 2;
+        this.isClicked = false;
+        this.isLinked = false;
+        this.isStartPoint = false;
+        this.totalPassengerCount = 0;
+
+        this.setType = function (type) {
+            this.type = type;
+        }
+
+        this.setLine = function (line) {
+            this.line = line;
+        }
+
+        this.setInputPassengersTime = function () {
+            return Math.floor(Math.random() * 20) + 16;
+        }
+
+        this.setInputPassengersCount = function () {
+            return Math.floor(Math.random() * 5) + 2;
+        }
+
+        this.countdown = function () {
+            if (this.inputPassengersTime == 0) {
+                for (let i = 0; i < this.inputPassengersCount; i++) {
+                    const passenger = new Passenger(customType.genereateRandomType());
+
+                    if (passenger.type == this.type) {
+                        continue;
+                    }
+
+                    for (let i = 0; i < this.passengers.length; i++) {
+                        const currentPassenger = this.passengers[i];
+
+                        if (currentPassenger.type == passenger.type) {
+                            currentPassenger.ride();
+                            this.totalPassengerCount += 1;
+                            break;
+                        }
+                    }
+                }
+
+                this.inputPassengersTime = this.setInputPassengersTime();
+                this.inputPassengersCount = this.setInputPassengersCount();
+
+                for (let i = 0; i < this.passengers.length; i++) {
+                    let temp = this.passengers[i];
+                    $(`#${this.name}-${temp.type}`).html(temp.count);
+                }
+            } else {
+                this.inputPassengersTime -= 1;
+            }
+
+        }
+    }
+
+    function Train(div, line, passengers) {
+        this.div = div;
+        this.line = line;
+        this.stations = new LinkedList();
+        this.passengers = passengers;
+        this.isClicked = false;
+        this.isLinked = false;
+        this.isWaiting = false;
+        this.isGetOn = false;
+        this.currentStation = null;
+        this.nextStation = null;
+        this.totalPassengerCount = 0;
+        this.currentPassengerIndex = 0;
+        this.currentScore = 0;
+
+        this.getOn = function (station) {
+            const stationPassengers = station.passengers;
+
+            let trainPassenger = this.passengers[this.currentPassengerIndex];
+            let stationPassenger = stationPassengers[this.currentPassengerIndex];
+
+            if (this.totalPassengerCount == maxTrainPassengerCount) {
+                this.isWaiting = false;
+                this.isGetOn = false;
+            } else {
+                while (stationPassenger.count == 0) {
+                    this.currentPassengerIndex += 1;
+                    trainPassenger = this.passengers[this.currentPassengerIndex];
+                    stationPassenger = stationPassengers[this.currentPassengerIndex];
+
+                    if (this.currentPassengerIndex == this.passengers.length) {
+                        break;
+                    }
+                }
+
+                if (this.currentPassengerIndex >= this.passengers.length) {
+                    this.isWaiting = false;
+                    this.isGetOn = false;
+                    this.currentPassengerIndex = 0;
+
+                    return;
+                }
+
+                stationPassenger.count -= 1;
+                trainPassenger.count += 1;
+                this.totalPassengerCount += 1;
+                $(`#${station.name}-${stationPassenger.type}`).html(stationPassenger.count);
+                $(`#${this.line}-${trainPassenger.type}`).html(trainPassenger.count);
+            }
+        }
+
+        this.getOff = function (station) {
+            this.isWaiting = true;
+            const stationType = station.type;
+
+            let leavePassenger;
+            for (let i = 0; i < this.passengers.length; i++) {
+                if (this.passengers[i].type == stationType) {
+                    leavePassenger = this.passengers[i];
+                    break;
+                }
+            }
+
+            if (leavePassenger.count == 0) {
+                this.isGetOn = true;
+                displayLogMessage(`${this.line}에서 ${this.currentScore}점을 획득!`);
+                return;
+            }
+
+            leavePassenger.count -= 1;
+            this.totalPassengerCount -= 1;
+            this.currentScore += 10;
+            score += 10;
+
+            $(`#${this.line}-${leavePassenger.type}`).html(leavePassenger.count);
+            $(`.score`).html(score);
+        }
+    }
+
+    function Line() {
+        this.lineColor = ['red', 'blue', 'green', 'purple'];
+        this.trains = [];
+        this.currentIndex = 0;
+
+        this.getLineColor = function () {
+            return this.lineColor[this.currentIndex++];
+        }
+
+        this.setTrain = function (div) {
+            this.trains.push(new Train(div, this.getLineColor(), setPassengers()));
+        }
+
+        this.getTrain = function (index) {
+            this.trains[index];
+        }
+
+        this.init = function () {
+            this.currentIndex = 0;
+        }
+
+        this.isFull = function () {
+            return this.currentIndex >= this.lineColor.length;
+        }
+
+        this.makeLine = function (currentStation, nextStation, train) {
+            makeLine(currentStation, nextStation, train.line);
+        }
+
+        this.findByLineCololr = function (lineColor) {
+            const index = this.lineColor.indexOf(lineColor);
+            return this.trains[index];
+        }
+
+    }
+</script>
+<script>
+    const displayLogMessage = function (message, color) {
+        const messageDiv = $('<div>').html(`${message}`).addClass('log-message').css('color', color);
+
+        $('.log-display').append(messageDiv);
+    }
+
+    const generatePosition = function () {
+        let position = generateRandomPosition();
+
+        let isBlocked = true;
+        while (isBlocked) {
+            let i = 0;
+            for (i; i < blockPositions.length; i++) {
+                if (position.x == blockPositions[i].x && position.y == blockPositions[i].y) {
+                    position = generateRandomPosition();
+                    break;
+                }
+            }
+
+            isBlocked = (i == blockPositions.length) ? false : true;
+            i = 0;
+        }
+
+        for (let i = -5; i <= 5; i++) {
+            for (let j = -5; j <= 5; j++) {
+                blockPositions.push(new Position(position.x + i, position.y + j));
+            }
+        }
+
+        return position;
+    }
+
+    const generateRandomPosition = function () {
+        return new Position(Math.floor(Math.random() * 34) + 3, Math.floor(Math.random() * 26) + 2);
+    }
+
+    const blockPositions = [];
+</script>
+<script>
+    const makePassengerContainer = function (station) {
+        const customerContainer = $('<div>');
+        customerContainer.addClass('passenger-container');
+
+        const typeIndex = customType.array.indexOf(station.type);
+        const passangerType = customType.array;
+
+        for (let i = 0; i < passangerType.length; i++) {
+            if (passangerType[i] != typeIndex) {
+                const type = passangerType[i];
+
+                const inner = $('<div>').addClass('passenger-container-inner');
+                const innerDiv = $('<div>');
+                const imageForm = $('<div>').addClass('passegner-container-image-form');
+                const countForm = $('<div>').addClass('passenger-container-count-form').attr('id', `${station.name}-${type}`).html('0');
+
+                const typeDiv = $('<div>').addClass('display-type');
+                typeDiv.addClass(type);
+
+                imageForm.append(typeDiv);
+                innerDiv.append(imageForm, countForm);
+                inner.append(innerDiv);
+
+                customerContainer.append(inner);
+            }
+        }
+
+        station.div.append(customerContainer);
+    }
+</script>
+<script>
+
+    const setPassengers = function () {
+        const customType = new CustomType();
+
+        const passengers = [];
+        for (let i = 0; i < customType.array.length; i++) {
+            passengers.push(new Passenger(customType.array[i]));
+        }
+
+        return passengers;
+    }
+
+    const allStationIter = [];
+
+    function stationAppend() {
+        const div = $('<div class="station">');
+        const position = generatePosition();
+
+        const station = new Station(div, `station-${allStationIter.length}`, position, customType.genereateRandomType(), setPassengers());
+        allStationIter.push(station);
+
+        div.css({
+            'left': `${(position.x * 30) - 15}px`,
+            'bottom': `${(position.y * 30) - 15}px`,
+            'z-index': 30
+        });
+        div.attr('id', `${station.name}`);
+        div.addClass(station.type);
+
+        makePassengerContainer(station);
+
+        $('.main-page').append(div);
+        displayLogMessage(`${station.type}의 역이 생겼습니다!`, 'black');
+
+        $(div).on('click', function (evnet) {
+            if (isPaused) {
+                alert('일시 정지중!');
+                return;
+            }
+
+            let train = null;
+
+            if (!station.isClicked) {
+                if (!station.div.attr('line-point') && station.isLinked) {
+                    alert('기차의 시작과 끝 부분만 선택할 수 있습니다!');
+                    return;
+                }
+
+                if (!station.isLinked) {
+                    if (!isTrainClicked) {
+                        alert('역의 시작과 끝 부분만 선택할 수 있습니다.');
+                        return;
+                    }
+
+                    station.isLinked = true;
+                }
+                station.isStartPoint = true;
+
+                for (let i = 0; i < allStationIter.length; i++) {
+                    allStationIter[i].isClicked = true;
+                }
+            } else {
+                let startStation;
+                for (let i = 0; i < allStationIter.length; i++) {
+                    if (allStationIter[i].isStartPoint) {
+                        startStation = allStationIter[i];
+                        break;
+                    }
+                }
+
+                station.div.attr('line', startStation.div.attr('line'));
+
+                train = lines.findByLineCololr(startStation.div.attr('line'));
+                makeLine(startStation, station, train.line);
+
+                let linePoint;
+                if (startStation.div.attr('line-point') == 'head') {
+                    if (train.stations.size() == 1) {
+                        train.stations.push(station);
+                        station.div.attr('line-point', 'tail');
+                        train.isArrived = true;
+                        train.nextStation = train.stations.cycle();
+                    } else {
+                        train.stations.unshift(station);
+                        startStation.div.removeAttr('line-point');
+                        station.div.attr('line-point', 'head');
+                    }
+                } else {
+                    train.stations.push(station);
+                    startStation.div.removeAttr('line-point');
+                    station.div.attr('line-point', 'tail');
+                }
+
+                for (let i = 0; i < allStationIter.length; i++) {
+                    allStationIter[i].isClicked = false;
+                    allStationIter[i].isStartPoint = false;
+                }
+
+                const border = (station.isLinked) ? 'outline' : 'border';
+                div.css(border, `3px solid ${train.line}`);
+
+                station.isLinked = true;
+
+                if (isTrainClicked) {
+                    isTrainClicked = false;
+                }
+            }
+        });
+    }
+
+    for (let i = 0; i < 6; i++) {
+        stationAppend();
+    }
+</script>
+<script>
+    const makeKeyframes = function (name, startPosition, endPosition, line) {
+        const keyframes = `
+            @keyframes ${name} {
+                0% { transform: translate(${startPosition.x * 30}x, ${startPosition.y * 30}px); }
+                100% { transform: translate(${endPosition.x * 30 - startPosition.x * 30}px, ${-(endPosition.y * 30 - startPosition.y * 30)}px); }
+            }
+        `;
+
+        $(`#${line}-animation`).html('');
+        $(`#${line}-animation`).append(keyframes);
+    }
+</script>
+<script>
+    function makeLine(currentStation, nextStation, lineColor) {
+        const div = $('<div>');
+        div.addClass('line');
+
+        const distance = getDistance(currentStation, nextStation);
+
+        div.css({
+            'width': `${distance}px`,
+            'left': `${((currentStation.position.x < nextStation.position.x) ? currentStation.position.x : nextStation.position.x) * 30}px`,
+            'bottom': `${((currentStation.position.x < nextStation.position.x) ? currentStation.position.y : nextStation.position.y) * 30}px`,
+            'transform': `rotate(${getAngle(currentStation, nextStation)}deg)`,
+            'transform-origin': 'bottom left'
+        });
+        div.css('border-top', `5px solid ${lineColor}`);
+
+        $('.main-page').append(div);
+    }
+
+    const getDistance = function (currentStation, nextStation) {
+        return Math.sqrt(Math.pow((nextStation.position.x - currentStation.position.x) * 30, 2) + Math.pow((nextStation.position.y - currentStation.position.y) * 30, 2));
+    }
+
+    const getAngle = function (currentStation, nextStation) {
+        const startPoint = (currentStation.position.x < nextStation.position.x) ? currentStation : nextStation;
+        const endPoint = (startPoint === currentStation) ? nextStation : currentStation;
+
+        let angle = Math.atan2(Math.abs(startPoint.position.y - endPoint.position.y), Math.abs(startPoint.position.x - endPoint.position.x)) * (180 / Math.PI);
+        angle = (startPoint.position.y >= endPoint.position.y) ? angle : - angle;
+
+        return angle;
+    };
+
+    const getTime = function (speed, currentStation, nextStation) {
+        const distance = getDistance(currentStation, nextStation);
+
+        return distance / speed;
+    }
+</script>
+<script>
+    $('#pause').on('click', function () {
+        if (!isPaused) {
+            isPaused = true;
+            clearInterval(play);
+            displayLogMessage('일시정지 됨', 'red');
+
+            for (let i = 0; i < lines.currentIndex; i++) {
+                const train = lines.trains[i];
+                train.div.css("animation-play-state", "paused");
+            }
+
+        } else {
+            play = setInterval(game, 500);
+            displayLogMessage('일시정지 해제', 'red');
+            for (let i = 0; i < lines.currentIndex; i++) {
+                const train = lines.trains[i];
+                train.div.css("animation-play-state", "running");
+            }
+            isPaused = false;
+            $(this).html('일시 정지');
+        }
+    });
+
+    $('.train-set').on('click', function () {
+        if (isPaused) {
+            alert('일시 정지중!');
+            return;
+        }
+
+        if (lines.isFull()) {
+            alert("이미 기차가 세팅되어있음");
+            return;
+        } else {
+            isTrainClicked = true;
+            let train = lines.trains[lines.currentIndex++];
+
+            $(this).attr('disabled', true);
+            $(this).addClass('disabled');
+
+            $('.station').on('click.trainSet', function () {
+                for (let i = 0; i < allStationIter.length; i++) {
+                    if (allStationIter[i].name == $(this).attr('id')) {
+                        allStationIter[i].isLinked = true;
+                        allStationIter[i].div.attr('line', train.line);
+
+                        train.div.css({
+                            'left': `${allStationIter[i].position.x * 30 - 5}px`,
+                            'bottom': `${allStationIter[i].position.y * 30 - 5}px`
+                        });
+                        train.stations.push(allStationIter[i]);
+                        allStationIter[i].div.attr(`line-point`, 'head');
+
+                        break;
+                    }
+                }
+
+                $(this).css('border', `3px solid ${train.line}`);
+
+                $('.station').off('click.trainSet');
+                train.isLinked = true;
+                train.currentStation = train.stations.head.item;
+            });
+        }
+    });
+</script>
+<script>
+    function randomStationMakeTimer() {
+        return Math.floor(Math.random() * 20) + 10;
+    }
+
+    const lines = new Line();
+
+    for (let i = 0; i < lines.lineColor.length; i++) {
+        const trainDiv = $('<div>').addClass('train');
+        const newTrain = lines.setTrain(trainDiv);
+
+        trainDiv.addClass(lines.trains[i].line);
+        trainDiv.css('background-color', lines.trains[i].line);
+        $('.main-page').append(trainDiv);
+
+        const style = $('<style>').attr('id', `${lines.trains[i].line}-animation`);
+        $('head').append(style);
+    }
+    lines.init();
+
+    let isPaused = false;
+    let isTrainClicked = false;
+    let isStationFulled = false;
+
+    const maxTrainPassengerCount = 50;
+    const maxStationPassengerCount = 20;
+    const maxStations = 15;
+    const addTrainCount = 60;
+
+    let score = 0;
+    let leftTime = 60;
+    let stationMakeTimer = randomStationMakeTimer();
+    let addTrainTimer = addTrainCount;
+    let currentLineColor = 1;
+
+    let game = function () {
+        if (leftTime <= 0) {
+            console.log('겜 오버');
+            return;
+        }
+
+        addTrainTimer -= 1;
+        if (addTrainTimer <= 0) {
+            addTrainTimer = addTrainCount;
+    
+            let openTrain = lines.lineColor[currentLineColor++];
+
+            $('#' + openTrain + '-set').attr('disabled', false);
+            $('#' + openTrain + '-state-form').removeClass('disabled');
+        }
+
+        stationMakeTimer -= 1;
+        if (stationMakeTimer == 0) {
+            if (allStationIter.length != maxStations) {
+                stationAppend();
+                stationMakeTimer = randomStationMakeTimer();
+            }
+        }
+
+        for (let i = 0; i < allStationIter.length; i++) {
+            let = supervisedStation = allStationIter[i];
+            supervisedStation.countdown();
+
+            isStationFulled = false;
+            $('.station').css('background-color', 'gray');
+            if (supervisedStation.totalPassengerCount == maxStationPassengerCount) {
+                isStationFulled = true;
+
+                supervisedStation.div.css('background-color', 'red');
+                leftTime -= 1;
+                if (leftTime % 2 == 0) {
+                    let leftTimeDisplay = (leftTime / 2 < 10) ? `0${leftTime / 2}` : `${leftTime / 2}`;
+                    $('.leftTime').html(`0:${leftTimeDisplay}`);
+                }
+            }
+        }
+
+        for (let i = 0; i < lines.currentIndex; i++) {
+            const train = lines.trains[i];
+
+            if (train.isArrived) {
+                if (train.isGetOn) {
+                    train.getOn(train.nextStation);
+                } else {
+                    train.getOff(train.nextStation);
+                }
+
+                if (!train.isWaiting) {
+                    train.nextStation = train.stations.cycle();
+                    const animationName = `${train.currentStation.name}_to_${train.nextStation.name}`;
+
+                    makeKeyframes(animationName, train.currentStation.position, train.nextStation.position, train.line);
+                    train.div.css('animation', `${animationName} ${getTime(100, train.currentStation, train.nextStation)}s alternate ease-in-out`);
+
+                    train.div.on('animationend', function () {
+                        train.div.css({
+                            'left': `${train.nextStation.position.x * 30 - 5}px`,
+                            'bottom': `${train.nextStation.position.y * 30 - 5}px`
+                        });
+
+                        train.currentStation = train.nextStation;
+                        train.isArrived = true;
+                    });
+
+                    train.isArrived = false;
+                }
+
+            }
+        }
+    };
+
+    let play = setInterval(game, 500);
+
+    if (leftTime <= 0) {
+        clearInterval(play);
+    }
+</script>

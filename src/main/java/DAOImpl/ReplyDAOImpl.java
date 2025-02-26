@@ -11,7 +11,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import Common.Statics;
 import DAO.ReplyDAO;
+import DTO.BoardDTO;
 import DTO.ReplyDTO;
 
 public enum ReplyDAOImpl implements ReplyDAO {
@@ -150,8 +152,58 @@ public enum ReplyDAOImpl implements ReplyDAO {
 
 	@Override
 	public List<ReplyDTO> selectByBoardId(int boardId, int page) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * "
+				+ "FROM ( "
+				+ "SELECT A.*, ROW_NUMBER() OVER(ORDER BY REPLY_ID DESC) AS RNUM "
+				+ "FROM ( "
+				+ "SELECT * "
+				+ "FROM REPLY R "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON R.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE BOARD_ID = ?) A) "
+				+ "WHERE RNUM BETWEEN ? AND ?";
+		
+		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
+		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+
+		endIndex = (endIndex > getSelectByBoardIdSize(boardId)) ? getSelectByBoardIdSize(boardId) : endIndex;
+		
+		try (Connection con = getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, boardId);
+			pstat.setInt(2, startIndex);
+			pstat.setInt(3, endIndex);
+
+			try(ResultSet rs = pstat.executeQuery();){
+				List<ReplyDTO> list = new ArrayList<>();
+				while(rs.next()) {
+					ReplyDTO dto = new ReplyDTO();
+					dto.setReplyId(rs.getInt("reply_Id"));
+					dto.setMemberId(rs.getInt("member_Id"));;
+					dto.setBoardId(rs.getInt("board_Id"));
+					dto.setContents(rs.getString("contents"));
+					dto.setRegDate(rs.getTimestamp("reg_Date"));
+					dto.setWriter(rs.getString("nickName"));
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
+
+	@Override
+	public int getSelectByBoardIdSize(int boardId) throws Exception {
+		String sql = "SELECT COUNT(*) FROM REPLY R INNER JOIN MEMBERS M ON R.MEMBER_ID = M.MEMBER_ID WHERE BOARD_ID = ?";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)) {
+			pstat.setInt(1, boardId);
+			
+			try(ResultSet rs = pstat.executeQuery()) {
+				rs.next();
+				
+				return rs.getInt(1);
+			}
+		}
 	}
 	
 }

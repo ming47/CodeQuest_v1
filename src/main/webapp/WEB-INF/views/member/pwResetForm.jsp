@@ -1,90 +1,104 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>비밀번호 재설정</title>
-	<style>
-		body {
-			font-family: 'Jua', sans-serif;
-			background: #f8f9fa;
-			margin: 0;
-			padding: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 100vh;
-		}
+<meta charset="UTF-8">
+<title>비밀번호 재설정</title>
+<style>
+@font-face {
+	font-family: 'DungGeunMo';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body {
+	background: #f8f9fa;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background: url('/images/pop.jpg') no-repeat center;
+	background-size: cover;
+	font-family: 'DungGeunMo';
+}
 
-		.pw-container {
-			background: #ffffff;
-			width: 360px;
-			border-radius: 10px;
-			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-			padding: 30px;
-			text-align: center;
-		}
+.pw-container {
+	background: #ffffff;
+	width: 360px;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	text-align: center;
+}
 
-		.pw-container h2 {
-			font-size: 24px;
-			margin-bottom: 10px;
-		}
+.pw-container h2 {
+	font-size: 24px;
+	margin-bottom: 10px;
+	font-weight:bold;
+}
 
-		.pw-container p {
-			font-size: 14px;
-			color: #555;
-			margin-bottom: 20px;
-		}
+.pw-container p {
+	font-size: 14px;
+	color: #555;
+	margin-bottom: 20px;
+}
 
-		.pw-container input[type="text"] {
-			width: 80%;
-			padding: 12px;
-			margin-bottom: 20px;
-			font-size: 14px;
-			border: 1px solid #ddd;
-			border-radius: 6px;
-			outline: none;
-		}
+.pw-container input[type="text"] {
+	width: 80%;
+	padding: 12px;
+	margin-bottom: 20px;
+	font-size: 14px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	outline: none;
+	font-family: 'DungGeunMo';
+}
 
-		.pw-container input[type="text"]:focus {
-			border-color: #b4c28a;
-			box-shadow: 0 0 5px rgba(180, 194, 138, 0.3);
-		}
+.pw-container input[type="text"]:focus {
+	border-color: #b4c28a;
+	box-shadow: 0 0 5px rgba(180, 194, 138, 0.3);
+}
 
-		.pw-container button {
-			width: 80%;
-			background: #b4c28a;
-			color: #ffffff;
-			font-size: 16px;
-			border: none;
-			padding: 12px;
-			border-radius: 6px;
-			cursor: pointer;
-			transition: background 0.3s;
-		}
+.pw-container button {
+	width: 80%;
+	background: #b4c28a;
+	color: #ffffff;
+	font-size: 17px;
+	border: none;
+	padding: 12px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background 0.3s;
+	font-family: 'DungGeunMo';
+}
 
-		.pw-container button:hover {
-			background: #346e30;
-		}
+.pw-container button:hover {
+	background: #346e30;
+}
 
-		.pw-container input[type="password"] {
-			width: 80%;
-			padding: 12px;
-			margin-bottom: 20px;
-			font-size: 14px;
-			border: 1px solid #ddd;
-			border-radius: 6px;
-			outline: none;
-		}
+.pw-container input[type="password"] {
+	width: 80%;
+	padding: 12px;
+	margin-bottom: 20px;
+	font-size: 14px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	outline: none;
+}
 
-		.pw-container input[type="password"]:focus {
-			border-color: #b4c28a;
-			box-shadow: 0 0 5px rgba(180, 194, 138, 0.3);
-		}
-	</style>
+.pw-container input[type="password"]:focus {
+	border-color: #b4c28a;
+	box-shadow: 0 0 5px rgba(180, 194, 138, 0.3);
+}
+</style>
 </head>
 
 <body>
@@ -94,8 +108,9 @@
 				<h2>비밀번호 재설정</h2>
 				<p>비밀번호를 재설정할 이메일을 입력해주세요.</p>
 				<form action="/member/sendResetEmail.do" method="post" id="frm">
-					<input type="text" name="email" id="email" placeholder="재설정할 이메일을 작성해주세요."> <br>
-					<span id="result_email"></span>
+					<input type="text" name="email" id="email"
+						placeholder="재설정할 이메일을 작성해주세요."> <br> <span
+						id="result_email"></span>
 					<button id="mailsend" type="button">인증 메일 전송</button>
 					<input type="hidden" name="emailDupli" id="emailDupli">
 				</form>
@@ -105,14 +120,16 @@
 			<div class="pw-container">
 				<h2>비밀번호 재설정</h2>
 				<p>전송된 인증 암호를 입력해주세요</p>
-				<input type="text" name="auth" id="auth" placeholder="인증 코드를 입력해주세요.">
-				<input type="hidden" name="authCode" id="authCode" value="${authCode}">
-				<br>
+				<input type="text" name="auth" id="auth"
+					placeholder="인증 코드를 입력해주세요."> <input type="hidden"
+					name="authCode" id="authCode" value="${authCode}"> <br>
 				<span id="result_auth"></span>
 				<form action="/member/pwReset.do" method="post" id="frm2">
-					<input type="password" name="pw" id="pw" placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요">
-					<input type="password" name="pwr" id="pwr" placeholder="패스워드를 다시 입력해주세요">
-					<input type="hidden" name="resetEmail" id="resetEmail" value="${authEmail}">
+					<input type="password" name="pw" id="pw"
+						placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요"> <input
+						type="password" name="pwr" id="pwr" placeholder="패스워드를 다시 입력해주세요">
+					<input type="hidden" name="resetEmail" id="resetEmail"
+						value="${authEmail}">
 					<button id="pwReset">완료</button>
 				</form>
 			</div>
