@@ -31,6 +31,12 @@ public class PlaytimeDTO {
 		this.regDate = regDate;
 		this.formatTime = formatTime;
 	}
+	
+	public PlaytimeDTO(int gameId, int memberId, int playtime) {
+		this.gameId = gameId;
+		this.memberId = memberId;
+		this.playtime = playtime;
+	}
 
 	public String getFormatTime() {
 		return formatTime;

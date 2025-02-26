@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import Common.ConvertURL;
 import DAOImpl.GameImpl;
 import DAOImpl.ScoreDAOImpl;
+import DTO.MemberDTO;
 import DTO.ScoreDTO;
 
 @WebServlet("/score/*")
@@ -50,8 +51,23 @@ public class ScoreController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+
+		try {		
+			String cmd = ConvertURL.of(request);
+			
+			if(cmd.equals("/score/add.do")) {
+				int gameId = Integer.parseInt(request.getParameter("gameId"));
+				int score = Integer.parseInt(request.getParameter("score"));
+				
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				
+				scoreDAO.insert(new ScoreDTO(gameId, member.getMemberId(), score));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

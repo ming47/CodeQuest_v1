@@ -32,6 +32,12 @@ public class ScoreDTO {
 		this.user = user;
 	}
 	
+	public ScoreDTO(int gameId, int memberId, double score) {
+		this.gameId = gameId;
+		this.memberId = memberId;
+		this.score = score;
+	}
+	
 	public ScoreDTO() {
 		super();
 	}
