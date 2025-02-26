@@ -58,10 +58,8 @@ public class BoardController extends HttpServlet {
 				}
 				request.getRequestDispatcher("/WEB-INF/views/board/write.jsp").forward(request, response);
 			}
-
-			else if (cmd.equals("/board/printout.do")) {
-
-			} else if (cmd.equals("/board/list.do")) {// 게시글 목록 출력
+			
+			else if (cmd.equals("/board/list.do")) {// 게시글 목록 출력
 				String scpage = (String) request.getParameter("cpage");
 
 				if (scpage == null || scpage.equals("null")) {

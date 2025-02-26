@@ -27,7 +27,7 @@ public enum GameImpl implements GameDAO {
 
 	@Override
 	public List<GameDTO> selectAll() throws Exception {
-		String sql = "SELECT * FROM GAME";
+		String sql = "SELECT * FROM GAMEs";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -44,7 +44,7 @@ public enum GameImpl implements GameDAO {
 
 	@Override
 	public GameDTO selectById(int id) throws Exception {
-		String sql = "SELECT * FROM GAME WHERE GAME_ID = ?";
+		String sql = "SELECT * FROM GAMEs WHERE GAME_ID = ?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
