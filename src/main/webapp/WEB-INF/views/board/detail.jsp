@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -231,6 +229,7 @@ td#contents {
 	flex-direction: column;
 	gap: 10px;
 	float: left;
+	color : black;
 }
 
 #input {
@@ -364,12 +363,9 @@ td#contents {
 
 </style>
 <script>
-
-
 window.onload = function(){
    //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기 
    $(document).ready(function() {
-	   
 	   const $commentInput = $("#commentInput");
        const $inputBtn = $("#inputbtn");
        
@@ -401,18 +397,11 @@ window.onload = function(){
                alert("댓글을 입력하세요");
                return false;
            }
-
            this.submit();
        });
-	   
        makeCommentItem(); // 여기에 닫는 괄호 추가
     }); // $(document).ready 끝
 }; // window.onload 끝
-
-
-
-
-
 </script>
 </head>
 <body>
@@ -539,61 +528,46 @@ window.onload = function(){
 	</div>
 	<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </body>
-</html>
-						
-						<script>
-						
-						
-               $("#inputbtn").on(
-                     "click",
-                     function() {
-                        let commentText = $("#commentInput").val();
-                        if (commentText == "") {
-                           alert("댓글을 입력하세요")
-                           return;
-                        }
-                        let updatecontents = $("<div>").addClass(
-                              "comment-box");
-                        $("#comments").append(updatecontents);
-                        $("#commentsInput").val("");
-                     });
-               
-               
-               
-              $(".deletebtn").on("click", function(){
-                  let target = $(this).attr("seq");
+<script>	
+	$("#inputbtn").on("click",function() {
+		let commentText = $("#commentInput").val().trim();
+		if (commentText == "") {
+			alert("댓글을 입력하세요")
+			return;
+			}
+		let updatecontents = $("<div>").addClass("comment-box");
+ 		$("#comments").append(updatecontents);
+        $("#commentsInput").val("");
+        });
+		$(".deletebtn").on("click", function(){
+        let target = $(this).attr("seq");
                   
-                  location.href = "/delete.reply" + target;
+		location.href = "/delete.reply" + target;
 
-               let last_cpage = sessionStorage.getItem("last_cpage");
-               location.href = "/list.board?cpage=" + last_cpage;
-              });
-             
-               $(".updatebtn").on("click",   function(){
-                  
-                        //댓글 수정하기 버튼 눌렀을때    
-                           
-                        $(".writerdiv").attr("contentEditable", "true").focus();
+        let last_cpage = sessionStorage.getItem("last_cpage");
+        location.href = "/list.board?cpage=" + last_cpage;
+          });
+		$(".updatebtn").on("click",   function(){
+			//댓글 수정하기 버튼 눌렀을때    
+			$(".writerdiv").attr("contentEditable", "true").focus();
                         
 
-                        $(".updatebtn,.deletebtn").hide();
+            $(".updatebtn,.deletebtn").hide();
                         //기존에 있던 버튼 숨기기 
-                        let updateOK = $("<button>");
-                        updateOK.html("수정완료").attr("id", "updateOK");
+            let updateOK = $("<button>");
+            updateOK.html("수정완료").attr("id", "updateOK");
 
-                        let updateCancel = $("<button>");
-                        updateCancel.html("취소").attr("id","updateCancel")
+            let updateCancel = $("<button>");
+            updateCancel.html("취소").attr("id","updateCancel")
                               
 
-                        updateCancel.attr("type", "button");
+            updateCancel.attr("type", "button");
 
-                        updateCancel.on("click", function() {
-                           location.reload();
-                        });
-
-                        $(".btnbox").append(updateOK, updateCancel);
-
-                     });
+            updateCancel.on("click", function() {
+            location.reload();
+            });
+            $(".btnbox").append(updateOK, updateCancel);
+          });
 
                  // 게시물 삭제하기 눌렀을때
                $("#delete").on("click", function() {                 
@@ -601,9 +575,7 @@ window.onload = function(){
                       location.href = "/board/delete.do?id=${dto.boardId}";
                    }                 
                 }); 
-          
-             
-                
+
              // 게시물 수정하기 눌렀을때 
                 $("#update").on("click", function() {
                 	
@@ -628,13 +600,7 @@ window.onload = function(){
                     });
                     
                     $(".footer").append(updateOK, updateCancel);
-               
-                 
-               
                 });
-            
-                
-                
                 //댓글 수정하기 버튼 눌렀을때   
                 $(".updatebtn").on("click", function(){
           
@@ -797,7 +763,7 @@ window.onload = function(){
 		            event.preventDefault();
 		            return false;
 		        }
-         	
+
          	$.ajax({
         			url: '/reply/add.do',
         	 		type: 'POST',
@@ -1014,4 +980,4 @@ window.onload = function(){
      				 '시 ' + date.getMinutes() + '분';		 
      	 }
          </script>
->>>>>>> recover-branch
+</html>
