@@ -26,16 +26,17 @@
 
 .logbox-buttons a {
 	margin-left: 15px;
-	color: #d2ddaf;
+	color: #ecfacf;
 	text-decoration: none;
 	background: #717171;
 	padding: 5px 10px;
-	border-radius: 5px;
 	font-size: 17px;
+	border-radius: 5px;
 }
 
 .logbox-buttons a:hover {
-	background: #003f7f;
+	background: #3c3b39;
+	color:white;
 }
 
 .logbox-time {
