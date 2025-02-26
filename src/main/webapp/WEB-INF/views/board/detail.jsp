@@ -365,7 +365,11 @@ td#contents {
 </style>
 </head>
 <body>
+<<<<<<< HEAD
    <div class="header">
+=======
+	<div class="header">
+>>>>>>> f6da3762cda401974911cb7bde80a16b7822c91f
       <div class="navi">
          <div class="logo">Team CodeQuest</div>
          <ul class="menu">
@@ -431,7 +435,11 @@ td#contents {
       <div class="commentSection">
             <!-- 댓글 목록 -->
             <div id="commentInputContainer">
+<<<<<<< HEAD
                  <input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
+=======
+              	<input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
+>>>>>>> f6da3762cda401974911cb7bde80a16b7822c91f
                <div class="emoticons" style="display: none;">
                   <div class="emoticon">
                      <span class="emoji-btn">😀</span>
@@ -640,8 +648,13 @@ td#contents {
        });
    	}
    
+<<<<<<< HEAD
    function commentInput($commentInput, $inputBtn) {   //키보드 이벤트
       let commentText = $("#commentInput").val().trim();
+=======
+   function commentInput($commentInput, $inputBtn) {	//키보드 이벤트
+	   let commentText = $("#commentInput").val().trim();
+>>>>>>> f6da3762cda401974911cb7bde80a16b7822c91f
        if (commentText == "") {
           alert("댓글을 입력하세요")
           return;
@@ -678,6 +691,7 @@ td#contents {
               } 
           }).done(function(data) {
               alert('댓글이 등록되었습니다.');
+<<<<<<< HEAD
               $.ajax({
                   url: "/reply/ContentsAll.do",
                      data: { 'boardId': ${dto.boardId},
@@ -695,11 +709,15 @@ td#contents {
                      makeCommentItem(data.list);
                      makeCommentPageNavi(data.pageNavi, 'replyPageNavi');
                   }); 
+=======
+              makeCommentItem();
+>>>>>>> f6da3762cda401974911cb7bde80a16b7822c91f
               $commentInput.val("");
           });  
       }
        
        let updatecontents = $("<div>").addClass("comment-box");
+<<<<<<< HEAD
        $("#comments").append(updatecontents);
        console.log("rjffla");
         
@@ -707,6 +725,14 @@ td#contents {
    }
    
    function validInput($inputBtn) {   //등록 버튼 이벤트
+=======
+        $("#comments").append(updatecontents);
+        
+        validInput($inputBtn);
+   }
+   
+   function validInput($inputBtn) {	//등록 버튼 이벤트
+>>>>>>> f6da3762cda401974911cb7bde80a16b7822c91f
       if ($("#commentInput").val().trim() === "") {
            $inputBtn.prop("disabled", true);
             $inputBtn.css({
@@ -734,12 +760,20 @@ td#contents {
        });
        
        $commentInput.on('keyup', function(event) {
+<<<<<<< HEAD
           if(event.key == "Enter") {             
             commentInput($commentInput, $inputBtn);
           }
           validInput($inputBtn);
        });
 
+=======
+    	   if(event.key == "Enter") {    		   
+	    	  commentInput($commentInput, $inputBtn);
+    	   }
+    	   validInput($inputBtn);
+       });
+>>>>>>> f6da3762cda401974911cb7bde80a16b7822c91f
 
          // 입력창 이벤트 리스너
        $commentInput.on("input", function() {
@@ -747,8 +781,13 @@ td#contents {
        });
 
       $inputBtn.on("click",function() {
+<<<<<<< HEAD
          commentInput($commentInput, $inputBtn);
       });
+=======
+    	  commentInput($commentInput, $inputBtn);
+       });
+>>>>>>> f6da3762cda401974911cb7bde80a16b7822c91f
       
       // 댓글 목록 불러오기
       $.ajax({
@@ -907,7 +946,7 @@ td#contents {
                 url : '/file/image/upload.do',
                 data : formData,
                 type : 'POST',
-                //dataType:"multipart/form-data", 
+                //dataType:"multipart/form-data"ee, 
                 contentType : false,
                 processData : false,
                 error : function(request, status, error) {
