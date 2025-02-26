@@ -3,7 +3,9 @@ package Controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import Common.PageNavi;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.ReplyDAOImpl;
 import DTO.MemberDTO;
@@ -50,10 +53,19 @@ public class ReplyController extends HttpServlet {
 			}
 
 			else if (cmd.equals("/reply/ContentsAll.do")) {
+				int page = Integer.parseInt(request.getParameter("page"));
 				int id = Integer.parseInt(request.getParameter("boardId"));
-				List<ReplyDTO> rdto = rdao.selectByBoardId(id);
+				
+				Map<String, Object> json = new HashMap<>();
+				
+				List<ReplyDTO> rdto = rdao.selectByBoardId(id, page);
+				json.put("list", rdto);
+				
+				PageNavi pageNavi = new PageNavi(page, rdao.getSelectByBoardIdSize(id));
+				json.put("pageNavi", pageNavi.generate());
+				
 				response.setContentType("text/html; charset=utf8");
-				response.getWriter().append(g.toJson(rdto));
+				response.getWriter().append(g.toJson(json));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
