@@ -25,6 +25,8 @@ class Tetris {
                 this.fall();
             }
         }
+       
+      
 
         document.getElementById("tetris-move-left-button").onmousedown = (e) => {
             this.moveLeft();
@@ -181,6 +183,24 @@ class Tetris {
             let gameover= document.getElementById("gameover");
             restart.style.display = "none";
             gameover.style.display = "block";
+            console.log("패배");
+            
+            let score = document.getElementById("lines").innerHTML;
+            
+            score = score.substring(1, score.length - 2);
+            
+	        $.ajax({
+	            url: '/score/add.do',
+	            type: 'POST',
+	            data: {
+	                gameId: 800005,
+	                score: score
+	            }
+	        }).done(function(data) {
+	           console.log(data);
+	        });
+            
+            
             return false;
         }
         return true;
@@ -250,6 +270,7 @@ class Tetris {
             let linesElem = document.getElementById("lines");
                 this.deletedLines++;
                 linesElem.innerText = "" + this.deletedLines;
+                
             } else {
                 y--;
             }

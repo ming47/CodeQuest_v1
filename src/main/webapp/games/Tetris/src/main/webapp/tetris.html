@@ -6,7 +6,9 @@
   <title>테트리스</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" type="text/css" href="css/tetris.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="js/tetris.js"></script>
+  
 </head>
 
 <body>
@@ -27,7 +29,7 @@
       <span class="tetris-panel-container">
         <p class="next" align="center">Next</p>
         <canvas id="next"></canvas>
-
+		<input type="hidden" id="GameScore">
         <p id="score" align="center">현재 Score :  <span id="lines"> 0 점 </span></p>
 
         <p class="end"><span id="message"></span></p>
@@ -69,6 +71,7 @@
     });
 
     document.getElementById('restart').addEventListener('click', function () {
+    	
       location.reload();
     });
 
@@ -79,7 +82,27 @@
     document.getElementById('home').addEventListener('click', function () {
       location.href='/';
     });
+    
+    $('#GameScore').on('input', function() {
+    	console.log($(this).val());
+    })
+    
+    const enterTime = new Date().getTime();
 
+	  window.addEventListener("beforeunload", function () {
+	      localStorage.setItem('play-time', new Date().getTime() - enterTime);
+	      
+	      $.ajax({
+	          url: '/game/playtime/add.do',
+	          type: 'POST',
+	          data: {
+	              gameId: 800005,
+	              playtime: new Date().getTime() - enterTime
+	          }
+	      }).done(function (data) {
+	          console.log(data);
+	      });   
+	  });  
   </script>
 </body>
 
