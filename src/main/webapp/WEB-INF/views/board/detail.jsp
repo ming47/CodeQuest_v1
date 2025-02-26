@@ -701,6 +701,7 @@ td#contents {
        
        let updatecontents = $("<div>").addClass("comment-box");
        $("#comments").append(updatecontents);
+       console.log("rjffla");
         
        validInput($inputBtn);
    }
@@ -762,7 +763,6 @@ td#contents {
               return;
           }
         
-          console.log(data);
           makeCommentItem(data.list);
           makeCommentPageNavi(data.pageNavi, 'replyPageNavi');
        }); 
