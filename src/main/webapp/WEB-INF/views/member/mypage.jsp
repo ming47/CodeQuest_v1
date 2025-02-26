@@ -696,7 +696,6 @@
 				if ($("#nickName") == originNickName) {
 					$("#result_nickName").html("");
 					nickName_val = true;
-					return;
 				}
 				$.ajax({
 					url: "/member/valueCheck.do",

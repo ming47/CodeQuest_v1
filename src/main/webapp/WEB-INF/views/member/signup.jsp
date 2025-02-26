@@ -353,6 +353,7 @@
 					"font-size": "16px"
 				}).html("ID는 영어소문자,숫자 8자리이상 20자리이하로 작성해주세요.");
 				id_val = false;
+				return
 			}
 			$.ajax({
 				url: "/member/valueCheck.do",
@@ -390,6 +391,7 @@
 					"font-size": "16px"
 				}).html("사용불가능한 PW입니다.");
 				pw_val = false;
+				return;
 			} else {
 				$("#result_pw").css({
 					"color": "green",
@@ -412,6 +414,7 @@
 					"font-size": "16px"
 				}).html("패스워드 일치하지 않음!");
 				pw_val = false;
+				return;
 			}
 		});
 
@@ -424,6 +427,7 @@
 					"font-size": "16px"
 				}).html("사용 불가능한 이름입니다.");
 				name_val = false;
+				return;
 			} else {
 				$("#result_name").css({
 					"color": "green",
@@ -515,14 +519,7 @@
 				}).html("사용 불가능한 이메일입니다.");
 				email_val = false;
 				return;
-			} else if ($("#email") == "") {
-				$("#result_email").html("값이 비었습니다.");
-				email_val = false;
-				return;
-			} else {
-				$("#result_email").html("");
-			}
-
+			} 
 			$.ajax({
 				url: "/member/valueCheck.do",
 				data: {
