@@ -93,7 +93,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("cpage", cpage);
 				PageNavi pageNavi = new PageNavi(cpage, dao.getSize());
 				request.setAttribute("page", pageNavi.generate());
-
+				request.setAttribute("pageUrl", "/board/list.do?cpage=");
 
 
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
@@ -144,12 +144,9 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("cpage", cpage);
 				PageNavi pageNavi = new PageNavi(cpage, dao.searchListgetSize(searchField,searchText));
 				request.setAttribute("page", pageNavi.generate());
-
+				request.setAttribute("pageUrl", String.format("/board/search.do?searchField=%s&searchText=%s&cpage=", searchField, searchText));
 
 				request.getRequestDispatcher("/WEB-INF/views/board/board.jsp").forward(request, response);
-
-
-
 			}
 
 

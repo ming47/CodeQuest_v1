@@ -73,7 +73,7 @@ html, body {
 	position: fixed;
 }
 
-.body{
+.body {
 	margin: 0;
 	width: 100%;
 	background-attachment: fixed;
@@ -82,6 +82,7 @@ html, body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-height: 100vh;
 }
 
 .footer {
@@ -145,7 +146,7 @@ html, body {
 	box-shadow: inset 0 0 8px #424242;
 	width: 73vw;
 	padding: 20px;
-	margin-top : 150px;
+	margin-top: 150px;
 	margin-bottom: 50px;
 }
 
@@ -155,22 +156,24 @@ table {
 	font-size: 19px;
 	border-spacing: 3px;
 	border-collapse: separate;
-	background-color: transparent; 
+	background-color: transparent;
 }
 
 table th, table td {
 	padding: 10px;
 	text-align: center;
 	border-radius: 1px;
-	border:none;
+	border: none;
 	font-family: 'DungGeunMo';
 	color: black;
 	background-color: #fafbf4;
+	height: 58px;
 }
 
 table tr {
 	border-radius: 1px;
 	font-family: 'DungGeunMo';
+	height: 58px;
 }
 
 td {
@@ -240,7 +243,6 @@ select {
 	transition: 0.3s;
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
-	
 }
 
 input {
@@ -251,20 +253,18 @@ input {
 	font-size: 16px;
 	transition: 0.3s;
 	border-radius: 5px;
-
 	font-family: 'DungGeunMo';
-
 }
 
 input:focus {
 	border-color: gray;
-	box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+	box-shadow: 0 0 8px rgba(128, 128, 128, 0.5);
 }
 
 .writebtn {
 	margin-top: 10px;
-	padding:20px;
-	margin-left:-17px;
+	padding: 20px;
+	margin-left: -17px;
 }
 
 button {
@@ -280,12 +280,14 @@ button {
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
 }
+
 #searchbar form {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center; 
-    gap: 10px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
 }
+
 .writebtn {
 	margin-top: 15px;
 }
@@ -304,7 +306,6 @@ button:hover {
 button:focus {
 	outline: none;
 }
-
 
 #name, #title, #number, #buttonbox {
 	height: 50px;
@@ -418,7 +419,11 @@ button:focus {
 				</table>
 
 				<div colspan="3" id="buttonbox">
-					<button class="writebtn">작성하기</button>
+					<c:if test="${dto == null}">
+						<a href="/board/addform.do" method="post">
+							<button class="writebtn">작성하기</button>
+						</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -491,41 +496,40 @@ button:focus {
 		return pageNavi;
 	}
 
-	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
-	
+	$('#number>td').append(makePageNavi('${pageUrl}'));
 	
 	 $(document).ready(function() {
-		    $(".writebtn").on("click", function(event) {
-		        let isLoggedIn =  "${member.memberId}" !== ""; 
-		        let isBanned   = "${member.isbanned}" == "true";
+         $(".writebtn").on("click", function(event) {
+             let isLoggedIn =  "${member.memberId}" !== ""; 
+             let isBanned   = "${member.isbanned}" == "true";
 
-		        if (!isLoggedIn) {
-		            if(confirm("회원만 글쓰기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
-		            	location.href="/";
-		            }
-		            event.preventDefault(); // 페이지 이동 방지
-		            return false;
-		            
-		            
-		        } else if(isBanned) {
-		        	
-		        	$.ajax({
-		        		url: '/service/member/ban/detail.do?id=${member.memberId}'
-		        	}).done(function(data) {
-		        		data = JSON.parse(data);
-		        		
-		        		parseDate(data.endDate);
-		        		
-		        		let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
-		        		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
-		        		alert(message);
-		        	});
-		   
-		            event.preventDefault();
-		            return false;
-		        }
-		    });
-		});
+             if (!isLoggedIn) {
+                 if(confirm("회원만 글쓰기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
+                    location.href="/";
+                 }
+                 event.preventDefault();
+                 return false;
+                 
+                 
+             } else if(isBanned) {
+                
+                $.ajax({
+                   url: '/service/member/ban/detail.do?id=${member.memberId}'
+                }).done(function(data) {
+                   data = JSON.parse(data);
+                   
+                   parseDate(data.endDate);
+                   
+                   let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+                   + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+                   alert(message);
+                });
+        
+                 event.preventDefault();
+                 return false;
+             }
+         });
+     });
 	 
 	 function parseDate(timestamp) {
 		 const date = new Date(timestamp);
