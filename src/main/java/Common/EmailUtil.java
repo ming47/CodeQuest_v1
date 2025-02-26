@@ -7,7 +7,7 @@ import javax.naming.InitialContext;
 import java.util.Properties;
 
 public class EmailUtil {
-    public static boolean sendResetEmail(String recipientEmail, String authCode) {
+    public static boolean sendResetEmail(String recipientEmail, String authCode, String action) {
         try {
             Context envContext = (Context) new InitialContext().lookup("java:comp/env");
             String username = (String) envContext.lookup("mail/username");
@@ -30,9 +30,14 @@ public class EmailUtil {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username, "CodeQuest"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+            if(action.equals("out")) {
+                message.setSubject("회원탈퇴 인증 코드");
+                message.setText("회원탈퇴를 위해 아래 인증 코드를 입력하세요:\n" + authCode);	
+                Transport.send(message);
+                return true;
+            }
             message.setSubject("비밀번호 재설정 인증 코드");
             message.setText("비밀번호 재설정을 위해 아래 인증 코드를 입력하세요:\n" + authCode);
-
             Transport.send(message);
             return true;
         } catch (Exception e) {

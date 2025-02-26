@@ -74,10 +74,14 @@ public class ReplyController extends HttpServlet {
 				HttpSession session = request.getSession();
 				MemberDTO member = (MemberDTO) session.getAttribute("member");
 				if (member == null) {
-					response.sendRedirect("/login.do");
+					response.sendRedirect("/");
 					return;
-				}
-
+				} 
+//				else if(member.getIsbanned()) { // 밴 유저는 글쓰기 불가	추후 당겨오면 쓸 수 있게됨	
+//		               response.sendRedirect("/");
+//		               return;
+//				}
+ 
 				
 				
 				System.out.println(member.getMemberId() + ": memberId");
@@ -91,6 +95,7 @@ public class ReplyController extends HttpServlet {
 				bdao.increaseReplyCount(boardId);	//댓글 카운트 추가
 				response.sendRedirect("/board/detail.do?id=" + boardId);
 			} else if (cmd.equals("/reply/delete.do")) { // 삭제 내일 다시와서 볼것
+				System.out.println("1");
 				int dto = Integer.parseInt(request.getParameter("id"));
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
 
