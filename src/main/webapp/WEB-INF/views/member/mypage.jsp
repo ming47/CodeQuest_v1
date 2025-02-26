@@ -471,7 +471,7 @@
 
 		<div class="main-content">
 			<div class="content" id="edit">
-				<h2 style="font-size: 50px;">내 정보</h2>
+				<h2 style="font-size: 40px;">내 정보</h2>
 				<br>
 				<fieldset>
 					<legend>기본정보</legend>
@@ -489,6 +489,7 @@
 						<div class="input-group">
 							<label for="nickname">닉네임</label> <input type="text" name="nickName" id="nickName"
 								value=${member.nickName } readonly>
+							<span id="result_nickName"></span>
 						</div>
 						<div class="input-group">
 							<label for="ssn">주민번호</label> <input type="text" name="ssn" id="ssn" value=${member.ssn }
@@ -534,7 +535,7 @@
 			</div>
 
 			<div class="content" id="game_records">
-				<h2 style="font-size: 50px;">게임기록</h2>
+				<h2 style="font-size: 40px;">게임기록</h2>
 				<c:if test="${not empty recentPlayTime}">
 					<div style="margin: 10px;">
 						<h3 style="font-size: 28px;">최근 플레이한 게임</h3>
@@ -557,7 +558,7 @@
 			</div>
 
 			<div class="content" id="my_posts">
-				<h2 style="font-size: 50px; margin-bottom: 20px;">게시글</h2>
+				<h2 style="font-size: 40px; margin-bottom: 20px;">게시글</h2>
 				<c:if test="${not empty recentPost}">
 					<div style="margin: 10px;">
 						<h3 style="font-size: 28px;">최근 작성한 게시글</h3>
@@ -603,7 +604,7 @@
 				</div>
 			</div>
 			<div class="content" id="my_qna">
-				<h2 style="font-size: 50px;">문의내역</h2>
+				<h2 style="font-size: 40px;">문의내역</h2>
 				<c:if test="${not empty recentQna}">
 					<div style="margin: 10px;">
 						<h3 style="font-size: 28px;">내가 작성한 문의내역</h3>
@@ -634,6 +635,7 @@
 	</div>
 	<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	<script>
+		let originNickName = $("#nickName");
 		var now = new Date();
 		$('.relative-date').each(function () {
 			var timestamp = parseInt($(this).data('timestamp'), 10);
@@ -677,6 +679,43 @@
 			});
 			$(".buttons").append(updateOk, updateCancel);
 			$("#update_address").css("visibility", "visible");
+			
+			$("#nickName").on("keyup", function () {
+				console.log(originNickName+"오리진 닉네임");
+				if ($("#nickName") == "") {
+					$("#result_nickName").html("");
+					return;
+				} else if($("#nickName").val() == originNickName) {
+					$("#result_nickName").html("");
+					nickName_val = true;
+					return;
+				}
+				$.ajax({
+					url: "/member/valueCheck.do",
+					data: {
+						field: "nickname",
+						value: $("#nickName").val()
+					},
+					method: "GET",
+					dataType: "text"
+				}).done(function (resp) {
+					if (resp.trim() == "exist" && originNickName != $("#nickName").val()) {
+						$("#result_nickName").css({
+							"color": "#BB3A48",
+							"font-size": "16px"
+						}).html("이미 사용중인 닉네임입니다.");
+						nickName_val = false;
+					} else {
+						$("#result_nickName").css({
+							"color": "green",
+							"font-size": "16px"
+						}).html("사용가능한 닉네임입니다.");
+						nickName_val = true;
+					}
+				}).fail(function (xhr, status, error) {
+					console.error("AJAX 요청 실패:", error);
+				});
+			});			
 
 		});
 		$("#update_address").on("click", function () {
@@ -687,17 +726,7 @@
 					$("#detailAddress").focus();
 				}
 			}).open();
-		});
-	/*
-		$("#out_btn").on("click", function () {
-			if (confirm("정말 탈퇴하시겠습니까?") == true) {
-				location.href = "/member/out.do?id=${member.memberId}"; //삭제요청한 ID를 세션에서 꺼낸후 request요청
-				alert("회원탈퇴가 완료되었습니다.");
-			} else {
-				location.href = "/";
-			}
-		});
-	*/
+		});	
 	    $("#out_btn").on("click", function() {
 			window.open("/member/outForm.do", "", "width=550, height=300");
 		});	
