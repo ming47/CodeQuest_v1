@@ -593,7 +593,7 @@ td#contents {
           })
     }
    
-   function commentInput($commentInput, $inputBtn) {	//키보드 이벤트
+   function commentInput($commentInput, $inputBtn) {	//댓글 입력
 	   let commentText = $("#commentInput").val().trim();
        if (commentText == "") {
           alert("댓글을 입력하세요")
@@ -669,7 +669,7 @@ td#contents {
           "cursor": "not-allowed"
        });
        
-       $commentInput.on('keyup', function(event) {
+       $commentInput.on('keyup', function(event) {	//키보드 이벤트
     	   if(event.key == "Enter") {    		   
 	    	  commentInput($commentInput, $inputBtn);
     	   }
