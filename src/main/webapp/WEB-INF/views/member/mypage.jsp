@@ -464,7 +464,7 @@
 				<li data-target="game_records">게임기록</li>
 				<li data-target="my_posts">게시글</li>
 				<li data-target="my_qna">문의내역</li>
-				<li id="out_btn">회원탈퇴</li>
+				<li id="out_btn_2">회원탈퇴</li>
 			</ul>
 		</div>
 
@@ -649,7 +649,7 @@
 			}
 		});
 		$(".popup").on("click", function() {
-			window.open("/service/qna/detail.do?qnaId=" + $(this).attr('value') + "&memberId=" +${member.memberId} + "&response="+ $(this).attr('data'), "", "width=1000, height=1000");
+			window.open("/service/qna/detail.do?qnaId=" + $(this).attr('value') + "&response="+ $(this).attr('data'), "", "width=1000, height=700");
 		});
 
 		$(".sidebar ul li").on("click", function () {
@@ -687,7 +687,7 @@
 				}
 			}).open();
 		});
-
+	/*
 		$("#out_btn").on("click", function () {
 			if (confirm("정말 탈퇴하시겠습니까?") == true) {
 				location.href = "/member/out.do?id=${member.memberId}"; //삭제요청한 ID를 세션에서 꺼낸후 request요청
@@ -696,6 +696,13 @@
 				location.href = "/";
 			}
 		});
+	*/
+	    $("#out_btn").on("click", function() {
+			window.open("/member/outForm.do", "", "width=550, height=300");
+		});	
+	    $("#out_btn_2").on("click", function() {
+			window.open("/member/outForm.do", "", "width=550, height=300");
+		});		
 
 	</script>
 </body>
