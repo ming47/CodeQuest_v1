@@ -233,7 +233,7 @@
 				<div class="sidebar">
 					<h2>Game List</h2>
 					<ul>
-					<c:forEach var="dto" items="${list }">
+					<c:forEach var="dto" items="${list}">
 						<a href="/game/list.do?id=${dto.gameId}">
 							<li>${dto.gameName}</li>
 						</a>
@@ -246,7 +246,7 @@
 					<img id="game-thumbnail" src="${game.gameThumb}">
 					<div class="gamepractice">
 						<div class="practicehead">${game.gameIntro}</div>
-						<div class="practicebody">${game.gameDescript }</div>
+						<div class="practicebody">${game.gameDescript}</div>
 						<div class="practicebutton">
 							<a href="/game/play.do?id=${game.gameId}"><button>Game Start</button></a>
 						</div>

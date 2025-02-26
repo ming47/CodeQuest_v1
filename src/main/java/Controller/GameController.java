@@ -47,6 +47,7 @@ public class GameController extends HttpServlet {
 				
 				request.setAttribute("game", game);
 				request.getRequestDispatcher("/WEB-INF/views/game/gamelist.jsp").forward(request, response);
+
 			} else if(cmd.equals("/game/play.do")) { // /game/play.do?id=800001
 				int gameId = Integer.parseInt(request.getParameter("id"));
 				
