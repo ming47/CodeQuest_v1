@@ -99,7 +99,8 @@ html, body {
    position: fixed;
    right: 10px;
    bottom: -35px;
-   top: 80px
+   top: 80px;
+   height: fit-content;
 }
 
 .body{
@@ -494,224 +495,224 @@ td#contents {
    <div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </body>
 <script> 
-	function makeCommentItem(){
-    	// 댓글 목록 불러오기
-       	$.ajax({
-        	url: "/reply/ContentsAll.do",
-           	data: { 'boardId': ${dto.boardId} },
-           	type: "get"
-       	}).done(function(data) {
-          	try{
-           	data = JSON.parse(data);}
-          	catch (e) {
-               	console.error("Error parsing JSON: ", e);
-               	return;
-           	}
+   function makeCommentItem(){
+       // 댓글 목록 불러오기
+          $.ajax({
+           url: "/reply/ContentsAll.do",
+              data: { 'boardId': ${dto.boardId} },
+              type: "get"
+          }).done(function(data) {
+             try{
+              data = JSON.parse(data);}
+             catch (e) {
+                  console.error("Error parsing JSON: ", e);
+                  return;
+              }
             let UserName = "${member.nickName}";   //작성자
             let Master = "${member.role}";   // 관리자
             
             $("#commentList").empty();
 
-           	for (let i = 0; i < data.length; i++) {
-               	let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
+              for (let i = 0; i < data.length; i++) {
+                  let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
                
-               	let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
-               	let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-               	let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
+                  let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
+                  let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+                  let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
                
-               	let btnBox = $("<div>").addClass("btnbox");
+                  let btnBox = $("<div>").addClass("btnbox");
 
-               	if (data[i].writer === UserName || Master === "admin") {   //관리자이거나 작성자일 경우 보이게하기
-                   	let updateBtn = $("<button>").addClass("updatebtn").text("수정");
-                   	let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
-                   	btnBox.append(updateBtn, deleteBtn);
-               	}
-               	commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
-               	
-               	$("#commentList").append(commentItem);
-           	}
+                  if (data[i].writer === UserName || Master === "admin") {   //관리자이거나 작성자일 경우 보이게하기
+                      let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+                      let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+                      btnBox.append(updateBtn, deleteBtn);
+                  }
+                  commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
+                  
+                  $("#commentList").append(commentItem);
+              }
            
-           	// 댓글 수정 기능
-           	$(".updatebtn").on("click", function() {
-               	let commentItem = $(this).closest(".comment-item");
-               	let contentDiv = commentItem.find(".writerdiv");
+              // 댓글 수정 기능
+              $(".updatebtn").on("click", function() {
+                  let commentItem = $(this).closest(".comment-item");
+                  let contentDiv = commentItem.find(".writerdiv");
                
-               	// 기존 내용 저장
-               	contentDiv.attr("data-original", contentDiv.html());
+                  // 기존 내용 저장
+                  contentDiv.attr("data-original", contentDiv.html());
                
-               	// 수정 가능하도록 설정
-               	contentDiv.attr("contentEditable", "true").focus();
+                  // 수정 가능하도록 설정
+                  contentDiv.attr("contentEditable", "true").focus();
 
-              	 // 기존 버튼 숨기기
-               	commentItem.find(".updatebtn, .deletebtn").hide();
+                  // 기존 버튼 숨기기
+                  commentItem.find(".updatebtn, .deletebtn").hide();
 
-               	// 수정완료 & 취소 버튼 추가
-               	let updateOK = $("<button>").addClass("updateOK").text("수정완료");
-               	let updateCancel = $("<button>").addClass("updateCancel").text("취소");
-               	commentItem.find(".btnbox").append(updateOK, updateCancel);
+                  // 수정완료 & 취소 버튼 추가
+                  let updateOK = $("<button>").addClass("updateOK").text("수정완료");
+                  let updateCancel = $("<button>").addClass("updateCancel").text("취소");
+                  commentItem.find(".btnbox").append(updateOK, updateCancel);
 
-              	 // 수정완료 버튼 클릭
-               	updateOK.on("click", function() {
-               		let updatedContent = contentDiv.html();
-                   	let replyId = commentItem.attr("data-id");
+                  // 수정완료 버튼 클릭
+                  updateOK.on("click", function() {
+                     let updatedContent = contentDiv.html();
+                      let replyId = commentItem.attr("data-id");
 
-                   	// 서버로 수정 요청
-                   	$.ajax({
-                       	url: "/reply/update.do",
-                       	type: "post",
-                       	data: { id: replyId, contents: updatedContent },
-                       	success: function(response) {
-                          	 // 성공하면 수정된 내용 유지
-                          	 if(response){
-                           	contentDiv.attr("contentEditable", "false");
-                          	contentDiv.attr("data-original", updatedContent);
+                      // 서버로 수정 요청
+                      $.ajax({
+                          url: "/reply/update.do",
+                          type: "post",
+                          data: { id: replyId, contents: updatedContent },
+                          success: function(response) {
+                              // 성공하면 수정된 내용 유지
+                              if(response){
+                              contentDiv.attr("contentEditable", "false");
+                             contentDiv.attr("data-original", updatedContent);
                            
-                           	// 버튼 복구
-                           	commentItem.find(".updatebtn, .deletebtn").show();
-                           	updateOK.remove();
-                           	updateCancel.remove();
-                           	}else{
-                            	alert("수정을 못했습니다.");
-                           	}
-                       	}
-                   	});
-               	});
+                              // 버튼 복구
+                              commentItem.find(".updatebtn, .deletebtn").show();
+                              updateOK.remove();
+                              updateCancel.remove();
+                              }else{
+                               alert("수정을 못했습니다.");
+                              }
+                          }
+                      });
+                  });
 
-               	// 취소 버튼 클릭
-               	updateCancel.on("click", function() {
-                   	// 원래 내용으로 되돌리기
-                   	contentDiv.html(contentDiv.attr("data-original"));
-                   	contentDiv.attr("contentEditable", "false");
+                  // 취소 버튼 클릭
+                  updateCancel.on("click", function() {
+                      // 원래 내용으로 되돌리기
+                      contentDiv.html(contentDiv.attr("data-original"));
+                      contentDiv.attr("contentEditable", "false");
 
-                   	// 버튼 복구
-                   	commentItem.find(".updatebtn, .deletebtn").show();
-                   	updateOK.remove();
-                   	updateCancel.remove();
-               	});
-           	});
+                      // 버튼 복구
+                      commentItem.find(".updatebtn, .deletebtn").show();
+                      updateOK.remove();
+                      updateCancel.remove();
+                  });
+              });
 
-           	// 댓글 삭제 기능
-           	$(".deletebtn").on("click", function() {
-               	let commentItem = $(this).closest(".comment-item");
-               	let replyId = commentItem.attr("data-id");
+              // 댓글 삭제 기능
+              $(".deletebtn").on("click", function() {
+                  let commentItem = $(this).closest(".comment-item");
+                  let replyId = commentItem.attr("data-id");
 
-               	if (confirm("정말 삭제하시겠습니까?")) {
-                   	$.ajax({
-                       	url: "/reply/delete.do",
-                       	type: "post",
-                       	data: { id: replyId, boardId : ${dto.boardId}},
-                       	success: function(response) {
-                           	// 삭제 성공하면 해당 댓글을 화면에서 제거
-                           	if(response) {                           
-                            	commentItem.remove();
-                           	} else {
-                              	alert("삭제하지 못했습니다.");
-                           	}
-                       	}
-                   	});
-               	}
-           	});
-       	})
- 	}
-	
-	function validInput($inputBtn) {
-		if ($("#commentInput").val().trim() === "") {
-        	$inputBtn.prop("disabled", true);
+                  if (confirm("정말 삭제하시겠습니까?")) {
+                      $.ajax({
+                          url: "/reply/delete.do",
+                          type: "post",
+                          data: { id: replyId, boardId : ${dto.boardId}},
+                          success: function(response) {
+                              // 삭제 성공하면 해당 댓글을 화면에서 제거
+                              if(response) {                           
+                               commentItem.remove();
+                              } else {
+                                 alert("삭제하지 못했습니다.");
+                              }
+                          }
+                      });
+                  }
+              });
+          })
+    }
+   
+   function validInput($inputBtn) {
+      if ($("#commentInput").val().trim() === "") {
+           $inputBtn.prop("disabled", true);
             $inputBtn.css({
-            	"background-color": "#ffd1dc",
+               "background-color": "#ffd1dc",
                 "cursor": "not-allowed"
             });
         } else {
-           	$inputBtn.prop("disabled", false);
-           	$inputBtn.css({
-           		"cursor": "pointer"
-           	});
+              $inputBtn.prop("disabled", false);
+              $inputBtn.css({
+                 "cursor": "pointer"
+              });
         }
-	}
+   }
 
-	//페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기 
-	$(document).ready(function() {
-	    const $commentInput = $("#commentInput");
-	    const $inputBtn = $("#inputbtn");
-	       
-	    // 초기상태 버튼 비활성화
-	    $inputBtn.prop("disabled", true);
-	    $inputBtn.css({
-	       	"background-color": "#ffd1dc",
-	    	"cursor": "not-allowed"
-	    });
+   //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기 
+   $(document).ready(function() {
+       const $commentInput = $("#commentInput");
+       const $inputBtn = $("#inputbtn");
+          
+       // 초기상태 버튼 비활성화
+       $inputBtn.prop("disabled", true);
+       $inputBtn.css({
+             "background-color": "#ffd1dc",
+          "cursor": "not-allowed"
+       });
 
-	   	// 입력창 이벤트 리스너
-	    $commentInput.on("input", function() {
-	    	validInput($inputBtn);
-	    });
+         // 입력창 이벤트 리스너
+       $commentInput.on("input", function() {
+          validInput($inputBtn);
+       });
 
-		$inputBtn.on("click",function() {
-	      	let commentText = $("#commentInput").val().trim();
-	      	if (commentText == "") {
-	         	alert("댓글을 입력하세요")
-	         	return;
-	        } else {
-	        	let isLoggedIn = "${member.memberId}" !== ""; 
-	            let isBanned   = "${member.isbanned}" == "true";
-	
-	            if (!isLoggedIn) {
-	                alert("회원만 글쓰기가 가능합니다.");
-	                event.preventDefault(); // 페이지 이동 방지
-	                return false;
-	            } else if(isBanned) {
-	               	$.ajax({
-	                  	url: '/service/member/ban/detail.do?id=${member.memberId}',
-	                  	type: 'GET'
-	               	}).done(function(data) {
-	                  	data = JSON.parse(data);
-	                  
-	                  	let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
-	                  		+ "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
-	                  	alert(message);
-	               	});
-	       
-	                event.preventDefault();
-	                return false;
-	            }
-	
-	          	$.ajax({
-	               	url: '/reply/add.do',
-	                type: 'POST',
-	                data: {
-	                   	boardId: ${dto.boardId},
-	                   	contents: $commentInput.val(),
-	                } 
-	            }).done(function(data) {
-	                alert('댓글이 등록되었습니다.');
-	                makeCommentItem();
-	                $commentInput.val("");
-	            });  
-	        }
-	      	
-	      	let updatecontents = $("<div>").addClass("comment-box");
-	       	$("#comments").append(updatecontents);
-	       	
-	       	validInput($inputBtn);
-	    });
-		
-	    makeCommentItem();
-	}); // $(document).ready 끝
-	
+      $inputBtn.on("click",function() {
+            let commentText = $("#commentInput").val().trim();
+            if (commentText == "") {
+               alert("댓글을 입력하세요")
+               return;
+           } else {
+              let isLoggedIn = "${member.memberId}" !== ""; 
+               let isBanned   = "${member.isbanned}" == "true";
+   
+               if (!isLoggedIn) {
+                   alert("회원만 글쓰기가 가능합니다.");
+                   event.preventDefault(); // 페이지 이동 방지
+                   return false;
+               } else if(isBanned) {
+                     $.ajax({
+                        url: '/service/member/ban/detail.do?id=${member.memberId}',
+                        type: 'GET'
+                     }).done(function(data) {
+                        data = JSON.parse(data);
+                     
+                        let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+                           + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+                        alert(message);
+                     });
+          
+                   event.preventDefault();
+                   return false;
+               }
+   
+                $.ajax({
+                     url: '/reply/add.do',
+                   type: 'POST',
+                   data: {
+                         boardId: ${dto.boardId},
+                         contents: $commentInput.val(),
+                   } 
+               }).done(function(data) {
+                   alert('댓글이 등록되었습니다.');
+                   makeCommentItem();
+                   $commentInput.val("");
+               });  
+           }
+            
+            let updatecontents = $("<div>").addClass("comment-box");
+             $("#comments").append(updatecontents);
+             
+             validInput($inputBtn);
+       });
+      
+       makeCommentItem();
+   }); // $(document).ready 끝
+   
 
     // 게시물 삭제하기 눌렀을때
     $("#delete").on("click", function() {                 
-    	if (confirm("정말 삭제하시겠습니까")) {
-        	location.href = "/board/delete.do?id=${dto.boardId}";
+       if (confirm("정말 삭제하시겠습니까")) {
+           location.href = "/board/delete.do?id=${dto.boardId}";
         }                 
     }); 
 
     // 게시물 수정하기 눌렀을때 
     $("#update").on("click", function() {
-    	$(".change").attr("contentEditable", "true");
+       $(".change").attr("contentEditable", "true");
         //$('#board_contents').summernote(setSummerNote());
             
-       	$('#board_title').focus();
+          $('#board_title').focus();
         $("#update,#delete").hide();
         
         //기존에 있던 버튼 숨기기 
@@ -723,55 +724,57 @@ td#contents {
         updateCancel.attr("type", "button");
         
         updateCancel.on("click", function() {
-        	location.reload();
-		});
+           location.reload();
+      });
                     
-    	$(".bottom").append(updateOK, updateCancel);
+       $(".bottom").append(updateOK, updateCancel);
     });
    
               
     $('#update-form').on('submit', function() {
-    	$('#hdtitle').val($('#board_title').html());
+       $('#hdtitle').val($('#board_title').html());
         $("#hdcontents").val($("#board_contents").html());
-   	});// 게시물 수정 
+      });// 게시물 수정 
                
     $("#frm").on("submit", function() {
-    	$("#hdtitle").val($("#board_title").html())
+       $("#hdtitle").val($("#board_title").html())
         $("#hdcontents").val($("#board_contents").html())
     })//댓글 수정 
-               
+
     $("#back").on("click", function() {
-    	let last_cpage = sessionStorage.getItem("last_cpage");
+       let last_cpage = sessionStorage.getItem("last_cpage");
         location.href = "/board/list.do?cpage=" +last_cpage;  });
             
         let isEmoticonPanelOpen = false;
         $("#emojiBtn").on("click", function(){
-        	isEmoticonPanelOpen = !isEmoticonPanelOpen;
+           isEmoticonPanelOpen = !isEmoticonPanelOpen;
             
             if(isEmoticonPanelOpen){   
-               	// 이모티콘 패널을 열면
-               	$(this).text("🤢");
-               	$(".emoticons").show();
-               	$(".emoticon").css({
-                  	'background': 'linear-gradient(to bottom, #bacee0 0%, rgba(42, 81, 18950, 0.51) 100%)',
+                  // 이모티콘 패널을 열면
+                  $(this).text("🤢");
+                  $(".emoticons").show();
+                  $(".emoticon").css({
+                     'background': 'linear-gradient(to bottom, #bacee0 0%, rgba(42, 81, 18950, 0.51) 100%)',
                     'transition': 'background 1s ease'
-               	});
+                  });
             } else{
-               	//이모티콘 패널을 닫으면
-               	$(this).text("😀");
-               	$(".emoticons").hide();
-               	$(".emoticon").css({
-                  	'background': '#bacee0',
+                  //이모티콘 패널을 닫으면
+                  $(this).text("😀");
+                  $(".emoticons").hide();
+                  $(".emoticon").css({
+                     'background': '#bacee0',
                     'transition': 'background 0.5s ease'
-               	});
+                  });
             }
          });
          $(".emoji-btn").on("click", function(){
+       	 	console.log("test");
                let emotion = $(this).text();
                let currentText = $('#commentInput').val();
                
                $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기
                $("#commentInput").focus();
+               validInput($('#inputbtn'));
 
                $("#emojiBtn").text("😀");
                isEmoticonPanelOpen = false;
@@ -781,7 +784,7 @@ td#contents {
              console.log('서머노트 세팅');
 
              return {
-             	placeholder : '내용을 입력하십시오',
+                placeholder : '내용을 입력하십시오',
                 height : 500,
                 minHeight : null, // set minimum height of editor
                 maxHeight : null, // set maximum height of editor
