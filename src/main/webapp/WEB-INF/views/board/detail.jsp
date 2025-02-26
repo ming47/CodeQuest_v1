@@ -740,6 +740,7 @@ td#contents {
           validInput($inputBtn);
        });
 
+
          // 입력창 이벤트 리스너
        $commentInput.on("input", function() {
           validInput($inputBtn);
@@ -837,7 +838,7 @@ td#contents {
             }
          });
          $(".emoji-btn").on("click", function(){
-              console.log("test");
+
                let emotion = $(this).text();
                let currentText = $('#commentInput').val();
                

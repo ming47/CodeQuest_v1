@@ -8,9 +8,6 @@
 <meta charset="UTF-8">
 <title>문의내역 상세보기</title>
 
-<!-- 팝업 크기는 window.open(..., "width=1000,height=1000")로 지정 -->
-
-<!-- 마이페이지와 비슷한 폰트/색상/스타일 적용 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link 
@@ -18,9 +15,9 @@
   rel="stylesheet">
 
 <style>
-  /* 공통 스타일 */
   body {
-    background: #f4f7f8;
+    background: url('/images/pop.jpg') no-repeat center;
+   	background-size: cover;
     color: #333;
     margin: 0;
     padding: 0;
@@ -41,6 +38,7 @@
     margin-bottom: 20px;
     color: #1e201d;
     text-align: center;
+    font-weight:bold;
   }
 
   fieldset {

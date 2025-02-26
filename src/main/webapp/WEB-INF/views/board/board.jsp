@@ -70,7 +70,7 @@ html, body {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	position: fixed;
+
 }
 
 .body {
@@ -133,7 +133,7 @@ html, body {
 }
 
 .logbox-container {
-	position: fixed;
+    position: absolute;
 	right: 10px;
 	bottom: -35px;
 	top: 80px
@@ -324,6 +324,7 @@ button:focus {
 	background-color: 'red';
 }
 </style>
+<script src = "${pageContext.request.contextPath}/detail.js"></script>
 </head>
 
 
@@ -507,7 +508,7 @@ button:focus {
                  if(confirm("회원만 글쓰기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
                     location.href="/";
                  }
-                 event.preventDefault();
+                 event.preventDefault(); 
                  return false;
                  
                  
