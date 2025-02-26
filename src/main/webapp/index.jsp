@@ -11,10 +11,6 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
 	integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka"
 	crossorigin="anonymous"></script>
-<script>
-	Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
-</script>
-
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -289,7 +285,6 @@
 	color: #2f2b2b;
 }
 
-
 .hidden {
 	display: none;
 }
@@ -315,7 +310,6 @@
 	padding: 5px;
 	font-size: 17px;
 }
-
 
 .gameList {
 	display: grid;
@@ -486,11 +480,7 @@ table tr {
 				</div>
 			</c:if>
 		</div>
-
-
 		<div class="main-content">
-
-
 			<div class="body">
 				<div class="gameList">
 					<div class="game">
@@ -530,8 +520,6 @@ table tr {
 						<a href="/game/list.do?id=800006"><button>Play</button></a>
 					</div>
 				</div>
-
-
 				<div class="boardlist">
 					<h3>📢 최근 게시물</h3>
 					<table>
@@ -567,10 +555,6 @@ table tr {
 					</table>
 				</div>
 			</div>
-
-
-
-
 			<div class="right-content">
 				<c:if test="${member.memberId==null}">
 					<div class="loginbox">
@@ -632,13 +616,6 @@ table tr {
 	</div>
 
 	<script>
-		function loginWithKakao() {
-			Kakao.Auth.authorize({
-				redirectUri : 'http://10.5.5.14/KakaoLogin',
-				scope : 'profile_nickname,profile_image,account_email',
-			});
-		}
-
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=550, height=300");
 		});
@@ -647,7 +624,13 @@ table tr {
 		if (loginStatus === 'fail') {
 			alert("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
 		}
-
+		Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
+		function loginWithKakao() {
+			Kakao.Auth.authorize({
+				redirectUri : 'http://10.5.5.14/KakaoLogin',
+				scope : 'profile_nickname,profile_image,account_email',
+			});
+		}
 		$(document)
 				.ready(
 						function() {
@@ -655,13 +638,6 @@ table tr {
 								$(".starter").hide();
 								$(".container").show();
 							}
-							/* 
-							let memberSession = ${member} !== "";   
-								if (memberSession){ 
-							        $(".rankingboard").css("height", "2000px"); // 높이 조정
-							        $(".rankingboard").addClass("expanded"); // 추가적인 스타일 적용 가능
-							  }
-							 */
 							function callLatestBoard() {
 								$
 										.ajax({
@@ -872,6 +848,5 @@ table tr {
 							});
 						});
 	</script>
-
 </body>
 </html>

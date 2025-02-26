@@ -545,52 +545,32 @@
 		});
 
 		//회원가입 submit 전 유효성 검사
-		$("#signupForm")
-			.on(
-				"submit",
-				function (event) {
-					if (!$("#id").val()) {
-						alert("ID는 필수 입력사항입니다.");
-						$("#id").focus();
-						return false;
-					} else if (!$("#pw").val()) {
-						alert("PW는 필수 입력사항입니다.");
-						$("#pw").focus();
-						return false;
-					} else if (!$("#pwr").val()) {
-						alert("PW는 필수 입력사항입니다.");
-						$("#pwr").focus();
-						return false;
-					} else if (!$("#name").val()) {
-						alert("이름은 필수 입력사항입니다.");
-						$("#name").focus();
-						return false;
-					} else if (!$("#ssnFront").val()) {
-						alert("주민등록번호는 필수 입력사항입니다.");
-						$("#ssnFront").focus();
-						return false;
-					} else if (!$("#ssnBack").val()) {
-						alert("주민등록번호는 필수 입력사항입니다.");
-						$("#ssnBack").focus();
-						return false;
-					} else if (!$("#phone").val()) {
-						alert("전화번호는 필수 입력사항입니다.");
-						$("#phone").focus();
-						return false;
-					} else if (!$("#email").val()) {
-						alert("이메일은 필수 입력사항입니다.");
-						$("#email").focus();
-						return false;
-					}
-					console.log(id_val, id_val_dupl, pw_val, name_val)
+		$("#signupForm").on("submit",function (event) {
+		    let inputField = [
+		        {selector: "#id", message: "ID는 필수 입력사항입니다."},
+		        {selector: "#pw", message: "PW는 필수 입력사항입니다."},
+		        {selector: "#pwr", message: "PW는 필수 입력사항입니다."},
+		        {selector: "#name", message: "이름은 필수 입력사항입니다."},
+		        {selector: "#ssnFront", message: "주민등록번호는 필수 입력사항입니다."},
+		        {selector: "#ssnBack", message: "주민등록번호는 필수 입력사항입니다."},
+		        {selector: "#phone", message: "전화번호는 필수 입력사항입니다."},
+		        {selector: "#email", message: "이메일은 필수 입력사항입니다."}
+		    ];
+		    for (let i = 0; i < inputField.length; i++) {
+		    	let field = $(inputField[i].selector);
+		        if (!field.val()) {
+		            alert(inputField[i].message);
+		            field.focus();
+		            return false;
+		        }
+		    }
 
-					if (!(id_val && pw_val && name_val && tel_val
-						&& email_val && nickName_val)) {
-						alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
-						return false;
-					}
-
-				});
+			if (!(id_val && pw_val && name_val && tel_val
+				&& email_val && nickName_val)) {
+				alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
+				return false;
+			}
+		});
 	</script>
 </body>
 
