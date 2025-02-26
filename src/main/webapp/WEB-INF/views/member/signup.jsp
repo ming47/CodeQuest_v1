@@ -274,7 +274,7 @@
 				<div class="input-group">
 					<input type="text" name="id" id="id" placeholder="8~20자 이내 영어소문자,숫자를 포함한 ID를 입력해주세요">
 				</div>
-				<span id="result_id"></span> <span id="result_id_dupl"></span> <input type="password" name="pw" id="pw"
+				<span id="result_id"></span><input type="password" name="pw" id="pw"
 					placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요"> <span id="result_pw"></span> <input type="password"
 					name="pwr" id="pwr" placeholder="패스워드를 다시 입력하세요"> <span id="result_pwr"></span>
 			</fieldset>
@@ -357,7 +357,7 @@
 				$("#result_id").css({
 					"color": "green",
 					"font-size": "16px"
-				}).html("유효한 ID입니다.");
+				}).html("사용가능한 ID입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
 					data: {
@@ -368,13 +368,13 @@
 					dataType: "text"
 				}).done(function (resp) {
 					if (resp.trim() === "exist") {
-						$("#result_id_dupl").css({
+						$("#result_id").css({
 							"color": "#BB3A48",
 							"font-size": "16px"
 						}).html("이미 사용중인 ID입니다");
 						id_val = false;
 					} else {
-						$("#result_id_dupl").css({
+						$("#result_id").css({
 							"color": "green",
 							"font-size": "16px"
 						}).html("사용가능한 ID입니다.");
@@ -393,13 +393,13 @@
 				$("#result_pw").css({
 					"color": "#BB3A48",
 					"font-size": "16px"
-				}).html("유효하지 않는 PW입니다.");
+				}).html("사용불가능한 PW입니다.");
 				pw_val = false;
 			} else {
 				$("#result_pw").css({
 					"color": "green",
 					"font-size": "16px"
-				}).html("유효한 PW 입니다.");
+				}).html("사용가능한 PW 입니다.");
 				pw_val = true;
 			}
 		});
@@ -477,13 +477,13 @@
 				$("#result_phone").css({
 					"color": "#BB3A48",
 					"font-size": "16px"
-				}).html("유효하지 않는 전화번호입니다.");
+				}).html("사용 불가능한 전화번호입니다.");
 				tel_val = false;
 			} else {
 				$("#result_phone").css({
 					"color": "green",
 					"font-size": "16px"
-				}).html("유효한 전화번호입니다.");
+				}).html("사용 가능한 전화번호입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
 					data: {
@@ -519,13 +519,13 @@
 				$("#result_email").css({
 					"color": "#BB3A48",
 					"font-size": "16px"
-				}).html("유효하지 않는 이메일입니다.");
+				}).html("사용 불가능한 이메일입니다.");
 				email_val = false;
 			} else {
 				$("#result_email").css({
 					"color": "green",
 					"font-size": "16px"
-				}).html("유효한 이메일 입니다.");
+				}).html("사용 가능한 이메일입니다.");
 				$.ajax({
 					url: "/member/valueCheck.do",
 					data: {

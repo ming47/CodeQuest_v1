@@ -168,13 +168,7 @@
 				method: "GET",
 				dataType: "text"
 			}).done(function (resp) {
-				if (resp == "true") {
-					alert("간편로그인한 계정은 비밀번호 재설정을 할수없습니다.");
-				}
-				else {
-					$('#frm').submit();
-				}
-
+				$('#frm').submit();
 			}).fail(function (xhr, status, error) {
 				console.error("AJAX 요청 실패:", error);
 			});
