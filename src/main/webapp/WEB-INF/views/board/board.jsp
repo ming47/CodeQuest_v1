@@ -323,6 +323,7 @@ button:focus {
    background-color: 'red';
 }
 </style>
+<script src = "${pageContext.request.contextPath}/detail.js"></script>
 </head>
 
 
