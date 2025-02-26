@@ -77,7 +77,7 @@ html, body {
 	margin: 0;
 	width: 100%;
 	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
+	background: url('/images/밤.gif') no-repeat center;
 	background-size: cover;
 	display: flex;
 	align-items: center;
@@ -151,12 +151,12 @@ html, body {
 }
 
 table {
-	
+	border-collapse: collapse;
 	width: 70vw;
 	font-size: 19px;
 	border-spacing: 3px;
 	border-collapse: separate;
-    border-collapse: collapse;
+	background-color: transparent;
 }
 
 table th, table td {
@@ -166,7 +166,7 @@ table th, table td {
 	border: none;
 	font-family: 'DungGeunMo';
 	color: black;
-
+	background-color: #fafbf4;
 	height: 58px;
 }
 
