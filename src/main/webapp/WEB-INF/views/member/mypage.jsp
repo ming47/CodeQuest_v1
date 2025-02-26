@@ -285,7 +285,7 @@
 			font-size: 20px;
 			cursor: pointer;
 			transition: 0.3s;
-			width: 110px;
+			width: 120px;
 			height: 48px;
 			margin-left: 10px;
 		}
@@ -432,6 +432,31 @@
 		.popup {
 			cursor: pointer;
 		}
+		.input-wrapper {
+		  flex: 1;
+		  display: flex;
+		  flex-direction: column;
+		}
+		.input-wrapper input {
+		  width: 100%;
+		  box-sizing: border-box;
+		}	
+		.input-group>span {
+			height: 100%;
+		}	
+		
+		.field-name {
+			width: 15%;
+		}
+		
+		.field-input {
+			width: 85%;
+		}
+		
+		
+		#zipCode {
+			width: 75%;
+		}
 	</style>
 </head>
 
@@ -480,55 +505,90 @@
 					<form action="/member/update.do" method="post" id="frm">
 						<input type="hidden" name="memberId" value=${member.memberId }>
 						<div class="input-group">
-							<label for="login_id">아이디</label> <input type="text"
-								value="<c:choose><c:when test='${member.loginId == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.loginId}</c:otherwise></c:choose>"
+							<span class="field-name">
+								<label for="login_id">아이디</label></span> 
+							<span class="field-input">
+								<input type="text"
+									value="<c:choose><c:when test='${member.loginId == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.loginId}</c:otherwise></c:choose>"
+									readonly>
+							</span>
+						</div>
+						<div class="input-group">
+							<span class="field-name"><label for="name">이름</label></span> 
+							<span class="field-input">
+							<input type="text" name="name" id="name" value=${member.name }
 								readonly>
+								</span>
 						</div>
 						<div class="input-group">
-							<label for="name">이름</label> <input type="text" name="name" id="name" value=${member.name }
+							<span class="field-name">
+								<label for="nickname">닉네임</label> 
+							</span>
+							<span class="input-wrapper field-input">
+								<input type="text" name="nickName" id="nickName"
+									value=${member.nickName } readonly>
+								<span id="result_nickName"></span>
+							</span>
+						</div>
+						<div class="input-group">
+							<span class="field-name">
+							<label for="ssn">주민번호</label></span>  
+							<span class="field-input">
+							<input type="text" name="ssn" id="ssn" value=${member.ssn }
 								readonly>
+							</span>
 						</div>
 						<div class="input-group">
-							<label for="nickname">닉네임</label> <input type="text" name="nickName" id="nickName"
-								value=${member.nickName } readonly>
-							<span id="result_nickName"></span>
+						<span class="field-name">
+							<label for="email">이메일</label> </span>
+							<span class="input-wrapper field-input">
+								<input type="text" name="email" id="email"value=${member.email } readonly>
+								<span id="result_email"></span>
+							</span>
 						</div>
 						<div class="input-group">
-							<label for="ssn">주민번호</label> <input type="text" name="ssn" id="ssn" value=${member.ssn }
-								readonly>
+						<span class="field-name">
+							<label for="phone">전화번호</label> </span>
+							<span class="input-wrapper field-input">
+								<input type="text" name="phone" id="phone"
+									value=${member.phone } readonly>
+								<span id="result_phone"></span>
+							</span>
 						</div>
 						<div class="input-group">
-							<label for="email">이메일</label> <input type="text" name="email" id="email"
-								value=${member.email } readonly>
-							<span id="result_email"></span>
-						</div>
-						<div class="input-group">
-							<label for="phone">전화번호</label> <input type="text" name="phone" id="phone"
-								value=${member.phone } readonly>
-							<span id="result_phone"></span>
-						</div>
-						<div class="input-group">
-							<label for="zipcode">우편번호</label> <input type="text" name="zipCode" id="zipCode"
+						<span class="field-name">
+							<label for="zipcode">우편번호</label>
+						</span> 
+						<span class="field-input"><input type="text" name="zipCode" id="zipCode"
 								value="<c:choose><c:when test='${member.zipCode == 0}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.zipCode}</c:otherwise></c:choose>"
 								readonly>
 							<button type="button" id="update_address" style="visibility: hidden;">검색</button>
+							</span>
 						</div>
 						<div class="input-group">
-							<label for="address">주소</label> <input type="text" name="address" id="address"
+						<span class="field-name">
+							<label for="address">주소</label> </span>
+						<span class="field-input"><input type="text" name="address" id="address"
 								value="<c:choose><c:when test='${member.address == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.address}</c:otherwise></c:choose>"
 								readonly>
+								</span>
 
 						</div>
 						<div class="input-group">
-							<label for="detail_address">상세주소</label> <input type="text" name="detailAddress"
+						<span class="field-name">
+							<label for="detail_address">상세주소</label> </span>
+						<span class="field-input"><input type="text" name="detailAddress"
 								id="detailAddress"
 								value="<c:choose><c:when test='${member.detailAddress == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.detailAddress}</c:otherwise></c:choose>"
-								readonly>
-
+								readonly> 
+								</span>
+				
 						</div>
 						<div class="input-group">
-							<label for="join_date">가입날짜</label> <input type="text" name="regDate" id="regDate"
-								value=${member.regDate } readonly>
+						<span class="field-name">						
+							<label for="join_date">가입날짜</label> </span>
+						<span class="field-input"><input type="text" name="regDate" id="regDate"
+								value=${member.regDate } readonly> </span>
 						</div>
 						<div class="buttons">
 							<button type="button" id="update_btn">수정하기</button>
@@ -693,9 +753,10 @@
 			//닉네임
 			$("#nickName").on("keyup", function () {
 				// 원래 입력되어있던 값 제외
-				if ($("#nickName") == originNickName) {
+				if ($("#nickName").val() == originNickName) {
 					$("#result_nickName").html("");
 					nickName_val = true;
+					return;
 				}
 				$.ajax({
 					url: "/member/valueCheck.do",
@@ -736,7 +797,7 @@
 				}
 
 				// 원래 입력되어있던 값 제외
-				if ($("#email") == originEmail) {
+				if ($("#email").val() == originEmail) {
 					$("#result_email").html("");
 					email_val = true;
 					return;
@@ -779,7 +840,7 @@
 					return;
 				}
 				// 원래 입력되어있던 값 제외
-				if ($("#phone") == originPhone) {
+				if ($("#phone").val() == originPhone) {
 					$("#result_phone").html("");
 					phone_val = true;
 					return;

@@ -345,7 +345,7 @@
 		});
 		//회원가입 정규식 유효성 검사
 		$("#id").on("keyup", function () {
-			let regex = /^[a-z0-9_]{8,20}$/;
+			let regex = /^(?=.*[a-z])(?=.*\d)[a-z0-9_]{8,20}$/;
 			let vali = regex.exec($(this).val());
 			if (vali == null) {
 				$("#result_id").css({
