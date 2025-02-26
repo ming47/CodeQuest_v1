@@ -472,37 +472,37 @@ td, th {
                   <img src="/images/skipstone.png">
                   <h3>Skipping Stone</h3>
                   <p>Action</p>
-                  <a href="/game/play.do?id=800001"><button>Play</button></a>
+                  <a href="/game/list.do?id=800001"><button>Play</button></a>
                </div>
                <div class="game">
                   <img src="/images/2048.png">
                   <h3>2048</h3>
                   <p>Puzzle</p>
-                   <a href="/game/play.do?id=800002"><button>Play</button></a>
+                   <a href="/game/list.do?id=800002"><button>Play</button></a>
                </div>
                <div class="game">
                   <img src="/images/warplane.png">
                   <h3>World Of WarPlane</h3>
                   <p>Action</p>
-                  <a href="/game/play.do?id=800003"><button>Play</button></a>
+                  <a href="/game/list.do?id=800003"><button>Play</button></a>
                </div>
                <div class="game">
                   <img src="/images/metro.png">
                   <h3>Mini Metro</h3>
                   <p>Strategy</p>
-                 <a href="/game/play.do?id=800004"><button>Play</button></a>
+                 <a href="/game/list.do?id=800004"><button>Play</button></a>
                </div>
                <div class="game">
                   <img src="/images/tetris.png">
                   <h3>Tetris</h3>
                   <p>Puzzle</p>
-                 <a href="/game/play.do?id=800005"><button>Play</button></a>
+                 <a href="/game/list.do?id=800005"><button>Play</button></a>
                </div>
                <div class="game">
                   <img src="/images/chess.jpg">
                   <h3>Chess</h3>
                   <p>Stretegy</p>
-                <a href="/game/play.do?id=800006"><button>Play</button></a>
+                <a href="/game/list.do?id=800006"><button>Play</button></a>
                </div>
             </div>
 
