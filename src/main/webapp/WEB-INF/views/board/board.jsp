@@ -203,7 +203,7 @@ table a:hover {
 	background-color: #2b2d42;
 	transition: background-color 0.3s ease;
 }
-/* ✅ 로그인 박스 */
+
 .loginbox {
 	width: 80%;
 	background: url('/login.jpg') no-repeat center;
@@ -218,7 +218,6 @@ table a:hover {
 	margin-right: 75px;
 }
 
-/* ✅ 로그인 버튼 및 입력 필드 배치 */
 .loginbox h2 {
 	font-family: "Jua", serif;
 	font-weight: 400;
@@ -241,6 +240,7 @@ select {
 	transition: 0.3s;
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
+	
 }
 
 input {
@@ -251,8 +251,9 @@ input {
 	font-size: 16px;
 	transition: 0.3s;
 	border-radius: 5px;
-	text-align: center;
+
 	font-family: 'DungGeunMo';
+
 }
 
 input:focus {
@@ -279,7 +280,12 @@ button {
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
 }
-
+#searchbar form {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; 
+    gap: 10px;
+}
 .writebtn {
 	margin-top: 15px;
 }
@@ -397,11 +403,9 @@ button:focus {
 
 					<tr id="searchbar">
 						<td colspan="5">
-							<form method="get" name="search" action="/board/search.do"
-								style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+							<form method="get" name="search" action="/board/search.do">
 								<select class="form-control" name="searchField"
 									style="width: 120px;">
-									<option value="0">선택</option>
 									<option value="schTitle">제목</option>
 									<option value="schWriter">작성자</option>
 								</select> <input type="text" class="form-control" placeholder="검색어 입력"
@@ -414,11 +418,7 @@ button:focus {
 				</table>
 
 				<div colspan="3" id="buttonbox">
-					<c:if test="${dto == null}">
-						<a href="/board/addform.do" method="post">
-							<button class="writebtn">작성하기</button>
-						</a>
-					</c:if>
+					<button class="writebtn">작성하기</button>
 				</div>
 			</div>
 		</div>
@@ -491,19 +491,21 @@ $(function() {
 	    });
 	 $(document).ready(function() {
 		    $(".writebtn").on("click", function(event) {
-		        let isLoggedIn = "${member.memberId}" !== ""; 
+		        let isLoggedIn =  "${member.memberId}" !== ""; 
 		        let isBanned   = "${member.isbanned}" == "true";
 
 		        if (!isLoggedIn) {
-		            alert("회원만 글쓰기가 가능합니다.");
+		            if(confirm("회원만 글쓰기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
+		            	location.href="/";
+		            }
 		            event.preventDefault(); // 페이지 이동 방지
 		            return false;
 		            
 		            
 		        } else if(isBanned) {
+		        	
 		        	$.ajax({
-		        		url: '/service/member/ban/detail.do?id=' + ${member.memberId},
-		        		type: 'GET'
+		        		url: '/service/member/ban/detail.do?id=${member.memberId}'
 		        	}).done(function(data) {
 		        		data = JSON.parse(data);
 		        		
