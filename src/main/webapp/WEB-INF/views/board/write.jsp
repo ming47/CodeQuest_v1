@@ -52,6 +52,7 @@
 	background-size: cover;
 	position: relative;
 	justify-content: center;
+	overflow-x: hidden;
 }
 
 .header, .footer {
@@ -69,10 +70,9 @@
 
 .header {
 	height: 80px;
-	padding: 20px;
-	height: 80px;
-	margin:0px;
-	width: 100%;
+	padding: 30px;
+	width:100vw;
+	position:relative;
 }
 
 .footer {
@@ -82,8 +82,8 @@
 	justify-content: center;
 	font-size: 14px;
 	margin-top: 50px;
-	width: 100%;
 	bottom: 0px;
+	width:100vw;
 }
 
 .header>.navi>.logo {
@@ -95,6 +95,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin: 0;
 }
 
 .menu {
@@ -112,7 +113,13 @@
 	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
 		black;
 	text-decoration: none;
+	font-size:15px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	margin-top:15px;
 }
+
 
 .menu li:hover a {
 	background: #3c3b39;
@@ -134,9 +141,6 @@ h1 {
 
 .body {
 	font-family: 'DungGeunMo';
-	width: 70%;
-	background-attachment: fixed;
-	background-size: cover;
 	align-items: center;
 	justify-content: center;
 }
@@ -148,7 +152,7 @@ h1 {
 .logbox-container {
 	right: 10px;
 	top: 100px;
-	position: fixed;
+	position: absolute;
 }
 
 table {
@@ -381,7 +385,6 @@ button:hover {
 				url : '/file/image/upload.do',
 				data : formData,
 				type : 'POST',
-				//dataType:"multipart/form-data", 
 				contentType : false,
 				processData : false,
 				error : function(request, status, error) {
