@@ -248,7 +248,7 @@
 						<div class="practicehead">${game.gameIntro}</div>
 						<div class="practicebody">${game.gameDescript }</div>
 						<div class="practicebutton">
-							<a href="${game.gameGateway}"><button>Game Start</button></a>
+							<a href="/game/play.do?id=${game.gameId}"><button>Game Start</button></a>
 						</div>
 					</div>
 				</div>
