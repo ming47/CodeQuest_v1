@@ -20,9 +20,13 @@
 			padding: 0;
 		}
 
-		body {
+		html,body {
+		    margin: 0;
+    		padding: 0;
 			background: #f4f7f8;
 			overflow-y: auto;
+			width: 100%;
+			height: 100vh;
 		}
 
 		.header,
@@ -98,15 +102,14 @@
 		}
 
 		.container {
-			width: 100%;
-			max-width: 1500px;
+			width: 73vw;
+			margin: 100px auto;
 			background: white;
 			border-radius: 10px;
 			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-			margin: 100px auto;
 			padding: 20px;
 			display: flex;
-			margin-left: 350px;
+			/*  margin-left: 350px; */
 		}
 
 		.main-content {
@@ -119,13 +122,11 @@
 
 		.sidebar {
 			width: 250px;
-			height: 330px;
 			background: #f4f4f4;
 			padding: 20px;
 			border-radius: 10px;
 			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-			left: 35px;
-			position: fixed;
+			height: 330px;
 		}
 
 		.sidebar h2 {
@@ -173,10 +174,10 @@
 		}
 
 		fieldset {
-			width: 65%;
+			width: 70%;
 			border: 3px solid #b4c28a;
 			border-radius: 10px;
-			padding: 15px;
+			padding: 14px;
 			margin: auto;
 			text-align: left;
 			background: #fafafa;

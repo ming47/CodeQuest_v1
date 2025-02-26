@@ -20,6 +20,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	height: 100vh;
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -53,6 +54,10 @@ h1 {
 
 .btn:hover {
 	transform: scale(1.2);
+}
+.btn:focus {
+    outline: none;
+    box-shadow: none;
 }
 </style>
 </head>
