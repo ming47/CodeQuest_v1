@@ -16,7 +16,8 @@
 
 <style>
   body {
-    background: #f4f7f8;
+    background: url('/images/pop.jpg') no-repeat center;
+   	background-size: cover;
     color: #333;
     margin: 0;
     padding: 0;
@@ -37,6 +38,7 @@
     margin-bottom: 20px;
     color: #1e201d;
     text-align: center;
+    font-weight:bold;
   }
 
   fieldset {

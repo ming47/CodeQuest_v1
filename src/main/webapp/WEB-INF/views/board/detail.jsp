@@ -13,13 +13,23 @@
    rel="stylesheet">
 <script
    src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+<link
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
+	rel="stylesheet">
 <link
    href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
    rel="stylesheet">
 <script
    src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 <style>
+@font-face {
+	font-family: 'DungGeunMo';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 * {
    box-sizing: border-box;
    margin: 0;
@@ -365,7 +375,7 @@ td#contents {
 </style>
 </head>
 <body>
-	<div class="header">
+   <div class="header">
       <div class="navi">
          <div class="logo">Team CodeQuest</div>
          <ul class="menu">
@@ -431,7 +441,7 @@ td#contents {
       <div class="commentSection">
             <!-- 댓글 목록 -->
             <div id="commentInputContainer">
-              	<input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
+                 <input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
                <div class="emoticons" style="display: none;">
                   <div class="emoticon">
                      <span class="emoji-btn">😀</span>
@@ -472,129 +482,176 @@ td#contents {
    </div>
    <div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </body>
-<script> 
-   function makeCommentItem(){
-       // 댓글 목록 불러오기
-          $.ajax({
-           url: "/reply/ContentsAll.do",
-              data: { 'boardId': ${dto.boardId} },
-              type: "get"
-          }).done(function(data) {
-             try{
-              data = JSON.parse(data);}
-             catch (e) {
-                  console.error("Error parsing JSON: ", e);
-                  return;
-              }
-            let UserName = "${member.nickName}";   //작성자
-            let Master = "${member.role}";   // 관리자
-            
-            $("#commentList").empty();
+<script>
+   function makePageNavi(dto, className) {
+       $('.' + className).remove();
+       $('.' + className).off('click');
+    
+       console.log(dto);
 
-              for (let i = 0; i < data.length; i++) {
-                  let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
-               
-                  let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
-                  let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-                  let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
-               
-                  let btnBox = $("<div>").addClass("btnbox");
+       const pageNavi = $('<div>').addClass('pageNavi');
+       pageNavi.css({
+           'width': 'fit-content',
+           'height': 'fit-content'
+       });
 
-                  if (data[i].writer === UserName || Master === "admin") {   //관리자이거나 작성자일 경우 보이게하기
-                      let updateBtn = $("<button>").addClass("updatebtn").text("수정");
-                      let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
-                      btnBox.append(updateBtn, deleteBtn);
-                  }
-                  commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
+       function makeSpan(content, index) {
+           const span = $('<span>').html(content).addClass('page');
+           span.attr('value', index);
+           return span;
+       }
+
+       if (!dto.isFirst) {
+           pageNavi.append(makeSpan('이전', dto.startNavi - 1).addClass(className).attr('tag', 'prev'));
+       }
+
+       for (let i = dto.startNavi; i <= dto.endNavi; i++) {
+           pageNavi.append(makeSpan(i, i).addClass(className));
+       }
+
+       if (!dto.isEnd) {
+           pageNavi.append(makeSpan('다음', dto.endNavi + 1).addClass(className).attr('tag', 'next'));
+       }
+
+       const indexCss = '.page {font-size: 20px; width: 50px; height: 50px; padding-left: 5px; padding-right: 5px;}'
+       const hover = '.page:hover { cursor: pointer; }'
+
+       $('style').append(hover).append(indexCss);
+
+       return pageNavi;
+   }
+
+      function makeCommentItem(data){
+        let UserName = "${member.nickName}";   //작성자
+        let Master = "${member.role}";   // 관리자
+        
+        $("#commentList").empty();
+
+        for (let i = 0; i < data.length; i++) {
+           let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
+               
+            let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
+            let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
+               
+            let btnBox = $("<div>").addClass("btnbox");
+
+            if (data[i].writer === UserName || Master === "admin") {   //관리자이거나 작성자일 경우 보이게하기
+               let updateBtn = $("<button>").addClass("updatebtn").text("수정");
+                let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
+                btnBox.append(updateBtn, deleteBtn);
+            }
+            commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
                   
-                  $("#commentList").append(commentItem);
-              }
+            $("#commentList").append(commentItem);
+      }
            
-              // 댓글 수정 기능
-              $(".updatebtn").on("click", function() {
-                  let commentItem = $(this).closest(".comment-item");
-                  let contentDiv = commentItem.find(".writerdiv");
+        // 댓글 수정 기능
+        $(".updatebtn").on("click", function() {
+           let commentItem = $(this).closest(".comment-item");
+            let contentDiv = commentItem.find(".writerdiv");
                
-                  // 기존 내용 저장
-                  contentDiv.attr("data-original", contentDiv.html());
+            // 기존 내용 저장
+            contentDiv.attr("data-original", contentDiv.html());
                
-                  // 수정 가능하도록 설정
-                  contentDiv.attr("contentEditable", "true").focus();
+            // 수정 가능하도록 설정
+            contentDiv.attr("contentEditable", "true").focus();
 
-                  // 기존 버튼 숨기기
-                  commentItem.find(".updatebtn, .deletebtn").hide();
+            // 기존 버튼 숨기기
+            commentItem.find(".updatebtn, .deletebtn").hide();
 
-                  // 수정완료 & 취소 버튼 추가
-                  let updateOK = $("<button>").addClass("updateOK").text("수정완료");
-                  let updateCancel = $("<button>").addClass("updateCancel").text("취소");
-                  commentItem.find(".btnbox").append(updateOK, updateCancel);
+            // 수정완료 & 취소 버튼 추가
+            let updateOK = $("<button>").addClass("updateOK").text("수정완료");
+            let updateCancel = $("<button>").addClass("updateCancel").text("취소");
+            commentItem.find(".btnbox").append(updateOK, updateCancel);
 
-                  // 수정완료 버튼 클릭
-                  updateOK.on("click", function() {
-                     let updatedContent = contentDiv.html();
-                      let replyId = commentItem.attr("data-id");
+            // 수정완료 버튼 클릭
+            updateOK.on("click", function() {
+               let updatedContent = contentDiv.html();
+                let replyId = commentItem.attr("data-id");
 
-                      // 서버로 수정 요청
-                      $.ajax({
-                          url: "/reply/update.do",
-                          type: "post",
-                          data: { id: replyId, contents: updatedContent },
-                          success: function(response) {
-                              // 성공하면 수정된 내용 유지
-                              if(response){
-                              contentDiv.attr("contentEditable", "false");
-                             contentDiv.attr("data-original", updatedContent);
+                // 서버로 수정 요청
+                $.ajax({
+                   url: "/reply/update.do",
+                    type: "post",
+                    data: { id: replyId, contents: updatedContent },
+                    success: function(response) {
+                       // 성공하면 수정된 내용 유지
+                        if(response){
+                           contentDiv.attr("contentEditable", "false");
+                            contentDiv.attr("data-original", updatedContent);
                            
                               // 버튼 복구
-                              commentItem.find(".updatebtn, .deletebtn").show();
-                              updateOK.remove();
-                              updateCancel.remove();
-                              }else{
-                               alert("수정을 못했습니다.");
-                              }
-                          }
-                      });
-                  });
-
-                  // 취소 버튼 클릭
-                  updateCancel.on("click", function() {
-                      // 원래 내용으로 되돌리기
-                      contentDiv.html(contentDiv.attr("data-original"));
-                      contentDiv.attr("contentEditable", "false");
-
-                      // 버튼 복구
-                      commentItem.find(".updatebtn, .deletebtn").show();
-                      updateOK.remove();
-                      updateCancel.remove();
+                             commentItem.find(".updatebtn, .deletebtn").show();
+                             updateOK.remove();
+                             updateCancel.remove();
+                        }else{
+                           alert("수정을 못했습니다.");
+                        }
+                      }
                   });
               });
 
-              // 댓글 삭제 기능
-              $(".deletebtn").on("click", function() {
-                  let commentItem = $(this).closest(".comment-item");
-                  let replyId = commentItem.attr("data-id");
+              // 취소 버튼 클릭
+              updateCancel.on("click", function() {
+              // 원래 내용으로 되돌리기
+              contentDiv.html(contentDiv.attr("data-original"));
+              contentDiv.attr("contentEditable", "false");
 
-                  if (confirm("정말 삭제하시겠습니까?")) {
-                      $.ajax({
-                          url: "/reply/delete.do",
-                          type: "post",
-                          data: { id: replyId, boardId : ${dto.boardId}},
-                          success: function(response) {
-                              // 삭제 성공하면 해당 댓글을 화면에서 제거
-                              if(response) {                           
-                               commentItem.remove();
-                              } else {
-                                 alert("삭제하지 못했습니다.");
-                              }
-                          }
-                      });
-                  }
+              // 버튼 복구
+              commentItem.find(".updatebtn, .deletebtn").show();
+              updateOK.remove();
+              updateCancel.remove();
               });
-          })
+      });
+
+        // 댓글 삭제 기능
+        $(".deletebtn").on("click", function() {
+           let commentItem = $(this).closest(".comment-item");
+            let replyId = commentItem.attr("data-id");
+
+            if (confirm("정말 삭제하시겠습니까?")) {
+               $.ajax({
+                   url: "/reply/delete.do",
+                    type: "post",
+                    data: { id: replyId, boardId : ${dto.boardId}},
+                    success: function(response) {
+                       // 삭제 성공하면 해당 댓글을 화면에서 제거
+                        if(response) {                           
+                           commentItem.remove();
+                        } else {
+                           alert("삭제하지 못했습니다.");
+                        }
+                    }
+                  });
+              }
+       });
     }
+      
+      function makeCommentPageNavi(pageNavi, className) {
+        $('#comments').after(makePageNavi(pageNavi, className));
+        
+        $('.replyPageNavi').on('click', function() {
+           const clicked = $(this);   
+           
+          $.ajax({
+             url: '/reply/ContentsAll.do?boardId=${dto.boardId}&page=' + clicked.attr('value')
+          }).done(function(data) {
+             data = JSON.parse(data);
+             
+             console.log(data);
+             makeCommentItem(data.list);
+             
+            if(typeof clicked.attr('tag') != 'undefined') {
+               console.log('걸림');
+               makeCommentPageNavi(data.pageNavi, className);
+         }
+          });
+       });
+      }
    
-   function commentInput($commentInput, $inputBtn) {	//댓글 입력
-	   let commentText = $("#commentInput").val().trim();
+   function commentInput($commentInput, $inputBtn) {   //키보드 이벤트
+      let commentText = $("#commentInput").val().trim();
        if (commentText == "") {
           alert("댓글을 입력하세요")
           return;
@@ -631,18 +688,35 @@ td#contents {
               } 
           }).done(function(data) {
               alert('댓글이 등록되었습니다.');
-              makeCommentItem();
+              $.ajax({
+                  url: "/reply/ContentsAll.do",
+                     data: { 'boardId': ${dto.boardId},
+                              'page': 1},
+                     type: "get"
+                 }).done(function(data) {
+                     try{
+                         data = JSON.parse(data);}
+                     catch (e) {
+                         console.error("Error parsing JSON: ", e);
+                         return;
+                     }
+                   
+                     console.log(data);
+                     makeCommentItem(data.list);
+                     makeCommentPageNavi(data.pageNavi, 'replyPageNavi');
+                  }); 
               $commentInput.val("");
           });  
       }
        
        let updatecontents = $("<div>").addClass("comment-box");
-        $("#comments").append(updatecontents);
+       $("#comments").append(updatecontents);
+       console.log("rjffla");
         
-        validInput($inputBtn);
+       validInput($inputBtn);
    }
    
-   function validInput($inputBtn) {	//등록 버튼 이벤트
+   function validInput($inputBtn) {   //등록 버튼 이벤트
       if ($("#commentInput").val().trim() === "") {
            $inputBtn.prop("disabled", true);
             $inputBtn.css({
@@ -669,12 +743,13 @@ td#contents {
           "cursor": "not-allowed"
        });
        
-       $commentInput.on('keyup', function(event) {	//키보드 이벤트
-    	   if(event.key == "Enter") {    		   
-	    	  commentInput($commentInput, $inputBtn);
-    	   }
-    	   validInput($inputBtn);
+       $commentInput.on('keyup', function(event) {
+          if(event.key == "Enter") {             
+            commentInput($commentInput, $inputBtn);
+          }
+          validInput($inputBtn);
        });
+
 
          // 입력창 이벤트 리스너
        $commentInput.on("input", function() {
@@ -682,10 +757,26 @@ td#contents {
        });
 
       $inputBtn.on("click",function() {
-    	  commentInput($commentInput, $inputBtn);
-       });
+         commentInput($commentInput, $inputBtn);
+      });
       
-       makeCommentItem();
+      // 댓글 목록 불러오기
+      $.ajax({
+       url: "/reply/ContentsAll.do",
+          data: { 'boardId': ${dto.boardId},
+                   'page': 1},
+          type: "get"
+      }).done(function(data) {
+          try{
+              data = JSON.parse(data);}
+          catch (e) {
+              console.error("Error parsing JSON: ", e);
+              return;
+          }
+        
+          makeCommentItem(data.list);
+          makeCommentPageNavi(data.pageNavi, 'replyPageNavi');
+       }); 
    }); // $(document).ready 끝
    
 
@@ -757,7 +848,7 @@ td#contents {
             }
          });
          $(".emoji-btn").on("click", function(){
-       	 	console.log("test");
+
                let emotion = $(this).text();
                let currentText = $('#commentInput').val();
                
@@ -826,7 +917,7 @@ td#contents {
                 url : '/file/image/upload.do',
                 data : formData,
                 type : 'POST',
-                //dataType:"multipart/form-data"ee, 
+                //dataType:"multipart/form-data", 
                 contentType : false,
                 processData : false,
                 error : function(request, status, error) {

@@ -71,39 +71,16 @@ public enum ScoreDAOImpl implements ScoreDAO {
 
 	@Override
 	public List<ScoreDTO> selectByGameId(int gameId) throws Exception {
-		String sql = "";
-		if (gameId < 800004) {			
-			sql = "SELECT * "
-					+ "FROM SCORE S "
-					+ "INNER JOIN MEMBERS M "
-					+ "ON S.MEMBER_ID = M.MEMBER_ID "
-					+ "WHERE GAME_ID = ? "
-					+ "ORDER BY SCORE DESC";
-		} else {
-			sql = "SELECT * "
-					+ "FROM MEMBERS M "
-					+ "INNER JOIN "
-					+ "(SELECT AVG(SCORE) AS \"SCORE\", MEMBER_ID, GAME_ID "
-					+ "FROM SCORE "
-					+ "WHERE GAME_ID = ? "
-					+ 	"AND MEMBER_ID IN ( "
-					+ 	"SELECT MEMBER_ID "
-					+ 	"FROM SCORE "
-					+ 	"WHERE GAME_ID = ? "
-					+ 	"GROUP BY MEMBER_ID, GAME_ID "
-					+ 	"HAVING COUNT(*) > 10) "
-					+ "GROUP BY MEMBER_ID, GAME_ID) S "
-					+ "ON M.MEMBER_ID = S.MEMBER_ID "
-					+ "ORDER BY \"SCORE\" DESC";
-		}
+		String 	sql = "SELECT * "
+				+ "FROM SCORE S "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON S.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE GAME_ID = ? "
+				+ "ORDER BY SCORE DESC";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, gameId);
-			
-			if (gameId >= 800004) {
-				pstat.setInt(2, gameId);
-			}
 			
 			try(ResultSet rs = pstat.executeQuery()) {
 				List<ScoreDTO> dto = new ArrayList<>();
