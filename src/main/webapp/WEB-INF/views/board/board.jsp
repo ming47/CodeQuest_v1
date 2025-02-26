@@ -70,7 +70,7 @@ html, body {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	position: fixed;
+
 }
 
 .body {
@@ -133,7 +133,7 @@ html, body {
 }
 
 .logbox-container {
-	position: fixed;
+    position: absolute;
 	right: 10px;
 	bottom: -35px;
 	top: 80px
