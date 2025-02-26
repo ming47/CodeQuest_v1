@@ -478,17 +478,7 @@ $(function() {
 
 	$('#number>td').append(makePageNavi('/board/list.do?cpage='));
 	
-	 $(document).ready(function() {
-	        $('form[name="search"]').submit(function(event) {
-	            let searchField = $('select[name="searchField"]').val(); 
-
-	            if (searchField === "0") {
-	                alert("옵션을 선택해주세요!"); 
-	                event.preventDefault(); // 폼 제출 방지
-	             
-	            }
-	        });
-	    });
+	
 	 $(document).ready(function() {
 		    $(".writebtn").on("click", function(event) {
 		        let isLoggedIn =  "${member.memberId}" !== ""; 
