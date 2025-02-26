@@ -507,7 +507,7 @@ button:focus {
                  if(confirm("회원만 글쓰기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
                     location.href="/";
                  }
-                 event.preventDefault();
+                 event.preventDefault(); 
                  return false;
                  
                  

@@ -133,6 +133,8 @@ h1 {
 	font-weight: bold;
 	letter-spacing: 2px;
 	margin-top: 20px;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 6px 0 black;
+		
 }
 
 .body {
@@ -181,9 +183,9 @@ textarea {
 
 button {
 	padding: 15px 20px;
-	background-color: #3c3b39;
+	background-color: #666666;
 	color: white;
-	border: none;
+	border: 3px solid white;
 	letter-spacing: 5px;
 	font-weight: bold;
 	position: relative;
@@ -191,7 +193,10 @@ button {
 	overflow: hidden;
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
-	heghit: 20px;
+}
+
+button:hover {
+	background: #66635f;
 }
 
 button:hover {
