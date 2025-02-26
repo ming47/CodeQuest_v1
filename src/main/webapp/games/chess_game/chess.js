@@ -41,7 +41,7 @@ function checkGameEnd() {
         totalGames++;
         updateStats();
         
-        // 게임 종료 알림
+        // 게임 종료 알림 이걸 보내야해
         alert(`게임 종료!\n${winner === 'white' ? '플레이어' : 'AI'} 가 승리했습니다!`);
         return true;
     } else if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) {
