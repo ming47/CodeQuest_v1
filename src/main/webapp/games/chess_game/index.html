@@ -9,6 +9,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="index_sty.css" rel="stylesheet">
     <title>AI Chess</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script> -->
 </head>
@@ -85,5 +86,40 @@
     </div>
     <script src="chess.js"></script>
 </body>
+<script>
+const enterTime = new Date().getTime();
+
+window.addEventListener("beforeunload", function() {
+    localStorage.setItem('play-time', new Date().getTime() - enterTime);
+
+    $.ajax({
+        url: '/game/playtime/add.do',
+        type: 'POST',
+        data: {
+            gameId: 800006,
+            playtime: new Date().getTime() - enterTime
+        }
+    }).done(function(data) {
+       console.log(data);
+    });
+    
+    let score = $('#white-counter').html();
+    score = score.substr(12);
+    console.log(score);
+    
+    $.ajax({
+        url: '/score/add.do',
+        type: 'POST',
+        data: {
+            gameId: 800006,
+            score: score
+        }
+    }).done(function(data) {
+       console.log(data);
+    });
+    
+    
+});
+</script>
 
 </html>

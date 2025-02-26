@@ -9,7 +9,18 @@ class gameover extends Phaser.Scene {
         
         // 세션 스토리지에서 점수 가져오기
         let finalScore = sessionStorage.getItem("finalScore") || 0;
-        
+        $.ajax({
+            url: '/score/add.do',
+            type: 'POST',
+            data: {
+                gameId: 800001,
+                score: finalScore
+            }
+        }).done(function(data) {
+           console.log(data);
+        });
+
+
         // 게임 오버 텍스트
         this.add.text(512, 200, "Game Over", { fontSize: "48px", fill: "#fff" }).setOrigin(0.5);
         
