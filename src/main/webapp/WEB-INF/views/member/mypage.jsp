@@ -617,19 +617,19 @@
 							<a href="/game/list.do?id=${list.gameId}">
 							    <c:choose>
 							        <c:when test="${list.gameId == 800001}">
-							            공튕기기
+							            Skipping Stone
 							        </c:when>
 							        <c:when test="${list.gameId == 800002}">
 							            2048
 							        </c:when>
 							        <c:when test="${list.gameId == 800003}">
-							            warplane
+							            WORLD OF WARPLANE
 							        </c:when>
 							        <c:when test="${list.gameId == 800004}">
 							            Mini Metro
 							        </c:when>
 							        <c:when test="${list.gameId == 800005}">
-							            Tetris
+							            TETRIS!
 							        </c:when>
 							        <c:when test="${list.gameId == 800006}">
 							            Chess!
