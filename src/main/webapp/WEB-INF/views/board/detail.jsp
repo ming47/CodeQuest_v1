@@ -888,7 +888,7 @@ table th {
                let emotion = $(this).text();
                let currentText = $('#commentInput').val();
                
-               $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기	c
+               $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기	commit
                $("#commentInput").focus();
                validInput($('#inputbtn'));
 
