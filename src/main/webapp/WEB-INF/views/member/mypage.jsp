@@ -759,20 +759,6 @@
          var postDate = new Date(timestamp);
          var diffMinutes = Math.floor((now - postDate) / (1000 * 60));
 
-<<<<<<< HEAD
-			if (diffMinutes < 1) {
-				$(this).text("방금 전");
-			} else if (diffMinutes < 60) {
-				$(this).text(diffMinutes + "분 전");
-			} else if (diffMinutes < 720) {
-				var diffHours = Math.floor(diffMinutes / 60);
-				$(this).text(diffHours + "시간 전");
-			}
-		});
-		$(".popup").on("click", function () {
-			window.open("/member/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=600");
-		});
-=======
          if (diffMinutes < 1) {
             $(this).text("방금 전");
          } else if (diffMinutes < 60) {
@@ -783,9 +769,8 @@
          }
       });
       $(".popup").on("click", function () {
-         window.open("/member/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=700");
+         window.open("/member/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=600");
       });
->>>>>>> 3e563419b42f745de04d9495ca384e2c514a8710
 
       $(".sidebar ul li").on("click", function () {
          let targetId = $(this).attr("data-target");
