@@ -340,7 +340,8 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			
 			List<AnalyzeDTO> dto = new ArrayList<>();
 			while(rs.next()) {
-				dto.add(AnalyzeDTO.of(rs));
+				String label = (rs.getString(2).equals("1")) ? "남자" : "여자";
+				dto.add(new AnalyzeDTO(rs.getInt(1), label));
 			}
 			return dto;
 		}		
