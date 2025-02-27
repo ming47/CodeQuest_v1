@@ -25,23 +25,6 @@ public enum QnADAOImpl implements QnADAO {
 		
 		return ds.getConnection();
 	}
-
-	@Override
-	public List<QnADTO> selectAll() throws Exception {
-		String sql = "SELECT * FROM QNA Q INNER JOIN MEMBERS U ON Q.MEMBER_ID = U.MEMBER_ID";
-		
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();) {
-			
-			List<QnADTO> dtos = new ArrayList<>();
-			while(rs.next()) {
-				dtos.add(QnADTO.of(rs));
-			}
-			
-			return dtos;
-		}
-	}
 	
 	@Override
 	public QnADTO selectById(int id) throws Exception {
@@ -215,19 +198,6 @@ public enum QnADAOImpl implements QnADAO {
 		}
 	}
 
-	@Override
-	public int getNextVal() throws Exception {
-		String sql = "SELECT QNA_ID_SEQ.NEXTVAL FROM DUAL";
-		
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();) {
-			rs.next();
-			
-			return rs.getInt(1);
-		}
-	}
-
 	public List<QnADTO> selectAll(int page) throws Exception {
 		String sql = "select * "
 				+ "from "
@@ -271,14 +241,14 @@ public enum QnADAOImpl implements QnADAO {
 				+ "FROM QNA Q "
 				+ "INNER JOIN MEMBERS M "
 				+ "ON Q.MEMBER_ID = M.MEMBER_ID "
-				+ "WHERE RESPONSE_YN = ? ) A )"
+				+ "WHERE RESPONSE_YN = ? ) A ) "
 				+ "WHERE RNUM BETWEEN ? AND ?";
 		
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
 		int endIndex = startIndex + Statics.recordCountPerPage - 1;
 
-		endIndex = (endIndex > getSize(selectByResponseYN(responseYN))) ? 
-				getSize(selectByResponseYN(responseYN)) : endIndex;
+		endIndex = (endIndex > selectByResponseYN(responseYN).size()) ? 
+				selectByResponseYN(responseYN).size() : endIndex;
 
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -307,14 +277,14 @@ public enum QnADAOImpl implements QnADAO {
 				+ "FROM QNA Q "
 				+ "INNER JOIN MEMBERS M "
 				+ "ON Q.MEMBER_ID = M.MEMBER_ID "
-				+ "WHERE NICKNAME LIKE ? ) A )"
+				+ "WHERE NICKNAME LIKE ? ) A ) "
 				+ "WHERE RNUM BETWEEN ? AND ?";
 		
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
 		int endIndex = startIndex + Statics.recordCountPerPage - 1;
 
-		endIndex = (endIndex > getSize(selectByWriterLike(writer))) ? 
-				getSize(selectByWriterLike(writer)) : endIndex;
+		endIndex = (endIndex > selectByWriterLike(writer).size()) ? 
+				selectByWriterLike(writer).size() : endIndex;
 
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -343,14 +313,14 @@ public enum QnADAOImpl implements QnADAO {
 				+ "FROM QNA Q "
 				+ "INNER JOIN MEMBERS M "
 				+ "ON Q.MEMBER_ID = M.MEMBER_ID "
-				+ "WHERE CONTENT LIKE ? ) A )"
+				+ "WHERE CONTENT LIKE ? ) A ) "
 				+ "WHERE RNUM BETWEEN ? AND ?";
 		
 		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
 		int endIndex = startIndex + Statics.recordCountPerPage - 1;
 
-		endIndex = (endIndex > getSize(selectByContentLike(content))) ? 
-				getSize(selectByContentLike(content)) : endIndex;
+		endIndex = (endIndex > selectByContentLike(content).size()) ? 
+				selectByContentLike(content).size() : endIndex;
 
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -395,10 +365,5 @@ public enum QnADAOImpl implements QnADAO {
 	            return list;
 	        }
 	    }
-	}
-
-	@Override
-	public int getSize(List<QnADTO> dto) {
-		return dto.size();
 	}
 }

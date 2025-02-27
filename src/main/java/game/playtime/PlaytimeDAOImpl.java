@@ -15,7 +15,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import utils.AnalyzeDTO;
-import utils.GENDER;
 
 public enum PlaytimeDAOImpl implements PlaytimeDAO {
 	INSTANCE;
@@ -349,9 +348,11 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 
 	@Override
 	public List<AnalyzeDTO> selectAnaGroupByGameId(String type) throws Exception {
-		String sql = "SELECT " + getInsertQuery(type) + ", GAME_ID "
-				+ "FROM PLAY_TIME "
-				+ "GROUP BY GAME_ID";
+		String sql = "SELECT " + getInsertQuery(type) + ", GAME_NAME "
+				+ "FROM PLAY_TIME P "
+				+ "INNER JOIN GAMES G "
+				+ "ON P.GAME_ID = G.GAME_ID "
+				+ "GROUP BY G.GAME_ID, GAME_NAME";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -359,7 +360,7 @@ public enum PlaytimeDAOImpl implements PlaytimeDAO {
 			
 			List<AnalyzeDTO> dto = new ArrayList<>();
 			while(rs.next()) {
-				String label = rs.getString(2) + "0대";
+				String label = rs.getString(2);
 				dto.add(new AnalyzeDTO(rs.getDouble(1), label));
 			}
 			return dto;

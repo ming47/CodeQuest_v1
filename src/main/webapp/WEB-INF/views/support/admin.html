@@ -569,8 +569,8 @@
                                     			<div class="game-detail center-align">
                                     				<div class="inner">
                                     					<div class="game-detail-title title-form">
-                                    						<span id="game-title">대충 게임 이름</span>
-                                    						<span id="game-id">(ID: 800001)</span>
+                                    						<span id="game-title"></span>
+                                    						<span id="game-id"></span>
                                     					</div>
                                     					<div class="game-detail-contents">
                                     						<div class="game-detail-daliy-access center-align">
@@ -824,7 +824,7 @@
 </body>
 
 </html>
-<script tag="functions">
+<script>
 function Dataset() {
 	this.data = [];
 	this.label = [];
@@ -876,8 +876,6 @@ function gameDetailCahrtSet(dataset) {
 	});
 }
 
-</script>
-<script tag="common">
     $('.left-selector').on('click', function () {
         const select = $(this).attr('value');
         const offset = $('.' + select).offset();
@@ -984,6 +982,15 @@ function gameDetailCahrtSet(dataset) {
     		url: '/service/admin/playtime/rate/game.do?range=month&id=' + 800001
     	}).done(function(data) {
     		displayRate(data, $('#prev-month-game-access-rate-game-detail'));
+    	});
+    	
+    	$.ajax({
+    		url: '/game/detail.do?id=800001'
+    	}).done(function(data) {
+    		data = JSON.parse(data);
+    		
+    		$('#game-title').html(data.gameName);
+    		$('#game-id').html("ID: (" + data.gameId + ")");
     	});
 
         let accessCountDataset = [];
@@ -1108,7 +1115,7 @@ function gameDetailCahrtSet(dataset) {
         			labels: gameDetailMauDataset.label,
                     datasets: [
                       {
-                        label: 'Dataset',
+                        label: '일일 이용자 수',
                         data: gameDetailMauDataset.data,
                     	}
                 	]
@@ -1259,14 +1266,23 @@ function gameDetailCahrtSet(dataset) {
         			$(this).val(Number(value) + 1);
         		}
         		
-        		$('#prev').val(value);
+        		if(value == "800001") {
+	        		$('#prev').val("800005");
+        		} else {
+        			$('#prev').val(Number(value) - 1);
+        		}
         	} else {
         		if(value == '800001') {
         			$(this).val('800005');
         		} else {
         			$(this).val(Number(value) - 1);
         		}
-        		$('#next').val(value);
+        		
+        		if(value == "800005") {
+	        		$('#next').val("800001");
+        		} else {
+        			$('#next').val(Number(value) + 1);
+        		}
         	}
         	
         	gameDetailinit();
@@ -1288,7 +1304,7 @@ function gameDetailCahrtSet(dataset) {
             			labels: gameDetailMauDataset.label,
                         datasets: [
                           {
-                            label: 'Dataset',
+                            label: '일일 이용자 수',
                             data: gameDetailMauDataset.data,
                         	}
                     	]
@@ -1328,6 +1344,15 @@ function gameDetailCahrtSet(dataset) {
         	}).done(function(data) {
         		displayRate(data, $('#prev-month-game-access-rate-game-detail'));
         	});
+        	
+        	$.ajax({
+        		url: '/game/detail.do?id=' + value
+        	}).done(function(data) {
+        		data = JSON.parse(data);
+        		
+        		$('#game-title').html(data.gameName);
+        		$('#game-id').html("ID: (" + data.gameId + ")");
+        	});
         });
         
         $.ajax({
@@ -1360,8 +1385,7 @@ function gameDetailCahrtSet(dataset) {
             });
         });
     }
-</script>
-<script tage="user">
+
 	function makeUserList(dto) {
 		$('.user-item').remove();
 		
@@ -1547,8 +1571,7 @@ function gameDetailCahrtSet(dataset) {
         	makeUserPageNavi(data, url);
 		})
 	});
-</script>
-<script tag="qna">
+
     $('.check-response-yn').on('click', function () {
         const url = ($(this).val() == 'whole') ? "/qna/list.do?page=" : "/qna/list/response_yn.do?response_yn=" + $(this).val() + "&page=";
 
@@ -1747,7 +1770,7 @@ function gameDetailCahrtSet(dataset) {
             $('.qna-reply-contents').attr('contenteditable', true);
 
             buttonHTML = '답글 등록하기';
-            url = '/qna_reply/insert.do';
+            url = '/qna_reply/add.do';
         }
         data.qnaId = $('#qna-contents-id').html();
 

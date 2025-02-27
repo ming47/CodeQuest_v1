@@ -47,7 +47,7 @@ public class QnAReplyController extends HttpServlet {
 		try {		
 			String cmd = ConvertURL.of(request);
 			
-			if (cmd.equals("/qna_reply/insert.do")) {
+			if (cmd.equals("/qna_reply/add.do")) {
 				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
 				String context = request.getParameter("context");
 				

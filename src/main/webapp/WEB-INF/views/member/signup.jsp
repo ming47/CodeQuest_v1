@@ -400,7 +400,7 @@
 				pw_val = true;
 			}
 		});
-
+		
 		$("#pwr").on("keyup", function (e) {
 			if ($("#pw").val() === $(this).val()) {
 				$("#result_pwr").css({

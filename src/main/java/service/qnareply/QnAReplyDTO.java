@@ -48,6 +48,10 @@ public class QnAReplyDTO {
 		return context;
 	}
 	
+	public String getWriter() {
+		return writer;
+	}
+	
 	public static QnAReplyDTO of(ResultSet rs) throws SQLException {
 		return new QnAReplyDTO(
 				rs.getInt("QNA_REPLY_ID"),
@@ -55,6 +59,6 @@ public class QnAReplyDTO {
 				rs.getInt("MEMBER_ID"),
 				rs.getTimestamp("REG_DATE"),
 				rs.getString("CONTEXT"),
-				rs.getString("NAME"));
+				rs.getString("NICKNAME"));
 	}
 }

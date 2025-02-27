@@ -62,7 +62,12 @@ public class GameController extends HttpServlet {
 						scoreDAO.selectByMemberIdAndGameId(Integer.parseInt(userId), Integer.parseInt(gameId));
 
 				response.getWriter().append(g.toJson(dto));
-			} 
+			} else if(cmd.equals("/game/detail.do")) {
+				int gameId = Integer.parseInt(request.getParameter("id"));
+				
+				GameDTO game = gdao.selectById(gameId);
+				response.getWriter().append(g.toJson(game));
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
