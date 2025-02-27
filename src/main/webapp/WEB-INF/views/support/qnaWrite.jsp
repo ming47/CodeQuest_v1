@@ -133,8 +133,8 @@ h1 {
 	font-weight: bold;
 	letter-spacing: 2px;
 	margin-top: 20px;
-	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 6px 0 black;
-		
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 6px 0
+		black;
 }
 
 .body {
@@ -197,12 +197,10 @@ button {
 
 button:hover {
 	background: #66635f;
+	transform: scale(1.1);
 }
 
-button:hover {
-	background: #66635f;
 }
-
 .card {
 	border-radius: 10px;
 	padding: 20px;
@@ -288,7 +286,7 @@ button:hover {
 			<div class="boardbox">
 				<h1>Q & A 작성</h1>
 				<form action="/member/qna/add.do" method="post">
-				<input type="hidden" name="memberId" value="${member.memberId}">
+					<input type="hidden" name="memberId" value="${member.memberId}">
 					<div class="card">
 						<div class="card-header">내용 입력</div>
 						<input type="hidden" name="contents" id="input-contents">
