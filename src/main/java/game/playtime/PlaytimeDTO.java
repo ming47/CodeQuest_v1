@@ -14,7 +14,6 @@ public class PlaytimeDTO {
 	private String formatTime;
 	
 	public PlaytimeDTO(int playtimeId, int memberId, int gameId, int playtime, Timestamp regDate) {
-		super();
 		this.playtimeId = playtimeId;
 		this.memberId = memberId;
 		this.gameId = gameId;
@@ -23,7 +22,6 @@ public class PlaytimeDTO {
 	}
 	
 	public PlaytimeDTO(int playtimeId, int memberId, int gameId, int playtime, Timestamp regDate, String formatTime) {
-		super();
 		this.playtimeId = playtimeId;
 		this.memberId = memberId;
 		this.gameId = gameId;

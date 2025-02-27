@@ -15,7 +15,6 @@ public class GameDTO {
 
 	public GameDTO(int gameId, String gameName, String gameIntro, String gameDescript, String gameThumb,
 			String gameGateway) {
-		super();
 		this.gameId = gameId;
 		this.gameName = gameName;
 		this.gameIntro = gameIntro;
@@ -23,11 +22,6 @@ public class GameDTO {
 		this.gameThumb = gameThumb;
 		this.gameGateway = gameGateway;
 	}
-
-	public GameDTO() {
-		super();
-	}
-
 
 	public int getGameId() {
 		return gameId;

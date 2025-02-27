@@ -787,7 +787,7 @@ table tr {
 								$
 										.ajax(
 												{
-													url : "/score/list/game.do?id="
+													url : "/game/score/list/game.do?id="
 															+ gameId,
 													type : "GET",
 													dataType : "json"

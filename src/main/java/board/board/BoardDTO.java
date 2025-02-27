@@ -10,10 +10,8 @@ public class BoardDTO {
 	private String contents;
 	private int viewCount;
 	private int replyCount;
-	
 	private String writer;
 	private String role;
-
 
 	public BoardDTO() {}
 

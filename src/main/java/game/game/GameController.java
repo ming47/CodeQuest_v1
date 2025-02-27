@@ -24,20 +24,18 @@ import utils.ConvertURL;
 
 @WebServlet("/game/*")
 public class GameController extends HttpServlet {
-	private GameDAO gdao = GameDAOImpl.INSTANCE;
+	GameDAO gdao = GameDAOImpl.INSTANCE;
 	PlaytimeDAO pdao = PlaytimeDAOImpl.INSTANCE;
 	ScoreDAO scoreDAO = ScoreDAOImpl.INSTANCE;
 	
 	Gson g = new Gson();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		
 		try {
 			String cmd = ConvertURL.of(request);
-			System.out.println(cmd);
-
-			String ip = request.getRemoteAddr();
-			System.out.println(ip);
 			
 			if(cmd.equals("/game/list.do")) {
 				int id = Integer.parseInt(request.getParameter("id"));
@@ -48,8 +46,7 @@ public class GameController extends HttpServlet {
 				
 				request.setAttribute("game", game);
 				request.getRequestDispatcher("/WEB-INF/views/game/gamelist.jsp").forward(request, response);
-
-			} else if(cmd.equals("/game/play.do")) { // /game/play.do?id=800001
+			} else if(cmd.equals("/game/play.do")) { 
 				int gameId = Integer.parseInt(request.getParameter("id"));
 				
 				GameDTO game = gdao.selectById(gameId);
@@ -77,6 +74,7 @@ public class GameController extends HttpServlet {
 
 		try {		
 			String cmd = ConvertURL.of(request);
+			
 			if (cmd.equals("/game/playtime/add.do")) {
 				int gameId = Integer.parseInt(request.getParameter("gameId"));
 				int playtime = Integer.parseInt(request.getParameter("playtime"));
@@ -96,5 +94,4 @@ public class GameController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 }
