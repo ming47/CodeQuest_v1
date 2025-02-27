@@ -769,7 +769,7 @@
 			}
 		});
 		$(".popup").on("click", function () {
-			window.open("/member/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=700");
+			window.open("/member/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=600");
 		});
 
 		$(".sidebar ul li").on("click", function () {
