@@ -254,7 +254,7 @@
 						<div class="practicehead">${game.gameIntro}</div>
 						<div class="practicebody">${game.gameDescript}</div>
 						<div class="practicebutton">
-							<a href="/game/play.do?id=${game.gameId}"><button>Game Start</button></a>
+							<button id="game_btn">Game Start</button>
 						</div>
 					</div>
 				</div>
@@ -292,9 +292,38 @@
 					console.log('게임 정보를 불러오는 데 실패했습니다.');
 				});
 			});
+			
+	         $("#game_btn").on("click", function(event) {
+	             let isLoggedIn =  "${member.memberId}" !== ""; 
+	             let isBanned   = "${member.isbanned}" == "true";
+	             if (!isLoggedIn) {
+	                 if(confirm("회원만 게임하기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
+	                    location.href="/";
+	                 }
+	                 event.preventDefault(); 
+	                 return false;
+	             } else if(isBanned) {
+	                $.ajax({
+	                   url: '/service/member/ban/detail.do?id=${member.memberId}'
+	                }).done(function(data) {
+	                   data = JSON.parse(data);
+	                   parseDate(data.endDate);
+	                   let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
+	                   + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
+	                   alert(message);
+	                });
+	                 event.preventDefault();
+	                 return false;
+	             }
+	             
+	             location.href= '/game/play.do?id=${game.gameId}';
+	         });
+		 function parseDate(timestamp) {
+			 const date = new Date(timestamp);
+			 return date.getFullYear() + '년 ' + Number(date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' +  date.getHours() + 
+					 '시 ' + date.getMinutes() + '분';		 
+		 }			
 		});
 	</script>
-
 </body>
-
 </html>
