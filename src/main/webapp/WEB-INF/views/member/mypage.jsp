@@ -924,12 +924,6 @@
 					}
 				}).open();
 			});
-			$("#out_btn").on("click", function () {
-				window.open("/member/outForm.do", "", "width=550, height=300");
-			});
-			$("#out_btn_2").on("click", function () {
-				window.open("/member/outForm.do", "", "width=550, height=300");
-			});
 			$("#frm").on("submit", function (event) {
 				console.log("폰 : " + phone_val)
 				console.log("메일 : " + email_val)
@@ -939,6 +933,12 @@
 					return false;
 				}
 			});
+		});
+		$("#out_btn").on("click", function () {
+			window.open("/member/outForm.do", "", "width=550, height=300");
+		});
+		$("#out_btn_2").on("click", function () {
+			window.open("/member/outForm.do", "", "width=550, height=300");
 		});
 
 	</script>

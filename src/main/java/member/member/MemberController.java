@@ -250,6 +250,7 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("member", member);
 				}
 				response.sendRedirect("/member/mypage.do");
+				//request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
