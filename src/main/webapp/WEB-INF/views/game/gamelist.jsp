@@ -20,6 +20,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	text-decoration: none;
 }
 
 .container {
@@ -108,30 +109,32 @@
 	width: 100%;
 	justify-content: space-evenly;
 	display: flex;
-	height: 100%;
+	height:80%;
 }
 
 .gamemenu {
 	width: 15%;
-	height: 700px;
+	height: 200px;
 	max-height: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin-left: 10px;
 	margin-right: 50px;
+	margin-top: 280px;
 }
 
 .sidebar {
-	padding:5px;
+	padding: 5px;
 	width: 230px;
-	height: 400px;
+	height: 70vh;
 	background: #f4f4f4;
 	border-radius: 10px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar h2 {
-	font-size: 20px;
+	font-size: 17px;
 	color: black;
 	font-weight: bold;
 	margin-bottom: 3px;
@@ -146,7 +149,7 @@
 }
 
 .sidebar ul li {
-	padding: 10px;
+	padding: 20px;
 	font-size: 16px;
 	border-bottom: 1px solid #ddd;
 	cursor: pointer;
@@ -159,19 +162,27 @@
 
 .gamedetail {
 	width: 75%;
-	margin-right: 20px;
+	margin: 20px;
 	height: 800px;
+}
+
+#game-thumbnail {
+	margin: 30px;
+	width: 40%;
+	height: 70vh;
 }
 
 .gameheader {
 	width: 100%;
-	height: 800px;
+	height: 80vh;
 	display: flex;
 }
 
 .gamepractice {
-	margin-top: 50px;
-	width: 500px;
+	margin-top: 40px;
+	margin-left: 80px;
+	margin-right: 30px;
+	width: 35vw;
 	align-items: center;
 	justify-content: center;
 }
@@ -204,10 +215,15 @@
 	border: 1px solid black;
 	background-color: white;
 }
+
+#gama_btn{
+	padding:40px;
+}
+
 .logbox-container {
-	position: fixed;
+	position: absolute;
 	top: 80px;
-	right: 140px;
+	right: 20px;
 	z-index: 1000;
 }
 </style>
@@ -226,7 +242,7 @@
 					<li><a href="/service/qna/addForm.do">Service</a></li>
 				</ul>
 			</div>
-			<!-- ✅ 로그인 정보 -->
+
 			<c:if test="${member.loginId != null}">
 				<div class="logbox-container">
 					<jsp:include page="/logbox.jsp" />
@@ -239,11 +255,11 @@
 				<div class="sidebar">
 					<h2>Game List</h2>
 					<ul>
-					<c:forEach var="dto" items="${list}">
-						<a href="/game/list.do?id=${dto.gameId}">
-							<li>${dto.gameName}</li>
-						</a>
-					</c:forEach>
+						<c:forEach var="dto" items="${list}">
+							<a href="/game/list.do?id=${dto.gameId}">
+								<li>${dto.gameName}</li>
+							</a>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
@@ -260,70 +276,114 @@
 				</div>
 			</div>
 		</div>
-		<!-- ✅ 푸터 -->
+
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>
 
 	<script>
-		$(document).ready(function() {
-			$('.sidebar ul li').on('click', function() {
-				let gameId = $(this).attr('value'); // 선택한 게임 ID 가져오기
+		$(document)
+				.ready(
+						function() {
+							$('.sidebar ul li')
+									.on(
+											'click',
+											function() {
+												let gameId = $(this).attr(
+														'value'); // 선택한 게임 ID 가져오기
 
-				$.ajax({
-					url : '/game/call.do?gameId=' + gameId,
-					method : 'GET',
-					dataType : 'json'
-				}).done(function(data) {
-					if (!data)
-						return;
+												$
+														.ajax(
+																{
+																	url : '/game/call.do?gameId='
+																			+ gameId,
+																	method : 'GET',
+																	dataType : 'json'
+																})
+														.done(
+																function(data) {
+																	if (!data)
+																		return;
 
-					// gameheader 이미지 변경
-					$('.gameheader img').attr('src', data.thumbnailImgPath);
+																	// gameheader 이미지 변경
+																	$(
+																			'.gameheader img')
+																			.attr(
+																					'src',
+																					data.thumbnailImgPath);
 
-					// practicehead 업데이트 (게임 소개)
-					$('.practicehead').text(data.introduce);
+																	// practicehead 업데이트 (게임 소개)
+																	$(
+																			'.practicehead')
+																			.text(
+																					data.introduce);
 
-					// practicebody 업데이트 (게임 설명)
-					$('.practicebody').text(data.description);
+																	// practicebody 업데이트 (게임 설명)
+																	$(
+																			'.practicebody')
+																			.text(
+																					data.description);
 
-					// practicebutton 텍스트 변경
-					$('.practicebutton button').text(data.buttonText);
-				}).fail(function() {
-					console.log('게임 정보를 불러오는 데 실패했습니다.');
-				});
-			});
-			
-	         $("#game_btn").on("click", function(event) {
-	             let isLoggedIn =  "${member.memberId}" !== ""; 
-	             let isBanned   = "${member.isbanned}" == "true";
-	             if (!isLoggedIn) {
-	                 if(confirm("회원만 게임하기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
-	                    location.href="/";
-	                 }
-	                 event.preventDefault(); 
-	                 return false;
-	             } else if(isBanned) {
-	                $.ajax({
-	                   url: '/service/member/ban/detail.do?id=${member.memberId}'
-	                }).done(function(data) {
-	                   data = JSON.parse(data);
-	                   parseDate(data.endDate);
-	                   let message = "현재 차단된 계정입니다.\n차단 이유: " + data.reason + "\n" 
-	                   + "차단 기간: " + parseDate(data.startDate) + " ~ " + parseDate(data.endDate);
-	                   alert(message);
-	                });
-	                 event.preventDefault();
-	                 return false;
-	             }
-	             
-	             location.href= '/game/play.do?id=${game.gameId}';
-	         });
-		 function parseDate(timestamp) {
-			 const date = new Date(timestamp);
-			 return date.getFullYear() + '년 ' + Number(date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' +  date.getHours() + 
-					 '시 ' + date.getMinutes() + '분';		 
-		 }			
-		});
+																	// practicebutton 텍스트 변경
+																	$(
+																			'.practicebutton button')
+																			.text(
+																					data.buttonText);
+																})
+														.fail(
+																function() {
+																	console
+																			.log('게임 정보를 불러오는 데 실패했습니다.');
+																});
+											});
+
+							$("#game_btn")
+									.on(
+											"click",
+											function(event) {
+												let isLoggedIn = "${member.memberId}" !== "";
+												let isBanned = "${member.isbanned}" == "true";
+												if (!isLoggedIn) {
+													if (confirm("회원만 게임하기가 가능합니다.\n로그인 하러 가시겠습니까?")) {
+														location.href = "/";
+													}
+													event.preventDefault();
+													return false;
+												} else if (isBanned) {
+													$
+															.ajax(
+																	{
+																		url : '/service/member/ban/detail.do?id=${member.memberId}'
+																	})
+															.done(
+																	function(
+																			data) {
+																		data = JSON
+																				.parse(data);
+																		parseDate(data.endDate);
+																		let message = "현재 차단된 계정입니다.\n차단 이유: "
+																				+ data.reason
+																				+ "\n"
+																				+ "차단 기간: "
+																				+ parseDate(data.startDate)
+																				+ " ~ "
+																				+ parseDate(data.endDate);
+																		alert(message);
+																	});
+													event.preventDefault();
+													return false;
+												}
+
+												location.href = '/game/play.do?id=${game.gameId}';
+											});
+							function parseDate(timestamp) {
+								const date = new Date(timestamp);
+								return date.getFullYear() + '년 '
+										+ Number(date.getMonth() + 1) + '월 '
+										+ date.getDate() + '일 '
+										+ date.getHours() + '시 '
+										+ date.getMinutes() + '분';
+							}
+						});
 	</script>
 </body>
 </html>
