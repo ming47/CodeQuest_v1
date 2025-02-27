@@ -45,11 +45,17 @@ public class GameController extends HttpServlet {
 				request.setAttribute("game", game);
 				request.getRequestDispatcher("/WEB-INF/views/game/gamelist.jsp").forward(request, response);
 
-			} else if(cmd.equals("/game/play.do")) { // /game/play.do?id=800001
+			} else if(cmd.equals("/game/play.do")) {
 				int gameId = Integer.parseInt(request.getParameter("id"));
-				
 				GameDTO game = gdao.selectById(gameId);
-				
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				if (member == null) {
+					response.sendRedirect("/");
+					return;
+				} else if(member.getIsbanned()) { // 밴 유저는 불가
+					response.sendRedirect("/");
+					return;
+				}
 				response.sendRedirect(game.getGameGateway());
 			}
 		}catch (Exception e) {

@@ -619,7 +619,7 @@
 					            <img src="/images/warplane.png" alt="워플레인" />
 					        </c:when>
 					        <c:when test="${list.gameId == 800004}">
-					            <img src="/images/metro.png" alt="metro" />
+					            <img src="/images/metro2.png" alt="metro" />
 					        </c:when>
 					        <c:when test="${list.gameId == 800005}">
 					            <img src="/images/tetris.png" alt="테트리스" />
