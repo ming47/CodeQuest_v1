@@ -14,8 +14,8 @@
 <script>
 	Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
 </script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -41,6 +41,8 @@
 	background-size: cover;
 }
 
+
+
 .header, .footer {
 	display: flex;
 	align-items: center;
@@ -54,8 +56,7 @@
 }
 
 .header {
-	position: relative;
-	top: 0;
+	position: fixed;
 	left: 0;
 	height: 80px;
 	padding: 20px;
@@ -64,6 +65,7 @@
 	justify-content: center;
 	background-color: black;
 	top: 0;
+	z-index: 10;
 }
 
 .footer {
@@ -132,6 +134,7 @@
 }
 
 .body {
+
 	width: 70%;
 	display: flex;
 	flex-direction: column;
@@ -140,15 +143,21 @@
 	top: 60px;
 }
 
+.bottombody {
+	width: 70%;
+	margin-top: 70px;
+}
+
 .loginbox {
 	width: 85%;
 	background-size: cover;
 	padding: 10px;
+	border: 3px solid white;
 	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
-	font-family: "Jua", serif;
-	background: url('/images/login.jpg') no-repeat center;
+	font-family: "Jua", serif; <!--
+	background: url('/images/login.jpg') no-repeat center; -->
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
@@ -158,9 +167,9 @@
 	margin-bottom: 50px;
 	margin-top: 80px;
 	margin-right: 75px;
+	background-color: rgba(255, 255, 255, 0.9);
 }
 
-/* ✅ 로그인 버튼 및 입력 필드 배치 */
 .loginbox h2 {
 	font-family: "Jua", serif;
 	font-weight: 400;
@@ -180,7 +189,6 @@
 	border-radius: 5px;
 }
 
-/* ✅ 아이디 / 비밀번호 입력 필드 + 로그인 버튼 정렬 */
 .loginbox .input-group {
 	display: flex;
 	align-items: center;
@@ -236,8 +244,8 @@
 
 .rankingboard {
 	width: 85%;
-	height: 380px;
-	background: white;
+	height: 442px;
+	background-color: rgba(255, 255, 255, 0.9);
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -249,7 +257,7 @@
 	font-size: 20px;
 	margin-right: 80px;
 	position: relative;
-	top: 60px;
+	top: 90px;
 }
 
 .ranking-tabs {
@@ -289,7 +297,6 @@
 	color: #2f2b2b;
 }
 
-
 .hidden {
 	display: none;
 }
@@ -300,12 +307,17 @@
 
 .logbox-container {
 	position: absolute;
-	position: fixed;
+	display: flex;
 	top: 80px;
 	right: 20px;
 	z-index: 1000;
 }
-
+	
+#ranking {
+	margin-top: 40px;
+	width: 85%;
+	height: 458px;
+}
 .rankingboard ul {
 	list-style: none;
 	padding: 0;
@@ -316,7 +328,6 @@
 	font-size: 17px;
 }
 
-
 .gameList {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -324,18 +335,22 @@
 	padding: 10px;
 	width: 90%;
 	font-family: "Press Start 2P", serif;
-	margin-top: 30px;
+	margin-top: 43px;
 }
 
 .game {
 	border: 3px;
 	color: black;
 	min-width: 280px;
+	height: 360px;
 	padding: 15px;
 	border-radius: 10px;
 	text-align: center;
 	scroll-snap-align: start;
 	transition: transform 0.3s ease-in-out;
+	background-color: rgba(255, 255, 255, 0.5);
+	margin: 15px;
+	position: relative;
 }
 
 .game:hover {
@@ -343,9 +358,31 @@
 }
 
 .game img {
-	width: 100%;
-	height: 160px;
 	border-radius: 10px;
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	transition: opacity 0.5s ease; /* 부드러운 전환 */
+}
+
+.game:hover img {
+	opacity: 0;
+	width: 100%;
+	height: 200px;
+}
+
+.game:hover .hover-img {
+	opacity: 1;
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+.hover-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
 }
 
 .game h3 {
@@ -385,11 +422,12 @@
 	border-radius: 10px;
 	text-align: center;
 	color: white;
-	margin-top: 20px;
+	margin-top: 15px;
 	font-family: "Jua", serif;
 	font-weight: 400;
 	font-style: normal;
 	font-size: 20px;
+	margin-top: 50px;
 }
 
 .boardlist h3 {
@@ -420,19 +458,29 @@ thead, tbody {
 }
 
 td, th {
-	border-radius: 1px;
+	border-radius: 2px;
 	border: none;
 	width: 100%;
 	heghit: 48px;
 	text-align: center;
 	font-family: 'DungGeunMo';
 	font-weight: bold;
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+th {
+	font-size: 20px;
 }
 
 td a {
-	text-decoration: none;
-	color: black;
+	text-decoration: none; /* 링크 밑줄 제거 */
+	color: black; /* 기본 텍스트 색상 */
+	transition: color 0.3s ease; /* 색상 변화를 부드럽게 */
+}
+
+td.clicktitle:hover {
+	transform: scale(1.1); /* 크기를 1.2배 키움 */
+	background-color: #f0f0f0; /* 배경색 변경 */
 }
 
 table tr {
@@ -440,14 +488,35 @@ table tr {
 	font-family: 'DungGeunMo';
 	height: 48px;
 }
+
+.chart img {
+	width: 60px;
+	height: 50px;
+}
+
+.chart {
+	margin-bottom: -20px;
+}
+
+.mainimage{
+
+	width: 800px;
+	height: 600px;
+		object-fit: cover;
+}
+
 </style>
+
+
 <c:if test="${member.memberId != null}">
 	<style>
+	
 #ranking {
 	margin-top: 40px;
 	width: 85%;
-	height: 660px;
+	height: 458px;
 }
+
 </style>
 </c:if>
 </head>
@@ -485,6 +554,7 @@ table tr {
 					<%@ include file="logbox.jsp"%>
 				</div>
 			</c:if>
+
 		</div>
 
 
@@ -492,9 +562,12 @@ table tr {
 
 
 			<div class="body">
+
 				<div class="gameList">
 					<div class="game">
-						<img src="/images/skipstone.png">
+						<img src="/images/coin.gif" alt="게임 이미지"> <img
+							class="hover-img" src="/images/skipstone.png" alt="호버 이미지">
+
 						<h3>Skipping Stone</h3>
 						<p>Action</p>
 						<a href="/game/list.do?id=800001"><button>Play</button></a>
@@ -507,7 +580,7 @@ table tr {
 					</div>
 					<div class="game">
 						<img src="/images/warplane.png">
-						<h3>World Of WarPlane</h3>
+						<h3>WarPlane</h3>
 						<p>Action</p>
 						<a href="/game/list.do?id=800003"><button>Play</button></a>
 					</div>
@@ -531,44 +604,7 @@ table tr {
 					</div>
 				</div>
 
-
-				<div class="boardlist">
-					<h3>📢 최근 게시물</h3>
-					<table>
-						<thead>
-							<tr id="title">
-								<th style="width: 12%;">번호</th>
-								<th style="width: 42%;">제목</th>
-								<th style="width: 17%;">작성자</th>
-								<th style="width: 17%;">날짜</th>
-								<th style="width: 12%;">조회</th>
-							</tr>
-						</thead>
-						<tbody id="latestboard">
-
-						</tbody>
-					</table>
-				</div>
-				<div class="boardlist">
-					<h3>📢 이번주 인기 게시글</h3>
-					<table>
-						<thead>
-							<tr id="title">
-								<th style="width: 12%;">번호</th>
-								<th style="width: 42%;">제목</th>
-								<th style="width: 17%;">작성자</th>
-								<th style="width: 17%;">날짜</th>
-								<th style="width: 12%;">조회</th>
-							</tr>
-						</thead>
-						<tbody id="hot-weekend-board">
-
-						</tbody>
-					</table>
-				</div>
 			</div>
-
-
 
 
 			<div class="right-content">
@@ -625,7 +661,67 @@ table tr {
 				</div>
 			</div>
 		</div>
+		<div class="bottombody">
+		
+		
+		
+			<div id="carouselExampleSlidesOnly" class="carousel slide"
+				data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+					
+					
+						<img src="/images/로고.png" class="mainimage" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="/images/chess.jpg" class="mainimage" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="/images/metro.png"class="mainimage" alt="...">
+					</div>
+				</div>
+				
+				
+				
+				
+			</div>
+			<div class="boardlist">
+				<h3>♕ 이번주 인기 게시글</h3>
+				<table>
+					<thead>
+						<tr id="title">
+							<th style="width: 12%;">번호</th>
+							<th class="click-title" style="width: 42%;">제목</th>
+							<th style="width: 17%;">작성자</th>
+							<th style="width: 17%;">날짜</th>
+							<th style="width: 12%;">조회</th>
+						</tr>
+					</thead>
+					<tbody id="hot-weekend-board">
 
+					</tbody>
+				</table>
+			</div>
+
+			<div class="boardlist">
+				<h3>📢 최근 게시물</h3>
+				<table>
+					<thead>
+						<tr id="title">
+							<th style="width: 12%;">번호</th>
+							<th class="click-title" style="width: 42%;">제목</th>
+							<th style="width: 17%;">작성자</th>
+							<th style="width: 17%;">날짜</th>
+							<th style="width: 12%;">조회</th>
+						</tr>
+					</thead>
+					<tbody id="latestboard">
+
+					</tbody>
+				</table>
+			</div>
+
+		</div>
 
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 
@@ -674,7 +770,6 @@ table tr {
 													console.log(calld);
 													let latestBoard = $('#latestboard');
 
-												
 													latestBoard.empty();
 
 													if (!calld
@@ -684,7 +779,6 @@ table tr {
 														return;
 													}
 
-												
 													for (let i = 0; i < calld.length; i++) {
 														const tr = $('<tr>');
 
@@ -696,7 +790,7 @@ table tr {
 														tr.append($('</td>'));
 														tr
 																.append($(
-																		'<td style="width: 42%;">')
+																		'<td class="clicktitle"style="width: 42%;">')
 																		.append(
 																				$(
 																						'<a>')
@@ -749,7 +843,6 @@ table tr {
 												console.log(calld);
 												let latestBoard = $('#hot-weekend-board');
 
-											
 												latestBoard.empty();
 
 												if (!calld
@@ -759,7 +852,6 @@ table tr {
 													return;
 												}
 
-												
 												for (let i = 0; i < calld.length; i++) {
 													const tr = $('<tr>');
 
@@ -771,7 +863,7 @@ table tr {
 													tr.append($('</td>'));
 													tr
 															.append($(
-																	'<td style="width: 42%;">')
+																	'<td class="clicktitle"style="width: 42%;">')
 																	.append(
 																			$(
 																					'<a>')
@@ -852,17 +944,15 @@ table tr {
 												});
 							}
 
-							let defaultGameId = "800001"; 
+							let defaultGameId = "800001";
 							loadRanking(defaultGameId);
 
-						
 							$(".tab-btn").click(function() {
 								$(".tab-btn").removeClass("active");
 								$(this).addClass("active");
 
 								let gameId = $(this).data("game");
 
-							
 								if (gameId.startsWith("game")) {
 									gameId = gameId.replace("game", "");
 									gameId = Number(80000 + gameId);
