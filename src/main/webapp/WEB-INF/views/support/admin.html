@@ -10,8 +10,6 @@
             box-sizing: border-box;
         }
         
-
-
         .inner {
             height: 95%;
             width: 95%;
@@ -466,11 +464,32 @@
         .qna-reply-controller {
             height: 10%;
         }
-    </style>
-    <style>
-        canvas {
-            height: 100%;
-            width: 100%;
+        
+        .qna-response-y {
+        	background-color: lightgray;
+        }
+        
+        .qna-response-n {
+        	background-color: white;
+        }
+        
+        .controller-list>span {
+        	width: 100%;
+        	display: flex;
+        	justify-content: space-evenly;
+        }
+        
+        table {
+        	border-collapse: collapse;
+        	border-spacing: 3px;
+			border-collapse: separate;
+			background-color: transparent;
+        }
+        
+        table th, table td {
+        	border-radius: 1px;
+			border: none;
+			background-color: #fafbf4;
         }
     </style>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -632,7 +651,7 @@
                             <div class="inner">
                                 <div class="qna-list-contents">
                                     <div class="qna-list-contents-inner">
-                                        <table border="1" id="member-table">
+                                        <table id="member-table">
                                             <tr>
                                                 <th width="12%" height="50px">번호</th>
                                                 <th width="32%">닉네임</th>
@@ -659,7 +678,7 @@
                                 <div class="user-info center-align">
                                     <div class="inner-fat">
                                         <div class="user-info-title title title-form" id="user-nickname"></div>
-                                        <table border="1" id="user-info-table">
+                                        <table id="user-info-table">
                                             <tr>
                                                 <th width="10%" height="50%">ID</th>
                                                 <td width="25%" id="user-id"></td>
@@ -694,7 +713,7 @@
                                 <div class="ban-list center-align">
                                     <div class="inner-fat">
                                         <div class="ban-list-title title-form">차단 목록</div>
-                                        <table border="1" id="ban-list-table">
+                                        <table id="ban-list-table">
                                         	<tr>
                                                 <th width="10%" height="50%">번호</th>
                                                 <th width="20%">사유</th>
@@ -709,27 +728,31 @@
                                 <div class="ban-controller center-align">
                                     <div class="inner-fat">
                                         <div class="ban-detail-setting">
-                                            <div class="ban-reason-controller center-align">
-                                                <select class="ban-select" id="reason-select">
-                                                	<option>광고</option>
-                                                	<option>분탕</option>
-                                                	<option>도배</option>
-                                                	<option>기분 나쁨</option>
-                                                	<option>영정</option>
-                                                	<option>기타</option>
-                                                </select>
-                                                <input type="text" placeholder="차단 사유" id="reason" disabled>
+                                            <div class="ban-reason-controller controller-list center-align">
+	                                            <span>
+	                                                <select class="ban-select" id="reason-select">
+	                                                	<option>광고</option>
+	                                                	<option>분탕</option>
+	                                                	<option>도배</option>
+	                                                	<option>기분 나쁨</option>
+	                                                	<option>영정</option>
+	                                                	<option>기타</option>
+	                                                </select>
+	                                                <input type="text" placeholder="차단 사유" id="reason" disabled>
+	                                            </span>
                                             </div>
-                                            <div class="ban-end-date-controller center-align">
-                                                <select class="ban-select" id="end-date-select" disabled>
-                                                	<option value="720">30일</option>
-                                                	<option value="72">3일</option>
-                                                	<option value="168">7일</option>
-                                                	<option value="1">1시간</option>
-                                                	<option value="-1">없음</option>
-                                                	<option value="0">기타</option>
-                                                </select>
-                                                <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)" id="end-date" disabled>
+                                            <div class="ban-end-date-controller controller-list center-align">
+                                                <span>
+	                                                <select class="ban-select" id="end-date-select" disabled>
+	                                                	<option value="720">30일</option>
+	                                                	<option value="72">3일</option>
+	                                                	<option value="168">7일</option>
+	                                                	<option value="1">1시간</option>
+	                                                	<option value="-1">없음</option>
+	                                                	<option value="0">기타</option>
+	                                                </select>
+	                                                <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)" id="end-date" disabled>
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="ban-button center-align"></div>
@@ -748,7 +771,7 @@
                             <div class="inner">
                                 <div class="qna-list-contents">
                                     <div class="qna-list-contents-inner">
-                                        <table border="1" id="qna-table">
+                                        <table id="qna-table">
                                             <tr>
                                                 <th width="10%" height="5%">번호</th>
                                                 <th width="50%">내용</th>
@@ -787,7 +810,7 @@
                                 </div>
                                 <div class="qna-contents">
                                     <div class="qna-contents-inner">
-                                        <table border="1" style="height: 95%;">
+                                        <table style="height: 95%;">
                                             <tr>
                                                 <th width="10%" height="8%">번호</th>
                                                 <td width="10%" id="qna-contents-id"></td>
@@ -1016,18 +1039,21 @@ function gameDetailCahrtSet(dataset) {
         	}
         	
         	accessCountChart = new Chart($('#access-chart'), {
-               	type: 'bar',
+               	
                 data: {
                   	labels: accessCountDataset[0].label,
                   	datasets: [{
+                  		type: 'bar',
                         label: '이용 시간 평균',
                         data: accessCountDataset[0].data,
                         yAxisID: "y-avg"
                       }, {
+                    	  type: 'line',
                       	label: '사용자 수',
                       	data: accessCountDataset[1].data,
                       	yAxisID: "y-count"
                       }, {
+                    	type: 'bar',
                       	label: '이용 시간 총합',
                       	data: accessCountDataset[2].data,
                       	 yAxisID: "y-sum"
@@ -1047,7 +1073,7 @@ function gameDetailCahrtSet(dataset) {
                              position: "left",
                              ticks: {
                                  min: 1,
-                                 max: 100000
+                                 max: 1000
                              }
                          },
                          "y-count": {
@@ -1153,18 +1179,20 @@ function gameDetailCahrtSet(dataset) {
             	}
             	
             	accessCountChart = new Chart($('#access-chart'), {
-                   	type: 'bar',
                     data: {
                       	labels: accessCountDataset[0].label,
                       	datasets: [{
-                          label: '이용 시간 평균',
-                          data: accessCountDataset[0].data,
-                          yAxisID: "y-avg"
+		                   	type: 'bar',
+                          	label: '이용 시간 평균',
+                          	data: accessCountDataset[0].data,
+                          	yAxisID: "y-avg"
                         }, {
+                        	type: 'line',
                         	label: '사용자 수',
                         	data: accessCountDataset[1].data,
                         	yAxisID: "y-count"
                         }, {
+                        	type: 'bar',
                         	label: '이용 시간 총합',
                         	data: accessCountDataset[2].data,
                         	 yAxisID: "y-sum"
@@ -1676,25 +1704,25 @@ function gameDetailCahrtSet(dataset) {
             const tr = $('<tr>').addClass('qna-item');
             const currentDTO = dto[i];
 
-            let responseState, backgroundColor;
+            let responseState, responseClass;
             if (currentDTO.responseYn == 'N') {
                 responseState = "미응답";
-                backgroundColor = "white";
+                responseClass = 'qna-response-y';
             } else {
                 responseState = "응답완료";
-                backgroundColor = "green";
+                responseClass = 'qna-response-n';
             }
 
-            let contentsHTML = (currentDTO.contents.length > 15) ? currentDTO.contents.substr(0, 15 - 2) + "..." : currentDTO.contents;
+            let contentsHTML = (currentDTO.contents.length > 15) ? currentDTO.contents.substr(3, 11 - 2) + "..." : currentDTO.contents;
 
             const contents = $('<td>').html(responseState + " " + contentsHTML).attr('value', currentDTO.qnaId);
 
-            tr.append($('<td>').html(currentDTO.qnaId).attr('height', '9.5%'));
+            tr.append($('<td>').html(currentDTO.qnaId));
             tr.append(contents);
             tr.append($('<td>').html(currentDTO.writer));
             tr.append($('<td>').html(currentDTO.regDate));
 
-            tr.css('background-color', backgroundColor);
+            tr.addClass(responseClass);
             $('#qna-table>tbody').append(tr);
 
             contents.on('click', function () {
