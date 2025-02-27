@@ -24,14 +24,11 @@ import service.blacklist.BlackListDAOImpl;
 import service.blacklist.BlackListDTO;
 import service.qna.QnADAO;
 import service.qna.QnADAOImpl;
-import service.qna.QnADTO;
 import service.qnareply.QnAReplyDAO;
 import service.qnareply.QnAReplyDAOImpl;
-import service.qnareply.QnAReplyDTO;
 import utils.AnalyzeDTO;
 import utils.ConvertURL;
 import utils.PageNavi;
-import utils.TimeUtil;
 
 
 @WebServlet("/service/*")
@@ -59,6 +56,12 @@ public class ServiceController extends HttpServlet {
 				}
 				request.getRequestDispatcher("/WEB-INF/views/support/qnaWrite.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/main.do")) {
+				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
+				
+				if (dto == null || dto.getRole().equals("user")) {
+					response.sendRedirect("/");
+				}
+			
 				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
 			} else if(cmd.equals("/service/admin/playtime/search/days.do")) {
 				String group = request.getParameter("group");
@@ -98,7 +101,7 @@ public class ServiceController extends HttpServlet {
 				
 				double result = playtimeDAO.selectTodayAna(type);
 				
-				String dto = (type.equals("count")) ? String.valueOf((int) result) : TimeUtil.toString((int) result);
+				String dto = (type.equals("count")) ? String.valueOf((int) result) : toString((int) result);
 				response.getWriter().append(dto);
 			} else if(cmd.equals("/service/admin/playtime/rate.do")) {
 				String type = request.getParameter("range");
@@ -131,7 +134,7 @@ public class ServiceController extends HttpServlet {
 				double result = playtimeDAO.selectTodayAnaByGameId(type, gameId);
 				System.out.println("days/game.do :" + result);
 				
-				String dto = (type.equals("count")) ? String.valueOf((int) result) : TimeUtil.toString((int) result);
+				String dto = (type.equals("count")) ? String.valueOf((int) result) : toString((int) result);
 				response.getWriter().append(dto);
 			} else if(cmd.equals("/service/admin/playtime/rate/game.do")) {
 				int gameId = Integer.parseInt(request.getParameter("id"));
@@ -234,12 +237,47 @@ public class ServiceController extends HttpServlet {
 					} else {						
 						blackListDAO.insert(new BlackListDTO(memberId, reason, period));
 					}
-					System.out.println(memberId + " " + reason + " " + period);
 				}
-				
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+    private String toString(long millisec) {
+    	int hours = 0;
+    	int minutes = 0;
+    	int sec = 0;
+    	int milli = (int) millisec;
+    	
+    	if (millisec >= 1000) {    		
+    		sec = (int) (millisec / 1000);
+    		milli = (int) millisec % 1000;
+    	}
+    	
+    	String smillisec = String.valueOf(milli);
+    	if (milli < 100) {
+    		smillisec = "0" + String.valueOf(milli);
+    		
+    		if (milli < 10) {
+    			smillisec = "00" + String.valueOf(milli);
+    		}
+    	}
+    	
+    	if (sec >= 60) {
+    		minutes = (int) (sec / 60);
+    		sec = sec % 60;
+    	} else {
+    		return String.format("%d.%s초", sec, smillisec);
+    	}
+    	
+    	if (minutes >= 60) {
+    		hours = (int) (minutes / 60);
+    		minutes = minutes % 60;
+    	} else {
+        	return String.format("%d분 %d.%s초", minutes, sec, smillisec);
+    	}
+    	
+    	return String.format("%d시간 %d분 %d.%s초", hours, minutes, sec, smillisec);
+    }
 }
