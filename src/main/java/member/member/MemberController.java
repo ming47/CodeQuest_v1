@@ -287,7 +287,7 @@ public class MemberController extends HttpServlet {
 					response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
 				}
 				
-			} else if(cmd.equals("/member/qna/add.do")) { //q&a작성
+			} else if(cmd.equals("/member/qna/add.do")) { //Q&A작성
 				String contents = request.getParameter("contents");
 				int memberId = Integer.parseInt(request.getParameter("memberId"));
 				

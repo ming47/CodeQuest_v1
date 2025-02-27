@@ -19,6 +19,7 @@ public class PlaytimeDTO {
 		this.gameId = gameId;
 		this.playtime = playtime;
 		this.regDate = regDate;
+		this.formatTime = convertToTimeString(playtime);
 	}
 	
 	public PlaytimeDTO(int playtimeId, int memberId, int gameId, int playtime, Timestamp regDate, String formatTime) {
@@ -35,7 +36,14 @@ public class PlaytimeDTO {
 		this.memberId = memberId;
 		this.playtime = playtime;
 	}
-
+	
+    private String convertToTimeString(int Seconds) {
+        int totalSeconds = Seconds / 1000;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        return minutes + "분 " + seconds + "초";
+    }
+    
 	public String getFormatTime() {
 		return formatTime;
 	}
