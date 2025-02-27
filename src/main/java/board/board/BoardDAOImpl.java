@@ -215,8 +215,6 @@ public enum BoardDAOImpl implements BoardDAO {
 		try (Connection con = getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, startIndex);
 			pstat.setInt(2, endIndex);
-
-			System.out.println(startIndex + " " + endIndex);
 			try (ResultSet rs = pstat.executeQuery()) {
 				List<BoardDTO> dto = new ArrayList<BoardDTO>();
 

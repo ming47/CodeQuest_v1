@@ -135,9 +135,12 @@ public class BoardController extends HttpServlet {
 				dao.increaseViewCount(boardId);
 
 				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
-				ViewCountDTO viewCountDTO = (dto != null) ? new ViewCountDTO(boardId, dto.getMemberId()) : new ViewCountDTO(boardId);
-				vdao.insert(viewCountDTO);
 				
+				if(dto != null) {				
+					vdao.insertMember(new ViewCountDTO(boardId, dto.getMemberId()));
+				} else {
+					vdao.insert(new ViewCountDTO(boardId));
+				}	
 				request.setAttribute("member", dto);
 				request.setAttribute("dto", dao.selectById(boardId));
 
