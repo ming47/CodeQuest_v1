@@ -38,11 +38,20 @@ public enum ScoreDAOImpl implements ScoreDAO {
 
 	@Override
 	public List<ScoreDTO> selectByGameId(int gameId) throws Exception {
-		String sql = "SELECT * FROM SCORE S INNER JOIN MEMBERS M ON S.MEMBER_ID = M.MEMBER_ID "
-				+ "WHERE GAME_ID = ? " + "ORDER BY SCORE DESC";
+		String sql = "SELECT * "
+				+ "FROM ( "
+				+ "SELECT A.*, ROW_NUMBER() OVER(ORDER BY SCORE DESC) AS RNUM "
+				+ "FROM ( "
+				+ "SELECT * "
+				+ "FROM SCORE S "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON S.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE GAME_ID = ?) A)"
+				+ "WHERE RNUM <= ?";
 
 		try (Connection con = getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setInt(1, gameId);
+			pstat.setInt(2, (getSelectByGameIdSize(gameId) < 10) ? getSelectByGameIdSize(gameId) : 10);
 
 			try (ResultSet rs = pstat.executeQuery()) {
 				List<ScoreDTO> dto = new ArrayList<>();
@@ -101,6 +110,25 @@ public enum ScoreDAOImpl implements ScoreDAO {
 				}
 
 				return dto;
+			}
+		}
+	}
+
+	@Override
+	public int getSelectByGameIdSize(int gameId) throws Exception {
+		String sql = "SELECT COUNT(*) "
+				+ "FROM SCORE S "
+				+ "INNER JOIN MEMBERS M "
+				+ "ON S.MEMBER_ID = M.MEMBER_ID "
+				+ "WHERE GAME_ID = ?";
+		
+		try (Connection con = getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, gameId);
+
+			try (ResultSet rs = pstat.executeQuery()) {
+				rs.next();
+				
+				return rs.getInt(1);
 			}
 		}
 	}
