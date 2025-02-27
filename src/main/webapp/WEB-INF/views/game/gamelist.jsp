@@ -26,11 +26,11 @@
 	flex-direction: column;
 	align-items: center;
 	display: flex;
-	width: 1660px;
-	height: 1024px;
+	width: 100%;
+	height: 100%;
 	justify-content: center;
 	align-items: center;
-	background: url('/images/allback.jpg') no-repeat center;
+	background: url('/images/밤.gif') no-repeat center;
 	background-size: cover;
 	font-family: "Press Start 2P", serif;
 }
@@ -113,7 +113,7 @@
 
 .gamemenu {
 	width: 15%;
-	height: 500px;
+	height: 700px;
 	max-height: auto;
 	display: flex;
 	align-items: center;
@@ -124,19 +124,19 @@
 .sidebar {
 	padding:5px;
 	width: 230px;
-	height: 340px;
+	height: 400px;
 	background: #f4f4f4;
 	border-radius: 10px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar h2 {
-	font-size: 33px;
+	font-size: 20px;
 	color: black;
 	font-weight: bold;
 	margin-bottom: 3px;
 	border-bottom: 2px solid black;
-	padding-bottom: 3px;
+	padding: 20px;
 	margin-left: 3px;
 }
 
