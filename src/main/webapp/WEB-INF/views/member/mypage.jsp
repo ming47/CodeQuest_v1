@@ -113,9 +113,6 @@
 			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 			padding: 20px;
 			display: flex;
-			
-			
-			/*  margin-left: 350px; */
 		}
 
 		.main-content {
@@ -343,7 +340,6 @@
 			border-radius: 10px;
 			padding: 15px;
 			width: calc(33.33% - 20px);
-			/* 3열 배치, 간격 고려 */
 			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 			transition: transform 0.3s;
 		}
@@ -383,9 +379,7 @@
 
 		.recent-game-row {
 			display: flex;
-			/* 가로로 나열 */
 			align-items: center;
-			/* 세로 중앙 정렬 */
 			border: 2px solid #b4c28a;
 			border-radius: 10px;
 			padding: 10px;
@@ -398,17 +392,14 @@
 			height: 60px;
 			margin-right: 20px;
 			object-fit: cover;
-			/* 이미지 비율 맞춤 */
 		}
 
 		.recent-game-row .game-title {
 			flex: 1;
-			/* 남는 공간을 차지하도록 (제목 영역 크게) */
 			font-size: 20px;
 			font-weight: bold;
 		}
 
-		/* 링크 밑줄·파란색 제거 */
 		.recent-game-row .game-title a {
 			text-decoration: none;
 			color: #333;
@@ -418,7 +409,6 @@
 			text-decoration: underline;
 		}
 
-		/* 날짜/시간 칸 오른쪽 정렬 */
 		.recent-game-row .play-date,
 		.recent-game-row .play-time {
 			width: 150px;
@@ -461,6 +451,13 @@
 		
 		#zipCode {
 			width: 75%;
+		}	
+		.recent-game-row img {
+		    width: 80px;
+		    height: 80px;
+		    margin-right: 20px;
+		    object-fit: cover;
+		    object-position: center;
 		}
 	</style>
 </head>
@@ -471,7 +468,7 @@
 			<div class="logo">Team CodeQuest</div>
 			<ul class="menu">
 				<li><a href="/">Home</a></li>
-				<li><a href="/game/list.do">Game</a></li>
+				<li><a href="/game/list.do?id=800001">Game</a></li>
 				<li><a href="/board/list.do">Board</a></li>
 				<c:choose>
 					<c:when test="${member.role == 'admin'}">
@@ -513,8 +510,7 @@
 							<span class="field-name">
 								<label for="login_id">아이디</label></span> 
 							<span class="field-input">
-								<input type="text"
-									value="<c:choose><c:when test='${member.loginId == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.loginId}</c:otherwise></c:choose>"
+								<input type="text" value="<c:choose><c:when test='${member.loginId == null}'>입력된 정보가 없습니다.</c:when><c:otherwise>${member.loginId}</c:otherwise></c:choose>"
 									readonly>
 							</span>
 						</div>
@@ -612,7 +608,29 @@
 				</c:if>
 				<c:forEach var="list" items="${recentPlayTime}">
 					<div class="recent-game-row">
-						<img src="/game.png" alt="게임 이미지" />
+					    <c:choose>
+					        <c:when test="${list.gameId == 800001}">
+					            <img src="/images/skipstone2.png" alt="돌튕기기" />
+					        </c:when>
+					        <c:when test="${list.gameId == 800002}">
+					            <img src="/images/2048.png" alt="2048" />
+					        </c:when>
+					        <c:when test="${list.gameId == 800003}">
+					            <img src="/images/warplane.png" alt="워플레인" />
+					        </c:when>
+					        <c:when test="${list.gameId == 800004}">
+					            <img src="/images/metro.png" alt="metro" />
+					        </c:when>
+					        <c:when test="${list.gameId == 800005}">
+					            <img src="/images/tetris.png" alt="테트리스" />
+					        </c:when>
+					        <c:when test="${list.gameId == 800006}">
+					            <img src="/images/chess2.jpg" alt="chess" />
+					        </c:when>
+					        <c:otherwise>
+					            <img src="/images/default.png" alt="게임 이미지" />
+					        </c:otherwise>
+					    </c:choose>					
 						<div class="game-title">
 							<a href="/game/list.do?id=${list.gameId}">
 							    <c:choose>
@@ -629,7 +647,7 @@
 							            Mini Metro
 							        </c:when>
 							        <c:when test="${list.gameId == 800005}">
-							            TETRIS!
+							            TETRIS
 							        </c:when>
 							        <c:when test="${list.gameId == 800006}">
 							            Chess!
