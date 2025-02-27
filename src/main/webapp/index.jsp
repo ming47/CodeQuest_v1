@@ -11,11 +11,7 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
 	integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka"
 	crossorigin="anonymous"></script>
-<script>
-	Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -41,10 +37,8 @@
 	background-size: cover;
 }
 
-
-
 .header, .footer {
-	display: flex;
+
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 20px;
@@ -54,19 +48,19 @@
 	font-style: normal;
 	width: 100%;
 }
-
 .header {
-	position: fixed;
-	left: 0;
-	height: 80px;
-	padding: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: black;
-	top: 0;
-	z-index: 10;
+   position: fixed;
+   left: 0;
+   height: 80px;
+   padding: 20px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: black;
+   top: 0;
+   z-index: 10;
 }
+
 
 .footer {
 	height: 60px;
@@ -134,7 +128,6 @@
 }
 
 .body {
-
 	width: 70%;
 	display: flex;
 	flex-direction: column;
@@ -143,21 +136,15 @@
 	top: 60px;
 }
 
-.bottombody {
-	width: 70%;
-	margin-top: 70px;
-}
-
 .loginbox {
 	width: 85%;
 	background-size: cover;
 	padding: 10px;
-	border: 3px solid white;
 	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
-	font-family: "Jua", serif; <!--
-	background: url('/images/login.jpg') no-repeat center; -->
+	font-family: "Jua", serif;
+	background: url('/images/login.jpg') no-repeat center;
 	background-size: cover;
 	padding: 10px;
 	border-radius: 20px;
@@ -167,9 +154,9 @@
 	margin-bottom: 50px;
 	margin-top: 80px;
 	margin-right: 75px;
-	background-color: rgba(255, 255, 255, 0.9);
 }
 
+/* ✅ 로그인 버튼 및 입력 필드 배치 */
 .loginbox h2 {
 	font-family: "Jua", serif;
 	font-weight: 400;
@@ -189,6 +176,7 @@
 	border-radius: 5px;
 }
 
+/* ✅ 아이디 / 비밀번호 입력 필드 + 로그인 버튼 정렬 */
 .loginbox .input-group {
 	display: flex;
 	align-items: center;
@@ -244,8 +232,9 @@
 
 .rankingboard {
 	width: 85%;
-	height: 442px;
-	background-color: rgba(255, 255, 255, 0.9);
+	height: 445px;
+	min-height: 300px;
+	background: white;
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -257,7 +246,7 @@
 	font-size: 20px;
 	margin-right: 80px;
 	position: relative;
-	top: 90px;
+	top: 60px;
 }
 
 .ranking-tabs {
@@ -307,17 +296,12 @@
 
 .logbox-container {
 	position: absolute;
-	display: flex;
+	position: fixed;
 	top: 80px;
 	right: 20px;
 	z-index: 1000;
 }
-	
-#ranking {
-	margin-top: 40px;
-	width: 85%;
-	height: 458px;
-}
+
 .rankingboard ul {
 	list-style: none;
 	padding: 0;
@@ -335,21 +319,21 @@
 	padding: 10px;
 	width: 90%;
 	font-family: "Press Start 2P", serif;
-	margin-top: 43px;
+	margin-top: 30px;
 }
 
 .game {
 	border: 3px;
 	color: black;
 	min-width: 280px;
-	height: 360px;
+	width: 300px;
 	padding: 15px;
 	border-radius: 10px;
 	text-align: center;
 	scroll-snap-align: start;
 	transition: transform 0.3s ease-in-out;
 	background-color: rgba(255, 255, 255, 0.5);
-	margin: 15px;
+	margin: 10px;
 	position: relative;
 }
 
@@ -359,7 +343,7 @@
 
 .game img {
 	border-radius: 10px;
-	width: 100%;
+	width: 250px;
 	height: 200px;
 	object-fit: cover;
 	transition: opacity 0.5s ease; /* 부드러운 전환 */
@@ -367,21 +351,22 @@
 
 .game:hover img {
 	opacity: 0;
-	width: 100%;
+	width: 250px;
 	height: 200px;
 }
 
 .game:hover .hover-img {
 	opacity: 1;
-	width: 100%;
+	width: 250px;
 	height: 200px;
-	object-fit: cover;
+	left: 16px;
 }
 
 .hover-img {
+	width: 250px;
+	height: 200px;
 	position: absolute;
-	top: 0;
-	left: 0;
+	left: 16px;
 	opacity: 0;
 }
 
@@ -422,12 +407,11 @@
 	border-radius: 10px;
 	text-align: center;
 	color: white;
-	margin-top: 15px;
+	margin-top: 20px;
 	font-family: "Jua", serif;
 	font-weight: 400;
 	font-style: normal;
 	font-size: 20px;
-	margin-top: 50px;
 }
 
 .boardlist h3 {
@@ -439,14 +423,21 @@
 }
 
 table {
-	border-radius: 5px;
+   border-radius: 5px;
+   width: 70%;
+   border: 1px;
+   color: black;
+   border-collapse: collapse;
+   border-spacing: 4px;
+   border-collapse: separate;
+   font-size: 15px;
+}
+
+
+.bottombody {
 	width: 100%;
-	border: 1px;
-	color: black;
-	border-collapse: collapse;
-	border-spacing: 4px;
-	border-collapse: separate;
-	font-size: 15px;
+	margin-top: 70px;
+	height: 50%;
 }
 
 thead, tbody {
@@ -458,65 +449,44 @@ thead, tbody {
 }
 
 td, th {
-	border-radius: 2px;
-	border: none;
-	width: 100%;
-	heghit: 48px;
-	text-align: center;
-	font-family: 'DungGeunMo';
-	font-weight: bold;
-	background-color: rgba(255, 255, 255, 0.8);
+   border-radius: 2px;
+   border: none;
+   width: 100%;
+   heghit: 48px;
+   text-align: center;
+   font-family: 'DungGeunMo';
+   font-weight: bold;
+   background-color: rgba(255, 255, 255, 0.8);
+}
+th {
+   font-size: 20px;
 }
 
-th {
-	font-size: 20px;
-}
 
 td a {
-	text-decoration: none; /* 링크 밑줄 제거 */
-	color: black; /* 기본 텍스트 색상 */
-	transition: color 0.3s ease; /* 색상 변화를 부드럽게 */
+	text-decoration: none;
+	color: black;
 }
 
 td.clicktitle:hover {
-	transform: scale(1.1); /* 크기를 1.2배 키움 */
-	background-color: #f0f0f0; /* 배경색 변경 */
+   transform: scale(1.1); 
+   background-color: #f0f0f0; 
 }
+
 
 table tr {
 	border-radius: 1px;
 	font-family: 'DungGeunMo';
 	height: 48px;
 }
-
-.chart img {
-	width: 60px;
-	height: 50px;
-}
-
-.chart {
-	margin-bottom: -20px;
-}
-
-.mainimage{
-
-	width: 800px;
-	height: 600px;
-		object-fit: cover;
-}
-
 </style>
-
-
 <c:if test="${member.memberId != null}">
 	<style>
-	
 #ranking {
 	margin-top: 40px;
 	width: 85%;
-	height: 458px;
+	height: 660px;
 }
-
 </style>
 </c:if>
 </head>
@@ -554,59 +524,58 @@ table tr {
 					<%@ include file="logbox.jsp"%>
 				</div>
 			</c:if>
-
 		</div>
-
-
 		<div class="main-content">
-
-
 			<div class="body">
 
 				<div class="gameList">
 					<div class="game">
-						<img src="/images/coin.gif" alt="게임 이미지"> <img
-							class="hover-img" src="/images/skipstone.png" alt="호버 이미지">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
+						<img src="/images/skipstone.png">
 
 						<h3>Skipping Stone</h3>
 						<p>Action</p>
-						<a href="/game/list.do?id=800001"><button>Play</button></a>
+						<a href="/game/list.do?id=800001"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/2048.png">
 						<h3>2048</h3>
 						<p>Puzzle</p>
-						<a href="/game/list.do?id=800002"><button>Play</button></a>
+						<a href="/game/list.do?id=800002"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/warplane.png">
 						<h3>WarPlane</h3>
 						<p>Action</p>
-						<a href="/game/list.do?id=800003"><button>Play</button></a>
+						<a href="/game/list.do?id=800003"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/metro.png">
 						<h3>Mini Metro</h3>
 						<p>Strategy</p>
-						<a href="/game/list.do?id=800004"><button>Play</button></a>
+						<a href="/game/list.do?id=800004"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/tetris.png">
 						<h3>Tetris</h3>
 						<p>Puzzle</p>
-						<a href="/game/list.do?id=800005"><button>Play</button></a>
+						<a href="/game/list.do?id=800005"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/chess.jpg">
 						<h3>Chess</h3>
 						<p>Stretegy</p>
-						<a href="/game/list.do?id=800006"><button>Play</button></a>
+						<a href="/game/list.do?id=800006"><button>Insert Coin</button></a>
 					</div>
 				</div>
 
+
 			</div>
-
-
 			<div class="right-content">
 				<c:if test="${member.memberId==null}">
 					<div class="loginbox">
@@ -660,38 +629,20 @@ table tr {
 					</div>
 				</div>
 			</div>
+
+
+
 		</div>
 		<div class="bottombody">
-		
-		
-		
-			<div id="carouselExampleSlidesOnly" class="carousel slide"
-				data-bs-ride="carousel">
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-					
-					
-						<img src="/images/로고.png" class="mainimage" alt="...">
-					</div>
-					<div class="carousel-item">
-						<img src="/images/chess.jpg" class="mainimage" alt="...">
-					</div>
-					<div class="carousel-item">
-						<img src="/images/metro.png"class="mainimage" alt="...">
-					</div>
-				</div>
-				
-				
-				
-				
-			</div>
+
 			<div class="boardlist">
-				<h3>♕ 이번주 인기 게시글</h3>
+				<h3>📢 이번주 인기 게시글</h3>
 				<table>
 					<thead>
 						<tr id="title">
 							<th style="width: 12%;">번호</th>
 							<th class="click-title" style="width: 42%;">제목</th>
+
 							<th style="width: 17%;">작성자</th>
 							<th style="width: 17%;">날짜</th>
 							<th style="width: 12%;">조회</th>
@@ -702,7 +653,6 @@ table tr {
 					</tbody>
 				</table>
 			</div>
-
 			<div class="boardlist">
 				<h3>📢 최근 게시물</h3>
 				<table>
@@ -710,6 +660,7 @@ table tr {
 						<tr id="title">
 							<th style="width: 12%;">번호</th>
 							<th class="click-title" style="width: 42%;">제목</th>
+
 							<th style="width: 17%;">작성자</th>
 							<th style="width: 17%;">날짜</th>
 							<th style="width: 12%;">조회</th>
@@ -723,18 +674,12 @@ table tr {
 
 		</div>
 
+
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 
 	</div>
 
 	<script>
-		function loginWithKakao() {
-			Kakao.Auth.authorize({
-				redirectUri : 'http://10.5.5.14/KakaoLogin',
-				scope : 'profile_nickname,profile_image,account_email',
-			});
-		}
-
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=550, height=300");
 		});
@@ -743,7 +688,13 @@ table tr {
 		if (loginStatus === 'fail') {
 			alert("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
 		}
-
+		Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
+		function loginWithKakao() {
+			Kakao.Auth.authorize({
+				redirectUri : 'http://10.5.5.14/KakaoLogin',
+				scope : 'profile_nickname,profile_image,account_email',
+			});
+		}
 		$(document)
 				.ready(
 						function() {
@@ -751,13 +702,6 @@ table tr {
 								$(".starter").hide();
 								$(".container").show();
 							}
-							/* 
-							let memberSession = ${member} !== "";   
-								if (memberSession){ 
-							        $(".rankingboard").css("height", "2000px"); // 높이 조정
-							        $(".rankingboard").addClass("expanded"); // 추가적인 스타일 적용 가능
-							  }
-							 */
 							function callLatestBoard() {
 								$
 										.ajax({
@@ -790,7 +734,7 @@ table tr {
 														tr.append($('</td>'));
 														tr
 																.append($(
-																		'<td class="clicktitle"style="width: 42%;">')
+																		'<td style="width: 42%;">')
 																		.append(
 																				$(
 																						'<a>')
@@ -863,7 +807,7 @@ table tr {
 													tr.append($('</td>'));
 													tr
 															.append($(
-																	'<td class="clicktitle"style="width: 42%;">')
+																	'<td style="width: 42%;">')
 																	.append(
 																			$(
 																					'<a>')
@@ -962,6 +906,5 @@ table tr {
 							});
 						});
 	</script>
-
 </body>
 </html>

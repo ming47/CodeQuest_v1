@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let squares = []
     let score = 0
 
+    // create the playing board
     function createBoard() {
         for (let i = 0; i < width * width; i++) {
             const square = document.createElement("div")
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     createBoard()
 
+    //generate a new number
     function generate() {
         const randomNumber = Math.floor(Math.random() * squares.length)
         if (squares[randomNumber].innerHTML == 0) {
@@ -73,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < squares.length; i++) {
             const row = Math.floor(i / width);
             const col = i % width;
+            // 각 셀의 새로운 좌표 계산 (예: 셀 크기가 100px인 경우)
             squares[i].style.transform = `translate(${col * 100}px, ${row * 100}px)`;
         }
     }
@@ -144,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         checkForWin()
     }
 
+    ///assign functions to keys
     function control(e) {
         if (e.key === "ArrowLeft") {
             keyLeft()
@@ -184,28 +188,19 @@ document.addEventListener("DOMContentLoaded", () => {
         moveDown()
         generate()
     }
+
+    //check for the number 2048 in the squares to win
     function checkForWin() {
         for (let i = 0; i < squares.length; i++) {
             if (squares[i].innerHTML == 2048) {
                 resultDisplay.innerHTML = "You WIN!"
                 document.removeEventListener("keydown", control)
                 setTimeout(clear, 3000)
-                
-	             $.ajax({
-	            url: '/score/add.do',
-	            type: 'POST',
-	            data: {
-	                gameId: 800002,
-	                score: score
-	            }
-	        	}).done(function(data) {
-	           		console.log(data);
-	        	});               
-                
             }
         }
     }
 
+    //check if there are no zeros on the board to lose
     function checkForGameOver() {
         let zeros = 0
         for (let i = 0; i < squares.length; i++) {
@@ -214,22 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         if (zeros === 0) {
-            resultDisplay.innerHTML = "패배!"
+            resultDisplay.innerHTML = "You LOSE!"
             document.removeEventListener("keydown", control)
             setTimeout(clear, 3000)
-
-            $.ajax({
-            url: '/score/add.do',
-            type: 'POST',
-            data: {
-                gameId: 800002,
-                score: score
-            }
-        	}).done(function(data) {
-           		console.log(data);
-        	});
-
-            
         }
     }
 
@@ -237,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(myTimer)
     }
 
+    //add colours
     function addColours() {
         for (let i = 0; i < squares.length; i++) {
             if (squares[i].innerHTML == 0) squares[i].style.backgroundColor = "#afa192"
