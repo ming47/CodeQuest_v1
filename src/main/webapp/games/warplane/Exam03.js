@@ -42,6 +42,7 @@ class Exam03 extends Phaser.Scene {
                     this.gameTime = 0;  // 시간 초기화
                     this.tileSpeed = 2;  // 배경 속도 초기화
                     this.isGameOver = false;  // 게임 오버 상태 초기화
+
 			        console.log("패배");
 			        $.ajax({
 			            url: '/score/add.do',

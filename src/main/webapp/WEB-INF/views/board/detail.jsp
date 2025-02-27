@@ -11,8 +11,10 @@
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 	rel="stylesheet">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
+	rel="stylesheet">
 
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
@@ -27,6 +29,7 @@
 		format('woff');
 	font-weight: normal;
 	font-style: normal;
+
 }
 
 * {
@@ -149,8 +152,9 @@ li {
 	border-radius: 16px;
 	box-shadow: inset 0 0 8px #424242;
 	padding: 20px;
-	margin-top: 150px;
+	margin-top: 40px;
 	margin-bottom: 50px;
+	width: 50vw;
 }
 
 .top {
@@ -165,7 +169,7 @@ li {
 
 table {
 	border-collapse: collapse;
-	width: 70vw;
+	width: 48vw;
 	font-size: 19px;
 	border-spacing: 3px;
 	border-collapse: separate;
@@ -202,6 +206,8 @@ td#contents {
 .bottom {
 	text-align: right;
 	margin-top: 20px;
+	position: relative;
+	height: 50px;
 }
 /*
 .bottom button {
@@ -233,6 +239,8 @@ td#contents {
 }
 
 #back {
+	position : absolute;
+	left: 20px;
 	margin-right: 300px;
 }
 
@@ -303,7 +311,6 @@ td#contents {
 	margin-top: 30px;
 	font-size: 20px;
 }
-
 /* 삭제 버튼 스타일 */
 .comment-delete {
 	background: none;
@@ -382,6 +389,16 @@ td#contents {
 .relative-date{
 	padding:5px;
 }
+
+table th {
+	width: 10vw;
+}
+
+#board_contents {
+  overflow: auto;
+  word-wrap: break-word;
+}
+
 </style>
 </head>
 <body>
@@ -871,7 +888,7 @@ td#contents {
                let emotion = $(this).text();
                let currentText = $('#commentInput').val();
                
-               $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기
+               $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기	c
                $("#commentInput").focus();
                validInput($('#inputbtn'));
 

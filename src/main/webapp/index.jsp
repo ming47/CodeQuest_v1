@@ -38,7 +38,7 @@
 }
 
 .header, .footer {
-	display: flex;
+	background: #1e201d;
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 20px;
@@ -48,19 +48,20 @@
 	font-style: normal;
 	width: 100%;
 }
-
 .header {
-	position: relative;
-	top: 0;
-	left: 0;
-	height: 80px;
-	padding: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: black;
-	top: 0;
+
+   position: fixed;
+   left: 0;
+   height: 80px;
+   padding: 20px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   	background: #1e201d;
+   top: 0;
+   z-index: 10;
 }
+
 
 .footer {
 	height: 60px;
@@ -152,7 +153,7 @@
 	text-align: center;
 	font-family: "Jua", serif;
 	margin-bottom: 50px;
-	margin-top: 80px;
+	margin-top: 111px;
 	margin-right: 75px;
 }
 
@@ -231,10 +232,12 @@
 }
 
 .rankingboard {
-	width: 85%;
-	height: 380px;
-	background: white;
-	padding: 20px;
+	width: 80%;
+	height: 445px;
+	min-height: 300px;
+	
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 51px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
@@ -245,7 +248,15 @@
 	font-size: 20px;
 	margin-right: 80px;
 	position: relative;
-	top: 60px;
+	top: 120px;
+}
+.rankingboard h3 {
+	font-size : 40px;
+	margin-top : -10px;
+}
+
+.rankingboard li {
+	margin: 12px;
 }
 
 .ranking-tabs {
@@ -254,6 +265,7 @@
 	flex-wrap: wrap; /* 버튼이 너무 많으면 줄바꿈 */
 	gap: 8px; /* 버튼 간격 조정 */
 	margin-bottom: 10px;
+	margin-top: 10px;
 	width: 100%; /* 랭킹보드 너비에 맞춤 */
 	max-width: 100%;
 	overflow: hidden; /* 초과 부분 숨김 */
@@ -318,18 +330,22 @@
 	padding: 10px;
 	width: 90%;
 	font-family: "Press Start 2P", serif;
-	margin-top: 30px;
+	margin-top: 58px;
 }
 
 .game {
 	border: 3px;
 	color: black;
 	min-width: 280px;
+	width: 300px;
 	padding: 15px;
 	border-radius: 10px;
 	text-align: center;
 	scroll-snap-align: start;
 	transition: transform 0.3s ease-in-out;
+	background-color: rgba(255, 255, 255, 0.5);
+	margin: 10px;
+	position: relative;
 }
 
 .game:hover {
@@ -337,9 +353,36 @@
 }
 
 .game img {
-	width: 100%;
-	height: 160px;
 	border-radius: 10px;
+	width: 250px;
+	height: 200px;
+	object-fit: cover;
+	transition: opacity 0.5s ease; /* 부드러운 전환 */
+	margin: 0 auto;
+}
+
+.game:hover img {
+	opacity: 0;
+	width: 250px;
+	height: 200px;
+	margin: 0 auto;
+}
+
+.game:hover .hover-img {
+	opacity: 1;
+	width: 250px;
+	height: 200px;
+	left: 23px;
+	margin: 0 auto;
+}
+
+.hover-img {
+	width: 250px;
+	height: 200px;
+	position: absolute;
+	left: 23px;
+	opacity: 0;
+	margin: 0 auto;
 }
 
 .game h3 {
@@ -361,8 +404,9 @@
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background 0.3s;
-	font-family: "Press Start 2P", serif;
+	font-family: "Press Start 2P", serif;s
 	font-weight: 400;
+	font-size :15px;
 	font-style: normal;
 	background: url('/images/gamebtn.png') no-repeat center;
 	background-size: cover;
@@ -373,7 +417,7 @@
 }
 
 .boardlist {
-	width: 90%;
+	width: 100%;
 	background-size: cover;
 	padding: 20px;
 	border-radius: 10px;
@@ -384,6 +428,7 @@
 	font-weight: 400;
 	font-style: normal;
 	font-size: 20px;
+	margin: 0 auto;
 }
 
 .boardlist h3 {
@@ -395,14 +440,23 @@
 }
 
 table {
-	border-radius: 5px;
+   border-radius: 5px;
+   width: 70%;
+   border: 1px;
+   color: black;
+   border-collapse: collapse;
+   border-spacing: 4px;
+   border-collapse: separate;
+   font-size: 15px;
+   justify-content: center;
+   margin: 0 auto;
+}
+
+
+.bottombody {
 	width: 100%;
-	border: 1px;
-	color: black;
-	border-collapse: collapse;
-	border-spacing: 4px;
-	border-collapse: separate;
-	font-size: 15px;
+	margin-top: 70px;
+	height: 50%;
 }
 
 thead, tbody {
@@ -414,20 +468,30 @@ thead, tbody {
 }
 
 td, th {
-	border-radius: 1px;
-	border: none;
-	width: 100%;
-	heghit: 48px;
-	text-align: center;
-	font-family: 'DungGeunMo';
-	font-weight: bold;
-	background-color: rgba(255, 255, 255, 0.9);
+   border-radius: 2px;
+   border: none;
+   width: 100%;
+   heghit: 48px;
+   text-align: center;
+   font-family: 'DungGeunMo';
+   font-weight: bold;
+   background-color: rgba(255, 255, 255, 0.8);
+}
+th {
+   font-size: 20px;
 }
 
 td a {
-	text-decoration: none;
-	color: black;
+   text-decoration: none; /* 링크 밑줄 제거 */
+   color: black; /* 기본 텍스트 색상 */
+   transition: color 0.3s ease; /* 색상 변화를 부드럽게 */
 }
+
+td.clicktitle:hover {
+   transform: scale(1.1); /* 크기를 1.2배 키움 */
+   background-color: #f0f0f0; /* 배경색 변경 */
+}
+
 
 table tr {
 	border-radius: 1px;
@@ -482,78 +546,54 @@ table tr {
 		</div>
 		<div class="main-content">
 			<div class="body">
+
 				<div class="gameList">
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/skipstone.png">
+
 						<h3>Skipping Stone</h3>
 						<p>Action</p>
-						<a href="/game/list.do?id=800001"><button>Play</button></a>
+						<a href="/game/list.do?id=800001"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/2048.png">
 						<h3>2048</h3>
 						<p>Puzzle</p>
-						<a href="/game/list.do?id=800002"><button>Play</button></a>
+						<a href="/game/list.do?id=800002"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/warplane.png">
-						<h3>World Of WarPlane</h3>
+						<h3>WarPlane</h3>
 						<p>Action</p>
-						<a href="/game/list.do?id=800003"><button>Play</button></a>
+						<a href="/game/list.do?id=800003"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/metro.png">
 						<h3>Mini Metro</h3>
 						<p>Strategy</p>
-						<a href="/game/list.do?id=800004"><button>Play</button></a>
+						<a href="/game/list.do?id=800004"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/tetris.png">
 						<h3>Tetris</h3>
 						<p>Puzzle</p>
-						<a href="/game/list.do?id=800005"><button>Play</button></a>
+						<a href="/game/list.do?id=800005"><button>Insert Coin</button></a>
 					</div>
 					<div class="game">
+						<img class="hover-img" src="/images/coin.gif" alt="호버 이미지">
 						<img src="/images/chess.jpg">
 						<h3>Chess</h3>
 						<p>Stretegy</p>
-						<a href="/game/list.do?id=800006"><button>Play</button></a>
+						<a href="/game/list.do?id=800006"><button>Insert Coin</button></a>
 					</div>
 				</div>
-				<div class="boardlist">
-					<h3>📢 최근 게시물</h3>
-					<table>
-						<thead>
-							<tr id="title">
-								<th style="width: 12%;">번호</th>
-								<th style="width: 42%;">제목</th>
-								<th style="width: 17%;">작성자</th>
-								<th style="width: 17%;">날짜</th>
-								<th style="width: 12%;">조회</th>
-							</tr>
-						</thead>
-						<tbody id="latestboard">
 
-						</tbody>
-					</table>
-				</div>
-				<div class="boardlist">
-					<h3>📢 이번주 인기 게시글</h3>
-					<table>
-						<thead>
-							<tr id="title">
-								<th style="width: 12%;">번호</th>
-								<th style="width: 42%;">제목</th>
-								<th style="width: 17%;">작성자</th>
-								<th style="width: 17%;">날짜</th>
-								<th style="width: 12%;">조회</th>
-							</tr>
-						</thead>
-						<tbody id="hot-weekend-board">
 
-						</tbody>
-					</table>
-				</div>
 			</div>
 			<div class="right-content">
 				<c:if test="${member.memberId==null}">
@@ -608,6 +648,49 @@ table tr {
 					</div>
 				</div>
 			</div>
+
+
+
+		</div>
+		<div class="bottombody">
+
+			<div class="boardlist">
+				<h3>🌟 이번주 인기 게시글</h3>
+				<table>
+					<thead>
+						<tr id="title">
+							<th style="width: 12%;">번호</th>
+							<th class="clicktitle" style="width: 42%;">제목</th>
+
+							<th style="width: 17%;">작성자</th>
+							<th style="width: 17%;">날짜</th>
+							<th style="width: 12%;">조회</th>
+						</tr>
+					</thead>
+					<tbody id="hot-weekend-board">
+
+					</tbody>
+				</table>
+			</div>
+			<div class="boardlist">
+				<h3>📢 최근 게시물</h3>
+				<table>
+					<thead>
+						<tr id="title">
+							<th style="width: 12%;">번호</th>
+							<th class="click-title" style="width: 42%;">제목</th>
+
+							<th style="width: 17%;">작성자</th>
+							<th style="width: 17%;">날짜</th>
+							<th style="width: 12%;">조회</th>
+						</tr>
+					</thead>
+					<tbody id="latestboard">
+
+					</tbody>
+				</table>
+			</div>
+
 		</div>
 
 
@@ -650,7 +733,6 @@ table tr {
 													console.log(calld);
 													let latestBoard = $('#latestboard');
 
-												
 													latestBoard.empty();
 
 													if (!calld
@@ -660,7 +742,6 @@ table tr {
 														return;
 													}
 
-												
 													for (let i = 0; i < calld.length; i++) {
 														const tr = $('<tr>');
 
@@ -672,7 +753,7 @@ table tr {
 														tr.append($('</td>'));
 														tr
 																.append($(
-																		'<td style="width: 42%;">')
+																		'<td class="clicktitle" style="width: 42%;">')
 																		.append(
 																				$(
 																						'<a>')
@@ -725,7 +806,6 @@ table tr {
 												console.log(calld);
 												let latestBoard = $('#hot-weekend-board');
 
-											
 												latestBoard.empty();
 
 												if (!calld
@@ -735,7 +815,6 @@ table tr {
 													return;
 												}
 
-												
 												for (let i = 0; i < calld.length; i++) {
 													const tr = $('<tr>');
 
@@ -747,7 +826,7 @@ table tr {
 													tr.append($('</td>'));
 													tr
 															.append($(
-																	'<td style="width: 42%;">')
+																	'<td class="clicktitle" style="width: 42%;">')
 																	.append(
 																			$(
 																					'<a>')
@@ -828,17 +907,15 @@ table tr {
 												});
 							}
 
-							let defaultGameId = "800001"; 
+							let defaultGameId = "800001";
 							loadRanking(defaultGameId);
 
-						
 							$(".tab-btn").click(function() {
 								$(".tab-btn").removeClass("active");
 								$(this).addClass("active");
 
 								let gameId = $(this).data("game");
 
-							
 								if (gameId.startsWith("game")) {
 									gameId = gameId.replace("game", "");
 									gameId = Number(80000 + gameId);

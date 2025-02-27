@@ -110,14 +110,17 @@ public class MemberController extends HttpServlet {
 				
 			} else if (cmd.equals("/member/out.do")) { //회원 탈퇴
 				int id = Integer.parseInt(request.getParameter("id"));
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				if (member == null) {
+					response.sendRedirect("/");
+					return;
+				}
 				int result = dao.deleteById(id);
 				if (result > 0) {
 					System.out.println("탈퇴성공!");
 					request.getSession().invalidate();
 					PrintWriter out = response.getWriter();
-					out.println("<script>window.close();</script>");
-					out.flush();
-					return;
+					out.println("<script>window.opener.location.href = '/'; window.close();</script>");
 				}
 				
 			} else if (cmd.equals("/member/emailDuplCheck.do")) { //이메일 중복체크
@@ -245,9 +248,12 @@ public class MemberController extends HttpServlet {
 
 				if(result > 0) {
 					MemberDTO member = dao.selectById(memberId);
+					boolean banned = blackListDao.isBanned(member.getMemberId());
+					member.setIsbanned(banned); //밴유저가 수정한 경우에도 밴 세팅
 					request.getSession().setAttribute("member", member);
 				}
-				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
+				response.sendRedirect("/member/mypage.do");
+				//request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");

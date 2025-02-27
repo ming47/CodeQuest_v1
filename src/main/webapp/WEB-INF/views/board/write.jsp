@@ -48,7 +48,7 @@
 	height: 100%;
 	align-items: center;
 	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
+	background: url('/images/밤.gif') no-repeat center;
 	background-size: cover;
 	position: relative;
 	justify-content: center;
@@ -193,10 +193,11 @@ button {
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
 }
-
 button:hover {
 	background: #66635f;
+	transform: scale(1.1);
 }
+
 
 .card {
 	border-radius: 10px;
