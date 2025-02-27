@@ -30,7 +30,7 @@ public class ScoreController extends HttpServlet {
 		try {		
 			String cmd = ConvertURL.of(request);
 			
-			if (cmd.equals("/game/score/list/game.do")) {
+			if (cmd.equals("/score/list/game.do")) {
 				String gameId = request.getParameter("id");
 				String userId = request.getParameter("user");
 				
@@ -53,7 +53,7 @@ public class ScoreController extends HttpServlet {
 		try {		
 			String cmd = ConvertURL.of(request);
 			
-			if(cmd.equals("game/score/add.do")) {
+			if(cmd.equals("/score/add.do")) {
 				System.out.println(cmd);
 				int gameId = Integer.parseInt(request.getParameter("gameId"));
 				int score = Integer.parseInt(request.getParameter("score"));
