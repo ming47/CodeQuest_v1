@@ -759,7 +759,7 @@ table th {
        validInput($inputBtn);
    }
    
-   function validInput($inputBtn) {   //등록 버튼 이벤트e
+   function validInput($inputBtn) {   //등록 버튼 이벤트
       if ($("#commentInput").val().trim() === "") {
            $inputBtn.prop("disabled", true);
 
