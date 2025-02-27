@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -9,18 +9,18 @@
 <title>게시글 상세 보기</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link
-   href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-   rel="stylesheet">
-<script
-   src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
 	rel="stylesheet">
+
 <link
-   href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
-   rel="stylesheet">
+	href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
+	rel="stylesheet">
 <script
-   src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
 <style>
 @font-face {
 	font-family: 'DungGeunMo';
@@ -29,458 +29,485 @@
 		format('woff');
 	font-weight: normal;
 	font-style: normal;
-}
-* {
-   box-sizing: border-box;
-   margin: 0;
-   padding: 0;
-   font-family: Arial, sans-serif;
+
 }
 
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
 
 html, body {
-   width: 100%;
-   height: 100vh;
+	width: 100%;
+	height: 100vh;
 }
-/* 헤드 */
+
 .header, .footer {
-   background: #1e201d;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 0 20px;
-   color: #b4c28a;
-   font-family: "Press Start 2P", serif;
-   font-weight: 400;
-   font-style: normal;
-   width: 100%;
+	background: #1e201d;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
+	color: #b4c28a;
+	font-family: "Press Start 2P", serif;
+	font-weight: 400;
+	font-style: normal;
+	width: 100%;
 }
 
 .header {
-   width: 100%;
-   height: 80px;
-   background: #1e201d;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   position: fixed;
+	width: 100%;
+	height: 80px;
+	background: #1e201d;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .navi {
-   width: 100%;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .logo {
-   font-size: 20px;
+	font-size: 20px;
 }
 
 .navi ul {
-   list-style: none;
-   display: flex;
-   gap: 20px;
+	list-style: none;
+	display: flex;
+	gap: 20px;
 }
 
 .navi ul li a {
-   padding: 10px 15px;
-   background: #717171;
-   color: white;
-   border-radius: 5px;
-   cursor: pointer;
-   text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
-      black;
-   text-decoration: none;
+	padding: 10px 15px;
+	background: #717171;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
+		black;
+	text-decoration: none;
+}
+
+li {
+	list-style-type: none;
 }
 
 .navi ul li:hover a {
-   background: #3c3b39;
-   color: white;
+	background: #3c3b39;
+	color: white;
 }
 
 .logbox {
-   color: #f4f4f4;
-   font-weight: bold;
-   font-size: 16px;
+	color: #f4f4f4;
+	font-weight: bold;
+	font-size: 16px;
 }
 
 .logbox-container {
-   position: fixed;
-   right: 10px;
-   bottom: -35px;
-   top: 80px;
-   height: fit-content;
+	position: absolute;
+	right: 10px;
+	bottom: -35px;
+	top: 80px;
+	height: fit-content;
 }
 
-.body{
-   margin: 0;
-   width: 100%;
-   background-attachment: fixed;
-   background: url('/images/allback.jpg') no-repeat center;
-   background-size: cover;
-   display: flex;
-   align-items: center;
-   justify-content: center;
+.body {
+	margin: 0;
+	width: 100%;
+	background-attachment: fixed;
+	background: url('/images/밤.gif') no-repeat center;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .footer {
-   height: 60px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 14px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
 }
 
 .container {
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-   color: white;
-   font-family: 'DungGeunMo';
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	color: white;
+	font-family: 'DungGeunMo';
+	padding: 0;
 }
 
-/* 상세페이지부터 */
 .body-inner {
-   border: none;
-   background-color: rgb(255, 255, 255, 0.5);
-   border-radius: 16px;
-   box-shadow: inset 0 0 8px #424242;
-   width: 73vw;
-   padding: 20px;
-   margin-top : 150px;
-   margin-bottom: 50px;
+	border: none;
+	background-color: rgb(255, 255, 255, 0.5);
+	border-radius: 16px;
+	box-shadow: inset 0 0 8px #424242;
+	padding: 20px;
+	margin-top: 40px;
+	margin-bottom: 50px;
+	width: 50vw;
 }
 
 .top {
-   text-align: center;
-   margin-bottom: 20px;
+	text-align: center;
+	margin-bottom: 20px;
 }
 
 .header h1 {
-   font-size: 28px;
-   color: #333;
+	font-size: 28px;
+	color: #333;
 }
 
 table {
-   border-collapse: collapse;
-   width: 70vw;
-   font-size: 19px;
-   border-spacing: 3px;
-   border-collapse: separate;
-   background-color: transparent; 
+	border-collapse: collapse;
+	width: 48vw;
+	font-size: 19px;
+	border-spacing: 3px;
+	border-collapse: separate;
+	background-color: transparent;
 }
 
 table th, table td {
-   padding: 10px;
-   text-align: center;
-   border-radius: 1px;
-   border:none;
-   font-family: 'DungGeunMo';
-   color: black;
-   background-color: #fafbf4;
+	padding: 10px;
+	text-align: center;
+	border-radius: 1px;
+	border: none;
+	font-family: 'DungGeunMo';
+	color: black;
+	background-color: #fafbf4;
 }
 
 table tr {
-   border-radius: 1px;
-   font-family: 'DungGeunMo';
+	border-radius: 1px;
+	font-family: 'DungGeunMo';
 }
 
 td {
-   color: black;
-   border-radius: 1px;
-   font-family: 'DungGeunMo';
+	color: black;
+	border-radius: 1px;
+	font-family: 'DungGeunMo';
 }
 
-/* 내용 부분만 높이 4배로 설정 */
 td#contents {
-   height: 200px; /* 4배 높이 */
-   word-wrap: break-word;
-   white-space: pre-wrap;
+	height: 200px;
+	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 
 .bottom {
-   text-align: right;
-   margin-top: 20px;
+	text-align: right;
+	margin-top: 20px;
+	position: relative;
+	height: 50px;
 }
-
+/*
 .bottom button {
-   padding: 10px 20px;
-   background-color: #3c3b39;
-   color: white;
-   border: none;
-   letter-spacing: 5px;
-   font-weight: bold;
-   position: relative;
-   transition: all 0.4s;
-   overflow: hidden;
-   border-radius: 5px;
-   font-family: 'DungGeunMo';
+	padding: 10px 20px;
+	background-color: #3c3b39;
+	color: white;
+	border: none;
+	letter-spacing: 5px;
+	font-weight: bold;
+	position: relative;
+	transition: all 0.4s;
+	overflow: hidden;
+	border-radius: 5px;
+	font-family: 'DungGeunMo';
+}
+*/
+.button {
+	padding: 10px 20px;
+	background-color: #3c3b39;
+	color: white;
+	border: none;
+	letter-spacing: 5px;
+	font-weight: bold;
+	position: relative;
+	transition: all 0.4s;
+	overflow: hidden;
+	border-radius: 5px;
+	font-family: 'DungGeunMo';
 }
 
 #back {
-   margin-right: 300px;
+	position : absolute;
+	left: 20px;
+	margin-right: 300px;
 }
 
 .bottom a:hover {
-   background-color: #45a049;
+	background-color: #45a049;
 }
 
 #commentSection {
-   margin-top: 20px;
-   padding: 15px;
-   background: #f9f9 border-radius: 10px;
+	margin-top: 20px;
+	padding: 15px;
+	background-color: rgb(255, 255, 255, 0.5);
+	border-radius: 10px;
+	position: relative;
 }
 
-/* 댓글 입력창 스타일 */
 #commentInput {
-   display: flex;
-   flex-direction: column;
-   gap: 10px;
-   float: left;
-   color : black;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	float: left;
+	color: black;
 }
 
 #input {
-   width: 100%;
-   height: 60px;
-   padding: 10px;
-   border: 1px solid #ddd;
-   border-radius: 5px;
-   resize: none;
-}
-/*
-#inputbtn {
-   align-self: flex-end;
-   background-color: #4CAF50;
-   color: white;
-   padding: 10px 20px;
-   border-radius: 5px;
-   font-size: 16px;
-   transition: background-color 0.3s;
-   border: none;
-   cursor: pointer;
+	width: 100%;
+	height: 60px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	resize: none;
 }
 
-#inputbtn:hover {
-   background-color: #45a049;
+.pageNavi>span {
+	color: white;
+	margin: 5px;
+	border: 3px solid white;
+	background-color: #3c3b39;
+	border-radius: 10px;
 }
-*/
-/* 프로필 아이콘 */
-.comment-item .profile-icon {
-   width: 40px;
-   height: 40px;
-   border-radius: 50%;
-   background: #4CAF50;
-   color: white;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-weight: bold;
-   font-size: 16px;
+
+.pageNavi>span:hover {
+	background: #3c3b39;
 }
 
 /* 댓글 내용 */
 .comment-content {
-   flex-grow: 1;
+	flex-grow: 1;
+	margin-top: 20px;
+	padding-left: 10px;
+	height: 50px;
+}
+
+#commentList {
+	margin: 10px;
 }
 
 .comment-header {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   font-size: 14px;
-   color: #666;
-   margin-bottom: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #666;
+	margin-bottom: 5px;
+	padding-left: 10px;
+	background-color: #fafbf4;
 }
 
-.comment-body {
-   font-size: 16px;
-   color: #333;
+.comment-item {
+	margin-top: 30px;
+	font-size: 20px;
 }
-
 /* 삭제 버튼 스타일 */
 .comment-delete {
-   background: none;
-   border: none;
-   color: #ff5555;
-   cursor: pointer;
-   font-size: 14px;
-   transition: color 0.2s;
+	background: none;
+	border: none;
+	color: #ff5555;
+	cursor: pointer;
+	font-size: 14px;
+	transition: color 0.2s;
 }
 
-.comment-delete:hover {
-   color: #ff0000;
-}
-/* 댓글 입력창과 버튼을 가로로 배치 */
 #commentInputContainer {
-   display: flex;
-   align-items: center;
-   gap: 10px;
-   margin-top: 10px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.buttonContainer {
+	height: 50px;
+	position: relative;
+}
+
+.buttonContainerInner {
+	position: absolute;
+	right: 30px;
 }
 
 /* 입력창 스타일 */
 #commentInput {
-   flex: 1;
-   height: 50px;
-   padding: 12px;
-   border: 1px solid #ddd;
-   border-radius: 8px;
-   font-size: 14px;
-}
-/* 등록 버튼 스타일 */
-/*
-#inputbtn {
-   background-color: pink;
-   color: white;
-   padding: 12px 20px;
-   border-radius: 8px;
-   font-size: 16px;
-   border: none;
-   cursor: pointer;
-   transition: background-color 0.3s;
+	flex: 1;
+	height: 50px;
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 14px;
+	margin-bottom: 10px;
+	width: 50px;
 }
 
-#inputbtn:hover {
-   background-color: white;
-   color: pink;
-}
-*/
-/* 이모티콘 */
 .emoji-btn {
-    cursor: pointer;
-    font-size: 1.5em;
-    padding: 5px;
-    display: inline-block;
+	cursor: pointer;
+	font-size: 1.5em;
+	padding: 20px;
+	display: inline-block;
+}
+
+.updatebtn, .deletebtn {
+	margin: 10px;
+	padding: 10px;
+	background-color: #3c3b39;
+	border: none;
+	border-radius: 8px;
 }
 
 .emoji-btn:hover {
-    transform: scale(1.2);
-    transition: transform 0.2s;
+	transform: scale(1.2);
+	transition: transform 0.2s;
 }
 
 .emoticon {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    padding: 10px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 10px;
+	padding: 10px;
+	background: white;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.pageNaviForm {
+	display: flex;
+	justify-content: center;
+   	align-items: center;
+}
+
+.relative-date{
+	padding:5px;
+}
+
+table th {
+	width: 10vw;
+}
+
+#board_contents {
+  overflow: auto;
+  word-wrap: break-word;
 }
 
 </style>
 </head>
 <body>
-   <div class="header">
-      <div class="navi">
-         <div class="logo">Team CodeQuest</div>
-         <ul class="menu">
-            <li><a href="/">Home</a></li>
-            <li><a href="/game/list.do">Game</a></li>
-            <li><a href="/board/list.do">Board</a></li>
-            <c:choose>
-               <c:when test="${member.role == 'admin'}">
-                  <li><a href="/service/admin/main.do">Service</a></li>
-               </c:when>
-               <c:otherwise>
-                  <li><a href="/service/qna/addForm.do">Service</a></li>
-               </c:otherwise>
-            </c:choose>
-         </ul>
-      </div>
-   </div>
-            <!-- ✅ 로그인 정보 -->
-         <c:if test="${member.memberId != null}">
-            <div class="logbox-container">
-               <%@ include file="../../../logbox.jsp"%>
-            </div>
-         </c:if>
-   <div class="container">
-   <div class="body">
-   <div class="body-inner">
-      <div class="top">
-         <h1>게시글 상세 보기</h1>
-      </div>
-      <table>
-         <tr>
-            <th>글 번호</th>
-            <td>${dto.boardId}</td>
-         </tr>
-         <tr>
-            <th>작성자</th>
-            <td>${dto.writer}</td>
-         </tr>
-         <tr>
-            <th>작성 날짜</th>
-            <td>${dto.regDate}</td>
-         </tr>
-         <tr>
-            <th>첨부된 파일:</th>
-            <td><c:forEach var="i" items="${filelist}">
-                  <a
-                     href="/file/download.do?filename=${i.sysname}&oriname=${i.oriname}">${i.oriname}
-                  </a>
-                  <br>
-               </c:forEach></td>
-         </tr>
-         <tr>
-            <th>제목</th>
-            <td class="change" id="board_title">${dto.title}</td>
-         </tr>
-         <tr>
-            <th>내용</th>
-            <!-- 내용 부분에 높이를 4배로 설정 -->
-            <td class="change" id="board_contents" height="500px">${dto.contents}</td>
-         </tr>
-      </table>
-      
-      <div class="commentSection">
-            <!-- 댓글 목록 -->
-            <div id="commentInputContainer">
-                 <input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
-               <div class="emoticons" style="display: none;">
-                  <div class="emoticon">
-                     <span class="emoji-btn">😀</span>
-                       <span class="emoji-btn">😊</span>
-                         <span class="emoji-btn">😎</span>
-                       <span class="emoji-btn">😍</span>
-                       <span class="emoji-btn">🎉</span>
-                       <span class="emoji-btn">👍</span>
-                  </div>
-               </div>
-            </div>
-                  <div class = "buttonContainer">
-                  <button id="emojiBtn" type = "button">😀</button>
-                  <button id="inputbtn" type="button">등록</button>
-               </div>
-         <div id="comments">
-            <ul id="commentList"></ul>
-            <!-- AJAX로 댓글이 추가될 부분 -->
-         </div>
-      </div>
-      <form action="/board/update.do" method="post" id="update-form">
-         <input id="id" type="hidden" name="id" value="${dto.boardId}">
-         <input name="title" type="hidden" id="hdtitle"> 
-         <input name="contents" type="hidden" id="hdcontents">
-         <div class="bottom">
-            <button type="button" id="back">목록으로</button>
-            <!-- 여기 게시글 수정 삭제 버튼  -->
-            <c:if test="${dto.getMemberId() == member.getMemberId() || member.role == 'admin'}">
-               <td class="reply_button_area-${item.id}">
-                  <button id="update" type="button">수정하기</button>
-                  <button id="delete" type="button">삭제하기</button> 
-               </td>
-             </c:if>
-         </div>
-      </form>
-   </div>
-   </div>
-   </div>
-   <div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
+	<div class="header">
+		<div class="navi">
+			<div class="logo">Team CodeQuest</div>
+			<ul class="menu">
+				<li><a href="/">Home</a></li>
+				<li><a href="/game/list.do">Game</a></li>
+				<li><a href="/board/list.do">Board</a></li>
+				<c:choose>
+					<c:when test="${member.role == 'admin'}">
+						<li><a href="/service/admin/main.do">Service</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="/service/qna/addForm.do">Service</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</div>
+
+	<c:if test="${member.memberId != null}">
+		<div class="logbox-container">
+			<%@ include file="../../../logbox.jsp"%>
+		</div>
+	</c:if>
+	<div class="container">
+		<div class="body">
+			<div class="body-inner">
+				<div class="top">
+					<h1>게시글 상세 보기</h1>
+				</div>
+				<table>
+					<tr>
+						<th>글 번호</th>
+						<td>${dto.boardId}</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>${dto.writer}</td>
+					</tr>
+					<tr>
+						<th>작성 날짜</th>
+						<td>${dto.regDate}</td>
+					</tr>
+					<tr>
+						<th>첨부된 파일:</th>
+						<td><c:forEach var="i" items="${filelist}">
+								<a
+									href="/file/download.do?filename=${i.sysname}&oriname=${i.oriname}">${i.oriname}
+								</a>
+								<br>
+							</c:forEach></td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td class="change" id="board_title">${dto.title}</td>
+					</tr>
+					<tr>
+						<!-- 내용 부분에 높이를 4배로 설정 -->
+						<td class="change" id="board_contents" colspan="2" height="500px">${dto.contents}</td>
+					</tr>
+				</table>
+
+				<div class="commentSection">
+					<!-- 댓글 목록 -->
+					<div id="commentInputContainer">
+						<input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
+						<div class="emoticons" style="display: none;">
+							<div class="emoticon">
+								<span class="emoji-btn">😀</span> <span class="emoji-btn">😊</span>
+								<span class="emoji-btn">😎</span> <span class="emoji-btn">😍</span>
+								<span class="emoji-btn">🎉</span> <span class="emoji-btn">👍</span>
+							</div>
+						</div>
+					</div>
+					<div class="buttonContainer">
+						<span class="buttonContainerInner">
+						<button class="button" id="emojiBtn" type="button">😀</button>
+						<button class="button" id="inputbtn" type="button">등록</button>
+						</span>
+					</div>
+					<div id="comments">
+						<ul id="commentList"></ul>
+						<!-- AJAX로 댓글이 추가될 부분 -->
+					</div>
+					<div class="pageNaviForm"></div>
+				</div>
+				<form action="/board/update.do" method="post" id="update-form">
+					<input id="id" type="hidden" name="id" value="${dto.boardId}">
+					<input name="title" type="hidden" id="hdtitle"> <input
+						name="contents" type="hidden" id="hdcontents">
+					<div class="bottom">
+						<button class="button" type="button" id="back">목록으로</button>
+						<!-- 여기 게시글 수정 삭제 버튼  -->
+						<c:if
+							test="${dto.getMemberId() == member.getMemberId() || member.role == 'admin'}">
+							<td class="reply_button_area-${item.id}">
+								<button class="button" id="update" type="button">수정하기</button>
+								<button class="button" id="delete" type="button">삭제하기</button>
+							</td>
+						</c:if>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 </body>
 <script>
    function makePageNavi(dto, className) {
@@ -530,21 +557,37 @@ td#contents {
         for (let i = 0; i < data.length; i++) {
            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
                
-            let profileIcon = $("<div>").addClass("profile-icon").text(data[i].writer.charAt(0));
             let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
-            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer + " · " + data[i].regDate);
+            let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer);
+            commentHeader.append($('<span>').html(data[i].regDate).addClass('relative-date').attr('data-timestamp', Date.parse(data[i].regDate)));
                
-            let btnBox = $("<div>").addClass("btnbox");
+            let btnBox = $("<div>").addClass("btnbox buttonContainer");
 
             if (data[i].writer === UserName || Master === "admin") {   //관리자이거나 작성자일 경우 보이게하기
                let updateBtn = $("<button>").addClass("updatebtn").text("수정");
                 let deleteBtn = $("<button>").addClass("deletebtn").text("삭제");
-                btnBox.append(updateBtn, deleteBtn);
+                
+                btnBox.append($('<span>').addClass('buttonContainerInner').append(updateBtn, deleteBtn));
             }
-            commentItem.append(profileIcon, commentHeader, contentDiv, btnBox);
+            commentItem.append(commentHeader, contentDiv, btnBox);
                   
             $("#commentList").append(commentItem);
       }
+        var now = new Date();
+    	$('.relative-date').each(function () {
+    		var timestamp = parseInt($(this).data('timestamp'), 10);
+    		var postDate = new Date(timestamp);
+    		var diffMinutes = Math.floor((now - postDate) / (1000 * 60));
+    	
+    		if (diffMinutes < 1) {
+    			$(this).text("방금 전");
+    		} else if (diffMinutes < 60) {
+    			$(this).text(diffMinutes + "분 전");
+    		} else if (diffMinutes < 720) {
+    			var diffHours = Math.floor(diffMinutes / 60);
+    			$(this).text(diffHours + "시간 전");
+    		}
+    	});	
            
         // 댓글 수정 기능
         $(".updatebtn").on("click", function() {
@@ -629,7 +672,7 @@ td#contents {
     }
       
       function makeCommentPageNavi(pageNavi, className) {
-        $('#comments').after(makePageNavi(pageNavi, className));
+        $('.pageNaviForm').append(makePageNavi(pageNavi, className));
         
         $('.replyPageNavi').on('click', function() {
            const clicked = $(this);   
@@ -719,10 +762,7 @@ td#contents {
    function validInput($inputBtn) {   //등록 버튼 이벤트
       if ($("#commentInput").val().trim() === "") {
            $inputBtn.prop("disabled", true);
-            $inputBtn.css({
-               "background-color": "#ffd1dc",
-                "cursor": "not-allowed"
-            });
+
         } else {
               $inputBtn.prop("disabled", false);
               $inputBtn.css({
@@ -738,10 +778,6 @@ td#contents {
           
        // 초기상태 버튼 비활성화
        $inputBtn.prop("disabled", true);
-       $inputBtn.css({
-             "background-color": "#ffd1dc",
-          "cursor": "not-allowed"
-       });
        
        $commentInput.on('keyup', function(event) {
           if(event.key == "Enter") {             
@@ -777,7 +813,7 @@ td#contents {
           makeCommentItem(data.list);
           makeCommentPageNavi(data.pageNavi, 'replyPageNavi');
        }); 
-   }); // $(document).ready 끝
+   });
    
 
     // 게시물 삭제하기 눌렀을때
@@ -936,5 +972,6 @@ td#contents {
             return date.getFullYear() + '년 ' + Number(date.getMonth() + 1) + '월 ' + date.getDate() + '일 ' +  date.getHours() + 
                   '시 ' + date.getMinutes() + '분';       
          }
+      
 </script>
 </html>

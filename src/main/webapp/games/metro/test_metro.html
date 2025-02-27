@@ -871,19 +871,37 @@
     let isStationFulled = false;
 
     const maxTrainPassengerCount = 50;
-    const maxStationPassengerCount = 20;
+    const maxStationPassengerCount = 10;
     const maxStations = 15;
-    const addTrainCount = 60;
+    const addTrainCount = 10;
 
     let score = 0;
-    let leftTime = 60;
+    let leftTime = 10;
     let stationMakeTimer = randomStationMakeTimer();
     let addTrainTimer = addTrainCount;
     let currentLineColor = 1;
+    
+    let gameover = false;
 
     let game = function () {
         if (leftTime <= 0) {
-            console.log('겜 오버');
+            gameover = true;
+            
+            if (gameover) {
+                clearInterval(play);
+                
+                $.ajax({
+                    url: '/score/add.do',
+                    type: 'POST',
+                    data: {
+                        gameId: 800004,
+                        score: score
+                    }
+                }).done(function(data) {
+                   console.log(data);
+                });
+            }
+            
             return;
         }
 
@@ -958,8 +976,21 @@
     };
 
     let play = setInterval(game, 500);
+    
+    const enterTime = new Date().getTime();
 
-    if (leftTime <= 0) {
-        clearInterval(play);
-    }
+    window.addEventListener("beforeunload", function() {
+        localStorage.setItem('play-time', new Date().getTime() - enterTime);
+
+        $.ajax({
+            url: '/game/playtime/add.do',
+            type: 'POST',
+            data: {
+                gameId: 800001,
+                playtime: new Date().getTime() - enterTime
+            }
+        }).done(function(data) {
+           console.log(data);
+        });
+    });    
 </script>
