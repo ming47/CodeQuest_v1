@@ -23,7 +23,6 @@
 }
 
 .container {
-	margin: auto;
 	flex-direction: column;
 	align-items: center;
 	display: flex;
@@ -31,7 +30,7 @@
 	height: 1024px;
 	justify-content: center;
 	align-items: center;
-	background: url('/allback.jpg') no-repeat center;
+	background: url('/images/allback.jpg') no-repeat center;
 	background-size: cover;
 	font-family: "Press Start 2P", serif;
 }
@@ -123,8 +122,9 @@
 }
 
 .sidebar {
+	padding:5px;
 	width: 230px;
-	height: 310px;
+	height: 340px;
 	background: #f4f4f4;
 	border-radius: 10px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -204,6 +204,12 @@
 	border: 1px solid black;
 	background-color: white;
 }
+.logbox-container {
+	position: fixed;
+	top: 80px;
+	right: 140px;
+	z-index: 1000;
+}
 </style>
 </head>
 
@@ -215,9 +221,9 @@
 				<div class="logo">Team CodeQuest</div>
 				<ul class="menu">
 					<li><a href="/">Home</a></li>
-					<li><a href="/game/list.do">Game</a></li>
+					<li><a href="/game/list.do?id=800001">Game</a></li>
 					<li><a href="/board/list.do">Board</a></li>
-					<li><a href="/service/list.do">Service</a></li>
+					<li><a href="/service/qna/addForm.do">Service</a></li>
 				</ul>
 			</div>
 			<!-- ✅ 로그인 정보 -->
