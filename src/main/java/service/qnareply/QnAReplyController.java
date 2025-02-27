@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import member.member.MemberDTO;
 import service.qna.QnADAOImpl;
 import utils.ConvertURL;
 
@@ -47,11 +48,13 @@ public class QnAReplyController extends HttpServlet {
 		try {		
 			String cmd = ConvertURL.of(request);
 			
-			if (cmd.equals("/qna_reply/insert.do")) {
+			if (cmd.equals("/qna_reply/add.do")) {
 				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
 				String context = request.getParameter("context");
 				
-				qnaReplyDAO.insert(new QnAReplyDTO(qnaId, 100001, context));
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				
+				qnaReplyDAO.insert(new QnAReplyDTO(qnaId, member.getMemberId(), context));
 				qnaDAO.updateResponseYNById(qnaId, "Y");
 			} else if (cmd.equals("/qna_reply/update.do")) {
 				int qnaId = Integer.parseInt(request.getParameter("qnaId"));

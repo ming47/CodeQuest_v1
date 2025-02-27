@@ -700,7 +700,7 @@ table tr {
 
 	<script>
 		$("#pwFinder").on("click", function() {
-			window.open("/member/pwResetForm.do", "", "width=550, height=300");
+			window.open("/member/pwResetForm.do", "", "width=550, height=500");
 		});
 		let urlParams = new URL(location.href).searchParams;
 		let loginStatus = urlParams.get('login');
@@ -866,7 +866,7 @@ table tr {
 								$
 										.ajax(
 												{
-													url : "/score/list/game.do?id="
+													url : "/game/score/list/game.do?id="
 															+ gameId,
 													type : "GET",
 													dataType : "json"
@@ -884,7 +884,7 @@ table tr {
 														return;
 													}
 
-													for (let i = 0; i < 10; i++) {
+													for (let i = 0; i < data.length; i++) {
 														console.log(data[i]);
 
 														const li = $('<li>')

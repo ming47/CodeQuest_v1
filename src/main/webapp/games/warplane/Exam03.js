@@ -38,14 +38,9 @@ class Exam03 extends Phaser.Scene {
                 this.isGameOver = true;  // 게임 오버 상태로 변경
                 this.physics.pause();
                 setTimeout(() => {
-                    this.scene.start("GameOver");  // 게임 오버 화면으로 이동
-                    this.gameTime = 0;  // 시간 초기화
-                    this.tileSpeed = 2;  // 배경 속도 초기화
-                    this.isGameOver = false;  // 게임 오버 상태 초기화
-
-			        console.log("패배");
+			        console.log(this.gameTime);
 			        $.ajax({
-			            url: '/score/add.do',
+			            url: '/game/score/add.do',
 			            type: 'POST',
 			            data: {
 			                gameId: 800003,
@@ -54,7 +49,11 @@ class Exam03 extends Phaser.Scene {
 			        }).done(function(data) {
 			           console.log(data);
 			        });
-
+			        
+                    this.scene.start("GameOver");  // 게임 오버 화면으로 이동
+                    this.gameTime = 0;  // 시간 초기화
+                    this.tileSpeed = 2;  // 배경 속도 초기화
+                    this.isGameOver = false;  // 게임 오버 상태 초기화
                 }, 2000);  // 2초 뒤에 게임 오버 화면
                 this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "GameOver").setOrigin(0.5);
           
