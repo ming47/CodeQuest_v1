@@ -15,12 +15,9 @@ public class BoardDTO {
 	private String role;
 
 
-	public BoardDTO() {
-		super();
-	}
+	public BoardDTO() {}
 
 	public BoardDTO(int boardId, int memberId, String title, Timestamp regDate, String contents ,int viewCount ,int replyCount, String writer, String role) {
-		super();
 		this.boardId = boardId;
 		this.memberId = memberId;
 		this.title = title;
@@ -40,7 +37,6 @@ public class BoardDTO {
 	
 
 	public BoardDTO(int boardId,String title,int memberId, String contents ) {
-
 		this.boardId = boardId;
 		this.title = title;
 		this.memberId = memberId;

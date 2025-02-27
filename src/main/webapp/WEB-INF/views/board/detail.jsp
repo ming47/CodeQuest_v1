@@ -715,7 +715,7 @@ td#contents {
           }).done(function(data) {
               alert('댓글이 등록되었습니다.');
               $.ajax({
-                  url: "/reply/ContentsAll.do",
+                  url: "/reply/list.do",
                      data: { 'boardId': ${dto.boardId},
                               'page': 1},
                      type: "get"
@@ -781,7 +781,7 @@ td#contents {
       
       // 댓글 목록 불러오기
       $.ajax({
-       url: "/reply/ContentsAll.do",
+       url: "/reply/list.do",
           data: { 'boardId': ${dto.boardId},
                    'page': 1},
           type: "get"
