@@ -728,8 +728,10 @@ table th {
               data: {
                     boardId: ${dto.boardId},
                     contents: $commentInput.val(),
+                    console.log(contents);
+                    console.log(boardID)
               } 
-          }).done(function(data) {
+          }).done(function(data) 
               alert('댓글이 등록되었습니다.');
               $.ajax({
                   url: "/reply/list.do",
@@ -953,7 +955,7 @@ table th {
                 url : '/file/image/upload.do',
                 data : formData,
                 type : 'POST',
-                //dataType:"multipart/form-data", 
+                //dataType:"multipart/form-data", ㅂㅂ
                 contentType : false,
                 processData : false,
                 error : function(request, status, error) {
