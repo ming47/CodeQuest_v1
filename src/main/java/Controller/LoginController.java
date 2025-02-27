@@ -33,28 +33,23 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         try {
             String code = request.getParameter("code");
-
             Context envContext = (Context) new InitialContext().lookup("java:comp/env");
-            String kakaoClientId = (String) envContext.lookup("kakao/client_id");
-            String kakaoRedirectUri = (String) envContext.lookup("kakao/redirect_uri");
-
+            String clientId = (String) envContext.lookup("kakao/client_id");
+            String redirectUri = (String) envContext.lookup("kakao/redirect_uri");
             String pUrl = "https://kauth.kakao.com/oauth/token";
             String bodyData = "grant_type=authorization_code&"
-                    + "client_id=" + kakaoClientId + "&"
-                    + "redirect_uri=" + kakaoRedirectUri + "&"
+                    + "client_id=" + clientId + "&"
+                    + "redirect_uri=" + redirectUri + "&"
                     + "code=" + code;
-
             URL url = new URL(pUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
             con.setDoOutput(true);
-
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"))) {
                 bw.write(bodyData);
                 bw.flush();
             }
-
             StringBuilder sb = new StringBuilder();
             try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"))) {
                 String input;
@@ -62,17 +57,14 @@ public class LoginController extends HttpServlet {
                     sb.append(input);
                 }
             }
-
             Gson gson = new Gson();
             OAuthTokenDTO oAuthToken = gson.fromJson(sb.toString(), OAuthTokenDTO.class);
             String accessToken = oAuthToken.getAccess_token();
-
             URL userInfoUrl = new URL("https://kapi.kakao.com/v2/user/me");
             HttpURLConnection userCon = (HttpURLConnection) userInfoUrl.openConnection();
             userCon.setRequestMethod("GET");
             userCon.setRequestProperty("Authorization", "Bearer " + accessToken);
             userCon.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-
             int responseCode = userCon.getResponseCode();
             BufferedReader userBr;
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -87,8 +79,6 @@ public class LoginController extends HttpServlet {
             }
             userBr.close();
             String userJson = userSb.toString();
-
-            // JSON 파싱 및 사용자 정보 추출
             com.google.gson.JsonObject jsonObj = gson.fromJson(userJson, com.google.gson.JsonObject.class);
             com.google.gson.JsonObject kakaoAccount = jsonObj.getAsJsonObject("kakao_account");
             com.google.gson.JsonObject profile = null;
@@ -108,8 +98,6 @@ public class LoginController extends HttpServlet {
             String accountEmail = kakaoAccount.has("email") && !kakaoAccount.get("email").isJsonNull()
                     ? kakaoAccount.get("email").getAsString()
                     : "정보없음";
-
-            // 회원 존재 여부에 따라 추가 정보 입력 또는 바로 로그인 처리
             boolean result = memberDao.isDuplicate("email", accountEmail);
             if(result == false) {
                 request.setAttribute("email", accountEmail);
@@ -117,10 +105,8 @@ public class LoginController extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/member/easySignupForm.jsp").forward(request, response);
             } else {
                 MemberDTO member = memberDao.easyLogin(accountEmail);
-                
 				boolean banned = blackListDao.isBanned(member.getMemberId());
 				member.setIsbanned(banned);
-				
                 request.getSession().setAttribute("member", member);
                 response.sendRedirect("/");
             }

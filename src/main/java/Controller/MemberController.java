@@ -21,17 +21,20 @@ import DAO.MemberDAO;
 
 import DAO.PlaytimeDAO;
 import DAO.QnADAO;
+import DAO.QnAReplyDAO;
 import DAO.ViewCountDAO;
 import DAOImpl.BlackListDAOImpl;
 import DAOImpl.BoardDAOImpl;
 import DAOImpl.MemberDAOImpl;
 import DAOImpl.PlaytimeDAOImpl;
 import DAOImpl.QnADAOImpl;
+import DAOImpl.QnAReplyDAOImpl;
 import DAOImpl.ViewCountDAOImpl;
 import DTO.BoardDTO;
 import DTO.MemberDTO;
 import DTO.PlaytimeDTO;
 import DTO.QnADTO;
+import DTO.QnAReplyDTO;
 import DTO.ViewCountDTO;
 
 @WebServlet("/member/*")
@@ -43,18 +46,18 @@ public class MemberController extends HttpServlet {
 	private PlaytimeDAO playtimeDao = PlaytimeDAOImpl.INSTANCE;
 	private QnADAO qnaDao = QnADAOImpl.INSTACNE;
 	private ViewCountDAO viewCountDao = ViewCountDAOImpl.INSTANCE;
+	QnAReplyDAO qnaReplyDao = QnAReplyDAOImpl.INSTANCE;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-
 		try {
 			String cmd = ConvertURL.of(request);
 			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 
-			} else if(cmd.equals("/member/valueCheck.do")) { //ajax 중복체크
+			} else if(cmd.equals("/member/valueCheck.do")) { //비동기 중복체크
 				String value = request.getParameter("value");
 				String field = request.getParameter("field");
 				String column = null;
@@ -67,7 +70,6 @@ public class MemberController extends HttpServlet {
 				} else if ("phone".equals(field)) {
 					column = "phone";
 				}
-				
 				if (column != null) {
 					boolean result = dao.isDuplicate(column, value);
 					if(result == true) {
@@ -100,11 +102,11 @@ public class MemberController extends HttpServlet {
 				
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 				
-			} else if (cmd.equals("/member/logout.do")) {
+			} else if (cmd.equals("/member/logout.do")) { //로그아웃 처리
 				request.getSession().invalidate();
 				response.sendRedirect("/");
 
-			} else if (cmd.equals("/member/pwResetForm.do")) {
+			} else if (cmd.equals("/member/pwResetForm.do")) { //비밀번호 재설정 폼
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
 				
 			} else if(cmd.equals("/member/outForm.do")) { //탈퇴 폼
@@ -121,15 +123,26 @@ public class MemberController extends HttpServlet {
 					out.flush();
 					return;
 				}
-			} else if (cmd.equals("/member/emailDuplCheck.do")) {
+				
+			} else if (cmd.equals("/member/emailDuplCheck.do")) { //이메일 중복체크
 				String email = request.getParameter("email");
 				boolean result = dao.getMemberByEmail(email);
 				if(result == true) {
 					response.getWriter().append("true");
 				}
 
-			} else if (cmd.equals("/shortvalid.do")) {
-
+			} else if(cmd.equals("/member/qna/detail.do")) { // 마이페이지 내가 작성한 Q&A
+				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
+				String response_yn = request.getParameter("response");
+				
+				QnADTO qnaDto = qnaDao.selectById(qnaId);
+				request.setAttribute("qnaDto", qnaDto);
+				
+				if(response_yn.equals("Y")) {
+					QnAReplyDTO qnaReplyDto = qnaReplyDao.selectByQnAId(qnaId);
+					request.setAttribute("qnaReplyDto", qnaReplyDto);
+				}
+				request.getRequestDispatcher("/WEB-INF/views/member/qnaDetail.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,18 +159,14 @@ public class MemberController extends HttpServlet {
 		try {
 			String cmd = ConvertURL.of(request);
 			if (cmd.equals("/member/add.do")) { //회원가입
-
 				String id = request.getParameter("id");
 				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
-
 				String name = request.getParameter("name");
 				String nickName = request.getParameter("nickName");
 
-				//주민번호 앞자리,뒷자리 받은 후 DB입력할수있게 폼 완성
 				String ssnFront = request.getParameter("ssnFront");
 				String ssnBack = request.getParameter("ssnBack");
 				String ssn = ssnFront + "-" + ssnBack + "******";
-				
 				String email = request.getParameter("email");
 				String phone = request.getParameter("phone");
 
@@ -168,28 +177,23 @@ public class MemberController extends HttpServlet {
 				} else if(postcodeStr == "") {
 					postcode = 0;
 				}
-
 				String address1 = request.getParameter("address1");
 				String address2 = request.getParameter("address2");
 
-
-				int result = dao.insert(new MemberDTO(id,pw,name,nickName,ssn,email,phone,postcode,address1,address2,"user")); //role은 정해진게없어서 null
+				int result = dao.insert(new MemberDTO(id,pw,name,nickName,ssn,email,phone,postcode,address1,address2,"user"));
 				if(result > 0) {
 					System.out.println("가입성공!");
 				}
 				response.sendRedirect("/");
-			} else if (cmd.equals("/member/easySignup.do")) {
 				
+			} else if (cmd.equals("/member/easySignup.do")) { //간편가입
 				String name = request.getParameter("name");
 				String nickName = request.getParameter("nickName");
-
 				String ssnFront = request.getParameter("ssnFront");
 				String ssnBack = request.getParameter("ssnBack");
 				String ssn = ssnFront + "-" + ssnBack + "******";
-				
 				String phone = request.getParameter("phone");
 				String email = request.getParameter("email");
-				
 				String postcodeStr = request.getParameter("postcode");
 				int postcode = 0;
 				if(postcodeStr != "") {
@@ -208,6 +212,7 @@ public class MemberController extends HttpServlet {
 					System.out.println("가입성공!");
 				}
 				response.sendRedirect("/");
+				
 			} else if (cmd.equals("/member/login.do")) { //로그인
 				String id = request.getParameter("id");
 				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
@@ -217,14 +222,14 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/?login=fail");
 					return;
 				}
-				// 밴 유저 검사
+				// 밴 유저 검사후 결과 담기
 				boolean banned = blackListDao.isBanned(member.getMemberId());
 				member.setIsbanned(banned);
 				request.getSession().setAttribute("member", member);
 				
 				response.sendRedirect("/");
 
-			} else if (cmd.equals("/member/update.do")) { // 수정
+			} else if (cmd.equals("/member/update.do")) { // 회원정보수정
 				int memberId = Integer.parseInt(request.getParameter("memberId"));
 				String loginId = request.getParameter("loginId");
 				String nickName = request.getParameter("nickName");
@@ -237,10 +242,8 @@ public class MemberController extends HttpServlet {
 				} else {
 					postcode = Integer.parseInt(zipCodeStr);
 				}
-
 				String address = request.getParameter("address");
 				String detailAddress = request.getParameter("detailAddress");
-
 
 				int result = dao.update(new MemberDTO(memberId,loginId,nickName,email,phone,postcode,address,detailAddress));
 
@@ -250,25 +253,20 @@ public class MemberController extends HttpServlet {
 				}
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
-			} else if (cmd.equals("/delete.do")) {
-
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
 				String action = "reset";
 				String member_out = request.getParameter("member_out");
 				if(member_out != null) {
 					action = "out";
-				}	
-				// 인증코드 생성
+				}
 				int authCode = (int)(Math.random() * 900000) + 100000; 
 				String codeStr = String.valueOf(authCode);
 				System.out.println("컨트롤러 인증코드 : " + codeStr);
 
-				// 세션에 인증 코드와 이메일 저장 (유효기간은 세션 타임아웃으로 대체 가능)
 				request.setAttribute("authEmail", email);
 				request.setAttribute("authCode", codeStr);
 
-				// 이메일 전송
 				boolean emailSent = EmailUtil.sendResetEmail(email, codeStr, action);
 				
 				if(emailSent) {
@@ -276,14 +274,14 @@ public class MemberController extends HttpServlet {
 				} else {
 					System.out.println("메일전송 실패");
 				}
-				if("true".equals(member_out)) { //회원탈퇴 이메일 처리
+				if("true".equals(member_out)) { //회원탈퇴시 이메일 처리
 					request.getRequestDispatcher("/WEB-INF/views/member/outForm.jsp").forward(request, response);
 					return;
 				}
 				
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
 
-			} else if (cmd.equals("/member/pwReset.do")) {
+			} else if (cmd.equals("/member/pwReset.do")) { //패스워드변경
 				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));
 				String email = request.getParameter("resetEmail");
 
@@ -292,6 +290,16 @@ public class MemberController extends HttpServlet {
 					System.out.println("패스워드 변경 성공!");
 					response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
 				}
+				
+			} else if(cmd.equals("/member/qna/add.do")) { //q&a작성
+				String contents = request.getParameter("contents");
+				int memberId = Integer.parseInt(request.getParameter("memberId"));
+				
+				int result = qnaDao.insert(new QnADTO(contents,memberId));
+				if(result > 0) {
+					System.out.println("QNA작성성공!");
+				}
+				response.sendRedirect("/");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -287,32 +287,15 @@ button:hover {
 		<div class="body">
 			<div class="boardbox">
 				<h1>Q & A 작성</h1>
-				<form action="/board/add.do" method="post"
-					enctype="multipart/form-data">
-
+				<form action="/member/qna/add.do" method="post">
+				<input type="hidden" name="memberId" value="${member.memberId}">
 					<div class="card">
-						<div class="card-header">제목 입력</div>
-						<div class="card-body">
-							<input type="text" name="title" placeholder="제목을 입력해주세요" required>
-						</div>
-
-
-						<div class="card-header">파일 첨부</div>
-						<div class="card-body">
-							<input type="file" name="file2" accept="image/*, .pdf, .docx">
-						</div>
-
-
 						<div class="card-header">내용 입력</div>
 						<input type="hidden" name="contents" id="input-contents">
 						<div class="card-body" id="contents"></div>
 					</div>
-
 					<div id="buttonbox">
-
 						<button class="button" id="writebtn" type="submit">작성완료</button>
-
-
 					</div>
 				</form>
 			</div>
@@ -402,7 +385,5 @@ button:hover {
 			location.href = "/board/list.do?cpage=" + last_cpage;
 		});
 	</script>
-
 </body>
-
 </html>

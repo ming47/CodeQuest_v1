@@ -614,7 +614,31 @@
 					<div class="recent-game-row">
 						<img src="/game.png" alt="게임 이미지" />
 						<div class="game-title">
-							<a href="/game/list.do?gameId=${list.gameId}"> 게임제목 들어올 공간 </a>
+							<a href="/game/list.do?id=${list.gameId}">
+							    <c:choose>
+							        <c:when test="${list.gameId == 800001}">
+							            Skipping Stone
+							        </c:when>
+							        <c:when test="${list.gameId == 800002}">
+							            2048
+							        </c:when>
+							        <c:when test="${list.gameId == 800003}">
+							            WORLD OF WARPLANE
+							        </c:when>
+							        <c:when test="${list.gameId == 800004}">
+							            Mini Metro
+							        </c:when>
+							        <c:when test="${list.gameId == 800005}">
+							            TETRIS!
+							        </c:when>
+							        <c:when test="${list.gameId == 800006}">
+							            Chess!
+							        </c:when>
+							        <c:otherwise>
+							            ${list.gameId}
+							        </c:otherwise>
+							    </c:choose>
+							</a>
 						</div>
 						<div class="play-date">플레이 날짜:
 							<span class="relative-date" data-timestamp="${list.regDate.time}">
@@ -727,7 +751,7 @@
 			}
 		});
 		$(".popup").on("click", function () {
-			window.open("/service/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=700");
+			window.open("/member/qna/detail.do?qnaId=" + $(this).attr('value') + "&response=" + $(this).attr('data'), "", "width=1000, height=700");
 		});
 
 		$(".sidebar ul li").on("click", function () {
