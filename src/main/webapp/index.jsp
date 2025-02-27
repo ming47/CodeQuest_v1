@@ -700,7 +700,7 @@ table tr {
 
 	<script>
 		$("#pwFinder").on("click", function() {
-			window.open("/member/pwResetForm.do", "", "width=550, height=300");
+			window.open("/member/pwResetForm.do", "", "width=550, height=500");
 		});
 		let urlParams = new URL(location.href).searchParams;
 		let loginStatus = urlParams.get('login');
