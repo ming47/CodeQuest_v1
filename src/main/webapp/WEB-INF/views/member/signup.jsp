@@ -392,6 +392,7 @@
 				pw_val = valid;
 			});
 		});
+
 		$("#pwr").on("keyup", function () {
 			const pw = $("#pw").val();
 			const pwr = $(this).val();

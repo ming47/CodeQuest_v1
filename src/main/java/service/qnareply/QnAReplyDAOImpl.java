@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -19,18 +18,6 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/orcl");
 		
 		return ds.getConnection();
-	}
-
-
-	@Override
-	public List<QnAReplyDTO> selectAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public QnAReplyDTO selectById(int id) throws Exception {
-		return null;
 	}
 
 	@Override
@@ -87,7 +74,7 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 				if(isSelected) {
 					return QnAReplyDTO.of(rs);
 				} else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException(qnaId + "에 해당하는 질문글은 없습니다.");
 				}
 			}
 		}

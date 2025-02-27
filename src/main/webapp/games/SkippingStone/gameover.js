@@ -10,7 +10,7 @@ class gameover extends Phaser.Scene {
         // 세션 스토리지에서 점수 가져오기
         let finalScore = sessionStorage.getItem("finalScore") || 0;
         $.ajax({
-            url: '/score/add.do',
+            url: '/game/score/add.do',
             type: 'POST',
             data: {
                 gameId: 800001,

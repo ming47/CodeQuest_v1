@@ -24,28 +24,6 @@ public enum ReplyDAOImpl implements ReplyDAO {
 	}
 
 	@Override
-	public List<ReplyDTO> selectAll() throws Exception {
-		String sql = "select * from Reply r inser join on members m on r.member_id = m.member_id";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			ResultSet rs = pstat.executeQuery();
-
-			List<ReplyDTO> list = new ArrayList<ReplyDTO>();
-
-			while (rs.next()) {
-				int reply_id = rs.getInt("id");
-				int member_id = rs.getInt("memberId");
-				int board_id = rs.getInt("board_id");
-				String contents = rs.getString("contents");
-				Timestamp regdate = rs.getTimestamp("reg_date");
-				String writer = rs.getString(rs.getString("nickName"));
-				list.add(new ReplyDTO(reply_id, member_id, board_id, contents, regdate, writer));
-			}
-			rs.close();
-			return list;
-		}
-	}
-
-	@Override
 	public ReplyDTO selectById(int id) throws Exception {
 
 		String sql = "select * from Reply r inner join members m on r.member_id = m.member_id "
@@ -96,55 +74,14 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			return pstat.executeUpdate();
 		}
 	}
-//	public int getSize() throws Exception {
-//	    String sql = "SELECT COUNT(*) FROM reply";
-//	    try (Connection con = this.getConnection();
-//	         PreparedStatement pstat = con.prepareStatement(sql);
-//	         ResultSet rs = pstat.executeQuery()) {
-//	        
-//	        if (rs.next()) {
-//	            return rs.getInt(1);  // count 값 반환
-//	        } else {
-//	            return 0;  // 조회된 값이 없으면 기본값 0 반환
-//	        }
-//	        
-//	    } catch (Exception e) {
-//	        e.printStackTrace();  // 예외 로깅
-//	        return 0;  // 오류 발생 시 0 반환
-//	    }
-//	}
-
 
 	@Override
-	public int deleteById(int dto) throws Exception {
+	public int deleteById(int id) throws Exception {
 		String sql = "delete reply where reply_id=?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 
-			pstat.setInt(1, dto);
+			pstat.setInt(1, id);
 			return pstat.executeUpdate();
-		}
-	}
-
-	@Override
-	public List<ReplyDTO> selectByBoardId(int boardId) throws Exception {	//댓글 출력
-		String sql = "select * from Reply r inner join members m on r.member_id = m.member_id "
-				+ "where board_id = ? order by r.reg_date desc";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
-			pstat.setInt(1, boardId);
-			try(ResultSet rs = pstat.executeQuery();){
-				List<ReplyDTO> list = new ArrayList<>();
-				while(rs.next()) {
-					ReplyDTO dto = new ReplyDTO();
-					dto.setReplyId(rs.getInt("reply_Id"));
-					dto.setMemberId(rs.getInt("member_Id"));;
-					dto.setBoardId(rs.getInt("board_Id"));
-					dto.setContents(rs.getString("contents"));
-					dto.setRegDate(rs.getTimestamp("reg_Date"));
-					dto.setWriter(rs.getString("nickName"));
-					list.add(dto);
-				}
-				return list;
-			}
 		}
 	}
 
@@ -203,5 +140,4 @@ public enum ReplyDAOImpl implements ReplyDAO {
 			}
 		}
 	}
-	
 }

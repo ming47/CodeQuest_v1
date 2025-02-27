@@ -20,31 +20,6 @@ public enum FilesDAOImpl implements FilesDAO {
 	}
 
 	@Override
-	public List<FilesDTO> selectAll() throws Exception {
-		String sql = "select * from Files";
-		try (Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery()) {
-
-			List<FilesDTO> dtoList = new ArrayList<>();
-
-			while (rs.next()) {
-
-				int fileId = rs.getInt(1);
-				int boardId = rs.getInt(2);
-				String oriname = rs.getString(3);
-				String sysname = rs.getString(4);
-
-				FilesDTO dto = new FilesDTO(fileId, boardId, oriname, sysname);
-
-				dtoList.add(dto);
-			}
-
-			return dtoList;
-		}
-	}
-
-	@Override
 	public FilesDTO selectById(int id) throws Exception {
 		String sql = "select * from files where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
@@ -76,18 +51,6 @@ public enum FilesDAOImpl implements FilesDAO {
 	}
 
 	@Override
-	public int update(FilesDTO dto) throws Exception {
-
-		return 0;
-	}
-
-	@Override
-	public int deleteById(int dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<FilesDTO> selectByBoardId(int boardId) throws Exception {
 		String sql = "select * from files where board_id=?";
 
@@ -98,7 +61,6 @@ public enum FilesDAOImpl implements FilesDAO {
 			List<FilesDTO> dto = new ArrayList<FilesDTO>();
 
 			while (rs.next()) {
-
 				int fileId = rs.getInt("file_Id");
 				String oriName = rs.getString("original_name");
 				String sysName = rs.getString("system_name");
@@ -109,43 +71,6 @@ public enum FilesDAOImpl implements FilesDAO {
 			}
 
 			return dto;
-
 		}
 	}
-
-	public int getSize() throws Exception {
-		List<FilesDTO> list = selectAll();
-		return list.size();
-	}
 }
-
-//public int insert(FilesDTO dto) throws Exception {
-//	String sql = "insert into files values(files_seq.nextval, ?, ?, ?)";
-//	try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-//		pstat.setString(1, dto.getOriginName());
-//		pstat.setString(2, dto.getSysName());
-//		pstat.setInt(3, dto.getParent_seq());
-//		return pstat.executeUpdate();
-//	}
-//}
-//
-//public List<FilesDTO> findById(int boardId) throws Exception {
-//	String sql = "select * from files where board_id = ?";
-//	try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-//		pstat.setInt(1, boardId);
-//		try (ResultSet rs = pstat.executeQuery();) {
-//			List<FilesDTO> list = new ArrayList<>();
-//			while (rs.next()) {
-//				
-//				int id = rs.getInt("file_id");
-//				String oriname = rs.getString("original_name");
-//		
-//				String name = rs.getString("system_name");
-//				int boardId = rs.getInt("board_id");
-//				list.add(new FilesDTO(fileId, oriname, name, boardId));
-//			}
-//			return list;
-//		}
-//	}
-//}
-//}

@@ -21,6 +21,10 @@ public class AnalyzeDTO {
 		return data;
 	}
 	
+	public void setData(Object data) {
+		this.data = data;
+	}
+	
 	public String getLabel() {
 		return label;
 	}

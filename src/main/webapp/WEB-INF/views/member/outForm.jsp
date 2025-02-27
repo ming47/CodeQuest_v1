@@ -84,6 +84,22 @@
 			border-color: #b4c28a;
 			box-shadow: 0 0 5px rgba(180, 194, 138, 0.3);
 		}
+		#loading {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background: #ffffff;
+		    z-index: 9999;
+		    display: none;
+		}
+		#loading img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    opacity : 0.5;
+		}
 	</style>
 </head>
 
@@ -112,8 +128,14 @@
 				<span id="result_auth"></span>
 				<button id="pwReset">탈퇴진행</button>
 			</div>
+			<script>
+                $(window).on("load", function(){
+                    $("#loading").fadeOut();
+                });
+            </script>
 		</c:otherwise>
 	</c:choose>
+	<div id="loading"> <img src="/images/loading.gif" alt="Loading..."> </div>
 
 	<script>
 		let email_val = false;
@@ -129,7 +151,6 @@
                 email_val = false;
                 return;
             }
-			
 			$.ajax({
 				url: "/member/valueCheck.do",
 				data: {
@@ -149,6 +170,7 @@
 					}).html("일치하는 이메일이 없습니다.");
 					email_val = false;
 				}
+				
 			}).fail(function (xhr, status, error) {
 				console.error("AJAX 요청 실패:", error);
 				email_val = false;
@@ -168,6 +190,7 @@
 				method: "GET",
 				dataType: "text"
 			}).done(function (resp) {
+				$("#loading").show(); 
 				$('#frm').submit();
 			}).fail(function (xhr, status, error) {
 				console.error("AJAX 요청 실패:", error);
