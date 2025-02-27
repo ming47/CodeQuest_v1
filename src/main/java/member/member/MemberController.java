@@ -245,9 +245,12 @@ public class MemberController extends HttpServlet {
 
 				if(result > 0) {
 					MemberDTO member = dao.selectById(memberId);
+					boolean banned = blackListDao.isBanned(member.getMemberId());
+					member.setIsbanned(banned); //밴유저가 수정한 경우에도 밴 세팅
 					request.getSession().setAttribute("member", member);
 				}
-				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
+				response.sendRedirect("/member/mypage.do");
+				//request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
@@ -287,7 +290,7 @@ public class MemberController extends HttpServlet {
 					response.getWriter().write("<script>alert('패스워드 변경 성공!'); window.close();</script>");
 				}
 				
-			} else if(cmd.equals("/member/qna/add.do")) { //q&a작성
+			} else if(cmd.equals("/member/qna/add.do")) { //Q&A작성
 				String contents = request.getParameter("contents");
 				int memberId = Integer.parseInt(request.getParameter("memberId"));
 				

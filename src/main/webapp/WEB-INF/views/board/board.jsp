@@ -325,8 +325,6 @@ button:focus {
 }
 </style>
 </head>
-
-
 <body>
 
 	<div class="header">
@@ -334,7 +332,7 @@ button:focus {
 			<div class="logo">Team CodeQuest</div>
 			<ul class="menu">
 				<li><a href="/">Home</a></li>
-				<li><a href="/game/list.do">Game</a></li>
+				<li><a href="/game/list.do?id=800001">Game</a></li>
 				<li><a href="/board/list.do">Board</a></li>
 				<c:choose>
 					<c:when test="${member.role == 'admin'}">
