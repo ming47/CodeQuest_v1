@@ -146,10 +146,10 @@ public enum BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int deleteById(int boardId) throws Exception {
+	public int deleteById(int id) throws Exception {
 		String sql = "delete from board where board_id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-			pstat.setInt(1, boardId);
+			pstat.setInt(1, id);
 			
 			return pstat.executeUpdate();
 		}

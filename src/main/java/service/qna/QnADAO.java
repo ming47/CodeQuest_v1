@@ -16,7 +16,7 @@ public interface QnADAO {
 	
 	int insert(QnADTO dto) throws Exception;
 	int update(QnADTO dto) throws Exception;
-	int deleteById(int dto) throws Exception;
+	int deleteById(int id) throws Exception;
 	
 	void updateResponseYNById(int id, String responseYN) throws Exception;
 	

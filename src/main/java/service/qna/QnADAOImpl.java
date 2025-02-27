@@ -75,17 +75,17 @@ public enum QnADAOImpl implements QnADAO {
 	}
 
 	@Override
-	public int deleteById(int dto) throws Exception {
+	public int deleteById(int id) throws Exception {
 		String sql = "DELETE FROM QNA WHERE QNA_ID=?";
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setInt(1, dto);
+			pstat.setInt(1, id);
 			
 			int result = pstat.executeUpdate();
 			
 			if (result == 0) {
-				throw new IllegalArgumentException(dto + "에 해당하는 데이터가 없습니다. id를 다시 확인해주세요.");
+				throw new IllegalArgumentException(id + "에 해당하는 데이터가 없습니다. id를 다시 확인해주세요.");
 			} 
 			
 			return result;

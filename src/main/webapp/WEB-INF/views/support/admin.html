@@ -1260,25 +1260,25 @@ function gameDetailCahrtSet(dataset) {
         	const value = $(this).val();
         	
         	if(id == 'next') {
-        		if(value == "800005") {
+        		if(value == "800006") {
         			$(this).val('800001');
         		} else {
         			$(this).val(Number(value) + 1);
         		}
         		
         		if(value == "800001") {
-	        		$('#prev').val("800005");
+	        		$('#prev').val("800006");
         		} else {
         			$('#prev').val(Number(value) - 1);
         		}
         	} else {
         		if(value == '800001') {
-        			$(this).val('800005');
+        			$(this).val('800006');
         		} else {
         			$(this).val(Number(value) - 1);
         		}
         		
-        		if(value == "800005") {
+        		if(value == "800006") {
 	        		$('#next').val("800001");
         		} else {
         			$('#next').val(Number(value) + 1);

@@ -14,7 +14,7 @@ public interface BoardDAO {
 	
 	int insert(BoardDTO dto) throws Exception;
 	int update(BoardDTO dto) throws Exception;
-	int deleteById(int dto) throws Exception;
+	int deleteById(int id) throws Exception;
 	
 	int getNextVal() throws Exception;	
 	int getSize() throws Exception;
