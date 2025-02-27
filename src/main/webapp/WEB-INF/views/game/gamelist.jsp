@@ -92,10 +92,11 @@
 	text-decoration: none;
 }
 
-.menu li:hover a {
-	background: #3c3b39;
+.sidebar li {
 	color: white;
 }
+
+
 
 .main-content {
 	display: flex;
@@ -109,7 +110,7 @@
 	width: 100%;
 	justify-content: space-evenly;
 	display: flex;
-	height:80%;
+	height: 80%;
 }
 
 .gamemenu {
@@ -125,22 +126,25 @@
 }
 
 .sidebar {
-	padding: 5px;
-	width: 230px;
+	width: 305px;
 	height: 70vh;
-	background: #f4f4f4;
 	border-radius: 10px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	background: url('/images/테마.gif') no-repeat center;
+	background-size: cover;
 }
 
 .sidebar h2 {
-	font-size: 17px;
-	color: black;
-	font-weight: bold;
-	margin-bottom: 3px;
-	border-bottom: 2px solid black;
-	padding: 20px;
-	margin-left: 3px;
+
+    font-size: 17px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 3px;
+
+    padding: 20px;
+    margin-left: 3px;
+    margin-top: 47px;
+    text-align: center;
 }
 
 .sidebar ul {
@@ -151,18 +155,18 @@
 .sidebar ul li {
 	padding: 20px;
 	font-size: 16px;
-	border-bottom: 1px solid #ddd;
 	cursor: pointer;
 	transition: background 0.3s;
 }
 
 .sidebar ul li:hover {
-	background: #ddd;
+background: rgb(134, 61, 224, 0.3);
+color: white;
 }
 
 .gamedetail {
-	width: 75%;
-	margin: 20px;
+	margin: -29px;
+	margin-top: 22px;
 	height: 800px;
 }
 
@@ -181,7 +185,7 @@
 .gamepractice {
 	margin-top: 40px;
 	margin-left: 80px;
-	margin-right: 30px;
+	margin-right: -27px;
 	width: 35vw;
 	align-items: center;
 	justify-content: center;
@@ -216,8 +220,8 @@
 	background-color: white;
 }
 
-#gama_btn{
-	padding:40px;
+#gama_btn {
+	padding: 40px;
 }
 
 .logbox-container {
@@ -253,7 +257,7 @@
 		<div class="gamecontents">
 			<div class="gamemenu">
 				<div class="sidebar">
-					<h2>Game List</h2>
+					<h2>👾Game List👾</h2>
 					<ul>
 						<c:forEach var="dto" items="${list}">
 							<a href="/game/list.do?id=${dto.gameId}">

@@ -66,18 +66,14 @@
 	font-family: "Press Start 2P", serif;
 	font-weight: 400;
 	font-style: normal;
-	width: 100vw;
+	width:100%;
 }
 
 .header {
 	height: 80px;
-	padding: 20px;
-	width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 80px;
-	z-index: 1000;
+	padding: 30px;
+	width:100vw;
+	position:relative;
 }
 
 .footer {
@@ -100,6 +96,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin: 0;
 }
 
 .menu {
@@ -117,8 +114,12 @@
 	text-shadow: 0 1px 0 black, -1px 2px 0 black, 1px 4px 0 black, 0 3px 0
 		black;
 	text-decoration: none;
+	font-size:15px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	margin-top:15px;
 }
-
 .menu li:hover a {
 	background: #3c3b39;
 	color: white;
