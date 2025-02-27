@@ -181,6 +181,9 @@
 					"font-size": "14px"
 				}).html("인증코드가 일치합니다.");
 				auth_val = true;
+			} else {
+				$("#result_auth").html("");
+				auth_val = false;
 			}
 		});
 
