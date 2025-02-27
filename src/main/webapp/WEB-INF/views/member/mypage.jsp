@@ -619,7 +619,7 @@
 					            <img src="/images/warplane.png" alt="워플레인" />
 					        </c:when>
 					        <c:when test="${list.gameId == 800004}">
-					            <img src="/images/metro.png" alt="metro" />
+					            <img src="/images/metro2.png" alt="metro" />
 					        </c:when>
 					        <c:when test="${list.gameId == 800005}">
 					            <img src="/images/tetris.png" alt="테트리스" />
@@ -924,12 +924,6 @@
 					}
 				}).open();
 			});
-			$("#out_btn").on("click", function () {
-				window.open("/member/outForm.do", "", "width=550, height=300");
-			});
-			$("#out_btn_2").on("click", function () {
-				window.open("/member/outForm.do", "", "width=550, height=300");
-			});
 			$("#frm").on("submit", function (event) {
 				console.log("폰 : " + phone_val)
 				console.log("메일 : " + email_val)
@@ -939,6 +933,12 @@
 					return false;
 				}
 			});
+		});
+		$("#out_btn").on("click", function () {
+			window.open("/member/outForm.do", "", "width=550, height=300");
+		});
+		$("#out_btn_2").on("click", function () {
+			window.open("/member/outForm.do", "", "width=550, height=300");
 		});
 
 	</script>

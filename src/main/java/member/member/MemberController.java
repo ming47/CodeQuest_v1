@@ -245,9 +245,12 @@ public class MemberController extends HttpServlet {
 
 				if(result > 0) {
 					MemberDTO member = dao.selectById(memberId);
+					boolean banned = blackListDao.isBanned(member.getMemberId());
+					member.setIsbanned(banned); //밴유저가 수정한 경우에도 밴 세팅
 					request.getSession().setAttribute("member", member);
 				}
-				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
+				response.sendRedirect("/member/mypage.do");
+				//request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
