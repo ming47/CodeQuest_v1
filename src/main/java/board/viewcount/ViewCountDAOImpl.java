@@ -24,18 +24,6 @@ public enum ViewCountDAOImpl implements ViewCountDAO {
 	}
 
 	@Override
-	public List<ViewCountDTO> selectAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ViewCountDTO selectById(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int insert(ViewCountDTO dto) throws Exception {
 		String sql = "INSERT INTO VIEW_COUNT(VIEW_COUNT_ID, BOARD_ID, MEMBER_ID) VALUES (VIEW_COUNT_ID_SEQ.NEXTVAL, ?, ?)";
 		
@@ -47,19 +35,7 @@ public enum ViewCountDAOImpl implements ViewCountDAO {
 			return pstat.executeUpdate();
 		}
 	}
-
-	@Override
-	public int deleteById(int dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int countByBoardId(int boardId) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public List<ViewCountDTO> selectRecentByMemberId(int memberId) throws Exception { //마이페이지 최근에 본 게시글 6개 가져오기
 	    String sql = "SELECT * FROM ( "

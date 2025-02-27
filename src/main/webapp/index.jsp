@@ -866,7 +866,7 @@ table tr {
 								$
 										.ajax(
 												{
-													url : "/score/list/game.do?id="
+													url : "/game/score/list/game.do?id="
 															+ gameId,
 													type : "GET",
 													dataType : "json"
@@ -884,7 +884,7 @@ table tr {
 														return;
 													}
 
-													for (let i = 0; i < 10; i++) {
+													for (let i = 0; i < data.length; i++) {
 														console.log(data[i]);
 
 														const li = $('<li>')

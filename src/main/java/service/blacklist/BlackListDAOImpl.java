@@ -1,7 +1,6 @@
 package service.blacklist;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -21,17 +20,6 @@ public enum BlackListDAOImpl implements BlackListDAO {
 	}
 
 	@Override
-	public List<BlackListDTO> selectAll() throws Exception {
-		return null;
-	}
-
-	@Override
-	public BlackListDTO selectById(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int insert(BlackListDTO dto) throws Exception {
 		String sql = "INSERT INTO BLACK_LIST(BLACK_ID, MEMBER_ID, REASON, END_DATE) VALUES(BLACK_ID_SEQ.NEXTVAL, ?, ?, SYSTIMESTAMP + NUMTODSINTERVAL(?, 'HOUR'))";
 		
@@ -40,19 +28,6 @@ public enum BlackListDAOImpl implements BlackListDAO {
 			pstat.setInt(1, dto.getMemberId());
 			pstat.setString(2, dto.getReason());
 			pstat.setInt(3, dto.getPeriod());
-			
-			return pstat.executeUpdate();
-		}
-	}
-
-	@Override
-	public int update(BlackListDTO dto) throws Exception {
-		String sql = "UPDATE BLACK_LIST SET END_DATE = ? WHERE BLACK_ID = ?";
-		
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setTimestamp(1, dto.getEndDate());
-			pstat.setInt(2, dto.getMemberId());
 			
 			return pstat.executeUpdate();
 		}
@@ -89,12 +64,6 @@ public enum BlackListDAOImpl implements BlackListDAO {
 			}
 			
 		}
-	}
-
-	@Override
-	public List<BlackListDTO> selectByPeriod(Date startTime, Date endTime) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
