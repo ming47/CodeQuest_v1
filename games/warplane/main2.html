@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.87.0/phaser.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script src="Start.js"></script>
     <script src="Exam03.js"></script>
      <script src="GameOver.js"></script>
@@ -41,6 +43,25 @@
             scene:[Start,Exam03,GameOver]
         };
         let game = new Phaser.Game(config);
+        
+        const enterTime = new Date().getTime();
+
+        window.addEventListener("beforeunload", function() {
+            localStorage.setItem('play-time', new Date().getTime() - enterTime);
+
+            $.ajax({
+                url: '/game/playtime/add.do',
+                type: 'POST',
+                data: {
+                    gameId: 800003,
+                    playtime: new Date().getTime() - enterTime
+                }
+            }).done(function(data) {
+               console.log(data);
+            });
+        });
+        
+        
 
     </script>
 </body>

@@ -286,13 +286,13 @@ class main extends Phaser.Scene {
             if (this.sound.get('hit')) {
                 this.sound.play('hit');
             }
-
             // 장애물 제거
             obstacle.destroy();
-
+			
             // 게임 오버 처리
             sessionStorage.setItem("finalScore", Math.floor(this.score));
-            this.scene.start("gameover");
+            this.scene.start("gameover");     
+            
         } else {
             // 무적 상태면 장애물만 제거
             obstacle.destroy();

@@ -77,7 +77,7 @@ html, body {
 	margin: 0;
 	width: 100%;
 	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
+	background: url('/images/밤.gif') no-repeat center;
 	background-size: cover;
 	display: flex;
 	align-items: center;
