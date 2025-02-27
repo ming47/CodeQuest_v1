@@ -74,7 +74,7 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 				if(isSelected) {
 					return QnAReplyDTO.of(rs);
 				} else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException(qnaId + "에 해당하는 질문글은 없습니다.");
 				}
 			}
 		}
