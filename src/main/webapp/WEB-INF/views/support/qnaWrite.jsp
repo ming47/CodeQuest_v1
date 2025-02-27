@@ -49,7 +49,7 @@
 	justify-content: center;
 	align-items: center;
 	background-attachment: fixed;
-	background: url('/images/allback.jpg') no-repeat center;
+	background: url('/images/밤.gif') no-repeat center;
 	background-size: cover;
 	justify-content: flex-end;
 	position: relative;
@@ -181,6 +181,14 @@ textarea {
 	resize: none;
 }
 
+.boardbox {
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 20px;
+	color: black;
+	background-color: #fafbf4;
+}
+
 button {
 	padding: 15px 20px;
 	background-color: #666666;
@@ -193,10 +201,12 @@ button {
 	overflow: hidden;
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
+	border-radius :5px;
+	
 }
 
 button:hover {
-	background: #66635f;
+background-color: #3c3b39;
 	transform: scale(1.1);
 }
 
@@ -207,6 +217,20 @@ button:hover {
 	margin-bottom: 20px;
 	color: black;
 	background-color: #fafbf4;
+}
+
+.card-header {
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: black;
+}
+
+.card-body {
+	flex-direction: column;
 }
 
 .card-header {
@@ -283,19 +307,23 @@ button:hover {
 		</c:if>
 
 		<div class="body">
-			<div class="boardbox">
+			
+			<div class="card">
 				<h1>Q & A 작성</h1>
-				<form action="/member/qna/add.do" method="post">
-					<input type="hidden" name="memberId" value="${member.memberId}">
-					<div class="card">
-						<div class="card-header">내용 입력</div>
-						<input type="hidden" name="contents" id="input-contents">
-						<div class="card-body" id="contents"></div>
-					</div>
-					<div id="buttonbox">
-						<button class="button" id="writebtn" type="submit">작성완료</button>
-					</div>
-				</form>
+				<div class="boardbox">
+				
+					<form action="/member/qna/add.do" method="post">
+						<input type="hidden" name="memberId" value="${member.memberId}">
+						<div class="card">
+							<div class="card-header"></div>
+							<input type="hidden" name="contents" id="input-contents">
+							<div class="card-body" id="contents"></div>
+						</div>
+						<div id="buttonbox">
+							<button class="button" id="writebtn" type="submit">작성완료</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
