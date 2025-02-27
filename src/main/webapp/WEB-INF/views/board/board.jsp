@@ -325,8 +325,6 @@ button:focus {
 }
 </style>
 </head>
-
-
 <body>
 
 	<div class="header">
