@@ -226,6 +226,12 @@ class Tetris {
     }
 
     checkBlockMove(x, y, type, angle) {
+    	
+    	    // 방어 코드 추가
+    if (!this.blocks[type] || !this.blocks[type].shape || !this.blocks[type].shape[angle]) {
+        console.error("Invalid type or angle:", type, angle);
+        return false;
+    }
         for (let i = 0; i < this.blocks[type].shape[angle].length; i++) {
             let cellX = x + this.blocks[type].shape[angle][i][0];
             let cellY = y + this.blocks[type].shape[angle][i][1];

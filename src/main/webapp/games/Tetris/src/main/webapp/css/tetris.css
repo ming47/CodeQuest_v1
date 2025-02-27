@@ -106,7 +106,7 @@ html, body {
 #restart{
     border-radius: 20px;
     margin:5px;
-    padding:2vh;
+    padding:10px;
     font-size:24px;
     background-color: #d0b2ec; 
     height:13vh;
@@ -158,10 +158,6 @@ html, body {
 #home:hover{
     background-color: #ccce5e; 
     color:white;
-}
-
-#home{
-
 }
 
 .tetris-panel-container p {
