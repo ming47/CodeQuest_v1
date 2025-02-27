@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(clear, 3000)
                 
 	             $.ajax({
-	            url: '/score/add.do',
+	            url: '/game/score/add.do',
 	            type: 'POST',
 	            data: {
 	                gameId: 800002,

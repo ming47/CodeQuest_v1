@@ -190,7 +190,7 @@ class Tetris {
             score = score.substring(1, score.length - 2);
             
 	        $.ajax({
-	            url: '/score/add.do',
+	            url: '/game/score/add.do',
 	            type: 'POST',
 	            data: {
 	                gameId: 800005,
