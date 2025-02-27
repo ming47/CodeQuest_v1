@@ -45,7 +45,7 @@ class Exam03 extends Phaser.Scene {
 
 			        console.log("패배");
 			        $.ajax({
-			            url: '/score/add.do',
+			            url: '/game/score/add.do',
 			            type: 'POST',
 			            data: {
 			                gameId: 800003,

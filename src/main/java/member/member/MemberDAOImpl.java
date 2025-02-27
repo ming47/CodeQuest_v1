@@ -11,7 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import utils.GENDER;
 import utils.Statics;
 
 public enum MemberDAOImpl implements MemberDAO {
@@ -21,37 +20,6 @@ public enum MemberDAOImpl implements MemberDAO {
 		Context ctx = new InitialContext();
 		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/orcl");
 		return ds.getConnection();
-	}
-
-	@Override
-	public List<MemberDTO> selectAll() throws Exception {
-		String sql = "select * from members where role='user'";
-
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			try (ResultSet rs = pstat.executeQuery()) {
-
-				List<MemberDTO> dto = new ArrayList<>();
-				while (rs.next()) {
-					int memberId = rs.getInt("member_id");
-					String loginId = rs.getString("login_id");
-					String name = rs.getString("name");
-					String nickName = rs.getString("nickname");
-					String ssn = rs.getString("ssn");
-					String email = rs.getString("email");
-					String phone = rs.getString("phone");
-					int postcode = rs.getInt("zip_code");
-					String address = rs.getString("address");
-					String detail_address = rs.getString("detail_address");
-					String role = rs.getString("role");
-					Timestamp date = rs.getTimestamp("reg_date");
-
-					dto.add(new MemberDTO(memberId,loginId,name,nickName,ssn,
-							email,phone,postcode,address,detail_address, role,date));
-				}
-
-				return dto;
-			}
-		}
 	}
 
 	@Override
@@ -214,44 +182,6 @@ public enum MemberDAOImpl implements MemberDAO {
 			int result = pstat.executeUpdate();
 			return result;
 		}
-	}
-
-	@Override
-	public List<MemberDTO> selectByGender(GENDER gender) throws Exception {		
-		String sql = "SELECT * FROM Members WHERE SSN LIKE ?";
-
-		String target = String.format("%%%d______", gender.getGenderFactor());
-		try(Connection con = getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setString(1, target);
-
-			List<MemberDTO> dto = new ArrayList<>();
-			try (ResultSet rs = pstat.executeQuery()) {
-				while (rs.next()) {
-					String id = rs.getString("user_id");
-					String name = rs.getString("name");
-					String ssn = rs.getString("ssn");
-					String email = rs.getString("email");
-					String phone = rs.getString("phone");
-					int postcode = rs.getInt("zip_code");
-					String address = rs.getString("address");
-					String detail_address = rs.getString("detail_address");
-					String role = rs.getString("role");
-					Timestamp date = rs.getTimestamp("reg_date");
-
-					dto.add(new MemberDTO(id,name,ssn,email,phone,postcode,address,detail_address,role,date));
-
-				}
-
-				return dto;
-			}
-		}
-	}
-
-	@Override
-	public List<MemberDTO> selectByAgeRange(int startAge, int endAge) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

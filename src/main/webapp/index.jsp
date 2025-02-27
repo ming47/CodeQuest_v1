@@ -38,7 +38,7 @@
 }
 
 .header, .footer {
-
+	background: #1e201d;
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 20px;
@@ -49,6 +49,7 @@
 	width: 100%;
 }
 .header {
+
    position: fixed;
    left: 0;
    height: 80px;
@@ -56,7 +57,7 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   background-color: black;
+   	background: #1e201d;
    top: 0;
    z-index: 10;
 }
@@ -231,11 +232,12 @@
 }
 
 .rankingboard {
-	width: 85%;
+	width: 80%;
 	height: 445px;
 	min-height: 300px;
+	
 	background-color: rgba(255, 255, 255, 0.9);
-	padding: 20px;
+	padding: 51px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
@@ -246,7 +248,15 @@
 	font-size: 20px;
 	margin-right: 80px;
 	position: relative;
-	top: 60px;
+	top: 120px;
+}
+.rankingboard h3 {
+	font-size : 40px;
+	margin-top : -10px;
+}
+
+.rankingboard li {
+	margin: 12px;
 }
 
 .ranking-tabs {
@@ -255,6 +265,7 @@
 	flex-wrap: wrap; /* 버튼이 너무 많으면 줄바꿈 */
 	gap: 8px; /* 버튼 간격 조정 */
 	margin-bottom: 10px;
+	margin-top: 10px;
 	width: 100%; /* 랭킹보드 너비에 맞춤 */
 	max-width: 100%;
 	overflow: hidden; /* 초과 부분 숨김 */
@@ -319,7 +330,7 @@
 	padding: 10px;
 	width: 90%;
 	font-family: "Press Start 2P", serif;
-	margin-top: 30px;
+	margin-top: 58px;
 }
 
 .game {
@@ -393,8 +404,9 @@
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background 0.3s;
-	font-family: "Press Start 2P", serif;
+	font-family: "Press Start 2P", serif;s
 	font-weight: 400;
+	font-size :15px;
 	font-style: normal;
 	background: url('/images/gamebtn.png') no-repeat center;
 	background-size: cover;
@@ -405,7 +417,7 @@
 }
 
 .boardlist {
-	width: 90%;
+	width: 100%;
 	background-size: cover;
 	padding: 20px;
 	border-radius: 10px;
@@ -416,6 +428,7 @@
 	font-weight: 400;
 	font-style: normal;
 	font-size: 20px;
+	margin: 0 auto;
 }
 
 .boardlist h3 {
@@ -853,7 +866,7 @@ table tr {
 								$
 										.ajax(
 												{
-													url : "/score/list/game.do?id="
+													url : "/game/score/list/game.do?id="
 															+ gameId,
 													type : "GET",
 													dataType : "json"
@@ -871,7 +884,7 @@ table tr {
 														return;
 													}
 
-													for (let i = 0; i < 10; i++) {
+													for (let i = 0; i < data.length; i++) {
 														console.log(data[i]);
 
 														const li = $('<li>')

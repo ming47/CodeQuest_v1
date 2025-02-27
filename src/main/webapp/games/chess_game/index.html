@@ -108,7 +108,7 @@ window.addEventListener("beforeunload", function() {
     console.log(score);
     
     $.ajax({
-        url: '/score/add.do',
+        url: '/game/score/add.do',
         type: 'POST',
         data: {
             gameId: 800006,
