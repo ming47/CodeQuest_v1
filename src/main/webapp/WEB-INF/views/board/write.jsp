@@ -193,10 +193,11 @@ button {
 	border-radius: 5px;
 	font-family: 'DungGeunMo';
 }
-
 button:hover {
 	background: #66635f;
+	transform: scale(1.1);
 }
+
 
 .card {
 	border-radius: 10px;

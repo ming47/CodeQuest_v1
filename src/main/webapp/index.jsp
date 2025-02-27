@@ -152,7 +152,7 @@
 	text-align: center;
 	font-family: "Jua", serif;
 	margin-bottom: 50px;
-	margin-top: 80px;
+	margin-top: 111px;
 	margin-right: 75px;
 }
 
@@ -234,7 +234,7 @@
 	width: 85%;
 	height: 445px;
 	min-height: 300px;
-	background: white;
+	background-color: rgba(255, 255, 255, 0.9);
 	padding: 20px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -347,27 +347,31 @@
 	height: 200px;
 	object-fit: cover;
 	transition: opacity 0.5s ease; /* 부드러운 전환 */
+	margin: 0 auto;
 }
 
 .game:hover img {
 	opacity: 0;
 	width: 250px;
 	height: 200px;
+	margin: 0 auto;
 }
 
 .game:hover .hover-img {
 	opacity: 1;
 	width: 250px;
 	height: 200px;
-	left: 16px;
+	left: 23px;
+	margin: 0 auto;
 }
 
 .hover-img {
 	width: 250px;
 	height: 200px;
 	position: absolute;
-	left: 16px;
+	left: 23px;
 	opacity: 0;
+	margin: 0 auto;
 }
 
 .game h3 {
@@ -431,6 +435,8 @@ table {
    border-spacing: 4px;
    border-collapse: separate;
    font-size: 15px;
+   justify-content: center;
+   margin: 0 auto;
 }
 
 
@@ -462,15 +468,15 @@ th {
    font-size: 20px;
 }
 
-
 td a {
-	text-decoration: none;
-	color: black;
+   text-decoration: none; /* 링크 밑줄 제거 */
+   color: black; /* 기본 텍스트 색상 */
+   transition: color 0.3s ease; /* 색상 변화를 부드럽게 */
 }
 
 td.clicktitle:hover {
-   transform: scale(1.1); 
-   background-color: #f0f0f0; 
+   transform: scale(1.1); /* 크기를 1.2배 키움 */
+   background-color: #f0f0f0; /* 배경색 변경 */
 }
 
 
@@ -636,12 +642,12 @@ table tr {
 		<div class="bottombody">
 
 			<div class="boardlist">
-				<h3>📢 이번주 인기 게시글</h3>
+				<h3>🌟 이번주 인기 게시글</h3>
 				<table>
 					<thead>
 						<tr id="title">
 							<th style="width: 12%;">번호</th>
-							<th class="click-title" style="width: 42%;">제목</th>
+							<th class="clicktitle" style="width: 42%;">제목</th>
 
 							<th style="width: 17%;">작성자</th>
 							<th style="width: 17%;">날짜</th>
@@ -734,7 +740,7 @@ table tr {
 														tr.append($('</td>'));
 														tr
 																.append($(
-																		'<td style="width: 42%;">')
+																		'<td class="clicktitle" style="width: 42%;">')
 																		.append(
 																				$(
 																						'<a>')
@@ -807,7 +813,7 @@ table tr {
 													tr.append($('</td>'));
 													tr
 															.append($(
-																	'<td style="width: 42%;">')
+																	'<td class="clicktitle" style="width: 42%;">')
 																	.append(
 																			$(
 																					'<a>')
