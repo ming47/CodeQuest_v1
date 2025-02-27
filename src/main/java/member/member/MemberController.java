@@ -110,14 +110,17 @@ public class MemberController extends HttpServlet {
 				
 			} else if (cmd.equals("/member/out.do")) { //회원 탈퇴
 				int id = Integer.parseInt(request.getParameter("id"));
+				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
+				if (member == null) {
+					response.sendRedirect("/");
+					return;
+				}
 				int result = dao.deleteById(id);
 				if (result > 0) {
 					System.out.println("탈퇴성공!");
 					request.getSession().invalidate();
 					PrintWriter out = response.getWriter();
-					out.println("<script>window.close();</script>");
-					out.flush();
-					return;
+					out.println("<script>window.opener.location.href = '/'; window.close();</script>");
 				}
 				
 			} else if (cmd.equals("/member/emailDuplCheck.do")) { //이메일 중복체크

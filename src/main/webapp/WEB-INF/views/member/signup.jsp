@@ -471,21 +471,16 @@
 					return false;
 				}
 			}
-
 			if (!(id_val && pw_val && name_val && tel_val
 				&& email_val && nickName_val)) {
 				alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
 				return false;
 			}
-
-
 			for(let i = 0; i < fields.length; i++) {
 				if(!fields[i].val) {
 					return false;
 				}
 			}
-
-			
 		});
 	</script>
 </body>
