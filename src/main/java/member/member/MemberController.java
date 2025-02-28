@@ -228,9 +228,6 @@ public class MemberController extends HttpServlet {
 				// 밴 유저 검사후 결과 담기
 				boolean banned = blackListDao.isBanned(member.getMemberId());
 				member.setIsbanned(banned);
-				
-			    String token = UUID.randomUUID().toString();
-				request.getSession().setAttribute("csrfToken", token);
 				request.getSession().setAttribute("member", member);
 				
 				response.sendRedirect("/");

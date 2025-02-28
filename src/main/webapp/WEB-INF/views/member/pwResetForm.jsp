@@ -98,6 +98,7 @@ body {
                 <h2>비밀번호 재설정</h2>
                 <p>비밀번호를 재설정할 이메일을 입력해주세요.</p>
                 <form action="/member/sendResetEmail.do" method="post" id="frm">
+                	<input type="hidden" name="csrfToken" value="${csrfToken}"/>
                     <input type="text" name="email" id="email" placeholder="재설정할 이메일을 작성해주세요."><br>
                     <span id="result_email"></span>
                     <button id="mailsend" type="button">인증 메일 전송</button>
@@ -113,6 +114,7 @@ body {
                 <input type="hidden" name="authCode" id="authCode" value="${authCode}"><br>
                 <span id="result_auth"></span>
                 <form action="/member/pwReset.do" method="post" id="frm2">
+                	<input type="hidden" name="csrfToken" value="${csrfToken}"/>
                     <input type="password" name="pw" id="pw" placeholder="8자 이상의 영어소문자,숫자를 포함한 PW를 입력해주세요">
                     <input type="password" name="pwr" id="pwr" placeholder="패스워드를 다시 입력해주세요">
                     <input type="hidden" name="resetEmail" id="resetEmail" value="${authEmail}">

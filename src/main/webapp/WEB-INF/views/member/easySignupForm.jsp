@@ -263,6 +263,7 @@
 			<h2>추가 정보입력</h2>
 		</div>
 		<form action="/member/easySignup.do" id="signupForm" method="post">
+			<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 			<fieldset>
 				<legend> * 이름 / 닉네임 / 주민번호 / 전화번호 / 이메일</legend>
 				<input type="text" name="name" id="name" placeholder="이름을 입력하세요">
