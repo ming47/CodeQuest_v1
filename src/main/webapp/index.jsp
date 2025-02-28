@@ -136,26 +136,6 @@
 	top: 60px;
 }
 
-.loginbox {
-	width: 85%;
-	background-size: cover;
-	padding: 10px;
-	border-radius: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	font-family: "Jua", serif;
-	background: url('/images/login.jpg') no-repeat center;
-	background-size: cover;
-	padding: 10px;
-	border-radius: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	text-align: center;
-	font-family: "Jua", serif;
-	margin-bottom: 50px;
-	margin-top: 111px;
-	margin-right: 75px;
-}
-
 .loginbox h2 {
 	font-family: "Jua", serif;
 	font-weight: 400;
@@ -228,8 +208,28 @@
 	gap: 10px;
 }
 
+.loginbox {
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	background: url('/images/login.jpg') no-repeat center;
+	background-size: cover;
+	padding: 10px;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-family: "Jua", serif;
+	margin-bottom: 50px;
+	position: relative;
+	top: 150px;
+	left:10%;
+	margin-right: 30%;
+}
+
 .rankingboard {
-	width: 80%;
 	height: 445px;
 	min-height: 300px;
 	background-color: rgba(255, 255, 255, 0.9);
@@ -242,9 +242,10 @@
 	font-weight: 400;
 	font-style: normal;
 	font-size: 20px;
-	margin-right: 80px;
 	position: relative;
-	top: 120px;
+	margin-right: 30%;
+	top: 160px;
+	left:10%;
 }
 
 .rankingboard h3 {
