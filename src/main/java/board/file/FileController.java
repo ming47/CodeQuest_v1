@@ -33,40 +33,8 @@ public class FileController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
 			String cmd = request.getRequestURI();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {		
-			String cmd = request.getRequestURI();
-			if (cmd.equals("/file/image/upload.do")) {	// 서머노트 에디터 이미지 들어올때 사용하는 요청
-				String requestPath = request.getParameter("request");
-				
-				String uploadPath = FileUtil.getPath("image", requestPath);
-		        Path uploadDir = Paths.get(uploadPath);
-		        		        
-		        if (!Files.exists(uploadDir)) {
-		            Files.createDirectories(uploadDir);
-		        }
-				Part file = request.getPart("file");
-				
-				String fileName = 
-						FileUtil.generateSysFileName(Paths.get(file.getSubmittedFileName()).getFileName().toString());
-				
-				try (InputStream fileContent = file.getInputStream()) {
-		            Path filePath = uploadDir.resolve(fileName);
-		            Files.copy(fileContent, filePath, StandardCopyOption.REPLACE_EXISTING);
-		            
-		            Map<String, Object> json = new HashMap<>();
-		            json.put("path", FileUtil.getPath(filePath.toString()));
-		            
-		            System.out.println(FileUtil.getPath(filePath.toString()));
-		            response.setContentType("application/json");
-		            response.getWriter().append(g.toJson(json));
-		        }
-			} else if (cmd.equals("/file/download.do")) {
+			
+			if (cmd.equals("/file/download.do")) {
 				System.out.println(request.getServletContext().getRealPath("upload"));
 
 				// 권한 확인하기..
@@ -96,6 +64,41 @@ public class FileController extends HttpServlet {
 					sos.flush();
 				}
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {		
+			String cmd = request.getRequestURI();
+			
+			if (cmd.equals("/file/image/upload.do")) {	// 서머노트 에디터 이미지 들어올때 사용하는 요청
+				String requestPath = request.getParameter("request");
+				
+				String uploadPath = FileUtil.getPath("image", requestPath);
+		        Path uploadDir = Paths.get(uploadPath);
+		        		        
+		        if (!Files.exists(uploadDir)) {
+		            Files.createDirectories(uploadDir);
+		        }
+				Part file = request.getPart("file");
+				
+				String fileName = 
+						FileUtil.generateSysFileName(Paths.get(file.getSubmittedFileName()).getFileName().toString());
+				
+				try (InputStream fileContent = file.getInputStream()) {
+		            Path filePath = uploadDir.resolve(fileName);
+		            Files.copy(fileContent, filePath, StandardCopyOption.REPLACE_EXISTING);
+		            
+		            Map<String, Object> json = new HashMap<>();
+		            json.put("path", FileUtil.getPath(filePath.toString()));
+		            
+		            System.out.println(FileUtil.getPath(filePath.toString()));
+		            response.setContentType("application/json");
+		            response.getWriter().append(g.toJson(json));
+		        }
+			} 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

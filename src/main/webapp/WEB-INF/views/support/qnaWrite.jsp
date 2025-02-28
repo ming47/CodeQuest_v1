@@ -359,8 +359,9 @@ background-color: #3c3b39;
 						'20', '22', '24', '28', '30', '36', '50', '72' ],
 				callbacks : { 
 					onImageUpload : function(files) {
-						console.log(files[0], this);
-						uploadImage(files[0], this);
+	                      for(let i = 0; i < files.length; i++) {
+		                      uploadImage(files[i], this);
+	                      }
 					},
 
 					onPaste : function(e) {
