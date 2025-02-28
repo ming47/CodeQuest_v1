@@ -62,7 +62,7 @@ public class ServiceController extends HttpServlet {
 					response.sendRedirect("/");
 				}
 			
-				request.getRequestDispatcher("/WEB-INF/views/support/admin.html").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/views/support/admin.jsp").forward(request, response);
 			} else if(cmd.equals("/service/admin/playtime/search/days.do")) {
 				String group = request.getParameter("group");
 				

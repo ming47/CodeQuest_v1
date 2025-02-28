@@ -18,7 +18,6 @@ public class FilterUtil implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-    	
     }
 
     @Override
@@ -31,18 +30,18 @@ public class FilterUtil implements Filter {
         if (session.getAttribute("csrfToken") == null) {
             String token = UUID.randomUUID().toString();
             session.setAttribute("csrfToken", token);
-            System.out.println("토큰을 생성하였습니다.");
         }
 
-        if ("POST".equalsIgnoreCase(request.getMethod())
-                || "PUT".equalsIgnoreCase(request.getMethod())
-                || "DELETE".equalsIgnoreCase(request.getMethod())) {
-            String sessionToken = (String) session.getAttribute("csrfToken");
-            String requestToken = request.getParameter("csrfToken");
+        if ("POST".equalsIgnoreCase(request.getMethod())) {
+            String contentType = request.getContentType();
+            if (contentType == null || !contentType.toLowerCase().startsWith("multipart/form-data")) {
+                String sessionToken = (String) session.getAttribute("csrfToken");
+                String requestToken = request.getParameter("csrfToken");
 
-            if (sessionToken == null || !sessionToken.equals(requestToken)) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "잘못된 CSRF 토큰 요청입니다.");
-                return;
+                if (sessionToken == null || !sessionToken.equals(requestToken)) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "잘못된 CSRF 토큰 요청입니다.");
+                    return;
+                }
             }
         }
         chain.doFilter(req, res);
