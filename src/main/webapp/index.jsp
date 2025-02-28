@@ -329,6 +329,7 @@
 	width: 90%;
 	font-family: "Press Start 2P", serif;
 	margin-top: 58px;
+	margin-left: -30px;
 }
 
 .game {
