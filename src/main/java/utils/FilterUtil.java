@@ -18,10 +18,6 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class FilterUtil implements Filter {
 	
-    private static final List<String> STATIC_EXTENSIONS = Arrays.asList(
-            ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".woff", ".woff2", ".ttf", ".svg", ".html"
-        );
-	
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -34,13 +30,14 @@ public class FilterUtil implements Filter {
         HttpSession session = request.getSession();
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=UTF-8");
+		session.setMaxInactiveInterval(1800);
 		
         if (session.getAttribute("csrfToken") == null) {
             String token = UUID.randomUUID().toString();
             session.setAttribute("csrfToken", token);
         }
         
-        //허용
+        //Allow
         if (request.getRequestURI().startsWith("/")) {
             chain.doFilter(req, res);
             return;
@@ -48,14 +45,8 @@ public class FilterUtil implements Filter {
             chain.doFilter(req, res);
             return;
         } 
-//        for (String ext : STATIC_EXTENSIONS) {
-//            if (request.getRequestURI().endsWith(ext)) {
-//                chain.doFilter(req, res);
-//                return;
-//            }
-//        }
         
-        //차단
+        //Deny
         if (!request.getRequestURI().endsWith(".do")) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "허용되지 않은 요청입니다.");
             return;
