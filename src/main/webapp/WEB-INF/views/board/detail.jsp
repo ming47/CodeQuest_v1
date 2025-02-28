@@ -568,6 +568,7 @@ table th {
 					<div class="pageNaviForm"></div>
 				</div>
 				<form action="/board/update.do" method="post" id="update-form">
+					<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 					<input id="id" type="hidden" name="id" value="${dto.boardId}">
 					<input name="title" type="hidden" id="hdtitle"> <input
 						name="contents" type="hidden" id="hdcontents">
