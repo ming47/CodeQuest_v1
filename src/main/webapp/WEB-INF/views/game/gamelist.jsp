@@ -162,15 +162,14 @@
 }
 
 .gamedetail {
-	margin: -29px;
-	margin-top: 22px;
 	height: 800px;
+	margin-top:2%;
 }
 
 #game-thumbnail {
 	margin: 30px;
 	width: 40%;
-	height: 70vh;
+	height: 75vh;
 }
 
 .gameheader {
