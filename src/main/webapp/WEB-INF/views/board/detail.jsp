@@ -862,7 +862,7 @@ table th {
        let last_cpage = sessionStorage.getItem("last_cpage");
         location.href = "/board/list.do?cpage=" +last_cpage;  });
             
-        let isEmoticonPanelOpen = false;
+        let isEmoticonPanelOpen = false;	//이모티콘이 닫혔다고 알려주는 논리 변수
         
         const picker = new EmojiButton({
             i18n: {
@@ -900,12 +900,11 @@ table th {
                let emotion = $(this).text();
                let currentText = $('#commentInput').val();
                
-               $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기	c
+               $('#commentInput').val(currentText + emotion);   //입력창에 이모티콘 넣기
                $("#commentInput").focus();
                validInput($('#inputbtn'));
 
                $("#emojiBtn").text("😀");
-               isEmoticonPanelOpen = false;
          });
         
          function setSummerNote(target) {
