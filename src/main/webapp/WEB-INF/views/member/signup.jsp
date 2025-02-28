@@ -269,6 +269,7 @@
 			<h2>회원가입</h2>
 		</div>
 		<form action="/member/add.do" id="signupForm" method="post">
+			<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 			<fieldset>
 				<legend> * 아이디 / 패스워드</legend>
 				<div class="input-group">

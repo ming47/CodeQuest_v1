@@ -276,7 +276,7 @@ background-color: #3c3b39;
 	color: black !important;
 }
 </style>
-
+<meta name="csrf-token" content="${csrfToken}">
 </head>
 
 <body>
@@ -314,6 +314,7 @@ background-color: #3c3b39;
 				<div class="boardbox">
 				
 					<form action="/member/qna/add.do" method="post">
+						<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 						<input type="hidden" name="memberId" value="${member.memberId}">
 						<div class="card">
 							<div class="card-header"></div>
@@ -381,10 +382,11 @@ background-color: #3c3b39;
 		}
 
 		function uploadImage(file, editor) {
+			var csrfToken = $('meta[name="csrf-token"]').attr('content');
 			let formData = new FormData();
 			formData.append('file', file);
 			formData.append('request', 'board');
-
+			formData.append('csrfToken', csrfToken);	
 			$.ajax({
 				url : '/file/image/upload.do',
 				data : formData,

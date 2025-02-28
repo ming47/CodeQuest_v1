@@ -494,6 +494,7 @@
     </style>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <meta name="csrf-token" content="${csrfToken}">
 </head>
 
 <body>
@@ -1505,6 +1506,7 @@ function gameDetailCahrtSet(dataset) {
 						alert('차단 설정을 해주십시오.');
 						return;
 					}
+					var csrfToken = $('meta[name="csrf-token"]').attr('content');
 					
 					$.ajax({
 						url: '/service/member/ban/add.do',
@@ -1512,7 +1514,8 @@ function gameDetailCahrtSet(dataset) {
 						data: {
 							memberId: item.memberId,
 							reason: reason,
-							endDate: endDate
+							endDate: endDate,
+							csrfToken: csrfToken
 						}
 					}).done(function(data) {
 						alert("차단되었습니다.");
@@ -1808,7 +1811,9 @@ function gameDetailCahrtSet(dataset) {
             button.html(buttonHTML));
 
         button.on('click', function () {
+        	var csrfToken = $('meta[name="csrf-token"]').attr('content');
             data.context = $('.qna-reply-contents').html();
+            data.csrfToken = csrfToken;
             console.log(url, data);
             $.ajax({
                 url: url,

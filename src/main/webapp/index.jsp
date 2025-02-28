@@ -591,6 +591,7 @@ td.clicktitle:hover {
 						<h2>로그인</h2>
 						<form action="/member/login.do" method="post" id="frm">
 							<div class="input-group">
+								<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 								<input type="text" name="id" id="id" placeholder="아이디">
 								<input type="password" name="pw" id="pw" placeholder="비밀번호">
 								<button id="loginBtn">로그인</button>
