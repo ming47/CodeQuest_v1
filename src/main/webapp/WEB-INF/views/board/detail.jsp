@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 상세 보기</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -21,6 +21,9 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+	
+<script src="/images/emoji-button-3.0.3.min.js"></script>
+	
 <style>
 @font-face {
 	font-family: 'DungGeunMo';
@@ -399,6 +402,7 @@ table th {
   word-wrap: break-word;
 }
 
+
 </style>
 </head>
 <body>
@@ -470,9 +474,6 @@ table th {
 						<input id="commentInput" name="contents" placeholder="댓글을 입력하세요">
 						<div class="emoticons" style="display: none;">
 							<div class="emoticon">
-								<span class="emoji-btn">😀</span> <span class="emoji-btn">😊</span>
-								<span class="emoji-btn">😎</span> <span class="emoji-btn">😍</span>
-								<span class="emoji-btn">🎉</span> <span class="emoji-btn">👍</span>
 							</div>
 						</div>
 					</div>
@@ -678,7 +679,7 @@ table th {
            const clicked = $(this);   
            
           $.ajax({
-             url: '/reply/ContentsAll.do?boardId=${dto.boardId}&page=' + clicked.attr('value')
+             url: '/reply/list.do?boardId=${dto.boardId}&page=' + clicked.attr('value')
           }).done(function(data) {
              data = JSON.parse(data);
              
@@ -771,7 +772,7 @@ table th {
         }
    }
 
-   //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기 
+   //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기
    $(document).ready(function() {
        const $commentInput = $("#commentInput");
        const $inputBtn = $("#inputbtn");
@@ -862,27 +863,38 @@ table th {
         location.href = "/board/list.do?cpage=" +last_cpage;  });
             
         let isEmoticonPanelOpen = false;
-        $("#emojiBtn").on("click", function(){
-           isEmoticonPanelOpen = !isEmoticonPanelOpen;
-            
-            if(isEmoticonPanelOpen){   
-                  // 이모티콘 패널을 열면
-                  $(this).text("🤢");
-                  $(".emoticons").show();
-                  $(".emoticon").css({
-                     'background': 'linear-gradient(to bottom, #bacee0 0%, rgba(42, 81, 18950, 0.51) 100%)',
-                    'transition': 'background 1s ease'
-                  });
-            } else{
-                  //이모티콘 패널을 닫으면
-                  $(this).text("😀");
-                  $(".emoticons").hide();
-                  $(".emoticon").css({
-                     'background': '#bacee0',
-                    'transition': 'background 0.5s ease'
-                  });
-            }
+        
+        const picker = new EmojiButton({
+            i18n: {
+                search: 'Search emojis...',
+                categories: {
+                    recents: 'Recent Emojis',
+                    smileys: 'Smileys & Emotion',
+                    people: 'People & Body',
+                    animals: 'Animals & Nature',
+                    food: 'Food & Drink',
+                    activities: 'Activities',
+                    travel: 'Travel & Places',
+                    objects: 'Objects',
+                    symbols: 'Symbols',
+                    flags: 'Flags'
+                },
+                notFound: 'No emojis found'
+                },
+                showSearch: false,
+                autoFocusSearch: false,
+                theme: 'dark'
+        });
+        picker.on('emoji', emoji => {
+            document.querySelector('#commentInput').value += emoji;
+            validInput($("#inputbtn"));
+          });
+        
+        const button = document.querySelector('#emojiBtn');
+        button.addEventListener('click', () => {
+               picker.togglePicker(button);             
          });
+        
          $(".emoji-btn").on("click", function(){
 
                let emotion = $(this).text();
