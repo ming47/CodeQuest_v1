@@ -146,6 +146,7 @@ li {
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 	color: white;
 	font-family: 'DungGeunMo';
+	
 	padding: 0;
 }
 
@@ -402,9 +403,80 @@ table th {
   word-wrap: break-word;
 }
 
+.updateCancel {
+  color: #ddd;
+  background-color: #3c3b39;
+  float: right;
+  margin-left: 10px; /* 이 값을 늘려 간격 확보 */
+  margin-top : 10px;
+  padding: 7px 10px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.updateOK {
+  color: white;
+  background-color: #3c3b39;
+  float: right;
+  margin-left: 15px; /* 간격 확보 */
+  margin-top : 10px;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 호버 효과 추가 */
+.updateCancel:hover {
+  	background: #66635f;
+	transform: scale(1.1);
+	color: white;
+}
+
+.updateOK:hover {
+	background: #66635f;
+	transform: scale(1.1);
+	color: white;
+}
+#board-updateOK{
+  color: white;
+  background-color: #3c3b39;
+  float: right;
+  margin-left: 15px; /* 간격 확보 */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+
+}
+#updateCancel{
+  color: #ddd;
+  background-color: #3c3b39;
+  float: right;
+  margin-left: 10px; /* 이 값을 늘려 간격 확보 */
+  padding: 10px 20px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  	font-family: 'DungGeunMo';
+
+
+}
+#board-updateOK:hover{
+	background: #66635f;
+	transform: scale(1.1);
+	color: white;
+}
+#updateCancel:hover{
+	background: #66635f;
+	transform: scale(1.1);
+	color: white;
+}
 
 </style>
-<meta name="csrf-token" content="${csrfToken}">
 </head>
 <body>
 	<div class="header">
@@ -491,7 +563,6 @@ table th {
 					<div class="pageNaviForm"></div>
 				</div>
 				<form action="/board/update.do" method="post" id="update-form">
-					<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 					<input id="id" type="hidden" name="id" value="${dto.boardId}">
 					<input name="title" type="hidden" id="hdtitle"> <input
 						name="contents" type="hidden" id="hdcontents">
@@ -607,24 +678,20 @@ table th {
             commentItem.find(".updatebtn, .deletebtn").hide();
 
             // 수정완료 & 취소 버튼 추가
-            let updateOK = $("<button>").addClass("updateOK").text("수정완료");
-            let updateCancel = $("<button>").addClass("updateCancel").text("취소");
+            let updateOK = $("<button>").addClass("updateOK button").text("수정완료");
+            let updateCancel = $("<button>").addClass("updateCancel button").text("취소");
             commentItem.find(".btnbox").append(updateOK, updateCancel);
 
             // 수정완료 버튼 클릭
             updateOK.on("click", function() {
                let updatedContent = contentDiv.html();
-               let replyId = commentItem.attr("data-id");
-               var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                let replyId = commentItem.attr("data-id");
 
                 // 서버로 수정 요청
                 $.ajax({
                    url: "/reply/update.do",
                     type: "post",
-                    data: { 
-                    	id: replyId, 
-                    	contents: updatedContent,
-                    	csrfToken: csrfToken},
+                    data: { id: replyId, contents: updatedContent },
                     success: function(response) {
                        // 성공하면 수정된 내용 유지
                         if(response){
@@ -659,16 +726,12 @@ table th {
         $(".deletebtn").on("click", function() {
            let commentItem = $(this).closest(".comment-item");
             let replyId = commentItem.attr("data-id");
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
             if (confirm("정말 삭제하시겠습니까?")) {
                $.ajax({
                    url: "/reply/delete.do",
                     type: "post",
-                    data: { 
-                    	id: replyId, 
-                    	boardId : ${dto.boardId},
-                    	csrfToken: csrfToken
-                    	},
+                    data: { id: replyId, boardId : ${dto.boardId}},
                     success: function(response) {
                        // 삭제 성공하면 해당 댓글을 화면에서 제거
                         if(response) {                           
@@ -732,7 +795,6 @@ table th {
               event.preventDefault();
               return false;
           }
-          var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
            $.ajax({
               url: '/reply/add.do',
@@ -740,7 +802,6 @@ table th {
               data: {
                     boardId: ${dto.boardId},
                     contents: $commentInput.val(),
-                    csrfToken: csrfToken
               } 
           }).done(function(data) {
               alert('댓글이 등록되었습니다.');
@@ -846,10 +907,10 @@ table th {
         
         //기존에 있던 버튼 숨기기 
         let updateOK = $("<button>");
-        updateOK.html("수정완료").attr("id", "board-updateOK");
+        updateOK.html("수정완료").attr("id", "board-updateOK").addClass("button");
 
         let updateCancel = $("<button>");
-        updateCancel.html("취소").attr("id","updateCancel")            
+        updateCancel.html("취소").attr("id","updateCancel").addClass("button");            
         updateCancel.attr("type", "button");
         
         updateCancel.on("click", function() {
@@ -969,11 +1030,9 @@ table th {
           }
 
           function uploadImage(file, editor) {
-  			 var csrfToken = $('meta[name="csrf-token"]').attr('content');
              let formData = new FormData();
              formData.append('file', file);
              formData.append('request', 'board');
- 			 formData.append('csrfToken', csrfToken);
              $.ajax({
                 url : '/file/image/upload.do',
                 data : formData,
