@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import service.qnareply.QnAReplyDAOImpl;
-import utils.ConvertURL;
 import utils.PageNavi;
 
 @WebServlet("/qna/*")
@@ -27,7 +26,7 @@ public class QnAController<QnADAO> extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if (cmd.equals("/qna/board.do")) {
 				int id = Integer.parseInt(request.getParameter("id"));
@@ -87,7 +86,7 @@ public class QnAController<QnADAO> extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if(cmd.equals("/qna/add.do")) {
 				

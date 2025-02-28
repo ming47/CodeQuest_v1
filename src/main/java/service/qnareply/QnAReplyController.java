@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 
 import member.member.MemberDTO;
 import service.qna.QnADAOImpl;
-import utils.ConvertURL;
 
 @WebServlet("/qna_reply/*")
 public class QnAReplyController extends HttpServlet {
@@ -21,7 +20,7 @@ public class QnAReplyController extends HttpServlet {
 	Gson g = new Gson();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if(cmd.equals("/qna_reply/board/qna.do")) {
 				int qnaId = Integer.parseInt(request.getParameter("id"));
@@ -40,7 +39,7 @@ public class QnAReplyController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if (cmd.equals("/qna_reply/add.do")) {
 				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
