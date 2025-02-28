@@ -29,7 +29,7 @@ body {
 	color: #333;
 	margin: 0;
 	padding: 0;
-	background: url('/images/pop.jpg') no-repeat center;
+
 	background-size: cover;
 	font-family: 'DungGeunMo';
 }

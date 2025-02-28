@@ -24,7 +24,7 @@ public enum ViewCountDAOImpl implements ViewCountDAO {
 	}
 
 	@Override
-	public int insert(ViewCountDTO dto) throws Exception {
+	public int insertMember(ViewCountDTO dto) throws Exception {
 		String sql = "INSERT INTO VIEW_COUNT(VIEW_COUNT_ID, BOARD_ID, MEMBER_ID) VALUES (VIEW_COUNT_ID_SEQ.NEXTVAL, ?, ?)";
 		
 		try(Connection con = getConnection();
@@ -69,5 +69,15 @@ public enum ViewCountDAOImpl implements ViewCountDAO {
 	    }
 	}
 
-
+	@Override
+	public int insert(ViewCountDTO dto) throws Exception {
+		String sql = "INSERT INTO VIEW_COUNT(VIEW_COUNT_ID, BOARD_ID) VALUES (VIEW_COUNT_ID_SEQ.NEXTVAL, ?)";
+		
+		try(Connection con = getConnection();
+				PreparedStatement pstat = con.prepareCall(sql);) {
+			pstat.setInt(1, dto.getBoardId());
+			
+			return pstat.executeUpdate();
+		}
+	}
 }

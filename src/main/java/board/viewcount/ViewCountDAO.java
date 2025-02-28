@@ -7,5 +7,6 @@ import service.qna.QnADTO;
 public interface ViewCountDAO {
 	List<ViewCountDTO> selectRecentByMemberId(int memberId) throws Exception;
 	
-	int insert(ViewCountDTO dto) throws Exception;	
+	int insert(ViewCountDTO dto) throws Exception;
+	int insertMember(ViewCountDTO dto) throws Exception;
 }
