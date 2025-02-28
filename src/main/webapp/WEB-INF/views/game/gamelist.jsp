@@ -278,7 +278,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>	
 
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>
@@ -301,6 +301,7 @@
 																			+ gameId,
 																	method : 'GET',
 																	dataType : 'json'
+																		
 																})
 														.done(
 																function(data) {

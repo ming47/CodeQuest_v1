@@ -288,10 +288,6 @@ button {
 	gap: 10px;
 }
 
-.writebtn {
-	margin-top: 15px;
-}
-
 .contents {
 	text-align: left;
 	padding-left: 30px;
