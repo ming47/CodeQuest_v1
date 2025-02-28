@@ -288,25 +288,20 @@ button:hover {
 				<h1>게시글 작성하기</h1>
 				<form action="/board/add.do" method="post"
 					enctype="multipart/form-data">
-					<input type="hidden" name="csrfToken" value="${csrfToken}"/>
+					<input type="hidden" name="csrfToken" value="${csrfToken}" id="token"/>
 					<div class="card">
 						<div class="card-header">제목 입력</div>
 						<div class="card-body">
 							<input type="text" name="title" placeholder="제목을 입력해주세요" required>
 						</div>
-
-
 						<div class="card-header">파일 첨부</div>
 						<div class="card-body">
 							<input type="file" name="file2" accept="image/*, .pdf, .docx">
 						</div>
-
-
 						<div class="card-header">내용 입력</div>
 						<input type="hidden" name="contents" id="input-contents">
 						<div class="card-body" id="contents"></div>
 					</div>
-
 					<div id="buttonbox">
 
 						<button class="button" id="writebtn" type="submit">작성완료</button>
@@ -325,6 +320,10 @@ button:hover {
 		$(document).ready(function() {
 
 			$('#contents').summernote(setSummerNote());
+		})
+		
+		$('form').on('submit', function() {
+			console.log($("#token").val());
 		})
 
 		function setSummerNote(target) {
