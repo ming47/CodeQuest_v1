@@ -302,6 +302,7 @@ color: white;
 																			+ gameId,
 																	method : 'GET',
 																	dataType : 'json'
+																		
 																})
 														.done(
 																function(data) {

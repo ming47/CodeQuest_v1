@@ -394,7 +394,7 @@ button:hover {
 					console.log("error: " + error);
 				}
 			}).done(function(data) {
-
+				console.log(data+"1");
 				$(editor).summernote('insertImage', data.path);
 			});
 		}
