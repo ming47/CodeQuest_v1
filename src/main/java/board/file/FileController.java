@@ -32,9 +32,6 @@ public class FileController extends HttpServlet {
 	Gson g = new Gson();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		
 		try {		
 			String cmd = ConvertURL.of(request);
 		} catch(Exception e) {
@@ -43,9 +40,6 @@ public class FileController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		
 		try {		
 			String cmd = ConvertURL.of(request);
 			

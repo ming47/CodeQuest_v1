@@ -39,7 +39,6 @@ public class FilterUtil implements Filter {
             if (contentType == null || !contentType.toLowerCase().startsWith("multipart/form-data")) {
                 String sessionToken = (String) session.getAttribute("csrfToken");
                 String requestToken = request.getParameter("csrfToken");
-
                 if (sessionToken == null || !sessionToken.equals(requestToken)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "잘못된 토큰 요청입니다.");
                     return;
