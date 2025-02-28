@@ -98,8 +98,8 @@ public enum ReplyDAOImpl implements ReplyDAO {
 				+ "WHERE BOARD_ID = ?) A) "
 				+ "WHERE RNUM BETWEEN ? AND ?";
 		
-		int startIndex = (page - 1) * Statics.recordCountPerPage + 1;
-		int endIndex = startIndex + Statics.recordCountPerPage - 1;
+		int startIndex = (page - 1) * 5 + 1;
+		int endIndex = startIndex + 5 - 1;
 
 		endIndex = (endIndex > getSelectByBoardIdSize(boardId)) ? getSelectByBoardIdSize(boardId) : endIndex;
 		

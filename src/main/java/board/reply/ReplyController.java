@@ -42,7 +42,7 @@ public class ReplyController extends HttpServlet {
 				List<ReplyDTO> rdto = rdao.selectByBoardId(id, page);
 				json.put("list", rdto);
 				
-				PageNavi pageNavi = new PageNavi(page, rdao.getSelectByBoardIdSize(id));
+				PageNavi pageNavi = new PageNavi(page, rdao.getSelectByBoardIdSize(id), 5, 10);
 				json.put("pageNavi", pageNavi.generate());
 				
 				response.setContentType("text/html; charset=utf8");

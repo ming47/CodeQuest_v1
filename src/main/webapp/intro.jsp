@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>입장 페이지</title>
 <style>
-/* 기존 스타일 유지 */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -70,7 +70,7 @@ h1 {
 
 	<script>
 		function enterGame() {
-			sessionStorage.setItem("enteredGame", "true"); // 세션 저장
+			sessionStorage.setItem("enteredGame", "true"); 
 			$(".starter").fadeOut(500, function() {
 				$(".container").fadeIn(500);
 			});
