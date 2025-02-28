@@ -26,6 +26,8 @@ public class FilterUtil implements Filter {
         HttpServletRequest request  = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession();
+		request.setCharacterEncoding("utf8");
+		response.setContentType("text/html; charset=UTF-8");
 
         if (session.getAttribute("csrfToken") == null) {
             String token = UUID.randomUUID().toString();
@@ -37,9 +39,8 @@ public class FilterUtil implements Filter {
             if (contentType == null || !contentType.toLowerCase().startsWith("multipart/form-data")) {
                 String sessionToken = (String) session.getAttribute("csrfToken");
                 String requestToken = request.getParameter("csrfToken");
-
                 if (sessionToken == null || !sessionToken.equals(requestToken)) {
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "잘못된 CSRF 토큰 요청입니다.");
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "잘못된 토큰 요청입니다.");
                     return;
                 }
             }

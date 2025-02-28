@@ -1,852 +1,922 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
-        .inner {
-            height: 95%;
-            width: 95%;
-            border-radius: 10px;
-            border: 1px solid lightgray;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+@font-face {
+	font-family: 'DungGeunMo';
+	src:
+		url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
-        .inner-fat {
-            height: 95%;
-            width: 98%;
-            border-radius: 10px;
-            border: 1px solid lightgray;
-        }
+* {
+	box-sizing: border-box;
+}
 
-        .inner-thin {
-            height: 90%;
-            width: 90%;
-            border-radius: 10px;
-            border: 1px solid lightgray;
-        }
-        
-        .title-form {
-        	background-color: lightgray;
-        	border-radius: 10px 10px 0 0;
-        }
+html {
+	font-family: 'DungGeunMo';
+}
 
-        .container {
-            width: 100vw;
-            height: 300vh;
-            position: relative;
-        }
+.inner {
+	height: 95%;
+	width: 95%;
+	border-radius: 10px;
+	border: 1px solid lightgray;
+}
 
-        .container>div {
-            float: left;
-            height: 100%;
-        }
+.inner-fat {
+	height: 95%;
+	width: 98%;
+	border-radius: 10px;
+	border: 1px solid lightgray;
+}
 
-        .left-navi {
-            width: 20%;
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            background-color: lightgray;
-        }
+.inner-thin {
+	height: 90%;
+	width: 90%;
+	border-radius: 10px;
+	border: 1px solid lightgray;
+}
 
-        .left-navi-selector {
-            width: 100%;
-            position: relative;
-        }
+.title-form {
+	background-color: #494949;
+	border-radius: 10px 10px 0 0;
+	color: white;
+}
 
-        ul {
-            height: fit-content;
-            margin: 0px;
-            padding: 0px;
-            list-style-type: none;
-            width: 100%;
-            position: absolute;
-            top: 500px;
-        }
+.container {
+	width: 100vw;
+	height: 300vh;
+	position: relative;
+}
 
-        li {
-            width: 100%;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            padding: 25px;
-            font-size: 25px;
-            font-weight: bold;
-        }
+.container>div {
+	float: left;
+	height: 100%;
+}
 
-        li:hover {
-            cursor: pointer;
-        }
+.left-navi {
+	width: 20%;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	background-color: #494949;
+	color: white;
+}
 
-        .contents {
-            width: 80%;
-            position: absolute;
-            right: 0px;
-        }
+.left-navi-selector {
+	width: 100%;
+	position: relative;
+}
 
-        .contents>div {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+ul {
+	height: fit-content;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+	width: 100%;
+	position: absolute;
+	top: 500px;
+}
 
-        .center-align {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+li {
+	width: 100%;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	padding: 25px;
+	font-size: 25px;
+	font-weight: bold;
+}
 
-        .title {
-            height: 10%;
-            font-size: 50px;
-            font-weight: bolder;
-            display: flex;
-            align-items: center;
-            padding-left: 50px;
-        }
+li:hover {
+	cursor: pointer;
+}
 
-        .contents-inner {
-            height: 90%;
-        }
+.contents {
+	width: 80%;
+	position: absolute;
+	right: 0px;
+}
 
-        .contents-inner>div {
-            height: 100%;
-            float: left;
-        }
+.contents>div {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-        .game-dashboard-inner>div {
-            float: left;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.center-align {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
-        .game-selector {
-            width: 25%;
-        }
-        
-        .display-info {
-        	height: 20%;
-        }
-        
-        .display-info-title {
-        	height: 30%;
-        	display: flex;
-        	align-items: center;
-            padding-left: 15px;
-            font-size: 25px;
-            font-weight: bolder;
-        }
-        
-        .display-info-contents {
-        	height: 70%;
-        	font-size: 30px;
-        	font-weight: bold;
-        }
+.title {
+	height: 10%;
+	font-size: 50px;
+	font-weight: bolder;
+	display: flex;
+	align-items: center;
+	padding-left: 50px;
+}
 
-        .detail-dashboard {
-            width: 75%;
-        }
+.contents-inner {
+	height: 90%;
+}
 
-        .detail-dashboard-inner {
-            width: 95%;
-            height: 95%;
-        }
+.contents-inner>div {
+	height: 100%;
+	float: left;
+}
 
-        .access-count-display {
-            height: 30%;
-        }
+.game-dashboard-inner>div {
+	float: left;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-        .access-count-title {
-            height: 20%;
-            font-size: 35px;
-            font-weight: bolder;
-            display: flex;
-            align-items: center;
-            padding-left: 15px;
-        }
+.game-selector {
+	width: 25%;
+}
 
-        .access-count-contents {
-            height: 80%;
-        }
-        
-        .access-count-contents>div {
-        	float: left;
-        	height: 100%;
-        }
-        
-        .access-count {
-        	width: 95%;
-        }
-        
-        .dashboard-selector {
-        	width: 5%;
-        }
+.display-info {
+	height: 20%;
+}
 
-        .detail-dashborad-bottom {
-            height: 70%;
-        }
+.display-info-title {
+	height: 30%;
+	display: flex;
+	align-items: center;
+	padding-left: 15px;
+	font-size: 25px;
+	font-weight: bolder;
+}
 
-        .detail-dashborad-bottom>div {
-            height: 100%;
-            float: left;
-        }
+.display-info-contents {
+	height: 70%;
+	font-size: 30px;
+}
 
-        .playtime-display {
-            width: 40%;
-        }
+.detail-dashboard {
+	width: 75%;
+}
 
-        .playtime-title {
-            height: 15%;
-            font-size: 35px;
-            font-weight: bolder;
-            display: flex;
-            align-items: center;
-            padding-left: 15px;
-        }
+.detail-dashboard-inner {
+	width: 95%;
+	height: 95%;
+}
 
-        .playtime-button-form {
-            height: 5%;
-        }
+.access-count-display {
+	height: 30%;
+}
 
-        .playtime {
-            height: 80%;
-        }
+.access-count-title {
+	height: 20%;
+	font-size: 35px;
+	font-weight: bolder;
+	display: flex;
+	align-items: center;
+	padding-left: 15px;
+}
 
-        .detail-dashboard-bottom-right {
-            width: 60%;
-        }
-        
-        .game-detail-display-title {
-        	height: 15%;
-        }
-        
-        .game-detail-display-contents {
-        	height: 85%;
-        }
-        
-        .game-detail-display-contents>div {
-        	float: left;
-        	height: 100%;
-        }
-        
-        .game-detail {
-        	width: 90%;
-        }
-        
-        .game-detail-title {
-        	height: 15%;
-        	display: flex;
-        	align-items: center;
-        }
-        
-        .game-detail-title>span {
-        	margin-left: 10px;
-        }
-        
-        #game-title {
-        	font-size: 25px;
-        	font-weight: bold;
-        }
-        
-        #game-id {
-        	color: gray;	
-        }
-        
-        .game-detail-contents {
-        	height: 85%;
-        }
-        
-        .game-detail-info {
-        	height: 30%;
-        }
-        
-        .game-detail-info>div {
-        	float: left;
-        	height: 100%;
-        	width: 50%;
-        }
-        
-        .game-detail-daliy-access {
-        	height: 40%;
-        }
-        
-        .game-detail-inner-title {
-        	height: 20%;
-        	display: flex;
-        	align-items: center;
-        	font-weight: bold;
-        	padding-left: 15px;	
-        }
-        
-        .game-detail-inner-contents {
-        	height: 80%;
-        }
-        
-        .game-detail-inner-chart-contents {
-        	height: 80%;
-        }
-        
-        #daliy-playtime-sum-game-detail {
-        	font-weight: bolder;
-        }
+.access-count-contents {
+	height: 80%;
+}
 
-        .board-management-inner>div {
-            float: left;
-            height: 100%;
-            width: 50%;
-        }
+.access-count-contents>div {
+	float: left;
+	height: 100%;
+}
 
-        .user-info {
-            height: 20%;
-        }
+.access-count {
+	width: 95%;
+}
 
-        .user-info-title {
-            height: 50%;
-        }
+.dashboard-selector {
+	width: 5%;
+}
 
-        .resent-board {
-            height: 30%;
-        }
+.detail-dashborad-bottom {
+	height: 70%;
+}
 
-        .ban-list {
-            height: 30%;
-        }
+.detail-dashborad-bottom>div {
+	height: 100%;
+	float: left;
+}
 
-        .ban-controller {
-            height: 20%;
-        }
+.playtime-display {
+	width: 45%;
+}
 
-        .ban-controller>div>div {
-            float: left;
-            height: 100%;
-        }
-        
-        .isBaaned-display {
-        	color: gray;
-        	font-size: 15px;
-        	margin-left: 20px;
-        }
+.playtime-title {
+	height: 15%;
+	font-size: 35px;
+	font-weight: bolder;
+	display: flex;
+	align-items: center;
+	padding-left: 15px;
+}
 
-        .resent-title {
-            height: 20%;
-        }
+.playtime-button-form {
+	height: 5%;
+}
 
-        .ban-list-title {
-            height: 20%;
-        }
+.playtime {
+	height: 80%;
+}
 
-        .ban-detail-setting {
-            width: 70%;
-        }
+.detail-dashboard-bottom-right {
+	width: 55%;
+}
 
-        .ban-button {
-            width: 30%;
-        }
+.game-detail-display-title {
+	height: 15%;
+}
 
-        .ban-detail-setting>div {
-            height: 50%;
-        }
+.game-detail-display-contents {
+	height: 85%;
+}
 
-        .qna-inner>div {
-            width: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.game-detail-display-contents>div {
+	float: left;
+	height: 100%;
+}
 
-        .qna-list-contents {
-            height: 85%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.game-detail {
+	width: 90%;
+}
 
-        table {
-            width: 100%;
-        }
+.game-detail-title {
+	height: 20%;
+	display: flex;
+	align-items: center;
+}
 
-        .qna-list-contents-inner {
-            height: 98%;
-            width: 98%;
-        }
+.game-detail-title>span {
+	margin-left: 10px;
+}
 
-        .qna-list-controller {
-            height: 10%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+#game-title {
+	font-size: 25px;
+	font-weight: bold;
+}
 
-        .page-navi-form {
-            height: 5%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+#game-id {
+	color: gray;
+}
 
-        .page-navi-inner {
-            height: 90%;
-            width: 98%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.game-detail-contents {
+	height: 80%;
+}
 
-        .qna-title-inner {
-            height: 70%;
-            width: 98%;
-        }
+.game-detail-info {
+	height: 30%;
+}
 
-        .qna-title {
-            height: 10%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.game-detail-info>div {
+	float: left;
+	height: 100%;
+	width: 50%;
+}
 
-        .qna-contents {
-            height: 60%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.game-detail-daliy-access {
+	height: 40%;
+}
 
-        .qna-contents-inner {
-            width: 98%;
-            height: 95%;
-        }
+.game-detail-inner-title {
+	height: 30%;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	padding-left: 15px;
+}
 
-        #qna-contents-contents {
-            height: 100%;
-            width: 100%;
-            overflow-y: auto;
-        }
+.game-detail-inner-contents {
+	height: 70%;
+}
 
-        .qna-contents-button {
-            height: 5%;
-            position: relative;
-        }
+.game-detail-inner-chart-contents {
+	height: 80%;
+}
 
-        #qna-delete {
-            right: 30px;
-            position: absolute;
-        }
+#daliy-playtime-sum-game-detail {
+	font-weight: bolder;
+}
 
-        .qna-reply {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 30%;
-        }
+.board-management-inner>div {
+	float: left;
+	height: 100%;
+	width: 50%;
+}
 
-        .qna-reply-inner {
-            width: 98%;
-            height: 95%;
-        }
+.user-info {
+	height: 20%;
+}
 
-        .qna-reply-contents {
-            height: 90%;
-        }
+.user-info-title {
+	height: 50%;
+}
 
-        #qna-contents-contents {
-            overflow-y: auto;
-        }
+.resent-board {
+	height: 30%;
+}
 
-        .qna-reply-controller {
-            height: 10%;
-        }
-        
-        .qna-response-y {
-        	background-color: lightgray;
-        }
-        
-        .qna-response-n {
-        	background-color: white;
-        }
-        
-        .controller-list>span {
-        	width: 100%;
-        	display: flex;
-        	justify-content: space-evenly;
-        }
-        
-        table {
-        	border-collapse: collapse;
-        	border-spacing: 3px;
-			border-collapse: separate;
-			background-color: transparent;
-        }
-        
-        table th, table td {
-        	border-radius: 1px;
-			border: none;
-			background-color: #fafbf4;
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-    <meta name="csrf-token" content="${csrfToken}">
+.ban-list {
+	height: 30%;
+}
+
+.ban-controller {
+	height: 20%;
+}
+
+.ban-controller>div>div {
+	float: left;
+	height: 100%;
+}
+
+.isBaaned-display {
+	color: gray;
+	font-size: 15px;
+	margin-left: 20px;
+}
+
+.resent-title {
+	height: 20%;
+}
+
+.ban-list-title {
+	height: 20%;
+}
+
+.ban-detail-setting {
+	width: 70%;
+}
+
+.ban-button {
+	width: 30%;
+}
+
+.ban-detail-setting>div {
+	height: 50%;
+}
+
+.check-ban{
+	padding: 10px 15px;
+	background: #3c3b39;
+	color: white;
+	border-radius: 5px;
+	cursor: pointer;
+	border: none;
+	margin:10px;
+}
+
+.check-ban:hover{
+	background: #66635f;
+	transform: scale(1.1);
+	color: white;
+}
+
+.qna-inner>div {
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.qna-list-contents {
+	height: 85%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+table {
+	width: 100%;
+}
+
+.qna-list-contents-inner {
+	height: 98%;
+	width: 98%;
+}
+
+.qna-list-controller {
+	height: 10%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.page-navi-form {
+	height: 5%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.page-navi-inner {
+	height: 90%;
+	width: 98%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.qna-title-inner {
+	height: 70%;
+	width: 98%;
+	top:0px;
+}
+
+.qna-title {
+	height: 10%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.qna-contents {
+	height: 60%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.qna-contents-inner {
+	width: 98%;
+	height: 95%;
+}
+
+#qna-contents-contents {
+	height: 100%;
+	width: 100%;
+	overflow-y: auto;
+}
+
+.qna-contents-button {
+	height: 5%;
+	position: relative;
+}
+
+#qna-delete {
+	right: 30px;
+	position: absolute;
+}
+
+.qna-reply {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 30%;
+}
+
+.qna-reply-inner {
+	width: 98%;
+	height: 95%;
+	padding:20px;
+}
+
+.qna-reply-contents {
+	height: 90%;
+
+}
+
+#qna-contents-contents {
+	overflow-y: auto;
+}
+
+.qna-reply-controller {
+	height: 10%;
+}
+
+.qna-response-y {
+	background-color: black;
+}
+
+.check-response-yn{
+	padding: 10px 10px;
+	background-color: #3c3b39;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-family: 'DungGeunMo';
+	transition: all 0.4s;
+	font-weight: bold;
+	margin-right:3px;
+}
+
+.check-response-yn:hover {
+	background: #66635f;
+	transform: scale(1.1);
+	color: white;
+}
+
+.allbtn{
+	margin-right:10px;
+}
+
+.controller-list>span {
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 3px;
+	border-collapse: separate;
+}
+
+table th, table td {
+	border-radius: 1px;
+	border: none;
+	background-color: #c7c7c770;
+}
+
+</style>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<meta name="csrf-token" content="${csrfToken}">
 </head>
 
 <body>
-    <div class="container">
-        <div class="left-navi">
-            <div class="letf-navi-selector">
-                <ul>
-                    <li class="left-selector" value="game-dashboard">게임 대시 보드</li>
-                    <li class="left-selector" value="board-management">게시판 관리</li>
-                    <li class="left-selector" value="qna">질문글</li>
-                </ul>
-            </div>
-        </div>
-        <div class="contents">
-            <div class="game-dashboard">
-                <div class="contents-form inner">
-                    <div class="title title-form">게임 대시보드</div>
-                    <div class="contents-inner game-dashboard-inner">
-                        <div class="game-selector">
-                            <div class="game-selector-inner inner">
-                            	<div class="display-info center-align">
-                            		<div class="inner-thin">
-                            			<div class="display-info-title title-form">금일 접속자 수</div>
-                            			<div class="display-info-contents center-align" id="today-access-count"></div>
-                            		</div>
-                            	</div>
-                            	<div class="display-info center-align">
-                            		<div class="inner-thin">
-                            			<div class="display-info-title title-form">금일 게임 시간 합계</div>
-                            			<div class="display-info-contents center-align" id="today-sum-playtime"></div>
-                            		</div>
-                            	</div>
-                            	<div class="display-info center-align">
-                            		<div class="inner-thin">
-                            			<div class="display-info-title title-form">금일 게임 시간 평균</div>
-                            			<div class="display-info-contents center-align" id="today-avg-playtime"></div>
-                            		</div>
-                            	</div>
-                            	<div class="display-info center-align">
-                            		<div class="inner-thin">
-                            			<div class="display-info-title title-form">전날 이용자 증감률</div>
-                            			<div class="display-info-contents center-align" id="prev-day-access-count-rate"></div>
-                            		</div>
-                            	</div>
-                            	<div class="display-info center-align">
-                            		<div class="inner-thin">
-                            			<div class="display-info-title title-form">전달 이용자 증감률</div>
-                            			<div class="display-info-contents center-align" id="prev-month-access-count-rate"></div>
-                            		</div>
-                            	</div>		
-                            </div>
-                        </div>
-                        <div class="detail-dashboard">
-                            <div class="detail-dashboard-inner">
-                                <div class="access-count-display center-align">
-                                    <div class="access-count-diplay-inner inner-fat">
-                                        <div class="access-count-title title-form">접속자 추이</div>
-                                        <div class="access-count-contents">
-                                        	<div class="access-count">                                        	
-                                            	<canvas id="access-chart"></canvas>
-                                        	</div>
-                                        	<div class="dashboard-selector center-align">
-                                        		<button id="access-count-get-next" value="day">></button>
-                                        	</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="detail-dashborad-bottom">
-                                    <div class="playtime-display center-align">
-                                        <div class="playtime-inner inner">
-                                            <div class="playtime-title title-form">게임 이용 시간</div>
-                                            <div class="playtime-button-form">
-                                                <button class="playtime-button" id="group-game">게임별</button>
-                                                <button class="playtime-button" id="group-gender">성별별</button>
-                                                <button class="playtime-button" id="group-age">나이별</button>
-                                               	<input type="radio" value="sum" name="playtime-type" checked/>합계
-                                               	<input type="radio" value="avg" name="playtime-type"/>평균
-                                               	<input type="radio" value="count" name="playtime-type"/>총합
-                                            </div>
-                                            <div class="playtime center-align">
-                                            	<canvas id="playtime-chart"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="detail-dashboard-bottom-right center-align">
-                                    	<div class="game-detail-display inner">
-                                    		<div class="game-detail-display-title title title-form">게임 상세</div>
-                                    		<div class="game-detail-display-contents">
-                                    			<div class="dashboard-selector center-align">
-                                    				<button id="prev" class="game-detail-get" value="800006"><</button>
-                                    			</div>
-                                    			<div class="game-detail center-align">
-                                    				<div class="inner">
-                                    					<div class="game-detail-title title-form">
-                                    						<span id="game-title"></span>
-                                    						<span id="game-id"></span>
-                                    					</div>
-                                    					<div class="game-detail-contents">
-                                    						<div class="game-detail-daliy-access center-align">
-                                    							<div class="inner">
-                                    								<div class="game-detail-inner-title title-form">일주일간 유저 수 추이</div>
-                                    								<div class="game-detail-inner-chart-contents">
-                                    									<canvas id="game-detail-mau-chart"></canvas>
-                                    								</div>
-                                    							</div>
-                                    						</div>
-                                    						<div class="game-detail-info">
-                                    							<div class="center-align">
-                                    								<div class="inner-thin">
-                                    									<div class="game-detail-inner-title title-form">금일 유저 수</div>
-                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="daliy-access-count-game-detail"></div>
-                                    								</div>
-                                    							</div>
-                                    							<div class="center-align">
-                                    								<div class="inner-thin">
-                                    									<div class="game-detail-inner-title title-form">금일 게임 시간 합계</div>
-                                    									<div class="game-detail-inner-contents center-align" id="daliy-playtime-sum-game-detail"></div>
-                                    								</div>
-                                    							</div>
-                                    						</div>
-                                    						<div class="game-detail-info">
-                                    							<div class="center-align">
-                                    								<div class="inner-thin">
-                                    									<div class="game-detail-inner-title title-form">전날 이용자 증감률</div>
-                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="prev-day-game-access-rate-game-detail"></div>
-                                    								</div>
-                                    							</div>
-                                    							<div class="center-align">
-                                    								<div class="inner-thin">
-                                    									<div class="game-detail-inner-title title-form">전달 이용자 증감률</div>
-                                    									<div class="game-detail-inner-contents display-info-contents center-align" id="prev-month-game-access-rate-game-detail"></div>
-                                    								</div>
-                                    							</div>
-                                    						</div>
-                                    					</div>
-                                    				</div>
-                                    			</div>
-                                    			<div class="dashboard-selector center-align">
-                                    				<button id="next" class="game-detail-get" value="800002">></button>
-                                    			</div>
-                                    		</div>
-                                    	</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="board-management">
-                <div class="contents-form inner">
-                    <div class="title title-form">유저 관리</div>
-                    <div class="contents-inner board-management-inner">
-                        <div class="ban-list center-align">
-                            <div class="inner">
-                                <div class="qna-list-contents">
-                                    <div class="qna-list-contents-inner">
-                                        <table id="member-table">
-                                            <tr>
-                                                <th width="12%" height="50px">번호</th>
-                                                <th width="32%">닉네임</th>
-                                                <th width="33%">이메일</th>
-                                                <th width="23%">가입 날짜</th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="page-navi-form">
-                                    <div class="page-navi-inner" id="user-page-navi"></div>
-                                </div>
-                                <div class="qna-list-controller">
-                                    <div class="inner center-align">
-                                        <button class="check-ban" value="true">Y</button>
-                                        <button class="check-ban" value="false">N</button>
-                                        <button class="check-ban" value="whole">전체</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="management-contoroller center-align">
-                            <div class="inner">
-                                <div class="user-info center-align">
-                                    <div class="inner-fat">
-                                        <div class="user-info-title title title-form" id="user-nickname"></div>
-                                        <table id="user-info-table">
-                                            <tr>
-                                                <th width="10%" height="50%">ID</th>
-                                                <td width="25%" id="user-id"></td>
-                                                <th width="10%">이메일</th>
-                                                <td width="55%" id="user-email"></td>
-                                            </tr>
-                                            <tr>
-                                                <th width="15%">가입 일자</td>
-                                                <td width="20%" id="user-reg-date"></td>
-                                                <th width="15%">차단 횟수</th>
-                                                <td width="10%" id="user-ban-count"></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="resent-board center-align">
-                                    <div class="inner-fat">
-                                        <div class="resent-title title-form">최근 게시글</div>
-                                        <table border="1" id="resent-board-table">
-                                        	<tr>
-                                        		<th width="10%">번호</th>
-                                        		<th width="60%">내용</th>
-                                        		<th width="20%">날짜</th>
-                                        		<th width="10%">조회수</th>
-                                        	</tr>
-                                        </table>
-                                        <div class="page-navi-form">
-                                            <div class="page-navi-inner"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ban-list center-align">
-                                    <div class="inner-fat">
-                                        <div class="ban-list-title title-form">차단 목록</div>
-                                        <table id="ban-list-table">
-                                        	<tr>
-                                                <th width="10%" height="50%">번호</th>
-                                                <th width="20%">사유</th>
-                                                <th width="70%">기간</th>
-                                            </tr>
-                                        </table>
-                                        <div class="page-navi-form">
-                                            <div class="page-navi-inner"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ban-controller center-align">
-                                    <div class="inner-fat">
-                                        <div class="ban-detail-setting">
-                                            <div class="ban-reason-controller controller-list center-align">
-	                                            <span>
-	                                                <select class="ban-select" id="reason-select">
-	                                                	<option>광고</option>
-	                                                	<option>분탕</option>
-	                                                	<option>도배</option>
-	                                                	<option>기분 나쁨</option>
-	                                                	<option>영정</option>
-	                                                	<option>기타</option>
-	                                                </select>
-	                                                <input type="text" placeholder="차단 사유" id="reason" disabled>
-	                                            </span>
-                                            </div>
-                                            <div class="ban-end-date-controller controller-list center-align">
-                                                <span>
-	                                                <select class="ban-select" id="end-date-select" disabled>
-	                                                	<option value="720">30일</option>
-	                                                	<option value="72">3일</option>
-	                                                	<option value="168">7일</option>
-	                                                	<option value="1">1시간</option>
-	                                                	<option value="-1">없음</option>
-	                                                	<option value="0">기타</option>
-	                                                </select>
-	                                                <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)" id="end-date" disabled>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="ban-button center-align"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="qna">
-                <div class="contents-form inner">
-                    <div class="title title-form">질문글</div>
-                    <div class="contents-inner qna-inner">
-                        <div class="qna-list">
-                            <div class="inner">
-                                <div class="qna-list-contents">
-                                    <div class="qna-list-contents-inner">
-                                        <table id="qna-table">
-                                            <tr>
-                                                <th width="10%" height="5%">번호</th>
-                                                <th width="50%">내용</th>
-                                                <th width="20%">작성자</th>
-                                                <th width="20%">작성 시간</th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="page-navi-form">
-                                    <div class="page-navi-inner" id="qna-list-page-navi"></div>
-                                </div>
-                                <div class="qna-list-controller">
-                                    <div class="inner">
-                                        <div>
-                                            <button class="check-response-yn" value="y">Y</button>
-                                            <button class="check-response-yn" value="n">N</button>
-                                            <button class="check-response-yn" value="whole">전체</button>
-                                        </div>
-                                        <div>
-                                            <select id="qna-search-conditions-select">
-                                                <option value="writer">작성자</option>
-                                                <option value="contents">내용</option>
-                                            </select>
-                                            <input type="text" placeholder="검색할 내용을 입력하세요" id="qna-search-key">
-                                            <button id="qna-search">검색</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="qna-respone">
-                            <div class="inner">
-                                <div class="qna-title">
-                                    <div class="qna-title-inner" id="qna-contents-responseYN"></div>
-                                </div>
-                                <div class="qna-contents">
-                                    <div class="qna-contents-inner">
-                                        <table style="height: 95%;">
-                                            <tr>
-                                                <th width="10%" height="8%">번호</th>
-                                                <td width="10%" id="qna-contents-id"></td>
-                                                <th width="10%">작성자</th>
-                                                <td width="15%" id="qna-contents-writer"></td>
-                                                <th width="15%">등록 날짜</th>
-                                                <td width="20%" id="qna-contents-reg-date"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="6">
-                                                    <div id="qna-contents-contents"></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div class="qna-contents-button">
-                                            <button id="qna-delete" disabled>삭제</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="qna-reply">
-                                    <div class="qna-reply-inner">
-                                        <div class="qna-reply-contents">
-                                        </div>
-                                        <div class="qna-reply-controller"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="left-navi">
+			<div class="letf-navi-selector">
+				<ul>
+					<li class="left-selector" value="game-dashboard">게임 DashBoard</li>
+					<li class="left-selector" value="board-management">Board 관리</li>
+					<li class="left-selector" value="qna">Q&A 확인</li>
+				</ul>
+			</div>
+		</div>
+		<div class="contents">
+			<div class="game-dashboard">
+				<div class="contents-form inner">
+					<div class="title title-form">게임 DashBoard</div>
+					<div class="contents-inner game-dashboard-inner">
+						<div class="game-selector">
+							<div class="game-selector-inner inner">
+								<div class="display-info center-align">
+									<div class="inner-thin">
+										<div class="display-info-title title-form center-align">금일 접속자 수</div>
+										<div class="display-info-contents center-align"
+											id="today-access-count"></div>
+									</div>
+								</div>
+								<div class="display-info center-align">
+									<div class="inner-thin">
+										<div class="display-info-title title-form center-align">금일 게임시간 합계</div>
+										<div class="display-info-contents center-align"
+											id="today-sum-playtime"></div>
+									</div>
+								</div>
+								<div class="display-info center-align">
+									<div class="inner-thin">
+										<div class="display-info-title title-form center-align">금일 게임시간 평균</div>
+										<div class="display-info-contents center-align"
+											id="today-avg-playtime"></div>
+									</div>
+								</div>
+								<div class="display-info center-align">
+									<div class="inner-thin">
+										<div class="display-info-title title-form">전날 이용자 증감률</div>
+										<div class="display-info-contents center-align"
+											id="prev-day-access-count-rate"></div>
+									</div>
+								</div>
+								<div class="display-info center-align">
+									<div class="inner-thin">
+										<div class="display-info-title title-form">전달 이용자 증감률</div>
+										<div class="display-info-contents center-align"
+											id="prev-month-access-count-rate"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="detail-dashboard">
+							<div class="detail-dashboard-inner">
+								<div class="access-count-display center-align">
+									<div class="access-count-diplay-inner inner-fat">
+										<div class="access-count-title title-form center-align">접속자 추이</div>
+										<div class="access-count-contents">
+											<div class="access-count">
+												<canvas id="access-chart"></canvas>
+											</div>
+											<div class="dashboard-selector center-align">
+												<button id="access-count-get-next" value="day">></button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="detail-dashborad-bottom">
+									<div class="playtime-display center-align">
+										<div class="playtime-inner inner">
+											<div class="playtime-title title-form center-align">게임 이용 시간</div>
+											<div class="playtime-button-form">
+												<button class="playtime-button" id="group-game">게임</button>
+												<button class="playtime-button" id="group-gender">성별</button>
+												<button class="playtime-button" id="group-age">나이</button>
+												<input type="radio" value="sum" name="playtime-type" checked />합계
+												<input type="radio" value="avg" name="playtime-type" />평균 <input
+													type="radio" value="count" name="playtime-type" />총합
+											</div>
+											<div class="playtime center-align">
+												<canvas id="playtime-chart"></canvas>
+											</div>
+										</div>
+									</div>
+									<div class="detail-dashboard-bottom-right center-align">
+										<div class="game-detail-display inner">
+											<div class="game-detail-display-title title title-form center-align">게임
+												상세</div>
+											<div class="game-detail-display-contents">
+												<div class="dashboard-selector center-align">
+													<button id="prev" class="game-detail-get" value="800006"><</button>
+												</div>
+												<div class="game-detail center-align">
+													<div class="inner">
+														<div class="game-detail-title title-form">
+															<span id="game-title"></span> <span id="game-id"></span>
+														</div>
+														<div class="game-detail-contents">
+															<div class="game-detail-daliy-access center-align">
+																<div class="inner">
+																	<div class="game-detail-inner-title title-form center-align">일주일간
+																		유저 수 추이</div>
+																	<div class="game-detail-inner-chart-contents">
+																		<canvas id="game-detail-mau-chart"></canvas>
+																	</div>
+																</div>
+															</div>
+															<div class="game-detail-info">
+																<div class="center-align">
+																	<div class="inner-thin">
+																		<div class="game-detail-inner-title title-form center-align">금일
+																			유저 수</div>
+																		<div
+																			class="game-detail-inner-contents display-info-contents center-align"
+																			id="daliy-access-count-game-detail"></div>
+																	</div>
+																</div>
+																<div class="center-align">
+																	<div class="inner-thin">
+																		<div class="game-detail-inner-title title-form center-align">금일 총 게임시간</div>
+																		<div class="game-detail-inner-contents center-align"
+																			id="daliy-playtime-sum-game-detail"></div>
+																	</div>
+																</div>
+															</div>
+															<div class="game-detail-info">
+																<div class="center-align">
+																	<div class="inner-thin">
+																		<div class="game-detail-inner-title title-form center-align">전날
+																			이용자 증감률</div>
+																		<div
+																			class="game-detail-inner-contents display-info-contents center-align"
+																			id="prev-day-game-access-rate-game-detail"></div>
+																	</div>
+																</div>
+																<div class="center-align">
+																	<div class="inner-thin">
+																		<div class="game-detail-inner-title title-form center-align">전달
+																			이용자 증감률</div>
+																		<div
+																			class="game-detail-inner-contents display-info-contents center-align"
+																			id="prev-month-game-access-rate-game-detail"></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="dashboard-selector center-align">
+													<button id="next" class="game-detail-get" value="800002">></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="board-management">
+				<div class="contents-form inner">
+					<div class="title title-form">유저 관리</div>
+					<div class="contents-inner board-management-inner">
+						<div class="ban-list center-align">
+							<div class="inner">
+								<div class="qna-list-contents">
+									<div class="qna-list-contents-inner">
+										<table id="member-table">
+											<tr>
+												<th width="12%" height="50px">번호</th>
+												<th width="32%">닉네임</th>
+												<th width="33%">이메일</th>
+												<th width="23%">가입 날짜</th>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="page-navi-form">
+									<div class="page-navi-inner" id="user-page-navi"></div>
+								</div>
+								<div class="qna-list-controller">
+									<div class="inner center-align">
+										<button class="check-ban" value="true">Ban Y</button>
+										<button class="check-ban" value="false">Ban N</button>
+										<button class="check-ban" value="whole">전체</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="management-contoroller center-align">
+							<div class="inner">
+								<div class="user-info center-align">
+									<div class="inner-fat">
+										<div class="user-info-title title title-form"
+											id="user-nickname"></div>
+										<table id="user-info-table">
+											<tr>
+												<th width="10%" height="50%">ID</th>
+												<td width="25%" id="user-id"></td>
+												<th width="10%">이메일</th>
+												<td width="55%" id="user-email"></td>
+											</tr>
+											<tr>
+												<th width="15%">가입 일자
+												</th>
+												<td width="20%" id="user-reg-date"></td>
+												<th width="15%">차단 횟수</th>
+												<td width="10%" id="user-ban-count"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="resent-board center-align">
+									<div class="inner-fat">
+										<div class="resent-title title-form center-align">최근 게시글</div>
+										<table border="1" id="resent-board-table">
+											<tr>
+												<th width="10%">번호</th>
+												<th width="60%">내용</th>
+												<th width="20%">날짜</th>
+												<th width="10%">조회수</th>
+											</tr>
+										</table>
+										<div class="page-navi-form">
+											<div class="page-navi-inner"></div>
+										</div>
+									</div>
+								</div>
+								<div class="ban-list center-align">
+									<div class="inner-fat">
+										<div class="ban-list-title title-form center-align">차단 목록</div>
+										<table id="ban-list-table">
+											<tr>
+												<th width="10%" height="50%">번호</th>
+												<th width="20%">사유</th>
+												<th width="70%">기간</th>
+											</tr>
+										</table>
+										<div class="page-navi-form">
+											<div class="page-navi-inner"></div>
+										</div>
+									</div>
+								</div>
+								<div class="ban-controller center-align">
+									<div class="inner-fat">
+										<div class="ban-detail-setting">
+											<div
+												class="ban-reason-controller controller-list center-align">
+												<span> <select class="ban-select" id="reason-select">
+														<option>광고</option>
+														<option>분탕</option>
+														<option>도배</option>
+														<option>기분 나쁨</option>
+														<option>영정</option>
+														<option>기타</option>
+												</select> <input type="text" placeholder="차단 사유" id="reason" disabled>
+												</span>
+											</div>
+											<div
+												class="ban-end-date-controller controller-list center-align">
+												<span> <select class="ban-select"
+													id="end-date-select" disabled>
+														<option value="720">30일</option>
+														<option value="72">3일</option>
+														<option value="168">7일</option>
+														<option value="1">1시간</option>
+														<option value="-1">없음</option>
+														<option value="0">기타</option>
+												</select> <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)"
+													id="end-date" disabled>
+												</span>
+											</div>
+										</div>
+										<div class="ban-button center-align"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="qna">
+				<div class="contents-form inner">
+					<div class="title title-form">질문글</div>
+					<div class="contents-inner qna-inner">
+						<div class="qna-list">
+							<div class="inner">
+								<div class="qna-list-contents">
+									<div class="qna-list-contents-inner">
+										<table id="qna-table">
+											<tr>
+												<th width="10%" height="5%">번호</th>
+												<th width="50%">내용</th>
+												<th width="20%">작성자</th>
+												<th width="20%">작성 시간</th>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="page-navi-form">
+									<div class="page-navi-inner" id="qna-list-page-navi"></div>
+								</div>
+								<div class="qna-list-controller">
+									<div class="inner center-align">
+										<div>
+											<button class="check-response-yn" value="y">답변 Y</button>
+											<button class="check-response-yn" value="n">답변 N</button>
+											<button class="check-response-yn allbtn" value="whole">전체</button>
+										</div>
+										<div>
+											<select id="qna-search-conditions-select">
+												<option value="writer">작성자</option>
+												<option value="contents">내용</option>
+											</select> <input type="text" placeholder="검색할 내용을 입력하세요"
+												id="qna-search-key">
+											<button id="qna-search">검색</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="qna-respone">
+							<div class="inner">
+								<div class="qna-title">
+									<div class="qna-title-inner" id="qna-contents-responseYN"></div>
+								</div>
+								<div class="qna-contents">
+									<div class="qna-contents-inner">
+										<table style="height: 95%;">
+											<tr>
+												<th width="10%" height="8%">번호</th>
+												<td width="10%" id="qna-contents-id"></td>
+												<th width="10%">작성자</th>
+												<td width="15%" id="qna-contents-writer"></td>
+												<th width="15%">등록 날짜</th>
+												<td width="20%" id="qna-contents-reg-date"></td>
+											</tr>
+											<tr>
+												<td colspan="6">
+													<div id="qna-contents-contents"></div>
+												</td>
+											</tr>
+										</table>
+										<div class="qna-contents-button">
+											<button id="qna-delete" disabled>삭제</button>
+										</div>
+									</div>
+								</div>
+								<div class="qna-reply">
+									<div class="qna-reply-inner">
+										<div class="qna-reply-contents"></div>
+										<div class="qna-reply-controller"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>
@@ -1072,7 +1142,7 @@ function gameDetailCahrtSet(dataset) {
                     	      }
                     	  },
                          "y-sum": {
-                             type: "logarithmic",  // ✅ 로그 스케일 적용
+                             type: "logarithmic",  // 로그 스케일 적용
                              position: "left",
                              ticks: {
                                  min: 1,
@@ -1211,7 +1281,7 @@ function gameDetailCahrtSet(dataset) {
                         	      }
                         	  },
                              "y-sum": {
-                                 type: "logarithmic",  // ✅ 로그 스케일 적용
+                                 type: "logarithmic",  // 로그 스케일 적용
                                  position: "left",
                                  ticks: {
                                      min: 1,
@@ -1712,10 +1782,10 @@ function gameDetailCahrtSet(dataset) {
             let responseState, responseClass;
             if (currentDTO.responseYn == 'N') {
                 responseState = "미응답";
-                responseClass = 'qna-response-y';
+                responseClass = 'qna-response-n';
             } else {
                 responseState = "응답완료";
-                responseClass = 'qna-response-n';
+                responseClass = 'qna-response-y';
             }
 
             let contentsHTML = (currentDTO.contents.length > 15) ? currentDTO.contents.substr(3, 11 - 2) + "..." : currentDTO.contents;
