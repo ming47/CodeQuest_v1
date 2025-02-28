@@ -87,7 +87,7 @@ public class ReplyController extends HttpServlet {
 				int boardId = Integer.parseInt(request.getParameter("boardId"));
 					
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
-				if (member.getRole().equals("user") && rdao.selectById(dto).getMemberId() == member.getMemberId()) {
+				if (member.getRole().equals("user") && rdao.selectById(dto).getMemberId() != member.getMemberId()) {
 					return;
 				}
 				
