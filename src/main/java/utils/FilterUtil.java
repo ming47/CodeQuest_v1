@@ -1,8 +1,6 @@
 package utils;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class FilterUtil implements Filter {
 	
-    private static final List<String> STATIC_EXTENSIONS = Arrays.asList(".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".woff", ".woff2", ".ttf", ".svg", ".html");
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -32,6 +28,7 @@ public class FilterUtil implements Filter {
         HttpSession session = request.getSession();
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=UTF-8");
+		
         if (session.getAttribute("csrfToken") == null) {
             String token = UUID.randomUUID().toString();
             session.setAttribute("csrfToken", token);
@@ -45,13 +42,6 @@ public class FilterUtil implements Filter {
             chain.doFilter(req, res);
             return;
         } 
-        for (String ext : STATIC_EXTENSIONS) {
-            if (request.getRequestURI().endsWith(ext)) {
-                chain.doFilter(req, res);
-                return;
-            }
-        }
-        
         
         //차단
         if (!request.getRequestURI().endsWith(".do")) {
@@ -64,6 +54,7 @@ public class FilterUtil implements Filter {
             if (contentType == null || !contentType.toLowerCase().startsWith("multipart/form-data")) {
                 String sessionToken = (String) session.getAttribute("csrfToken");
                 String requestToken = request.getParameter("csrfToken");
+                
                 if (sessionToken == null || !sessionToken.equals(requestToken)) {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "잘못된 토큰 요청입니다.");
                     return;
