@@ -325,6 +325,8 @@ button:focus {
 }
 </style>
 </head>
+
+
 <body>
 
 	<div class="header">
@@ -527,6 +529,7 @@ button:focus {
                  return false;
              }
          });
+         
      });
 	 
 	 function parseDate(timestamp) {
