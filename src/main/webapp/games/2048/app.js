@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 resultDisplay.innerHTML = "You WIN!"
                 document.removeEventListener("keydown", control)
                 setTimeout(clear, 3000)
-                
+                console.log(1);
 	             $.ajax({
 	            url: '/game/score/add.do',
 	            type: 'POST',
@@ -198,8 +198,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	                gameId: 800002,
 	                score: score
 	            }
-	        	}).done(function(data) {
-	           		console.log(data);
+	        	}).done(function() {
+	           		if(confrim("재시작 하시겠습니까?")) {
+                	   window.reloard();
+                   } else {
+                	   location.href="/game/list.do?id=800004";
+                   }
 	        	});               
                 
             }
@@ -217,16 +221,18 @@ document.addEventListener("DOMContentLoaded", () => {
             resultDisplay.innerHTML = "패배!"
             document.removeEventListener("keydown", control)
             setTimeout(clear, 3000)
-
+			console.log(1);
             $.ajax({
-            url: '/score/add.do',
+            url: '/game/score/add.do',
             type: 'POST',
             data: {
                 gameId: 800002,
                 score: score
             }
-        	}).done(function(data) {
-           		console.log(data);
+        	}).done(function() {
+           		if(confirm("돌아 가시겠습니까?")) {
+					location.href = '/game/list.do?id=800002'
+				}
         	});
 
             
