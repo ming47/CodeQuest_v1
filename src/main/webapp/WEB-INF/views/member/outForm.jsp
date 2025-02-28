@@ -8,8 +8,14 @@
 	<meta charset="UTF-8">
 	<title>회원탈퇴</title>
 	<style>
+		@font-face {
+		    font-family: 'DungGeunMo';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+		}
 		body {
-			font-family: 'Jua', sans-serif;
+    		font-family: 'DungGeunMo';
 			background: #f8f9fa;
 			margin: 0;
 			padding: 0;
