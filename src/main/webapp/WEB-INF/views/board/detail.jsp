@@ -772,7 +772,7 @@ table th {
         }
    }
 
-   //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기e 
+   //페이지 로딩이 완료되었을때, 서버에서 현재 글의 댓글 목록을 받아와 화면에 동적으로 구성하기
    $(document).ready(function() {
        const $commentInput = $("#commentInput");
        const $inputBtn = $("#inputbtn");
