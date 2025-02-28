@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import service.blacklist.BlackListDAO;
 import service.blacklist.BlackListDAOImpl;
@@ -22,6 +25,7 @@ import utils.OAuthTokenDTO;
 
 @WebServlet("/KakaoLogin")
 public class LoginController extends HttpServlet {
+	Gson gson = new Gson();
     private MemberDAO memberDao = MemberDAOImpl.INSTANCE;
     private BlackListDAO blackListDao = BlackListDAOImpl.INSTANCE;
 
@@ -54,7 +58,6 @@ public class LoginController extends HttpServlet {
                     sb.append(input);
                 }
             }
-            Gson gson = new Gson();
             OAuthTokenDTO oAuthToken = gson.fromJson(sb.toString(), OAuthTokenDTO.class);
             String accessToken = oAuthToken.getAccess_token();
             URL userInfoUrl = new URL("https://kapi.kakao.com/v2/user/me");
@@ -76,9 +79,9 @@ public class LoginController extends HttpServlet {
             }
             userBr.close();
             String userJson = userSb.toString();
-            com.google.gson.JsonObject jsonObj = gson.fromJson(userJson, com.google.gson.JsonObject.class);
-            com.google.gson.JsonObject kakaoAccount = jsonObj.getAsJsonObject("kakao_account");
-            com.google.gson.JsonObject profile = null;
+            JsonObject jsonObj = gson.fromJson(userJson, JsonObject.class);
+            JsonObject kakaoAccount = jsonObj.getAsJsonObject("kakao_account");
+            JsonObject profile = null;
             if (kakaoAccount.has("profile") && !kakaoAccount.get("profile").isJsonNull()) {
                 profile = kakaoAccount.getAsJsonObject("profile");
             }
@@ -104,6 +107,9 @@ public class LoginController extends HttpServlet {
                 MemberDTO member = memberDao.easyLogin(accountEmail);
 				boolean banned = blackListDao.isBanned(member.getMemberId());
 				member.setIsbanned(banned);
+				
+			    String token = UUID.randomUUID().toString();
+				request.getSession().setAttribute("csrfToken", token);
                 request.getSession().setAttribute("member", member);
                 response.sendRedirect("/");
             }

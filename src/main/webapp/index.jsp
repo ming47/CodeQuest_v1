@@ -592,8 +592,6 @@ table tr {
 						<a href="/game/list.do?id=800006"><button>Insert Coin</button></a>
 					</div>
 				</div>
-
-
 			</div>
 			<div class="right-content">
 				<c:if test="${member.memberId==null}">
@@ -616,7 +614,6 @@ table tr {
 
 				<div class="rankingboard" id="ranking">
 					<h3>🏆 랭킹 보드</h3>
-
 					<div class="ranking-tabs">
 						<button class="tab-btn active" data-game="game1">Skipping</button>
 						<button class="tab-btn" data-game="game2">2048</button>
@@ -648,9 +645,6 @@ table tr {
 					</div>
 				</div>
 			</div>
-
-
-
 		</div>
 		<div class="bottombody">
 
@@ -686,26 +680,20 @@ table tr {
 						</tr>
 					</thead>
 					<tbody id="latestboard">
-
 					</tbody>
 				</table>
 			</div>
-
 		</div>
-
-
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
-
 	</div>
-
+	<input type="hidden" id="loginStatus" value="${login}"/>
 	<script>
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=550, height=500");
 		});
-		let urlParams = new URL(location.href).searchParams;
-		let loginStatus = urlParams.get('login');
-		if (loginStatus === 'fail') {
+		if ($("#loginStatus").val() == 'failed') {
 			alert("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
+		    window.history.replaceState(null, null, "/");
 		}
 		Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
 		function loginWithKakao() {
