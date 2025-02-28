@@ -266,8 +266,9 @@
 			<fieldset>
 				<legend> * 이름 / 닉네임 / 주민번호 / 전화번호 / 이메일</legend>
 				<input type="text" name="name" id="name" placeholder="이름을 입력하세요">
-				<span id="result_name"></span> <input type="text" name="nickName" id="nickName" value=${nickName}
-					placeholder="닉네임을 입력하세요."> </span>
+				<span id="result_name"></span> 
+				<input type="text" name="nickName" id="nickName" value=${nickName}
+					placeholder="닉네임을 입력하세요.">
 				<div class="input-group">
 					<input type="text" name="ssnFront" id="ssnFront" placeholder="주민등록번호 앞자리" maxlength="6">
 					<span>-</span> <input type="text" name="ssnBack" id="ssnBack" placeholder="주민등록번호 뒷자리"

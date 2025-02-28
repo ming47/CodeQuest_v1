@@ -3,6 +3,7 @@ package member.member;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,7 +51,7 @@ public class MemberController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		try {
 			String cmd = ConvertURL.of(request);
-			if (cmd.equals("/member/addForm.do")) { //회원가입 폼
+			if (cmd.equals("/member/addForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 
 			} else if(cmd.equals("/member/valueCheck.do")) { //비동기 중복체크
@@ -73,7 +74,7 @@ public class MemberController extends HttpServlet {
 					}
 				}
 				
-			} else if (cmd.equals("/member/mypage.do")) { //마이페이지 폼
+			} else if (cmd.equals("/member/mypage.do")) { //마이페이지
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 				if (member == null) {
 					response.sendRedirect("/");
@@ -98,20 +99,23 @@ public class MemberController extends HttpServlet {
 				
 				request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 				
-			} else if (cmd.equals("/member/logout.do")) { //로그아웃 처리
+			} else if (cmd.equals("/member/logout.do")) {
 				request.getSession().invalidate();
 				response.sendRedirect("/");
 
-			} else if (cmd.equals("/member/pwResetForm.do")) { //비밀번호 재설정 폼
+			} else if (cmd.equals("/member/pwResetForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/pwResetForm.jsp").forward(request, response);
 				
-			} else if(cmd.equals("/member/outForm.do")) { //탈퇴 폼
+			} else if(cmd.equals("/member/outForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/outForm.jsp").forward(request, response);
 				
 			} else if (cmd.equals("/member/out.do")) { //회원 탈퇴
 				int id = Integer.parseInt(request.getParameter("id"));
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 				if (member == null) {
+					response.sendRedirect("/");
+					return;
+				} else if(id != member.getMemberId()) {
 					response.sendRedirect("/");
 					return;
 				}
@@ -123,14 +127,14 @@ public class MemberController extends HttpServlet {
 					out.println("<script>window.opener.location.href = '/'; window.close();</script>");
 				}
 				
-			} else if (cmd.equals("/member/emailDuplCheck.do")) { //이메일 중복체크
+			} else if (cmd.equals("/member/emailDuplCheck.do")) { //비밀번호 재설정 -> 간편로그인 유저 검증
 				String email = request.getParameter("email");
 				boolean result = dao.getMemberByEmail(email);
 				if(result == true) {
 					response.getWriter().append("true");
 				}
 
-			} else if(cmd.equals("/member/qna/detail.do")) { // 마이페이지 내가 작성한 Q&A
+			} else if(cmd.equals("/member/qna/detail.do")) { //마이페이지 내가 작성한 Q&A
 				int qnaId = Integer.parseInt(request.getParameter("qnaId"));
 				String response_yn = request.getParameter("response");
 				
@@ -147,7 +151,6 @@ public class MemberController extends HttpServlet {
 			e.printStackTrace();
 
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -218,12 +221,16 @@ public class MemberController extends HttpServlet {
 
 				MemberDTO member = dao.login(id, pw);
 				if(member == null) {
-					response.sendRedirect("/?login=fail");
+					request.setAttribute("login", "failed");
+					request.getRequestDispatcher("/index.jsp").forward(request, response);
 					return;
 				}
 				// 밴 유저 검사후 결과 담기
 				boolean banned = blackListDao.isBanned(member.getMemberId());
 				member.setIsbanned(banned);
+				
+			    String token = UUID.randomUUID().toString();
+				request.getSession().setAttribute("csrfToken", token);
 				request.getSession().setAttribute("member", member);
 				
 				response.sendRedirect("/");
@@ -253,7 +260,6 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("member", member);
 				}
 				response.sendRedirect("/member/mypage.do");
-				//request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp").forward(request, response);
 
 			} else if (cmd.equals("/member/sendResetEmail.do")) {
 				String email = request.getParameter("email");
