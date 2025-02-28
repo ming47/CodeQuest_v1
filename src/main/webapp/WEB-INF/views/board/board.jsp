@@ -420,7 +420,7 @@ button:focus {
 
 				<div colspan="3" id="buttonbox">
 					<c:if test="${dto == null}">
-						<a href="/board/addform.do" method="post">
+						<a href="/board/addform.do">
 							<button class="writebtn">작성하기</button>
 						</a>
 					</c:if>

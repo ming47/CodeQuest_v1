@@ -252,7 +252,7 @@ button:hover {
 
 
 
-
+<meta name="csrf-token" content="${csrfToken}">
 </head>
 
 <body>
@@ -288,7 +288,7 @@ button:hover {
 				<h1>게시글 작성하기</h1>
 				<form action="/board/add.do" method="post"
 					enctype="multipart/form-data">
-
+					<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 					<div class="card">
 						<div class="card-header">제목 입력</div>
 						<div class="card-body">
@@ -377,17 +377,18 @@ button:hover {
 		}
 
 		function uploadImage(file, editor) {
+			var csrfToken = $('meta[name="csrf-token"]').attr('content');
 			let formData = new FormData();
 			formData.append('file', file);
 			formData.append('request', 'board');
-
+			formData.append('csrfToken', csrfToken);
 			$.ajax({
-
 				url : '/file/image/upload.do',
 				data : formData,
 				type : 'POST',
 				contentType : false,
 				processData : false,
+				csrfToken: csrfToken,
 				error : function(request, status, error) {
 					console.log("code: " + request.status)
 					console.log("message: " + request.responseText)

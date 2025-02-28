@@ -505,6 +505,7 @@
             <fieldset>
                <legend>기본정보</legend>
                <form action="/member/update.do" method="post" id="frm">
+               	  <input type="hidden" name="csrfToken" value="${csrfToken}"/>
                   <input type="hidden" name="memberId" value=${member.memberId }>
                   <div class="input-group">
                      <span class="field-name">
