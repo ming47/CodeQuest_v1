@@ -28,8 +28,6 @@ public class ReplyController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf8");
-		response.setContentType("text/html; charset=UTF-8");
 		String cmd = request.getRequestURI();
 
 		try {
@@ -56,9 +54,6 @@ public class ReplyController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf8");
-		response.setContentType("text/html; charset=UTF-8");
-		
 		String cmd = request.getRequestURI();
 		try {
 			if (cmd.equals("/reply/add.do")) { 
