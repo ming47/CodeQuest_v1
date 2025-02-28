@@ -181,7 +181,6 @@ table {
 
 table th, table td {
 	padding: 10px;
-	text-align: center;
 	border-radius: 1px;
 	border: none;
 	font-family: 'DungGeunMo';
@@ -400,6 +399,12 @@ table th {
 #board_contents {
   overflow: auto;
   word-wrap: break-word;
+  width: 95%;
+  height: 95%;
+}
+
+.text-center {
+	text-align: center;
 }
 
 
@@ -439,20 +444,22 @@ table th {
 				</div>
 				<table>
 					<tr>
-						<th>글 번호</th>
-						<td>${dto.boardId}</td>
+						<th>제목</th>
+						<td class="change text-center" id="board_title" colspan="3">${dto.title}</td>
 					</tr>
 					<tr>
 						<th>작성자</th>
-						<td>${dto.writer}</td>
+						<td class="text-center" colspan="3">${dto.writer}</td>
 					</tr>
 					<tr>
-						<th>작성 날짜</th>
-						<td>${dto.regDate}</td>
+						<th width="20%">글 번호</th>
+						<td class="text-center" width="10%">${dto.boardId}</td>
+						<th width="20%">작성 날짜</th>
+						<td class="text-center" width="50%">${dto.regDate}</td>
 					</tr>
 					<tr>
-						<th>첨부된 파일:</th>
-						<td><c:forEach var="i" items="${filelist}">
+						<th>첨부 파일:</th>
+						<td class="text-center" colspan="3"><c:forEach var="i" items="${filelist}">
 								<a
 									href="/file/download.do?filename=${i.sysname}&oriname=${i.oriname}">${i.oriname}
 								</a>
@@ -460,12 +467,12 @@ table th {
 							</c:forEach></td>
 					</tr>
 					<tr>
-						<th>제목</th>
-						<td class="change" id="board_title">${dto.title}</td>
-					</tr>
-					<tr>
 						<!-- 내용 부분에 높이를 4배로 설정 -->
-						<td class="change" id="board_contents" colspan="2" height="500px">${dto.contents}</td>
+						<td colspan="5" height="500px">
+							<div class="change" id="board_contents">
+								${dto.contents}
+							</div>
+						</td>
 					</tr>
 				</table>
 
