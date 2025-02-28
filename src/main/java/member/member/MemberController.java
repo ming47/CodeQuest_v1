@@ -30,7 +30,6 @@ import service.qna.QnADTO;
 import service.qnareply.QnAReplyDAO;
 import service.qnareply.QnAReplyDAOImpl;
 import service.qnareply.QnAReplyDTO;
-import utils.ConvertURL;
 import utils.EmailUtil;
 import utils.SecurityUtil;
 
@@ -48,7 +47,7 @@ public class MemberController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			if (cmd.equals("/member/addForm.do")) {
 				request.getRequestDispatcher("/WEB-INF/views/member/signup.jsp").forward(request, response);
 
@@ -154,7 +153,7 @@ public class MemberController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			if (cmd.equals("/member/add.do")) { //회원가입
 				String id = request.getParameter("id");
 				String pw = SecurityUtil.hashPassword(request.getParameter("pw"));

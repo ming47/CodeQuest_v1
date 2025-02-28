@@ -19,7 +19,6 @@ import game.score.ScoreDAO;
 import game.score.ScoreDAOImpl;
 import game.score.ScoreDTO;
 import member.member.MemberDTO;
-import utils.ConvertURL;
 
 
 @WebServlet("/game/*")
@@ -32,7 +31,7 @@ public class GameController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if(cmd.equals("/game/list.do")) {
 				int id = Integer.parseInt(request.getParameter("id"));
@@ -78,7 +77,7 @@ public class GameController extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if (cmd.equals("/game/playtime/add.do")) {
 				int gameId = Integer.parseInt(request.getParameter("gameId"));

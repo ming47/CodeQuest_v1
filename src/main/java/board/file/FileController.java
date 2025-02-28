@@ -23,7 +23,6 @@ import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
-import utils.ConvertURL;
 import utils.FileUtil;
 
 @MultipartConfig // 파일 업로드를 위한 어노테이션
@@ -33,7 +32,7 @@ public class FileController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -41,8 +40,7 @@ public class FileController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
-			
+			String cmd = request.getRequestURI();
 			if (cmd.equals("/file/image/upload.do")) {	// 서머노트 에디터 이미지 들어올때 사용하는 요청
 				String requestPath = request.getParameter("request");
 				

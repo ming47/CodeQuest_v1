@@ -130,6 +130,10 @@
          border-radius: 10px;
          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
          height: 330px;
+   	 	 position: sticky;
+   	 	 top: 20px;
+
+
       }
 
       .sidebar h2 {

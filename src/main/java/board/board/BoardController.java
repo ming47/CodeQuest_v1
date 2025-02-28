@@ -22,7 +22,6 @@ import board.viewcount.ViewCountDAO;
 import board.viewcount.ViewCountDAOImpl;
 import board.viewcount.ViewCountDTO;
 import member.member.MemberDTO;
-import utils.ConvertURL;
 import utils.PageNavi;
 import utils.Statics;
 
@@ -37,7 +36,7 @@ public class BoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			if (cmd.equals("/board/addform.do")) {
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
 				if (member == null) { // 회원만 글쓰기 가능
@@ -164,7 +163,7 @@ public class BoardController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if (cmd.equals("/board/add.do")) {
 				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");

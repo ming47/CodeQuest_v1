@@ -27,7 +27,6 @@ import service.qna.QnADAOImpl;
 import service.qnareply.QnAReplyDAO;
 import service.qnareply.QnAReplyDAOImpl;
 import utils.AnalyzeDTO;
-import utils.ConvertURL;
 import utils.PageNavi;
 
 
@@ -43,7 +42,7 @@ public class ServiceController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			 
 			if(cmd.equals("/service/qna/addForm.do")) {
 				MemberDTO dto = (MemberDTO) request.getSession().getAttribute("member");
@@ -129,7 +128,6 @@ public class ServiceController extends HttpServlet {
 				String type = request.getParameter("type");
 				
 				double result = playtimeDAO.selectTodayAnaByGameId(type, gameId);
-				System.out.println("days/game.do :" + result);
 				
 				String dto = (type.equals("count")) ? String.valueOf((int) result) : toString((int) result);
 				response.getWriter().append(dto);
@@ -217,7 +215,7 @@ public class ServiceController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {		
-			String cmd = ConvertURL.of(request);
+			String cmd = request.getRequestURI();
 			
 			if(cmd.equals("/service/member/ban/add.do")) {
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
