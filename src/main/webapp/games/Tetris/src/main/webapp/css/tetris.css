@@ -15,7 +15,7 @@ html, body {
     height:100%;
     color: white;
     font-family: 'Press Start 2P', cursive;
-    background: url('../img/시작.gif') no-repeat center center/cover; 
+    background: url('img/시작.gif') no-repeat center center/cover; 
 }
 
 #start-screen h1 {

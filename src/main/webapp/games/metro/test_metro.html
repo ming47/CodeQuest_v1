@@ -6,8 +6,321 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <link href="stylesheet.css" rel="stylesheet">
+<!--     <link href="stylesheet.css" rel="stylesheet"> -->
 </head>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+.border {
+    border: 1px solid lightgray;
+}
+
+.container {
+    width: fit-content;
+    height: 1200px;
+    border:1px solid black;
+    margin: auto;
+}
+
+.container>div {
+    float: left;
+}
+
+.game-display {
+    width: fit-content;
+    height: 100%;
+}
+
+.log-display {
+    height: 240px;
+    overflow-y: auto;
+}
+
+.log-message {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.main-page {
+    width: 1200px;
+    height: 960px;
+    position: relative;
+    border: 1px solid black;
+}
+
+.main-page>div {
+    position: absolute;
+}
+
+.position {
+    border: 1px solid gray;
+}
+
+.train {
+    width: 15px;
+    height: 10px;
+    transform-origin: top left;
+    z-index: 50;
+}
+
+.line {
+    transform-origin: top left;
+}
+
+.station {
+    background-color: darkgray;
+    width: 30px;
+    height: 30px;
+    z-index: 30;
+}
+
+.display-type {
+    background-color: darkgray;
+    width: 20px;
+    height: 20px;
+}
+
+.circle {
+    border-radius: 50% 50% 50% 50%;
+}
+
+.top-left-radius {
+    border-top-left-radius: 50%;
+}
+
+.top-right-radius {
+    border-top-right-radius: 50%;
+}
+
+.bottom-left-radius {
+    border-bottom-left-radius: 50%;
+}
+
+.bottom-right-radius {
+    border-bottom-right-radius: 50%;
+}
+
+.passenger-container {
+    border: 1px solid black;
+    position: absolute;
+    right: -70px;
+    top: -70px;
+    overflow: hidden;
+    width: max-content;
+    z-index: 80;
+    background-color: white;
+}
+
+.passenger-container-inner {
+    border: 1px solid black;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+}
+
+.passenger-container-inner>div {
+    width: 95%;
+    height: 95%;
+}
+
+.passenger-container-inner>div>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.passenger-container-image-form {
+    height: 80%;
+}
+
+.passenger-container-count-form {
+    height: 20%;
+}
+
+.game-controller {
+    width: 600px;
+    height: 100%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(198, 226, 255);
+}
+
+.game-controller-inner {
+    width: 90%;
+    height: 90%;
+}
+
+.game-controller-inner>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-controller-inner>div>div {
+    width: 95%;
+    height: 90%;
+}
+
+.title {
+    font-size: x-large;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: dodgerblue;
+}
+
+.display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    font-weight: bolder;
+    background-color: white;
+}
+
+.score-form {
+    height: 15%;
+}
+
+.score-title {
+    height: 25%;
+}
+
+.score {
+    height: 75%;
+}
+
+.leftTime-form {
+    height: 15%;
+}
+
+.leftTime-title {
+    height: 25%;
+}
+
+.leftTime {
+    height: 75%;
+}
+
+.train-form {
+    height: 60%;
+}
+
+.button-form {
+    height: 10%;
+}
+
+.button-form>div {
+    background-color: white;
+}
+
+.train-state-form {
+    height: 25%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.train-state {
+    width: 95%;
+    height: 95%;
+}
+
+.train-state>div {
+    float: left;
+    height: 100%;
+}
+
+.line-color {
+   width: 20%;
+}
+
+.passenger-count-form {
+    width: 70%;
+}
+
+.passenger-title {
+    height: 25%;
+}
+
+.passenger-count {
+    height: 75%;
+    background-color: white;
+}
+
+.passenger-count-inner {
+    float: left;
+    height: 100%;
+    width: 33.3%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.passenger-count-inner>div {
+    width: 95%;
+    height: 95%;
+}
+
+.passenger-type {
+    height: 70%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.train-type-display-from {
+    width: 60%;
+    aspect-ratio : 1 / 1;
+    background-color: gray;
+}
+
+.count {
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.train-set-button-form {
+    width: 10%;
+}
+
+.train-set {
+    height: 100%;
+    width: 100%;
+}
+
+.disabled {
+    opacity: 0.5;
+}
+
+.button-form>div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.controll-button {
+    width: 80px;
+    height: 50px;
+}
+
+</style>
+
 
 <body>
     <div class="container border">
