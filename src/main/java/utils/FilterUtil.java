@@ -45,8 +45,6 @@ public class FilterUtil implements Filter {
                 return;
             }
         }
-        System.out.println("필터를 지났습니다");
-
         chain.doFilter(req, res);
     }
 
