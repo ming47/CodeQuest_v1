@@ -356,7 +356,7 @@ background-color: #3c3b39;
 						'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],
 				fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 						'20', '22', '24', '28', '30', '36', '50', '72' ],
-				callbacks : { //여기 부분이 이미지를 첨부하는 부분
+				callbacks : { 
 					onImageUpload : function(files) {
 						console.log(files[0], this);
 						uploadImage(files[0], this);
@@ -389,7 +389,6 @@ background-color: #3c3b39;
 				url : '/file/image/upload.do',
 				data : formData,
 				type : 'POST',
-				//dataType:"multipart/form-data", 
 				contentType : false,
 				processData : false,
 				error : function(request, status, error) {
