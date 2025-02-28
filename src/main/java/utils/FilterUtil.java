@@ -33,6 +33,11 @@ public class FilterUtil implements Filter {
             String token = UUID.randomUUID().toString();
             session.setAttribute("csrfToken", token);
         }
+        
+        if (request.getRequestURI().startsWith("/game/")) {
+            chain.doFilter(req, res);
+            return;
+        }
 
         if ("POST".equalsIgnoreCase(request.getMethod())) {
             String contentType = request.getContentType();
