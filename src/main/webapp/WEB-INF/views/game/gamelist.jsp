@@ -163,7 +163,7 @@
 
 .gamedetail {
 	height: 800px;
-	margin-top:2%;
+	margin-top:3%;
 }
 
 #game-thumbnail {
