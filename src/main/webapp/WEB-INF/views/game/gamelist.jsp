@@ -34,6 +34,7 @@
 	background: url('/images/밤.gif') no-repeat center;
 	background-size: cover;
 	font-family: "Press Start 2P", serif;
+	overflow-x:hidden;
 }
 
 .header, .footer {
@@ -96,8 +97,6 @@
 	color: white;
 }
 
-
-
 .main-content {
 	display: flex;
 	width: 100%;
@@ -122,7 +121,6 @@
 	justify-content: center;
 	margin-left: 10px;
 	margin-right: 50px;
-	margin-top: 280px;
 }
 
 .sidebar {
@@ -132,19 +130,18 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	background: url('/images/테마.gif') no-repeat center;
 	background-size: cover;
+	margin-top: 200%;
 }
 
 .sidebar h2 {
-
-    font-size: 17px;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 3px;
-
-    padding: 20px;
-    margin-left: 3px;
-    margin-top: 47px;
-    text-align: center;
+	font-size: 17px;
+	color: white;
+	font-weight: bold;
+	margin-bottom: 3px;
+	padding: 20px;
+	margin-left: 3px;
+	margin-top: 47px;
+	text-align: center;
 }
 
 .sidebar ul {
@@ -160,8 +157,8 @@
 }
 
 .sidebar ul li:hover {
-background: rgb(134, 61, 224, 0.3);
-color: white;
+	background: rgb(134, 61, 224, 0.3);
+	color: white;
 }
 
 .gamedetail {
@@ -184,7 +181,6 @@ color: white;
 
 .gamepractice {
 	margin-top: 40px;
-	margin-left: 80px;
 	margin-right: -27px;
 	width: 35vw;
 	align-items: center;
@@ -197,31 +193,34 @@ color: white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid black;
-	background-color: white;
 }
 
 .practicebody {
-	width: 100%;
-	height: 60%;
+	height: 70%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid black;
-	background-color: white;
 }
 
 .practicebutton {
-	height: 10%;
+	height: 30%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid black;
-	background-color: white;
+	margin: 20px;
+	position: relative;
+	right: -150px;
+	board:none;
+	top:-20px;
 }
 
-#gama_btn {
-	padding: 40px;
+#game_btn {
+	width: 100%;
+	height: 100%;
+	background: url('/images/게임리스트시작.png') no-repeat center;
+	background-size: 40% 80%;
+	outline: none;
+	border: none;
 }
 
 .logbox-container {
@@ -271,15 +270,16 @@ color: white;
 				<div class="gameheader">
 					<img id="game-thumbnail" src="${game.gameThumb}">
 					<div class="gamepractice">
-						<div class="practicehead">${game.gameIntro}</div>
-						<div class="practicebody"><img src="${game.gameDescript}"></div>
+						<div class="practicebody">
+							<img src="${game.gameDescript}" width="100%" height="100%">
+						</div>
 						<div class="practicebutton">
-							<button id="game_btn">Game Start</button>
+							<button id="game_btn"></button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>	
 
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>

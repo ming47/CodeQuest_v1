@@ -353,8 +353,9 @@ button:hover {
 						'20', '22', '24', '28', '30', '36', '50', '72' ],
 				callbacks : { //여기 부분이 이미지를 첨부하는 부분
 					onImageUpload : function(files) {
-						console.log(files[0], this);
-						uploadImage(files[0], this);
+	                      for(let i = 0; i < files.length; i++) {
+		                      uploadImage(files[i], this);
+	                      }
 					},
 
 					onPaste : function(e) {
