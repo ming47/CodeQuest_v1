@@ -272,7 +272,7 @@ color: white;
 					<img id="game-thumbnail" src="${game.gameThumb}">
 					<div class="gamepractice">
 						<div class="practicehead">${game.gameIntro}</div>
-						<div class="practicebody">${game.gameDescript}</div>
+						<div class="practicebody"><img src="${game.gameDescript}"></div>
 						<div class="practicebutton">
 							<button id="game_btn">Game Start</button>
 						</div>
