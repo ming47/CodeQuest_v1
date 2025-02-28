@@ -325,6 +325,8 @@ button:focus {
 }
 </style>
 </head>
+
+
 <body>
 
 	<div class="header">
@@ -418,7 +420,7 @@ button:focus {
 
 				<div colspan="3" id="buttonbox">
 					<c:if test="${dto == null}">
-						<a href="/board/addform.do" method="post">
+						<a href="/board/addform.do">
 							<button class="writebtn">작성하기</button>
 						</a>
 					</c:if>
@@ -527,6 +529,7 @@ button:focus {
                  return false;
              }
          });
+         
      });
 	 
 	 function parseDate(timestamp) {

@@ -48,20 +48,19 @@
 	font-style: normal;
 	width: 100%;
 }
+
 .header {
-
-   position: fixed;
-   left: 0;
-   height: 80px;
-   padding: 20px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   	background: #1e201d;
-   top: 0;
-   z-index: 10;
+	position: fixed;
+	left: 0;
+	height: 80px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #1e201d;
+	top: 0;
+	z-index: 10;
 }
-
 
 .footer {
 	height: 60px;
@@ -157,7 +156,6 @@
 	margin-right: 75px;
 }
 
-/* ✅ 로그인 버튼 및 입력 필드 배치 */
 .loginbox h2 {
 	font-family: "Jua", serif;
 	font-weight: 400;
@@ -177,7 +175,6 @@
 	border-radius: 5px;
 }
 
-/* ✅ 아이디 / 비밀번호 입력 필드 + 로그인 버튼 정렬 */
 .loginbox .input-group {
 	display: flex;
 	align-items: center;
@@ -235,7 +232,6 @@
 	width: 80%;
 	height: 445px;
 	min-height: 300px;
-	
 	background-color: rgba(255, 255, 255, 0.9);
 	padding: 51px;
 	border-radius: 10px;
@@ -250,9 +246,10 @@
 	position: relative;
 	top: 120px;
 }
+
 .rankingboard h3 {
-	font-size : 40px;
-	margin-top : -10px;
+	font-size: 40px;
+	margin-top: -10px;
 }
 
 .rankingboard li {
@@ -262,26 +259,26 @@
 .ranking-tabs {
 	display: flex;
 	justify-content: center;
-	flex-wrap: wrap; /* 버튼이 너무 많으면 줄바꿈 */
-	gap: 8px; /* 버튼 간격 조정 */
+	flex-wrap: wrap;
+	gap: 8px;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	width: 100%; /* 랭킹보드 너비에 맞춤 */
+	width: 100%;
 	max-width: 100%;
-	overflow: hidden; /* 초과 부분 숨김 */
+	overflow: hidden;
 }
 
 .tab-btn {
-	padding: 5px 8px; /* 버튼 크기 조정 */
+	padding: 5px 8px;
 	background: #ddd;
 	border: none;
 	cursor: pointer;
 	border-radius: 5px;
 	transition: 0.3s;
 	font-family: "Press Start 2P", serif;
-	font-size: 10px; /* 폰트 크기 조정 */
+	font-size: 10px;
 	margin-top: 5px;
-	white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
+	white-space: nowrap;
 }
 
 .tab-btn.active {
@@ -404,9 +401,9 @@
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background 0.3s;
-	font-family: "Press Start 2P", serif;s
+	font-family: "Press Start 2P", serif;
 	font-weight: 400;
-	font-size :15px;
+	font-size: 15px;
 	font-style: normal;
 	background: url('/images/gamebtn.png') no-repeat center;
 	background-size: cover;
@@ -440,18 +437,17 @@
 }
 
 table {
-   border-radius: 5px;
-   width: 70%;
-   border: 1px;
-   color: black;
-   border-collapse: collapse;
-   border-spacing: 4px;
-   border-collapse: separate;
-   font-size: 15px;
-   justify-content: center;
-   margin: 0 auto;
+	border-radius: 5px;
+	width: 70%;
+	border: 1px;
+	color: black;
+	border-collapse: collapse;
+	border-spacing: 4px;
+	border-collapse: separate;
+	font-size: 15px;
+	justify-content: center;
+	margin: 0 auto;
 }
-
 
 .bottombody {
 	width: 100%;
@@ -468,33 +464,29 @@ thead, tbody {
 }
 
 td, th {
-   border-radius: 2px;
-   border: none;
-   width: 100%;
-   heghit: 48px;
-   text-align: center;
-   font-family: 'DungGeunMo';
-   font-weight: bold;
-   background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 2px;
+	border: none;
+	width: 100%;
+	heghit: 48px;
+	text-align: center;
+	font-family: 'DungGeunMo';
+	font-weight: bold;
+	background-color: rgba(255, 255, 255, 0.8);
 }
+
 th {
-   font-size: 20px;
+	font-size: 20px;
 }
 
 td a {
-   text-decoration: none; /* 링크 밑줄 제거 */
-   color: black; /* 기본 텍스트 색상 */
-   transition: color 0.3s ease; /* 색상 변화를 부드럽게 */
+	text-decoration: none;
+	color: black;
+	transition: color 0.3s ease;
 }
 
 td.clicktitle:hover {
-   transform: scale(1.1); /* 크기를 1.2배 키움 */
-   background-color: #f0f0f0; /* 배경색 변경 */
-}
-
-
-table tr {
-	border-radius: 1px;
+	transform: scale(1.1);
+	background-color: #f0f0f0; table tr { border-radius : 1px;
 	font-family: 'DungGeunMo';
 	height: 48px;
 }
@@ -519,7 +511,7 @@ table tr {
 	<div class="container" style="display: none">
 
 
-		<!-- ✅ 헤더 -->
+
 		<div class="header">
 			<div class="navi">
 				<div class="logo">Team CodeQuest</div>
@@ -537,7 +529,7 @@ table tr {
 					</c:choose>
 				</ul>
 			</div>
-			<!-- ✅ 로그인 정보 -->
+
 			<c:if test="${member.memberId != null}">
 				<div class="logbox-container">
 					<%@ include file="logbox.jsp"%>
@@ -599,6 +591,7 @@ table tr {
 						<h2>로그인</h2>
 						<form action="/member/login.do" method="post" id="frm">
 							<div class="input-group">
+								<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 								<input type="text" name="id" id="id" placeholder="아이디">
 								<input type="password" name="pw" id="pw" placeholder="비밀번호">
 								<button id="loginBtn">로그인</button>
@@ -686,14 +679,14 @@ table tr {
 		</div>
 		<div class="footer">© 2025 Team CodeQuest. All rights reserved.</div>
 	</div>
-	<input type="hidden" id="loginStatus" value="${login}"/>
+	<input type="hidden" id="loginStatus" value="${login}" />
 	<script>
 		$("#pwFinder").on("click", function() {
 			window.open("/member/pwResetForm.do", "", "width=550, height=500");
 		});
 		if ($("#loginStatus").val() == 'failed') {
 			alert("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
-		    window.history.replaceState(null, null, "/");
+			window.history.replaceState(null, null, "/");
 		}
 		Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
 		function loginWithKakao() {
@@ -702,216 +695,116 @@ table tr {
 				scope : 'profile_nickname,profile_image,account_email',
 			});
 		}
-		$(document)
-				.ready(
-						function() {
-							if (sessionStorage.getItem("enteredGame") === "true") {
-								$(".starter").hide();
-								$(".container").show();
-							}
-							function callLatestBoard() {
-								$
-										.ajax({
-											url : "/board/mainlist.do",
-											type : "GET",
-											dataType : "json"
-										})
-										.done(
-												function(calld) {
-													console.log(calld);
-													let latestBoard = $('#latestboard');
+		$(document).ready(function() {
+			if (sessionStorage.getItem("enteredGame") === "true") {
+				$(".starter").hide();
+				$(".container").show();
+			}
 
-													latestBoard.empty();
+			function callLatestBoard() {
+				$.ajax({
+					url: "/board/mainlist.do",
+					type: "GET",
+					dataType: "json"
+				})
+				.done(function(calld) {
+					console.log(calld);
+					let latestBoard = $('#latestboard');
+					latestBoard.empty();
 
-													if (!calld
-															|| calld.length === 0) {
-														latestBoard
-																.append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
-														return;
-													}
+					if (!calld || calld.length === 0) {
+						latestBoard.append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
+						return;
+					}
 
-													for (let i = 0; i < calld.length; i++) {
-														const tr = $('<tr>');
+					for (let i = 0; i < calld.length; i++) {
+						const tr = $('<tr>');
+						tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
+						tr.append($('<td class="clicktitle" style="width: 42%;">').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
+						tr.append($('<td style="width: 17%;">').text(calld[i].writer));
+						tr.append($('<td style="width: 17%;">').text(calld[i].regDate));
+						tr.append($('<td style="width: 12%;">').text(calld[i].viewCount));
+						latestBoard.append(tr);
+					}
+				})
+				.fail(function(xhr, status, error) {
+					console.log("게시판 데이터 로딩 실패:", error);
+				});
+			}
 
-														tr
-																.append($(
-																		'<td style="width: 12%;">')
-																		.text(
-																				calld[i].boardId));
-														tr.append($('</td>'));
-														tr
-																.append($(
-																		'<td class="clicktitle" style="width: 42%;">')
-																		.append(
-																				$(
-																						'<a>')
-																						.attr(
-																								'href',
-																								"/board/detail.do?id="
-																										+ calld[i].boardId)
-																						.text(
-																								calld[i].title)));
-														tr.append($('</td>'));
-														tr
-																.append($(
-																		'<td style="width: 17%;">')
-																		.text(
-																				calld[i].writer));
-														tr.append($('</td>'));
-														tr
-																.append($(
-																		'<td style="width: 17%;">')
-																		.text(
-																				calld[i].regDate));
-														tr.append($('</td>'));
-														tr
-																.append($(
-																		'<td style="width: 12%;">')
-																		.text(
-																				calld[i].viewCount));
-														tr.append($('</td>'));
+			callLatestBoard();
 
-														latestBoard.append(tr);
-													}
-												}).fail(
-												function(xhr, status, error) {
-													console.log(
-															"게시판 데이터 로딩 실패:",
-															error);
-												});
-							}
+			$.ajax({
+				url: '/board/hotweek/list.do',
+				type: 'GET',
+				dataType: 'json'
+			})
+			.done(function(calld) {
+				console.log(calld);
+				let latestBoard = $('#hot-weekend-board');
+				latestBoard.empty();
 
-							callLatestBoard();
+				if (!calld || calld.length === 0) {
+					latestBoard.append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
+					return;
+				}
 
-							$
-									.ajax({
-										url : '/board/hotweek/list.do',
-										type : 'GET',
-										dataType : 'json'
-									})
-									.done(
-											function(calld) {
-												console.log(calld);
-												let latestBoard = $('#hot-weekend-board');
+				for (let i = 0; i < calld.length; i++) {
+					const tr = $('<tr>');
+					tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
+					tr.append($('<td class="clicktitle" style="width: 42%;">').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
+					tr.append($('<td style="width: 17%;">').text(calld[i].writer));
+					tr.append($('<td style="width: 17%;">').text(calld[i].regDate));
+					tr.append($('<td style="width: 12%;">').text(calld[i].viewCount));
+					latestBoard.append(tr);
+				}
+			});
 
-												latestBoard.empty();
+			function loadRanking(gameId) {
+				console.log(gameId);
 
-												if (!calld
-														|| calld.length === 0) {
-													latestBoard
-															.append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
-													return;
-												}
+				$.ajax({
+					url: "/game/score/list/game.do?id=" + gameId,
+					type: "GET",
+					dataType: "json"
+				})
+				.done(function(data) {
+					console.log(data);
+					let rankingList = $('.ranking-list');
+					rankingList.html('');
 
-												for (let i = 0; i < calld.length; i++) {
-													const tr = $('<tr>');
+					if (!data || data.length === 0) {
+						rankingList.append("<li>랭킹 데이터 없음</li>");
+						return;
+					}
 
-													tr
-															.append($(
-																	'<td style="width: 12%;">')
-																	.text(
-																			calld[i].boardId));
-													tr.append($('</td>'));
-													tr
-															.append($(
-																	'<td class="clicktitle" style="width: 42%;">')
-																	.append(
-																			$(
-																					'<a>')
-																					.attr(
-																							'href',
-																							"/board/detail.do?id="
-																									+ calld[i].boardId)
-																					.text(
-																							calld[i].title)));
-													tr.append($('</td>'));
-													tr
-															.append($(
-																	'<td style="width: 17%;">')
-																	.text(
-																			calld[i].writer));
-													tr.append($('</td>'));
-													tr
-															.append($(
-																	'<td style="width: 17%;">')
-																	.text(
-																			calld[i].regDate));
-													tr.append($('</td>'));
-													tr
-															.append($(
-																	'<td style="width: 12%;">')
-																	.text(
-																			calld[i].viewCount));
-													tr.append($('</td>'));
+					for (let i = 0; i < data.length; i++) {
+						console.log(data[i]);
+						const li = $('<li>').html((i + 1) + '위 ' + data[i].user + '(' + data[i].score + '점)');
+						rankingList.append(li);
+					}
+				})
+				.fail(function(xhr, status, error) {
+					console.log("랭킹 데이터 불러오기 실패:", error);
+				});
+			}
 
-													latestBoard.append(tr);
-												}
-											});
+			let defaultGameId = "800001";
+			loadRanking(defaultGameId);
 
-							function loadRanking(gameId) {
-								console.log(gameId);
+			$(".tab-btn").click(function() {
+				$(".tab-btn").removeClass("active");
+				$(this).addClass("active");
 
-								$
-										.ajax(
-												{
-													url : "/game/score/list/game.do?id="
-															+ gameId,
-													type : "GET",
-													dataType : "json"
-												})
-										.done(
-												function(data) {
-													console.log(data);
-													let rankingList = $('.ranking-list');
+				let gameId = $(this).data("game");
+				if (gameId.startsWith("game")) {
+					gameId = gameId.replace("game", "");
+					gameId = Number(80000 + gameId);
+				}
 
-													rankingList.html('');
-													if (!data
-															|| data.length === 0) {
-														rankingList
-																.append("<li>랭킹 데이터 없음</li>");
-														return;
-													}
-
-													for (let i = 0; i < data.length; i++) {
-														console.log(data[i]);
-
-														const li = $('<li>')
-																.html(
-																		i
-																				+ 1
-																				+ '위 '
-																				+ data[i].user
-																				+ '('
-																				+ data[i].score
-																				+ '점)');
-														$('.ranking-list')
-																.append(li);
-													}
-												}).fail(
-												function(xhr, status, error) {
-													console.log(
-															"랭킹 데이터 불러오기 실패:",
-															error);
-												});
-							}
-
-							let defaultGameId = "800001";
-							loadRanking(defaultGameId);
-
-							$(".tab-btn").click(function() {
-								$(".tab-btn").removeClass("active");
-								$(this).addClass("active");
-
-								let gameId = $(this).data("game");
-
-								if (gameId.startsWith("game")) {
-									gameId = gameId.replace("game", "");
-									gameId = Number(80000 + gameId);
-								}
-
-								loadRanking(gameId);
-							});
-						});
+				loadRanking(gameId);
+			});
+		});
 	</script>
 </body>
 </html>

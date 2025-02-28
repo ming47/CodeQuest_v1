@@ -110,6 +110,7 @@
 				<h2>회원탈퇴</h2>
 				<p>회원탈퇴할 이메일을 입력해주세요</p>
 				<form action="/member/sendResetEmail.do" method="post" id="frm">
+					<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 					<input type="text" name="email" id="email" placeholder="탈퇴를 진행할 이메일을 작성해주세요."> <br>
 					<span id="result_email"></span>
 					<button id="mailsend" type="button">인증 메일 전송</button>

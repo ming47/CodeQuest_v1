@@ -404,6 +404,7 @@ table th {
 
 
 </style>
+<meta name="csrf-token" content="${csrfToken}">
 </head>
 <body>
 	<div class="header">
@@ -490,6 +491,7 @@ table th {
 					<div class="pageNaviForm"></div>
 				</div>
 				<form action="/board/update.do" method="post" id="update-form">
+					<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 					<input id="id" type="hidden" name="id" value="${dto.boardId}">
 					<input name="title" type="hidden" id="hdtitle"> <input
 						name="contents" type="hidden" id="hdcontents">
@@ -612,13 +614,17 @@ table th {
             // 수정완료 버튼 클릭
             updateOK.on("click", function() {
                let updatedContent = contentDiv.html();
-                let replyId = commentItem.attr("data-id");
+               let replyId = commentItem.attr("data-id");
+               var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                 // 서버로 수정 요청
                 $.ajax({
                    url: "/reply/update.do",
                     type: "post",
-                    data: { id: replyId, contents: updatedContent },
+                    data: { 
+                    	id: replyId, 
+                    	contents: updatedContent,
+                    	csrfToken: csrfToken},
                     success: function(response) {
                        // 성공하면 수정된 내용 유지
                         if(response){
@@ -653,12 +659,16 @@ table th {
         $(".deletebtn").on("click", function() {
            let commentItem = $(this).closest(".comment-item");
             let replyId = commentItem.attr("data-id");
-
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (confirm("정말 삭제하시겠습니까?")) {
                $.ajax({
                    url: "/reply/delete.do",
                     type: "post",
-                    data: { id: replyId, boardId : ${dto.boardId}},
+                    data: { 
+                    	id: replyId, 
+                    	boardId : ${dto.boardId},
+                    	csrfToken: csrfToken
+                    	},
                     success: function(response) {
                        // 삭제 성공하면 해당 댓글을 화면에서 제거
                         if(response) {                           
@@ -722,6 +732,7 @@ table th {
               event.preventDefault();
               return false;
           }
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
            $.ajax({
               url: '/reply/add.do',
@@ -729,6 +740,7 @@ table th {
               data: {
                     boardId: ${dto.boardId},
                     contents: $commentInput.val(),
+                    csrfToken: csrfToken
               } 
           }).done(function(data) {
               alert('댓글이 등록되었습니다.');
@@ -957,9 +969,11 @@ table th {
           }
 
           function uploadImage(file, editor) {
+  			 var csrfToken = $('meta[name="csrf-token"]').attr('content');
              let formData = new FormData();
              formData.append('file', file);
              formData.append('request', 'board');
+ 			 formData.append('csrfToken', csrfToken);
              $.ajax({
                 url : '/file/image/upload.do',
                 data : formData,

@@ -276,7 +276,7 @@ background-color: #3c3b39;
 	color: black !important;
 }
 </style>
-
+<meta name="csrf-token" content="${csrfToken}">
 </head>
 
 <body>
@@ -314,6 +314,7 @@ background-color: #3c3b39;
 				<div class="boardbox">
 				
 					<form action="/member/qna/add.do" method="post">
+						<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 						<input type="hidden" name="memberId" value="${member.memberId}">
 						<div class="card">
 							<div class="card-header"></div>
@@ -356,7 +357,7 @@ background-color: #3c3b39;
 						'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],
 				fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18',
 						'20', '22', '24', '28', '30', '36', '50', '72' ],
-				callbacks : { //여기 부분이 이미지를 첨부하는 부분
+				callbacks : { 
 					onImageUpload : function(files) {
 						console.log(files[0], this);
 						uploadImage(files[0], this);
@@ -381,15 +382,15 @@ background-color: #3c3b39;
 		}
 
 		function uploadImage(file, editor) {
+			var csrfToken = $('meta[name="csrf-token"]').attr('content');
 			let formData = new FormData();
 			formData.append('file', file);
 			formData.append('request', 'board');
-
+			formData.append('csrfToken', csrfToken);	
 			$.ajax({
 				url : '/file/image/upload.do',
 				data : formData,
 				type : 'POST',
-				//dataType:"multipart/form-data", 
 				contentType : false,
 				processData : false,
 				error : function(request, status, error) {
