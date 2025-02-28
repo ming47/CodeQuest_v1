@@ -4,14 +4,594 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="index_sty.css" rel="stylesheet">
     <title>AI Chess</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- <link rel="stylesheet" href="/index_sty.css" />   -->
+ <script src="chess.min.js"></script> 
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #302e2b;
+}
+
+/* 상단 헤더 스타일 */
+.header_wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 100px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header_wrap .logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+.header_wrap .city a {
+    font-size: 25px;
+    color: red;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.header_wrap .user_menu a {
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.header_wrap .user_menu a:hover {
+    text-decoration: underline;
+}
+
+/* 헤드 하단 메뉴 */
+.header_menu {
+    width: 100%;
+    background: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    z-index: 1000;
+}
+
+.header_menu .menu_list {
+    display: flex;
+    padding: 10px 50px;
+    font-size: 15px;
+    margin: 0;
+    list-style: none;
+}
+
+.header_menu .menu_list li {
+    margin: 0 15px;
+}
+
+.header_menu .menu_list li a {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+.header_menu .menu_list li a:hover {
+    color: #007bff;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 140px;
+    min-height: 150vh;
+}
+
+h1 {
+    color: #beeb83;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+}
+
+#game-container {
+    display: flex;
+    align-items: flex-start;
+    background-color: white;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+    border: 3px solid #333;
+    margin: 20px 0;
+}
+
+.square {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.white {
+    background-color: #fff;
+}
+
+.black {
+    background-color: #b58863;
+}
+
+.piece {
+    font-size: 55px;
+    cursor: grab;
+    user-select: none;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 25px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* 턴 표시 스타일 */
+#turn-indicator {
+    margin-left: 40px;
+    padding: 20px;
+    background-color: #404040;
+    border-radius: 10px;
+    color: white;
+    font-size: 24px;
+    min-width: 200px;
+}
+
+.turn-active {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* 발 */
+.footer {
+    background-color: black;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: relative;
+}
+
+.footer-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.footer-icons i {
+    margin-right: 30px;
+    font-size: 30px;
+}
+
+.footer-icons i:last-child {
+    margin-right: 0;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 24px;
+}
+
+.game-info {
+    margin-left: 40px;
+    min-width: 200px;
+}
+
+#turn-indicator {
+    padding: 20px;
+    background-color: #404040;
+    border-radius: 10px;
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#stats-container {
+    padding: 20px;
+    background-color: #404040;
+    border-radius: 10px;
+    color: white;
+}
+
+.stat-item {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 20px;
+}
+
+.stat-item:last-child {
+    margin-bottom: 0;
+}
+
+#wins {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+#losses {
+    color: #f44336;
+    font-weight: bold;
+}
+
+#total-games {
+    color: #2196F3;
+    font-weight: bold;
+}
+
+/* 화살표 */
+#notation-container {
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#notation-header {
+    font-weight: bold;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+.notation-area {
+    height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    font-family: monospace;
+}
+
+#arrow-container {
+    display: flex;
+    border: 1px solid #ffffff;
+    margin-top: 0px;
+}
+
+.arrow-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    cursor: pointer;
+    background-color: #1b11116b;
+    border: none;
+    font-size: 30px;
+}
+
+.arrow-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.arrow-btn:first-child {
+    border-right: 1px solid #ccc;
+}
+
+#surrender-container {
+    position: relative;
+    margin-top: 15px;
+    height: 60px;
+    text-align: right;
+}
+
+#surrender-icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transition: transform 0.2s;
+}
+
+#surrender-icon:hover {
+    transform: scale(1.1);
+}
+
+/* 항복  */
+
+#notation-container {
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#notation-header {
+    font-weight: bold;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+.notation-area {
+    height: 350px;
+    overflow-y: auto;
+    padding: 10px;
+    font-family: monospace;
+}
+
+#surrender-container {
+    position: relative;
+    margin-top: 15px;
+    height: 80px;
+    text-align: right;
+}
+
+#surrender-icon {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    position: absolute;
+    margin: 0px 0px;
+    right: 0;
+    transition: transform 0.2s;
+}
+
+#surrender-icon:hover {
+    transform: scale(1.1);
+}
+
+/* 몸통 */
+html{
+    background-color: #302e2b;
+}
+
+/* 전체 머리 고정 */
+.header_fix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* 상단에 고정되도록 z-index 설정 */
+    background: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 상단 헤더 스타일 */
+  .header_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 100px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .header_wrap .logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+  }
+  
+  .header_wrap .city a{
+    font-size: 25px;
+    color: red;
+    text-decoration: none;
+    margin-right: 15px;
+  }
+  .header_wrap .user_menu a {
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+    margin-right: 15px;
+  }
+  
+  .header_wrap .user_menu a:hover {
+    text-decoration: underline;
+  }
+  
+  /* 헤드 하단 메뉴 */
+  .header_menu {
+    background: rgba(248, 248, 248, 0.418);
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .header_menu .menu_list {
+    display: flex;
+    padding: 10px 50px;
+    font-size: 15px;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .header_menu .menu_list li {
+    margin: 0 15px;
+  }
+  
+  .header_menu .menu_list li a {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+  }
+  
+  .header_menu .menu_list li a:hover {
+    color: #007bff;
+  }
+  /* 가슴 */
+  .middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 120px; /* 헤더 높이만큼 여백 */
+    margin-bottom: 8%;
+    padding: 20px;
+    min-height: 100vh; /* 최소 화면 높이 */
+}
+
+.slider-container {
+    width: 90%;
+    height: 800px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 30px;     /* 슬라이더와 콘텐츠 사이 간격 */
+}
+
+.imgshow {
+    width: 300%;
+    height: 100%;
+    display: flex;
+    animation: slide 12s infinite;  /* 전체 이미지3개를 12초동안 실행 */
+}
+
+.imgshow img {
+    width: 33.333%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes slide {  /* 이게 이미지를 전환시키는 코드인듯함 */
+    0% {
+        transform: translateX(0);
+    }
+    33.33% {
+        transform: translateX(-33.333%);
+    }
+    66.66% {
+        transform: translateX(-66.666%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%; /* 전체 너비 사용 */
+}
+
+/* 스크롤 가능하도록 body에 여백 추가 */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #302e2b;
+}
+
+.article-section {
+    margin: 30px 0;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #5634a7;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin: 40px 0 20px;
+    color: #5634a7;
+}
+
+.article-image {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.article-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.image-caption {
+    margin-top: 10px;
+    color: #26a54c;
+    font-size: 2em;
+    font-style: italic;
+}
+
+p {
+    margin: 20px 0;
+    font-size: 1.1em;
+    color: #ffffff;
+}
+/* 발 */
+.footer {
+    background-color: black;
+    height: 150px; /* Footer 전체 높이 */
+    /* margin-top: 300px;  */
+    
+    display: flex;
+    flex-direction: column; /* 수직 방향 배치 */
+    justify-content: center; 
+    align-items: center; 
+    color: white;
+    position: relative; /* 레이아웃에 맞게 조정 */
+}
+
+.footer-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px; /* 텍스트와 간격 */
+}
+
+.footer-icons i {
+    margin-right: 30px; /* 아이콘 간 간격 */
+    font-size: 30px; /* 아이콘 크기 */
+}
+
+.footer-icons i:last-child {
+    margin-right: 0; /* 마지막 아이콘의 오른쪽 여백 제거 */
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 24px; /* 텍스트 크기 */
+}
+
+
+</style>
 </head>
 
 <body>
