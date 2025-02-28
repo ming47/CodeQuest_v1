@@ -28,14 +28,23 @@ public class FilterUtil implements Filter {
         HttpSession session = request.getSession();
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=UTF-8");
-
         if (session.getAttribute("csrfToken") == null) {
             String token = UUID.randomUUID().toString();
             session.setAttribute("csrfToken", token);
         }
         
-        if (request.getRequestURI().startsWith("/game/")) {
+        //허용
+        if (request.getRequestURI().startsWith("/")) {
             chain.doFilter(req, res);
+            return;
+        } else if (request.getRequestURI().startsWith("/game/")) {
+            chain.doFilter(req, res);
+            return;
+        } 
+        
+        //차단
+        if (!request.getRequestURI().endsWith(".do")) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "허용되지 않은 요청입니다.");
             return;
         }
 
