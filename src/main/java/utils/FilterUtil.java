@@ -18,6 +18,10 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class FilterUtil implements Filter {
 	
+    private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(
+            ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".ico", ".html"
+        );
+	
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -25,6 +29,7 @@ public class FilterUtil implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
+    	
         HttpServletRequest request  = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 		request.setCharacterEncoding("utf8");
@@ -37,6 +42,10 @@ public class FilterUtil implements Filter {
         }
         //Allow
         if (request.getRequestURI().equals("/") || request.getRequestURI().startsWith("/game/")) {
+            chain.doFilter(request, response);
+            return;
+        }
+        if (isStaticResource(request.getRequestURI())) {
             chain.doFilter(request, response);
             return;
         }
@@ -58,6 +67,9 @@ public class FilterUtil implements Filter {
             }
         }
         chain.doFilter(request, response);
+    }
+    private boolean isStaticResource(String uri) {
+        return ALLOWED_EXTENSIONS.stream().anyMatch(uri::endsWith);
     }
 
     @Override

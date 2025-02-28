@@ -35,7 +35,7 @@
 			border-radius: 10px;
 			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 			text-align: center;
-			background: url('/images/allback.jpg') no-repeat center;
+			background: url('/images/밤.gif') no-repeat center;
 			background-size: cover;
 		}
 
