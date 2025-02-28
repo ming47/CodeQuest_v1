@@ -5,7 +5,7 @@
 <html>
 
 <head>
-   <meta charset="EUC-KR">
+   <meta charset="UTF-8">
    <title>마이페이지</title>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

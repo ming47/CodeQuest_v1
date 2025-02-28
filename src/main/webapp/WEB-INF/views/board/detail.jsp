@@ -409,10 +409,11 @@ table th {
   float: right;
   margin-left: 10px; /* 이 값을 늘려 간격 확보 */
   margin-top : 10px;
-  padding: 7px 10px;
   border: 1px solid #555;
   border-radius: 4px;
   cursor: pointer;
+  padding: 3px 5px;
+  font-size::15;
 }
 
 .updateOK {
@@ -421,10 +422,11 @@ table th {
   float: right;
   margin-left: 15px; /* 간격 확보 */
   margin-top : 10px;
-  padding: 7px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  padding: 3px 5px;
+  font-size::15;
 }
 
 /* 호버 효과 추가 */
@@ -444,26 +446,23 @@ table th {
   background-color: #3c3b39;
   float: right;
   margin-left: 15px; /* 간격 확보 */
-  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 13px;
-
+  padding:8px 12px;
+  font-size::15;
 }
 #updateCancel{
   color: #ddd;
   background-color: #3c3b39;
   float: right;
   margin-left: 10px; /* 이 값을 늘려 간격 확보 */
-  padding: 10px 20px;
   border: 1px solid #555;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 13px;
-  	font-family: 'DungGeunMo';
-
-
+  font-family: 'DungGeunMo';
+  padding:8px 12px;
+  font-size::15;
 }
 #board-updateOK:hover{
 	background: #66635f;
