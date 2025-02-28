@@ -34,6 +34,7 @@
 	background: url('/images/밤.gif') no-repeat center;
 	background-size: cover;
 	font-family: "Press Start 2P", serif;
+	overflow-x:hidden;
 }
 
 .header, .footer {
