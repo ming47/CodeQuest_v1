@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -531,8 +532,7 @@
                         <label for="nickname">닉네임</label> 
                      </span>
                      <span class="input-wrapper field-input">
-                        <input type="text" name="nickName" id="nickName"
-                           value=${member.nickName } readonly>
+						<input type="text" name="nickName" id="nickName" value="<c:out value='${member.nickName}'/>" readonly>
                         <span id="result_nickName"></span>
                      </span>
                   </div>
@@ -684,9 +684,10 @@
                <c:forEach var="list" items="${recentPost}">
                   <div class="post-card">
                      <div class="post-header">
-                        <span class="post-number">#${list.boardId}</span> <a class="post-title"
-                           href="/board/detail.do?id=${list.boardId}">${list.title}
-                           [${list.replyCount}]</a>
+                        <span class="post-number">#${list.boardId}</span> 
+							<a class="post-title" href="/board/detail.do?id=${list.boardId}">
+							   <c:out value="${list.title}" /> [<c:out value="${list.replyCount}"/>]
+							</a>
                      </div>
                      <div class="post-info">
                         <span class="post-date relative-date" data-timestamp="${list.regDate.time}">
@@ -706,9 +707,10 @@
                <c:forEach var="list" items="${recentViewPost}">
                   <div class="post-card">
                      <div class="post-header">
-                        <span class="post-number">#${list.boardId}</span> <a class="post-title"
-                           href="/board/detail.do?id=${list.boardId}">${list.title}
-                           [${list.replyCnt}]</a>
+                        <span class="post-number">#${list.boardId}</span> 
+                           	<a class="post-title" href="/board/detail.do?id=${list.boardId}">
+							   <c:out value="${list.title}" /> [<c:out value="${list.replyCnt}"/>]
+							</a>
                      </div>
                      <div class="post-info">
                         <span class="post-date relative-date" data-timestamp="${list.regDate.time}">
@@ -729,9 +731,17 @@
             <c:forEach var="list" items="${recentQna}">
                <div class="recent-game-row">
                   <div class="game-title">
-                     <div class="popup" value="${list.qnaId}" data="${list.responseYn}">
-                        ${list.contents}
-                     </div>
+					<div class="popup" value="${list.qnaId}" data="${list.responseYn}">
+					    <c:set var="temp" value="${fn:replace(fn:replace(list.contents, '<p>', ''), '</p>', '')}" />
+					    <c:choose>
+					        <c:when test="${fn:length(temp) > 20}">
+					            <c:out value="${fn:substring(temp, 0, 20)}" />...
+					        </c:when>
+					        <c:otherwise>
+					            <c:out value="${temp}"/>
+					        </c:otherwise>
+					    </c:choose>
+					</div>					
                   </div>
                   <div class="play-date">
                      <span class="post-date relative-date" data-timestamp="${list.regDate.time}">

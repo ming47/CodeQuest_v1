@@ -517,7 +517,9 @@ table th {
 				<table>
 					<tr>
 						<th>제목</th>
-						<td class="change text-center" id="board_title" colspan="3">${dto.title}</td>
+						<td class="change text-center" id="board_title" colspan="3">
+						  <c:out value="${dto.title}" />
+						</td>
 					</tr>
 					<tr>
 						<th>작성자</th>
@@ -638,7 +640,7 @@ table th {
         for (let i = 0; i < data.length; i++) {
            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
                
-            let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+            let contentDiv = $("<div>").addClass("comment-content writerdiv").text(data[i].contents).attr("data-original", data[i].contents);
             let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer);
             commentHeader.append($('<span>').html(data[i].regDate).addClass('relative-date').attr('data-timestamp', Date.parse(data[i].regDate)));
                
@@ -676,7 +678,7 @@ table th {
             let contentDiv = commentItem.find(".writerdiv");
                
             // 기존 내용 저장
-            contentDiv.attr("data-original", contentDiv.html());
+            contentDiv.attr("data-original", contentDiv.text());
                
             // 수정 가능하도록 설정
             contentDiv.attr("contentEditable", "true").focus();
@@ -691,7 +693,7 @@ table th {
 
             // 수정완료 버튼 클릭
             updateOK.on("click", function() {
-               let updatedContent = contentDiv.html();
+               let updatedContent = contentDiv.text();
                 let replyId = commentItem.attr("data-id");
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
@@ -1000,9 +1002,9 @@ table th {
          });
         
          function setSummerNote(target) {
-             console.log('서머노트 세팅');
-
              return {
+ 				codeviewFilter: true,
+				codeviewIframeFilter: true,
                 placeholder : '내용을 입력하십시오',
                 height : 500,
                 minHeight : null, // set minimum height of editor
@@ -1030,10 +1032,8 @@ table th {
 	                      uploadImage(files[i], this);
                       }
                    },
-
                    onPaste : function(e) {
                       console.log(e);
-
                       var clipboardData = e.originalEvent.clipboardData;
                       if (clipboardData && clipboardData.items
                             && clipboardData.items.length) {

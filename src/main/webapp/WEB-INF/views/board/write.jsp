@@ -327,9 +327,9 @@ button:hover {
 		})
 
 		function setSummerNote(target) {
-			console.log('서머노트 세팅');
-
 			return {
+				codeviewFilter: true,
+				codeviewIframeFilter: true,
 				placeholder : '내용을 입력하십시오',
 				height : 700,
 				minHeight : null, // set minimum height of editor
