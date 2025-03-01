@@ -34,6 +34,7 @@ public class FilterUtil implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=UTF-8");
+		
 		request.getSession().setMaxInactiveInterval(1800);
 		
         if (request.getSession().getAttribute("csrfToken") == null) {
