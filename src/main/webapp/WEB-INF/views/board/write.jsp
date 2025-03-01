@@ -275,8 +275,6 @@ button:hover {
 				</ul>
 			</div>
 		</div>
-
-
 		<c:if test="${member.loginId != null}">
 			<div class="logbox-container">
 				<!-- <%@ include file="/logbox.jsp"%> -->
@@ -292,7 +290,7 @@ button:hover {
 					<div class="card">
 						<div class="card-header">제목 입력</div>
 						<div class="card-body">
-							<input type="text" name="title" placeholder="제목을 입력해주세요" required>
+							<input type="text" name="title" id="title" placeholder="제목을 입력해주세요" required>
 						</div>
 						<div class="card-header">파일 첨부</div>
 						<div class="card-body">
@@ -322,8 +320,12 @@ button:hover {
 			$('#contents').summernote(setSummerNote());
 		})
 		
-		$('form').on('submit', function() {
-			console.log($("#token").val());
+		$("form").on("submit", function() {
+		    let titleVal = $("#title").val();
+		    if (titleVal.length >= 50) {
+		        alert("제목은 최대 50자 미만이어야 합니다.");
+		        return false;
+		    }
 		})
 
 		function setSummerNote(target) {
