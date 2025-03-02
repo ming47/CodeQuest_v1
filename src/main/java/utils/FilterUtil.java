@@ -18,6 +18,10 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class FilterUtil implements Filter {
 	
+    private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(
+            ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".ico", ".html"
+        );
+	
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -25,37 +29,36 @@ public class FilterUtil implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
+    	
         HttpServletRequest request  = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession();
 		request.setCharacterEncoding("utf8");
 		response.setContentType("text/html; charset=UTF-8");
-		session.setMaxInactiveInterval(1800);
 		
-        if (session.getAttribute("csrfToken") == null) {
+		request.getSession().setMaxInactiveInterval(1800);
+		
+        if (request.getSession().getAttribute("csrfToken") == null) {
             String token = UUID.randomUUID().toString();
-            session.setAttribute("csrfToken", token);
+            request.getSession().setAttribute("csrfToken", token);
         }
-        
         //Allow
-        if (request.getRequestURI().startsWith("/")) {
-            chain.doFilter(req, res);
+        if (request.getRequestURI().equals("/") || request.getRequestURI().startsWith("/game/")) {
+            chain.doFilter(request, response);
             return;
-        } else if (request.getRequestURI().startsWith("/game/")) {
-            chain.doFilter(req, res);
+        }
+        if (isStaticResource(request.getRequestURI())) {
+            chain.doFilter(request, response);
             return;
-        } 
-        
+        }
         //Deny
         if (!request.getRequestURI().endsWith(".do")) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "허용되지 않은 요청입니다.");
             return;
         }
-
         if ("POST".equalsIgnoreCase(request.getMethod())) {
             String contentType = request.getContentType();
             if (contentType == null || !contentType.toLowerCase().startsWith("multipart/form-data")) {
-                String sessionToken = (String) session.getAttribute("csrfToken");
+                String sessionToken = (String) request.getSession().getAttribute("csrfToken");
                 String requestToken = request.getParameter("csrfToken");
                 
                 if (sessionToken == null || !sessionToken.equals(requestToken)) {
@@ -64,7 +67,10 @@ public class FilterUtil implements Filter {
                 }
             }
         }
-        chain.doFilter(req, res);
+        chain.doFilter(request, response);
+    }
+    private boolean isStaticResource(String uri) {
+        return ALLOWED_EXTENSIONS.stream().anyMatch(uri::endsWith);
     }
 
     @Override
