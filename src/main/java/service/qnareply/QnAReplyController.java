@@ -54,7 +54,7 @@ public class QnAReplyController extends HttpServlet {
 				String context = request.getParameter("context");
 				
 				MemberDTO member = (MemberDTO) request.getSession().getAttribute("member");
-				System.out.println(context);
+
 				qnaReplyDAO.update(new QnAReplyDTO(qnaId, member.getMemberId(), context));
 			}
 		} catch(Exception e) {

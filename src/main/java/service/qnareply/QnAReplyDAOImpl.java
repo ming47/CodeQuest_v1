@@ -38,9 +38,6 @@ public enum QnAReplyDAOImpl implements QnAReplyDAO {
 	@Override
 	public int update(QnAReplyDTO dto) throws Exception {
 		String sql = "UPDATE QNA_REPLY SET MEMBER_ID = ?, CONTEXT = ? WHERE QNA_ID = ?";
-		System.out.println(dto.getContext());
-		System.out.println(dto.getMemberId());
-		System.out.println(dto.getQnaId());
 		
 		try(Connection con = getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
