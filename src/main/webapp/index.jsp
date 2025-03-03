@@ -778,7 +778,7 @@ td.clicktitle:hover {
 				for (let i = 0; i < calld.length; i++) {
 					const tr = $('<tr>');
 					tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
-					tr.append($('<td class="clicktitle" style="width: 42%;" >').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
+					tr.append($('<td class="clicktitle" style="width: 42%; height: 50px;" >').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
 					tr.append($('<td style="width: 17%;">').text(calld[i].writer));
 					tr.append(
 							  $('<td style="width: 17%;">').html(
