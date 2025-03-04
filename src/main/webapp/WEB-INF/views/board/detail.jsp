@@ -173,7 +173,6 @@ li {
 
 table {
 	border-collapse: collapse;
-	width: 48vw;
 	font-size: 19px;
 	border-spacing: 3px;
 	border-collapse: separate;
@@ -212,21 +211,7 @@ td#contents {
 	position: relative;
 	height: 50px;
 }
-/*
-.bottom button {
-	padding: 10px 20px;
-	background-color: #3c3b39;
-	color: white;
-	border: none;
-	letter-spacing: 5px;
-	font-weight: bold;
-	position: relative;
-	transition: all 0.4s;
-	overflow: hidden;
-	border-radius: 5px;
-	font-family: 'DungGeunMo';
-}
-*/
+
 .button {
 	padding: 10px 20px;
 	background-color: #3c3b39;
@@ -400,7 +385,7 @@ table th {
 #board_contents {
   overflow: auto;
   word-wrap: break-word;
-  width: 95%;
+
   height: 95%;
 }
 

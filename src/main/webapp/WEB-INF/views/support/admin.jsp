@@ -335,7 +335,7 @@ li:hover {
 }
 
 .ban-list {
-	height: 30%;
+	height: 60%;
 }
 
 .ban-controller {
@@ -490,6 +490,7 @@ table {
 
 .qna-reply-contents {
 	height: 90%;
+	border: 1px solid lightgray;
 
 }
 
@@ -560,6 +561,7 @@ table th, table td {
 					<li class="left-selector" value="game-dashboard">게임 DashBoard</li>
 					<li class="left-selector" value="board-management">Board 관리</li>
 					<li class="left-selector" value="qna">Q&A 확인</li>
+					<li class="left-selector" onclick="location.href='/'">메인으로</li>
 				</ul>
 			</div>
 		</div>
@@ -768,22 +770,6 @@ table th, table td {
 										</table>
 									</div>
 								</div>
-								<div class="resent-board center-align">
-									<div class="inner-fat">
-										<div class="resent-title title-form center-align">최근 게시글</div>
-										<table border="1" id="resent-board-table">
-											<tr>
-												<th width="10%">번호</th>
-												<th width="60%">내용</th>
-												<th width="20%">날짜</th>
-												<th width="10%">조회수</th>
-											</tr>
-										</table>
-										<div class="page-navi-form">
-											<div class="page-navi-inner"></div>
-										</div>
-									</div>
-								</div>
 								<div class="ban-list center-align">
 									<div class="inner-fat">
 										<div class="ban-list-title title-form center-align">차단 목록</div>
@@ -811,7 +797,7 @@ table th, table td {
 														<option>기분 나쁨</option>
 														<option>영정</option>
 														<option>기타</option>
-												</select> <input type="text" placeholder="차단 사유" id="reason" disabled>
+												</select> <input type="text" placeholder="차단 사유" id="reason" value="광고" disabled>
 												</span>
 											</div>
 											<div
@@ -824,7 +810,7 @@ table th, table td {
 														<option value="1">1시간</option>
 														<option value="-1">없음</option>
 														<option value="0">기타</option>
-												</select> <input type="text" placeholder="차단 기간을 설정하십시오(시간 단위)"
+												</select> <input type="text" value="30일" placeholder="차단 기간을 설정하십시오(시간 단위)"
 													id="end-date" disabled>
 												</span>
 											</div>
@@ -1473,17 +1459,7 @@ function gameDetailCahrtSet(dataset) {
             data = JSON.parse(data);
 
             makeQnAList(data.qnaList);
-            $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
-
-            $('.qna-list-page').on('click', function () {
-                $.ajax({
-                    url: '/qna/list.do?page=' + $(this).attr('value'),
-                    type: 'GET'
-                }).done(function (data) {
-                    data = JSON.parse(data);
-                    makeQnAList(data.qnaList);
-                });
-            });
+           	makeQnaPageNavi(data, '/qna/list.do?page=');
         });
     }
 
@@ -1525,7 +1501,7 @@ function gameDetailCahrtSet(dataset) {
     		
     			if(typeof clicked.attr('tag') != 'undefined') {
     				$('#user-page-navi').append(makePageNavi(data.pageNavi, 'user-page-navi'));
-    				makeUserPageNavi(data);
+    				makeUserPageNavi(data, url);
     			}
     		});
     	})
@@ -1685,20 +1661,7 @@ function gameDetailCahrtSet(dataset) {
         }).done(function (data) {
             data = JSON.parse(data);
             makeQnAList(data.qnaList);
-            
-            $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
-
-            $('.qna-list-page').off('click');
-            $('.qna-list-page').on('click', function () {
-                console.log(url + $(this).attr('value'));
-                $.ajax({
-                    url: url + $(this).attr('value'),
-                    type: 'GET'
-                }).done(function (data) {
-                    data = JSON.parse(data);
-                    makeQnAList(data.qnaList);
-                });
-            });
+            makeQnaPageNavi(data, url);
         })
     });
 
@@ -1714,20 +1677,7 @@ function gameDetailCahrtSet(dataset) {
         }).done(function (data) {
             data = JSON.parse(data);
             makeQnAList(data.qnaList);
-
-            $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
-
-            $('.qna-list-page').off('click');
-            $('.qna-list-page').on('click', function () {
-                console.log(url + $(this).attr('value'));
-                $.ajax({
-                    url: url + $(this).attr('value'),
-                    type: 'GET'
-                }).done(function (data) {
-                    data = JSON.parse(data);
-                    makeQnAList(data.qnaList);
-                })
-            });
+            makeQnaPageNavi(data, url);
         });
     });
 
@@ -1748,20 +1698,7 @@ function gameDetailCahrtSet(dataset) {
                 }).done(function (data) {
                     data = JSON.parse(data);
                     makeQnAList(data.qnaList);
-
-                    $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
-
-                    $('.qna-list-page').off('click');
-                    $('.qna-list-page').on('click', function () {
-                        console.log(url + $(this).attr('value'));
-                        $.ajax({
-                            url: '/qna/list.do?page=' + $(this).attr('value'),
-                            type: 'GET'
-                        }).done(function (data) {
-                            data = JSON.parse(data);
-                            makeQnAList(data.qnaList);
-                        })
-                    });
+                    makeQnaPageNavi(data, url);
                 });
             });
         }
@@ -1810,6 +1747,26 @@ function gameDetailCahrtSet(dataset) {
 
         $('style').append('.qna-item:hover {cursor:pointer;}')
     }
+    
+    function makeQnaPageNavi(data, url) {
+    	$('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-page-navi'));
+    	$('.qna-page-navi').on('click', function() {
+    		const clicked = $(this);
+		
+			$.ajax({
+				url: url + clicked.attr('value'),
+				type: 'GET'
+			}).done(function(data) {
+				data = JSON.parse(data);
+				makeQnAList(data.qnaList);
+
+				if(typeof clicked.attr('tag') != 'undefined') {
+					$('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-page-navi'));
+					makeQnAPageNavi(data, url);
+				}
+			});
+		})
+    }
 
     function setQnAContents(item) {
         $('#qna-contents-title').html(item.responseYn);
@@ -1846,10 +1803,11 @@ function gameDetailCahrtSet(dataset) {
 
         $('#qna-delete').attr('disabled', true);
         $('.qna-reply-controller').html('');
+        $('.qna-reply-contents').html('');
     }
 
     function makeQnAReplyContent(item) {
-        const div = $('<div>').addClass('qna-reply-contents');
+        const div = $('<div>').addClass('qna-reply-item');
         div.append($('<div>').html(item.writer + "의 답변입니다.").addClass('qna-reply-writer'));
         div.append($('<div>').html("답변 시간: " + item.regDate).addClass('qna-reply-regDate'));
         div.append($('<div>').html(item.context).addClass('qna-reply-context'));
@@ -1857,7 +1815,8 @@ function gameDetailCahrtSet(dataset) {
         		'border-top': '1px solid black',
         		'padding-top': '10px'});
 
-        $('#qna-contents-contents').append(div);
+       $('#qna-contents-contents').append(div);
+       $('.qna-reply-contents').html(item.context);
     }
 
     function setButton(responseYN) {
@@ -1870,13 +1829,12 @@ function gameDetailCahrtSet(dataset) {
             buttonHTML = '답글 수정하기';
             url = '/qna_reply/update.do';
         } else {
-            $('.qna-reply-contents').attr('contenteditable', true);
-
             buttonHTML = '답글 등록하기';
             url = '/qna_reply/add.do';
         }
         data.qnaId = $('#qna-contents-id').html();
-
+        $('.qna-reply-contents').attr('contenteditable', true);
+        
         const button = $('<button>');
 
         $('.qna-reply-controller').append(
@@ -1900,20 +1858,8 @@ function gameDetailCahrtSet(dataset) {
 
                     data = JSON.parse(data);
                     makeQnAList(data.qnaList);
-
-                    $('#qna-list-page-navi').append(makePageNavi(data.pageNavi, 'qna-list-page'));
-
-                    $('.qna-list-page').off('click');
-                    $('.qna-list-page').on('click', function () {
-                        console.log(url + $(this).attr('value'));
-                        $.ajax({
-                            url: url + $(this).attr('value'),
-                            type: 'GET'
-                        }).done(function (data) {
-                            data = JSON.parse(data);
-                            makeQnAList(data.qnaList);
-                        })
-                    });
+                    makeQnaPageNavi(data, '/qna/list.do?page=');
+                    initQnAContents();
                 })
             });
         });
