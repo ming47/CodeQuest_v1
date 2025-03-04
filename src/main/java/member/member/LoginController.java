@@ -23,7 +23,7 @@ import service.blacklist.BlackListDAO;
 import service.blacklist.BlackListDAOImpl;
 import utils.OAuthTokenDTO;
 
-@WebServlet("/KakaoLogin")
+@WebServlet("/KakaoLogin.do")
 public class LoginController extends HttpServlet {
 	Gson gson = new Gson();
     private MemberDAO memberDao = MemberDAOImpl.INSTANCE;

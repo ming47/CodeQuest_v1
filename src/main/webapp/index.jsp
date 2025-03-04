@@ -691,7 +691,7 @@ td.clicktitle:hover {
 		Kakao.init('f9db9ce16f96861764ec0a83c0470eff');
 		function loginWithKakao() {
 			Kakao.Auth.authorize({
-				redirectUri : 'http://10.5.5.14/KakaoLogin',
+				redirectUri : 'http://10.5.5.14/KakaoLogin.do',
 				scope : 'profile_nickname,profile_image,account_email',
 			});
 		}
