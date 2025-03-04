@@ -481,6 +481,7 @@ table th {
 }
 
 </style>
+<meta name="csrf-token" content="${csrfToken}">
 </head>
 <body>
 	<div class="header">
@@ -516,7 +517,9 @@ table th {
 				<table>
 					<tr>
 						<th>제목</th>
-						<td class="change text-center" id="board_title" colspan="3">${dto.title}</td>
+						<td class="change text-center" id="board_title" colspan="3">
+						  <c:out value="${dto.title}" />
+						</td>
 					</tr>
 					<tr>
 						<th>작성자</th>
@@ -568,6 +571,7 @@ table th {
 					<div class="pageNaviForm"></div>
 				</div>
 				<form action="/board/update.do" method="post" id="update-form">
+					<input type="hidden" name="csrfToken" value="${csrfToken}"/>
 					<input id="id" type="hidden" name="id" value="${dto.boardId}">
 					<input name="title" type="hidden" id="hdtitle"> <input
 						name="contents" type="hidden" id="hdcontents">
@@ -636,7 +640,7 @@ table th {
         for (let i = 0; i < data.length; i++) {
            let commentItem = $("<li>").addClass("comment-item").attr("data-id", data[i].replyId);
                
-            let contentDiv = $("<div>").addClass("comment-content writerdiv").html(data[i].contents).attr("data-original", data[i].contents);
+            let contentDiv = $("<div>").addClass("comment-content writerdiv").text(data[i].contents).attr("data-original", data[i].contents);
             let commentHeader = $("<div>").addClass("comment-header").text(data[i].writer);
             commentHeader.append($('<span>').html(data[i].regDate).addClass('relative-date').attr('data-timestamp', Date.parse(data[i].regDate)));
                
@@ -674,7 +678,7 @@ table th {
             let contentDiv = commentItem.find(".writerdiv");
                
             // 기존 내용 저장
-            contentDiv.attr("data-original", contentDiv.html());
+            contentDiv.attr("data-original", contentDiv.text());
                
             // 수정 가능하도록 설정
             contentDiv.attr("contentEditable", "true").focus();
@@ -689,14 +693,19 @@ table th {
 
             // 수정완료 버튼 클릭
             updateOK.on("click", function() {
-               let updatedContent = contentDiv.html();
+               let updatedContent = contentDiv.text();
                 let replyId = commentItem.attr("data-id");
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                 // 서버로 수정 요청
                 $.ajax({
                    url: "/reply/update.do",
                     type: "post",
-                    data: { id: replyId, contents: updatedContent },
+                    data: { 
+                    	id: replyId, 
+                    	contents: updatedContent,
+                    	csrfToken: csrfToken
+                    	},
                     success: function(response) {
                        // 성공하면 수정된 내용 유지
                         if(response){
@@ -731,12 +740,17 @@ table th {
         $(".deletebtn").on("click", function() {
            let commentItem = $(this).closest(".comment-item");
             let replyId = commentItem.attr("data-id");
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
             if (confirm("정말 삭제하시겠습니까?")) {
                $.ajax({
                    url: "/reply/delete.do",
                     type: "post",
-                    data: { id: replyId, boardId : ${dto.boardId}},
+                    data: { 
+                    	id: replyId, 
+                    	boardId : ${dto.boardId},
+                   		csrfToken : csrfToken
+                    },
                     success: function(response) {
                        // 삭제 성공하면 해당 댓글을 화면에서 제거
                         if(response) {                           
@@ -800,13 +814,14 @@ table th {
               event.preventDefault();
               return false;
           }
-
+          var csrfToken = $('meta[name="csrf-token"]').attr('content');
            $.ajax({
               url: '/reply/add.do',
               type: 'POST',
               data: {
                     boardId: ${dto.boardId},
-                    contents: $commentInput.val()
+                    contents: $commentInput.val(),
+                    csrfToken: csrfToken
               } 
           }).done(function(data) {
         	  console.log("123");
@@ -987,9 +1002,9 @@ table th {
          });
         
          function setSummerNote(target) {
-             console.log('서머노트 세팅');
-
              return {
+ 				codeviewFilter: true,
+				codeviewIframeFilter: true,
                 placeholder : '내용을 입력하십시오',
                 height : 500,
                 minHeight : null, // set minimum height of editor
@@ -1017,10 +1032,8 @@ table th {
 	                      uploadImage(files[i], this);
                       }
                    },
-
                    onPaste : function(e) {
                       console.log(e);
-
                       var clipboardData = e.originalEvent.clipboardData;
                       if (clipboardData && clipboardData.items
                             && clipboardData.items.length) {
@@ -1037,9 +1050,12 @@ table th {
           }
 
           function uploadImage(file, editor) {
+   			 var csrfToken = $('meta[name="csrf-token"]').attr('content');
              let formData = new FormData();
              formData.append('file', file);
              formData.append('request', 'board');
+             formData.append('csrfToken', csrfToken);
+             
              $.ajax({
                 url : '/file/image/upload.do',
                 data : formData,

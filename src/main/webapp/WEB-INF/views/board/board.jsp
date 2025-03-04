@@ -385,9 +385,12 @@ button:focus {
 					<c:forEach var="dto" items="${list}">
 						<tr>
 							<td>${dto.boardId}</td>
-							<td class="contents"><a
-								href="/board/detail.do?id=${dto.boardId}"> ${dto.title} </a> <span
-								class="reply-count">[${dto.replyCount}]</span></td>
+							<td class="contents">
+						 	  <a href="/board/detail.do?id=${dto.boardId}">
+							    <c:out value="${dto.title}"/>
+							  </a>  
+						  <span class="reply-count">[<c:out value="${dto.replyCount}" />]</span>
+							</td>
 							<td>${dto.writer}</td>
 							<td class="relative-date" data-timestamp="${dto.regDate.time}">${dto.regDate}</td>
 							<td>${dto.viewCount}</td>

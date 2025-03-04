@@ -17,7 +17,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap"
 	rel="stylesheet">
-<title>Responsive Game Portal</title>
+<title>웹 게임 포털 사이트</title>
 <style>
 * {
 	margin: 0;
@@ -650,7 +650,6 @@ td.clicktitle:hover {
 						<tr id="title">
 							<th style="width: 12%;">번호</th>
 							<th class="clicktitle" style="width: 42%;">제목</th>
-
 							<th style="width: 17%;">작성자</th>
 							<th style="width: 17%;">날짜</th>
 							<th style="width: 12%;">조회</th>
@@ -668,7 +667,6 @@ td.clicktitle:hover {
 						<tr id="title">
 							<th style="width: 12%;">번호</th>
 							<th class="click-title" style="width: 42%;">제목</th>
-
 							<th style="width: 17%;">작성자</th>
 							<th style="width: 17%;">날짜</th>
 							<th style="width: 12%;">조회</th>
@@ -697,6 +695,24 @@ td.clicktitle:hover {
 				scope : 'profile_nickname,profile_image,account_email',
 			});
 		}
+		function updateRelativeDates() {
+			  var now = new Date();
+			  $('.relative-date').each(function () {
+			    var timestamp = parseInt($(this).data('timestamp'), 10);
+			    var postDate = new Date(timestamp);
+			    var diffMinutes = Math.floor((now - postDate) / (1000 * 60));
+
+			    if (diffMinutes < 1) {
+			      $(this).text("방금 전");
+			    } else if (diffMinutes < 60) {
+			      $(this).text(diffMinutes + "분 전");
+			    } else if (diffMinutes < 720) {
+			      var diffHours = Math.floor(diffMinutes / 60);
+			      $(this).text(diffHours + "시간 전");
+			    }
+			  });
+		}
+
 		$(document).ready(function() {
 			if (sessionStorage.getItem("enteredGame") === "true") {
 				$(".starter").hide();
@@ -724,10 +740,18 @@ td.clicktitle:hover {
 						tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
 						tr.append($('<td class="clicktitle" style="width: 42%;">').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
 						tr.append($('<td style="width: 17%;">').text(calld[i].writer));
-						tr.append($('<td style="width: 17%;">').text(calld[i].regDate));
+						tr.append(
+								  $('<td style="width: 17%;">').html(
+								    '<span class="relative-date" data-timestamp="' + new Date(calld[i].regDate).getTime() + '">' +
+								      calld[i].regDate +
+								    '</span>'
+								  )
+								);
+
 						tr.append($('<td style="width: 12%;">').text(calld[i].viewCount));
 						latestBoard.append(tr);
 					}
+					updateRelativeDates();
 				})
 				.fail(function(xhr, status, error) {
 					console.log("게시판 데이터 로딩 실패:", error);
@@ -756,10 +780,18 @@ td.clicktitle:hover {
 					tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
 					tr.append($('<td class="clicktitle" style="width: 42%;">').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
 					tr.append($('<td style="width: 17%;">').text(calld[i].writer));
-					tr.append($('<td style="width: 17%;">').text(calld[i].regDate));
+					tr.append(
+							  $('<td style="width: 17%;">').html(
+							    '<span class="relative-date" data-timestamp="' + new Date(calld[i].regDate).getTime() + '">' +
+							      calld[i].regDate +
+							    '</span>'
+							  )
+							);
+
 					tr.append($('<td style="width: 12%;">').text(calld[i].viewCount));
 					latestBoard.append(tr);
 				}
+				updateRelativeDates();
 			});
 
 			function loadRanking(gameId) {
@@ -785,6 +817,7 @@ td.clicktitle:hover {
 						const li = $('<li>').html((i + 1) + '위 ' + data[i].user + '(' + data[i].score + '점)');
 						rankingList.append(li);
 					}
+					updateRelativeDates();
 				})
 				.fail(function(xhr, status, error) {
 					console.log("랭킹 데이터 불러오기 실패:", error);
