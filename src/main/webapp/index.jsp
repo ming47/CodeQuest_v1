@@ -233,7 +233,7 @@
 	height: 445px;
 	min-height: 300px;
 	background-color: rgba(255, 255, 255, 0.9);
-	padding: 51px;
+	padding: 30px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
@@ -249,19 +249,18 @@
 }
 
 .rankingboard h3 {
-	font-size: 40px;
+	font-size: 30px;
 	margin-top: -10px;
 }
 
 .rankingboard li {
-	margin: 12px;
 }
 
 .ranking-tabs {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: 5px;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	width: 100%;
