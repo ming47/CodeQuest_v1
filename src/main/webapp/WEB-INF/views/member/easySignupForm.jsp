@@ -275,6 +275,7 @@
 					<span>-</span> <input type="text" name="ssnBack" id="ssnBack" placeholder="주민등록번호 뒷자리"
 						maxlength="1">
 				</div>
+				<span id="result_ssn"></span> 
 				<input type="text" name="phone" id="phone" placeholder="전화번호를 입력하세요">
 				<span id="result_phone"></span> <input type="text" name="email" id="email" value=${email}
 					readonly></span>
@@ -313,12 +314,32 @@
 				}
 			});
 		$("#ssnFront").on("input", function () {
-			let val = $(this).val().replace(/\D/g, "");
-			$(this).val(val);
-			if (val.length === 6) {
-				$("#ssnBack").focus();
-			}
+		    let val = $(this).val().replace(/\D/g, "");
+		    $(this).val(val);
+
+		    if (val.length === 6) {
+		        const regex = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[0-1])$/;
+		        if (regex.test(val)) {
+		            $("#result_ssn").css({ "color": "green", "font-size": "16px" })
+		                            .html("사용 가능한 주민번호 입니다.");
+		            ssn_val = true;
+		        } else {
+		            $("#result_ssn").css({ "color": "#BB3A48", "font-size": "16px" })
+		                            .html("사용 불가능한 주민번호 입니다.");
+		            ssn_val = false;
+		        }
+		        $("#ssnBack").focus();
+		    } else {
+		        $("#result_ssn").css({ "color": "#BB3A48", "font-size": "16px" })
+		                        .html("주민번호는 6자리 입력해야합니다.");
+		        ssn_val = false;
+		    }
 		});
+
+		$("#ssnBack").on("input", function() {
+		    let val = $(this).val().replace(/\D/g, "");
+		    $(this).val(val);
+		});			
 		//다음POST API
 		$("#searchbnt").on("click", function () {
 			new daum.Postcode({
@@ -490,7 +511,7 @@
 					return false;
 				}
 
-				if (!(name_val && tel_val && email_val && nickName_val)) {
+				if (!(name_val && tel_val && email_val && nickName_val && ssn_val)) {
 					alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
 					return false;
 				}

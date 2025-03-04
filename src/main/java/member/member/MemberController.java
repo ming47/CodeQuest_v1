@@ -191,9 +191,7 @@ public class MemberController extends HttpServlet {
 				String email = request.getParameter("email");
 				String postcodeStr = request.getParameter("postcode");
 				int postcode = 0;
-				if(postcodeStr != "") {
-					postcode = 0;
-				} else if(postcodeStr == "") {
+				if(postcodeStr == "") {
 					postcode = 0;
 				} else if(postcodeStr == null) {
 					postcode = 0;
