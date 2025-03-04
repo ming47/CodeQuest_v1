@@ -648,7 +648,7 @@ td.clicktitle:hover {
 				<table>
 					<thead>
 						<tr id="title">
-							<th style="width: 12%;">번호</th>
+							<th style="width: 12%; height: 50px;">번호</th>
 							<th class="clicktitle" style="width: 42%;">제목</th>
 							<th style="width: 17%;">작성자</th>
 							<th style="width: 17%;">날짜</th>
@@ -665,7 +665,7 @@ td.clicktitle:hover {
 				<table>
 					<thead>
 						<tr id="title">
-							<th style="width: 12%;">번호</th>
+							<th style="width: 12%; height: 50px;">번호</th>
 							<th class="click-title" style="width: 42%;">제목</th>
 							<th style="width: 17%;">작성자</th>
 							<th style="width: 17%;">날짜</th>
@@ -731,13 +731,13 @@ td.clicktitle:hover {
 					latestBoard.empty();
 
 					if (!calld || calld.length === 0) {
-						latestBoard.append("<tr><td colspan='5'>게시글이 없습니다.</td></tr>");
+						latestBoard.append('<tr><td colspan="5" style="height: 50px;>게시글이 없습니다.</td></tr>');
 						return;
 					}
 
 					for (let i = 0; i < calld.length; i++) {
 						const tr = $('<tr>');
-						tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
+						tr.append($('<td style="width: 12%; height: 50px;">').text(calld[i].boardId));
 						tr.append($('<td class="clicktitle" style="width: 42%;">').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
 						tr.append($('<td style="width: 17%;">').text(calld[i].writer));
 						tr.append(
@@ -778,7 +778,7 @@ td.clicktitle:hover {
 				for (let i = 0; i < calld.length; i++) {
 					const tr = $('<tr>');
 					tr.append($('<td style="width: 12%;">').text(calld[i].boardId));
-					tr.append($('<td class="clicktitle" style="width: 42%;">').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
+					tr.append($('<td class="clicktitle" style="width: 42%; height: 50px;" >').append($('<a>').attr('href', "/board/detail.do?id=" + calld[i].boardId).text(calld[i].title)));
 					tr.append($('<td style="width: 17%;">').text(calld[i].writer));
 					tr.append(
 							  $('<td style="width: 17%;">').html(
