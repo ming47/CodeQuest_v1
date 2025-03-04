@@ -44,8 +44,7 @@ public class FilterUtil implements Filter {
         } else if (request.getRequestURI().startsWith("/game/")) {
             chain.doFilter(req, res);
             return;
-        } 
-        
+        }
         //Deny
         if (!request.getRequestURI().endsWith(".do")) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "허용되지 않은 요청입니다.");
