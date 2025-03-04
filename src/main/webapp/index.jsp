@@ -233,7 +233,7 @@
 	height: 445px;
 	min-height: 300px;
 	background-color: rgba(255, 255, 255, 0.9);
-	padding: 51px;
+	padding: 30px;
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
@@ -249,19 +249,18 @@
 }
 
 .rankingboard h3 {
-	font-size: 40px;
+	font-size: 30px;
 	margin-top: -10px;
 }
 
 .rankingboard li {
-	margin: 12px;
 }
 
 .ranking-tabs {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: 5px;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	width: 100%;
@@ -488,10 +487,22 @@ td a {
 
 td.clicktitle:hover {
 	transform: scale(1.1);
-	background-color: #f0f0f0; table tr { border-radius : 1px;
+	background-color: #f0f0f0; 
+}
+
+table tr { 
+	border-radius : 1px;
 	font-family: 'DungGeunMo';
 	height: 48px;
 }
+.heart{
+width: 110px;
+height: 50px;
+top : 115px;
+right: 20%;
+position: absolute;
+}
+
 </style>
 <c:if test="${member.memberId != null}">
 	<style>
@@ -500,6 +511,7 @@ td.clicktitle:hover {
 	width: 85%;
 	height: 660px;
 }
+
 </style>
 </c:if>
 </head>
@@ -588,6 +600,7 @@ td.clicktitle:hover {
 				</div>
 			</div>
 			<div class="right-content">
+			<img class="heart" src="/images/하트.gif"  >
 				<c:if test="${member.memberId==null}">
 					<div class="loginbox">
 						<h2>로그인</h2>
