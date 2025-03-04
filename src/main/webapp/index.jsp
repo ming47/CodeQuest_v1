@@ -600,8 +600,8 @@ position: absolute;
 				</div>
 			</div>
 			<div class="right-content">
-			<img class="heart" src="/images/하트.gif"  >
 				<c:if test="${member.memberId==null}">
+							<img class="heart" src="/images/하트.gif"  >
 					<div class="loginbox">
 						<h2>로그인</h2>
 						<form action="/member/login.do" method="post" id="frm">
