@@ -496,10 +496,10 @@ table tr {
 	height: 48px;
 }
 .heart{
-width: 110px;
-height: 50px;
-top : 115px;
-right: 20%;
+width: 80px;
+height: 90px;
+top : 78px;
+right: 22%;
 position: absolute;
 }
 
