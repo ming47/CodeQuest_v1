@@ -287,9 +287,10 @@
 					placeholder="닉네임을 입력하세요"> <span id="result_nickName"></span>
 				<div class="input-group">
 					<input type="text" name="ssnFront" id="ssnFront" placeholder="주민등록번호 앞자리" maxlength="6">
-					<span>-</span> <input type="text" name="ssnBack" id="ssnBack" placeholder="주민등록번호 뒷자리"
-						maxlength="1">
+					<span>-</span> 
+					<input type="text" name="ssnBack" id="ssnBack" placeholder="주민등록번호 뒷자리" maxlength="1">
 				</div>
+				<span id="result_ssn"></span>
 				<input type="text" name="phone" id="phone" placeholder="전화번호를 입력하세요">
 				<span id="result_phone"></span> <input type="text" name="email" id="email" placeholder="이메일을 입력하세요">
 				<span id="result_email"></span>
@@ -324,13 +325,18 @@
 					return false;
 				}
 		});
-		$("#ssnFront").on("input", function () {
-			let val = $(this).val().replace(/\D/g, "");
-			$(this).val(val);
-			if (val.length === 6) {
-				$("#ssnBack").focus();
-			}
-		});
+		$("#ssnFront").on("keyup", function () {
+			validateInput("#ssnFront", /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[0-1])$/, 
+						"사용 가능한 주민번호 입니다.", "사용 불가능한 주민번호 입니다.", "#result_ssn", function(valid) {
+				ssn_val = valid;
+			});
+		});	
+		$("#ssnBack").on("input", function() {
+		    let val = $(this).val().replace(/\D/g, "");
+		    $(this).val(val);
+		});		
+
+		
 		//다음POST API
 		$("#searchbnt").on("click", function () {
 			new daum.Postcode({
@@ -474,7 +480,7 @@
 				}
 			}
 			if (!(id_val && pw_val && name_val && tel_val
-				&& email_val && nickName_val)) {
+				&& email_val && nickName_val && ssn_val)) {
 				alert("입력한 값 중 유효하지 않은 항목이 있습니다. 다시 확인해주세요.");
 				return false;
 			}
