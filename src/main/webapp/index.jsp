@@ -488,10 +488,22 @@ td a {
 
 td.clicktitle:hover {
 	transform: scale(1.1);
-	background-color: #f0f0f0; table tr { border-radius : 1px;
+	background-color: #f0f0f0; 
+}
+
+table tr { 
+	border-radius : 1px;
 	font-family: 'DungGeunMo';
 	height: 48px;
 }
+.heart{
+width: 110px;
+height: 50px;
+top : 115px;
+right: 20%;
+position: absolute;
+}
+
 </style>
 <c:if test="${member.memberId != null}">
 	<style>
@@ -500,6 +512,7 @@ td.clicktitle:hover {
 	width: 85%;
 	height: 660px;
 }
+
 </style>
 </c:if>
 </head>
@@ -588,6 +601,7 @@ td.clicktitle:hover {
 				</div>
 			</div>
 			<div class="right-content">
+			<img class="heart" src="/images/하트.gif"  >
 				<c:if test="${member.memberId==null}">
 					<div class="loginbox">
 						<h2>로그인</h2>
