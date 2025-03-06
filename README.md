@@ -11,7 +11,7 @@
 </div> 
 
 ## 📝 소개
-백엔드 깃 레파지토리의 README.md를 빠르게 작성하기 위해 만든 템플릿입니다.
+소개글을 작성할 공간
 
 다음과 같은 내용을 작성할 수 있습니다.
 - 프로젝트 소개
@@ -34,12 +34,6 @@
 <img src="https://user-images.githubusercontent.com/80824750/208454673-0449e49c-57c6-4a6b-86cf-66c5b1e623dc.png">
 
 <br />
-
-## 🗂️ APIs
-작성한 API는 아래에서 확인할 수 있습니다.
-
-👉🏻 [API 바로보기](/backend/APIs.md)
-
 
 <br />
 
