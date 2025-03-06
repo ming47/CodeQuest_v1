@@ -48,9 +48,6 @@
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/JavaScript.png?raw=true" width="80">
 </div>
 
-![image](https://github.com/user-attachments/assets/53881640-84d7-48bb-b12a-9b8a594bb9af)
-
-
 ### Infra
 <div>
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/AWSEC2.png?raw=true" width="80">
