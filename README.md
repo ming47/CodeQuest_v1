@@ -63,7 +63,7 @@ https://www.erdcloud.com/d/9HCe4GSjjeHXT8iHu
 - Gmail STMP 이용하여 이메일 전송하기
     - [gmail 보내기](https://velog.io/@yewo2nn16/Email-이메일-전송하기with-첨부파일)
 - AWS EC2에 배포하기
-    - [서버 배포하기-2](https://velog.io/@shawnhansh/AWS-EC2에-배포하기)
+    - [서버 배포하기](https://velog.io/@shawnhansh/AWS-EC2에-배포하기)
 
 <br />
 
