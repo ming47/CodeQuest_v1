@@ -57,10 +57,10 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 
 ## 🛠️ 프로젝트 아키텍쳐
 ![no-image](https://user-images.githubusercontent.com/80824750/208294567-738dd273-e137-4bbf-8307-aff64258fe03.png)
-
-
-
 <br />
+
+## 🛠️ ERD
+https://www.erdcloud.com/d/9HCe4GSjjeHXT8iHu
 
 ## 🤔 기술적 이슈와 해결 과정
 - Stream 써야할까?
