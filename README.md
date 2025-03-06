@@ -21,8 +21,6 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 
 <br />
 
-> 화면 구성과 프로토 타입 중 원하는 것을 사용해주세요.
-
 ### 화면 구성
 |Screen #1|Screen #2|
 |:---:|:---:|
