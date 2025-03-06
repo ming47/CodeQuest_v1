@@ -83,4 +83,5 @@
 
 ## 💁‍♂️ 프로젝트 팀원
 ![image-removebg-preview](https://github.com/user-attachments/assets/13c98280-3737-4482-916e-eca309f88089)
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/2656f388-f5d3-4c8a-9256-a9f8ba89d436)
 
