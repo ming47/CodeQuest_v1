@@ -22,7 +22,7 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 
 | 메인화면 #1 | 회원가입 #2 | 마이페이지 #3 | 게시판 #4 |
 | :---: | :---: | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/d95882cb-b9ac-47ad-824a-6fac4683d659?raw=true" width="400" alt="메인화면 #1" /> | <img src="https://github.com/user-attachments/assets/c61f2e60-127e-4a6a-b2fc-df3c624ea310?raw=true" width="400" alt="회원가입 #2" /> | <img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="400" alt="마이페이지 #3" /> | <img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="400" alt
+| <img src="https://github.com/user-attachments/assets/d95882cb-b9ac-47ad-824a-6fac4683d659?raw=true" width="400" alt="메인화면 #1" /> | <img src="https://github.com/user-attachments/assets/c61f2e60-127e-4a6a-b2fc-df3c624ea310?raw=true" width="400" alt="회원가입 #2" /> | <img src="https://github.com/user-attachments/assets/f11c6c34-f114-4be7-af24-5e1677f1dfc0?raw=true" width="400" alt="마이페이지 #3" /> | <img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="400" alt="게시판 #4" /> |
 
 
 
