@@ -54,7 +54,7 @@
 
 ### Tools
 <div>
-<img src="https://github.com/user-attachments/assets/16b7a208-5ef9-4149-aacd-b0a6894f3ff3?raw=true" width="80" height="80" alt="Image">
+<img src="https://github.com/user-attachments/assets/16b7a208-5ef9-4149-aacd-b0a6894f3ff3?raw=true" width="75" height="100" alt="Image">
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Github.png?raw=true" width="80">
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Notion.png?raw=true" width="80">
 </div>
