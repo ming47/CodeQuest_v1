@@ -31,8 +31,6 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 
 <br />
 
-<br />
-
 ## ⚙ 기술 스택
 ### Back-end
 <div>
