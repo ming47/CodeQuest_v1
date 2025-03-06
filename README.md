@@ -52,10 +52,6 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 
 <br />
 
-## 🛠️ 프로젝트 아키텍쳐
-![no-image](https://user-images.githubusercontent.com/80824750/208294567-738dd273-e137-4bbf-8307-aff64258fe03.png)
-<br />
-
 ## 🛠️ ERD
 ![image](https://github.com/user-attachments/assets/5bf1c2a7-7c09-4f1e-88d6-e2a9d7563b9a)
 https://www.erdcloud.com/d/9HCe4GSjjeHXT8iHu
