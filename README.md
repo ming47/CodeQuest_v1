@@ -40,6 +40,7 @@
 <div>
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Java.png?raw=true" width="80">
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Ajax.png?raw=true" width="80">
+![image](https://github.com/user-attachments/assets/e08a7532-376e-47fa-ad44-dc68b810b9fc)
 </div>
 
 ### Front-end
