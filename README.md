@@ -13,7 +13,6 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 
 - 프로젝트 소개
 - 화면 구성
-- 와이어 프레임
 - 사용한 기술 스택
 - 프로젝트 아키텍쳐
 - 기술적 이슈와 해결 과정
@@ -23,11 +22,6 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 | 메인화면 #1 | 회원가입 #2 | 마이페이지 #3 | 게시판 #4 | 대시보드 #5 |
 | :---: | :---: | :---: | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/155aac71-0438-499c-b814-7c75b8ea6244?raw=true" width="500" height="300" alt="메인화면 #1" /> | <img src="https://github.com/user-attachments/assets/fe5e1176-66d0-477b-8067-406bf2599464?raw=true" width="500" height="300" alt="회원가입 #2" /> | <img src="https://github.com/user-attachments/assets/f11c6c34-f114-4be7-af24-5e1677f1dfc0?raw=true" width="500" height="300" alt="마이페이지 #3" /> | <img src="https://github.com/user-attachments/assets/17d23099-9a08-42e5-ad27-2121c2976cce?raw=true" width="500" height="300" alt="게시판 #4" /> | <img src="https://github.com/user-attachments/assets/50036e21-3e5f-4ec1-96c7-dccdb76d92d7?raw=true" width="500" height="300" alt="대시보드 #5" /> |
-
-
-
-### 와이어 프레임
-<img src="https://user-images.githubusercontent.com/80824750/208454673-0449e49c-57c6-4a6b-86cf-66c5b1e623dc.png">
 
 <br />
 
