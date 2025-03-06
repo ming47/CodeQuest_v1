@@ -38,14 +38,13 @@
 ### Back-end
 <div>
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Java.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Ajax.png?raw=true" width="80">
-<img src="https://github.com/user-attachments/assets/e08a7532-376e-47fa-ad44-dc68b810b9fc?raw=true" width="80" alt="Third Image">
 </div>
 
 ### Front-end
 <div>
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/HTMLCSS.png?raw=true" width="80">
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/JavaScript.png?raw=true" width="80">
+<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Ajax.png?raw=true" width="80">
 </div>
 
 ### Infra
@@ -55,7 +54,7 @@
 
 ### Tools
 <div>
-![image](https://github.com/user-attachments/assets/16b7a208-5ef9-4149-aacd-b0a6894f3ff3)
+<img src="https://github.com/user-attachments/assets/16b7a208-5ef9-4149-aacd-b0a6894f3ff3?raw=true" width="80" alt="Image">
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Github.png?raw=true" width="80">
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Notion.png?raw=true" width="80">
 </div>
