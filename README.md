@@ -1,6 +1,6 @@
 <!-- logo -->
 
-# Web Game Portal Site Project
+# [Servlet/JSP] Web Game Portal Site Project
 
 [<img src="https://img.shields.io/badge/-readme.md-important?style=flat&logo=google-chrome&logoColor=white" />]() [<img src="https://img.shields.io/badge/release-v1.5.3-yellow?style=flat&logo=google-chrome&logoColor=white" />]() 
 <br/> [<img src="https://img.shields.io/badge/프로젝트 기간-2025.02.17~2025.02.28-green?style=flat&logo=&logoColor=white" />]()
