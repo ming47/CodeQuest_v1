@@ -12,6 +12,7 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 다양한 미니 게임을 하나의 웹 포털에서 간편하게 즐길 수 있도록 기획했으며, 회원 관리와 랭킹 시스템을 통해 플레이어들이 경쟁하고 소통할 수 있도록 구성했습니다. 또한 커뮤니티기능과 관리자 페이지를 제작하였습니다. 프로젝트는 다음과 같은 내용을 담고 있습니다.
 
 - 프로젝트 소개
+- 화면 구성
 - 와이어 프레임
 - 사용한 기술 스택
 - 프로젝트 아키텍쳐
@@ -19,12 +20,11 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 - 프로젝트 팀원
 
 ### 화면 구성
-
+<div style="overflow-x: auto; width: 100%;">
 | 메인화면 #1 | 회원가입 #2 | 마이페이지 #3 | 게시판 #4 | 대시보드 #5 |
 | :---: | :---: | :---: | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/696fae09-c19b-4c2c-bb1b-6461b171fc5e?raw=true" width="800" alt="메인화면 #1" /> | <img src="https://github.com/user-attachments/assets/fe5e1176-66d0-477b-8067-406bf2599464?raw=true" width="800" alt="회원가입 #2" /> | <img src="https://github.com/user-attachments/assets/f11c6c34-f114-4be7-af24-5e1677f1dfc0?raw=true" width="800" alt="마이페이지 #3" /> | <img src="https://github.com/user-attachments/assets/17d23099-9a08-42e5-ad27-2121c2976cce?raw=true" width="800" alt="게시판 #4" /> | <img src="https://github.com/user-attachments/assets/50036e21-3e5f-4ec1-96c7-dccdb76d92d7?raw=true" width="800" alt="대시보드 #5" /> |
-
-
+</div>
 
 
 
