@@ -82,8 +82,6 @@
 <br />
 
 ## 💁‍♂️ 프로젝트 팀원
-|Backend|Frontend|
-|:---:|:---:|
 | ![image](https://github.com/user-attachments/assets/4b0dced4-4df4-4684-bff5-30425bdb6a28)
  | ![](https://github.com/SeongHo-C.png?size=120) |
-|[노예원](https://github.com/yewon-Noh)|[이성호](https://github.com/SeongHo-C)|
+|[강윤아아](https://github.com/yewon-Noh)|[이성호](https://github.com/SeongHo-C)|
