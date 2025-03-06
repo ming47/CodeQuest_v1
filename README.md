@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/abdcb950-cfbb-4e6d-91d8-11bf71ed52a3)<div align="center">
-
 <!-- logo -->
 <img src="https://user-images.githubusercontent.com/80824750/208554611-f8277015-12e8-48d2-b2cc-d09d67f03c02.png" width="400"/>
 
