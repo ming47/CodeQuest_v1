@@ -2,7 +2,7 @@
 
 # Team CodeQuest Project
 
-[<img src="https://img.shields.io/badge/-readme.md-important?style=flat&logo=google-chrome&logoColor=white" />]() [<img src="https://img.shields.io/badge/-tech blog-blue?style=flat&logo=google-chrome&logoColor=white" />]() [<img src="https://img.shields.io/badge/release-v0.0.0-yellow?style=flat&logo=google-chrome&logoColor=white" />]() 
+[<img src="https://img.shields.io/badge/-readme.md-important?style=flat&logo=google-chrome&logoColor=white" />]() [<img src="[https://img.shields.io/badge/-tech blog-blue?style=flat&logo=google-chrome&logoColor=white](https://img.shields.io/badge/-Notion-blue?style=flat&logo=google-chrome&logoColor=white)" />]() [<img src="https://img.shields.io/badge/release-v0.0.0-yellow?style=flat&logo=google-chrome&logoColor=white" />]() 
 <br/> [<img src="https://img.shields.io/badge/프로젝트 기간-2025.02.17~2025.02.28-green?style=flat&logo=&logoColor=white" />]()
 
 </div> 
