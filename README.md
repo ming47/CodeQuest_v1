@@ -14,7 +14,6 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 - 프로젝트 소개
 - 화면 구성
 - 사용한 기술 스택
-- 프로젝트 아키텍쳐
 - 기술적 이슈와 해결 과정
 - 프로젝트 팀원
 
