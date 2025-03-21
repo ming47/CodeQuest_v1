@@ -53,7 +53,7 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 
 <br />
 
-## 📝 프로젝트 아키텍처
+## 🏢 프로젝트 아키텍처
 
 ![프로젝트 아키텍처 이미지](https://github.com/user-attachments/assets/091cceb4-eddd-4534-8601-85640fb88219)
 <br />
