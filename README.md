@@ -8,12 +8,13 @@
 </div> 
 
 ## 📝 소개
-CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니다.
+CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project 입니다.
 다양한 미니 게임을 하나의 웹 포털에서 간편하게 즐길 수 있도록 기획했으며, 회원 관리와 랭킹 시스템을 통해 플레이어들이 경쟁하고 소통할 수 있도록 구성했습니다. 또한 커뮤니티기능과 관리자 페이지를 제작하였습니다. 프로젝트는 다음과 같은 내용을 담고 있습니다.
 
 - 프로젝트 소개
 - 화면 구성
 - 사용한 기술 스택
+- 프로젝트 아키텍처
 - ERD
 - 기술적 이슈와 해결 과정
 - 프로젝트 팀원
@@ -50,6 +51,11 @@ CodeQuest 팀이 진행하는 [Servlet/JSP] Web Game Portal Site Project입니�
 <img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Notion.png?raw=true" width="80">
 </div>
 
+<br />
+
+## 🏢 프로젝트 아키텍처
+
+![프로젝트 아키텍처 이미지](https://github.com/user-attachments/assets/091cceb4-eddd-4534-8601-85640fb88219)
 <br />
 
 ## 🛠️ ERD
